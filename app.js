@@ -1,4 +1,4 @@
-const express = require("express");
+const express = require('express');
 const app = express();
 
 function tariffDB() {
@@ -170,7 +170,7 @@ function tariffDB() {
         getKeys: () => Object.keys(tariff),
         get: key => tariff[key],
         getAll: () => tariff
-    }
+    };
 }
 
 function tariffRepository(db) {
@@ -190,7 +190,7 @@ function tariffRepository(db) {
             let maxKey = _max(lessKeys);
             let tariff = db.get(maxKey);
             if (!tariff) {
-                maxKey = _max(keys)
+                maxKey = _max(keys);
             }
             tariff = db.get(maxKey);
             const ret = {};
@@ -198,13 +198,13 @@ function tariffRepository(db) {
             return ret;
         },
         all: () => db.getAll()
-    }
+    };
 }
 
 /**
  * @return {number}
  */
-function YearMon(yearmon = "") {
+function YearMon(yearmon = '') {
     let date = new Date();
     if (yearmon.length === 6) {
         if (parseInt(yearmon.substr(0, 4), 10) > 1970) {
@@ -221,12 +221,12 @@ function YearMon(yearmon = "") {
     }
 
     function _parseDate(date) {
-        return "" + date.getFullYear()
-            + ((date.getMonth() < 10) ? "0" : "")
-            + date.getMonth()
+        return '' + date.getFullYear()
+            + ((date.getMonth() < 10) ? '0' : '')
+            + date.getMonth();
     }
 
-    return parseInt(_parseDate(date), 10)
+    return parseInt(_parseDate(date), 10);
 }
 
 /**
@@ -237,26 +237,30 @@ function YearMon(yearmon = "") {
  */
 function RequestParams(query) {
     const params = {
-        version: "1",
+        version: '1',
         yearmon: YearMon()
     };
 
-    if (query.hasOwnProperty('version')) params.version = query.version;
-    if (query.hasOwnProperty('yearmon')) params.yearmon = YearMon(query.yearmon);
+    if (query.hasOwnProperty('version')) {
+        params.version = query.version;
+    }
+    if (query.hasOwnProperty('yearmon')) {
+        params.yearmon = YearMon(query.yearmon);
+    }
 
     return {
         version: params.version,
         yearmon: params.yearmon
-    }
+    };
 }
 
 function VersionFactory(version, tariffRepository) {
-    const className = "Api_" + version;
+    const className = 'Api_' + version;
     const latest = function (tariffRepository) {
         return {
             result: params => tariffRepository.get(params.yearmon),
             all: () => tariffRepository.all()
-        }
+        };
     };
     const classes = {
         Api_1: latest,
@@ -268,10 +272,10 @@ function VersionFactory(version, tariffRepository) {
                 ? new classes[className](tariffRepository)
                 : new classes['Api_latest'](tariffRepository);
         }
-    }
+    };
 }
 
-app.get("/", (req, res) => {
+app.get('/', (req, res) => {
     const params = RequestParams(req.query);
     const api = VersionFactory(params.version, tariffRepository(tariffDB()))
         .create();
@@ -284,5 +288,5 @@ app.get("/", (req, res) => {
 });
 
 app.listen(3000, () => {
-    console.log("Server running on port 3000");
+    console.log('Server running on port 3000');
 });

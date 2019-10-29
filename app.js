@@ -182,6 +182,21 @@ function tariffRepository(db) {
         return Math.max(...lessKeys);
     }
 
+    function _transform(tariff) {
+        const ret = [];
+        Object.keys(tariff)
+            .map(zone => {
+                Object.keys(tariff[zone])
+                    .map(peak => {
+                        const value = tariff[zone][peak];
+                        value.zone = zone;
+                        value.peak = peak;
+                        ret.push(value);
+                    });
+            });
+        return ret;
+    }
+
     return {
         get: yearmon => {
             const keys = db.getKeys()
@@ -192,10 +207,8 @@ function tariffRepository(db) {
             if (!tariff) {
                 maxKey = _max(keys);
             }
-            tariff = db.get(maxKey);
-            const ret = {};
-            ret[maxKey] = tariff;
-            return ret;
+            tariff = _transform(db.get(maxKey));
+            return tariff;
         },
         all: () => db.getAll()
     };

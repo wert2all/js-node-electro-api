@@ -5,7 +5,7 @@ function tariffDB() {
     const tariff = {
         201703: {
             one: {
-                peak: {
+                full_peak: {
                     price: 1.68,
                     discount: 1,
                     ranges: [
@@ -14,14 +14,14 @@ function tariffDB() {
                 }
             },
             two: {
-                peak: {
+                full_peak: {
                     price: 1.68,
                     discount: 1,
                     ranges: [
                         {value: 100, price: 0.9}
                     ],
                 },
-                night: {
+                half_peak: {
                     price: 1.68,
                     discount: 0.5,
                     ranges: [
@@ -30,21 +30,21 @@ function tariffDB() {
                 }
             },
             three: {
-                peak: {
+                full_peak: {
                     price: 1.68,
                     discount: 1.5,
                     ranges: [
                         {value: 100, price: 0.9}
                     ],
                 },
-                halfpeak: {
+                half_peak: {
                     price: 1.68,
                     discount: 1,
                     ranges: [
                         {value: 100, price: 0.9}
                     ],
                 },
-                night: {
+                low_peak: {
                     price: 1.68,
                     discount: .4,
                     ranges: [
@@ -55,7 +55,7 @@ function tariffDB() {
         },
         201609: {
             one: {
-                peak: {
+                full_peak: {
                     price: 1.638,
                     discount: 1,
                     ranges: [
@@ -65,7 +65,7 @@ function tariffDB() {
                 }
             },
             two: {
-                peak: {
+                full_peak: {
                     price: 1.638,
                     discount: 1,
                     ranges: [
@@ -73,7 +73,7 @@ function tariffDB() {
                         {value: 600, price: 1.29},
                     ],
                 },
-                night: {
+                half_peak: {
                     price: 1.638,
                     discount: 0.5,
                     ranges: [
@@ -83,7 +83,7 @@ function tariffDB() {
                 }
             },
             three: {
-                peak: {
+                full_peak: {
                     price: 1.638,
                     discount: 1.5,
                     ranges: [
@@ -91,7 +91,7 @@ function tariffDB() {
                         {value: 600, price: 1.29},
                     ],
                 },
-                halfpeak: {
+                half_peak: {
                     price: 1.638,
                     discount: 1,
                     ranges: [
@@ -99,7 +99,7 @@ function tariffDB() {
                         {value: 600, price: 1.29},
                     ],
                 },
-                night: {
+                low_peak: {
                     price: 1.638,
                     discount: .4,
                     ranges: [
@@ -111,7 +111,7 @@ function tariffDB() {
         },
         201603: {
             one: {
-                peak: {
+                full_peak: {
                     price: 1.56,
                     discount: 1,
                     ranges: [
@@ -121,7 +121,7 @@ function tariffDB() {
                 }
             },
             two: {
-                peak: {
+                full_peak: {
                     price: 1.56,
                     discount: 1,
                     ranges: [
@@ -129,7 +129,7 @@ function tariffDB() {
                         {value: 600, price: .99},
                     ],
                 },
-                night: {
+                half_peak: {
                     price: 1.56,
                     discount: 0.5,
                     ranges: [
@@ -139,7 +139,7 @@ function tariffDB() {
                 }
             },
             three: {
-                peak: {
+                full_peak: {
                     price: 1.56,
                     discount: 1.5,
                     ranges: [
@@ -147,7 +147,7 @@ function tariffDB() {
                         {value: 600, price: .99},
                     ],
                 },
-                halfpeak: {
+                half_peak: {
                     price: 1.56,
                     discount: 1,
                     ranges: [
@@ -155,7 +155,7 @@ function tariffDB() {
                         {value: 600, price: .99},
                     ],
                 },
-                night: {
+                low_peak: {
                     price: 1.56,
                     discount: .4,
                     ranges: [

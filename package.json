@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "start": "nodemon app.js",
+    "build": "gulp build",
     "test": "eslint app.js"
   },
   "publishConfig": {
@@ -14,6 +15,8 @@
   },
   "devDependencies": {
     "nodemon": "^1.19.4",
-    "eslint": "^6.5.1"
+    "eslint": "^6.5.1",
+    "gulp": "^4.0.2",
+    "gulp-cli": "^2.2.0"
   }
 }

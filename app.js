@@ -4,166 +4,172 @@ const app = express();
 function tariffDB() {
     const tariff = {
         201703: {
-            one: {
-                full_peak: {
-                    price: 1.68,
-                    discount: 1,
-                    ranges: [
-                        {value: 100, price: 0.9}
-                    ],
-                }
-            },
-            two: {
-                full_peak: {
-                    price: 1.68,
-                    discount: 1,
-                    ranges: [
-                        {value: 100, price: 0.9}
-                    ],
+            city: {
+                one: {
+                    full_peak: {
+                        price: 1.68,
+                        discount: 1,
+                        ranges: [
+                            {value: 100, price: 0.9}
+                        ],
+                    }
                 },
-                half_peak: {
-                    price: 1.68,
-                    discount: 0.5,
-                    ranges: [
-                        {value: 100, price: 0.9}
-                    ],
-                }
-            },
-            three: {
-                full_peak: {
-                    price: 1.68,
-                    discount: 1.5,
-                    ranges: [
-                        {value: 100, price: 0.9}
-                    ],
+                two: {
+                    full_peak: {
+                        price: 1.68,
+                        discount: 1,
+                        ranges: [
+                            {value: 100, price: 0.9}
+                        ],
+                    },
+                    half_peak: {
+                        price: 1.68,
+                        discount: 0.5,
+                        ranges: [
+                            {value: 100, price: 0.9}
+                        ],
+                    }
                 },
-                half_peak: {
-                    price: 1.68,
-                    discount: 1,
-                    ranges: [
-                        {value: 100, price: 0.9}
-                    ],
+                three: {
+                    full_peak: {
+                        price: 1.68,
+                        discount: 1.5,
+                        ranges: [
+                            {value: 100, price: 0.9}
+                        ],
+                    },
+                    half_peak: {
+                        price: 1.68,
+                        discount: 1,
+                        ranges: [
+                            {value: 100, price: 0.9}
+                        ],
+                    },
+                    low_peak: {
+                        price: 1.68,
+                        discount: .4,
+                        ranges: [
+                            {value: 100, price: 0.9}
+                        ],
+                    }
                 },
-                low_peak: {
-                    price: 1.68,
-                    discount: .4,
-                    ranges: [
-                        {value: 100, price: 0.9}
-                    ],
-                }
-            },
+            }
         },
         201609: {
-            one: {
-                full_peak: {
-                    price: 1.638,
-                    discount: 1,
-                    ranges: [
-                        {value: 100, price: 0.714},
-                        {value: 600, price: 1.29},
-                    ],
-                }
-            },
-            two: {
-                full_peak: {
-                    price: 1.638,
-                    discount: 1,
-                    ranges: [
-                        {value: 100, price: 0.714},
-                        {value: 600, price: 1.29},
-                    ],
+            city: {
+                one: {
+                    full_peak: {
+                        price: 1.638,
+                        discount: 1,
+                        ranges: [
+                            {value: 100, price: 0.714},
+                            {value: 600, price: 1.29},
+                        ],
+                    }
                 },
-                half_peak: {
-                    price: 1.638,
-                    discount: 0.5,
-                    ranges: [
-                        {value: 100, price: 0.714},
-                        {value: 600, price: 1.29},
-                    ],
-                }
-            },
-            three: {
-                full_peak: {
-                    price: 1.638,
-                    discount: 1.5,
-                    ranges: [
-                        {value: 100, price: 0.714},
-                        {value: 600, price: 1.29},
-                    ],
+                two: {
+                    full_peak: {
+                        price: 1.638,
+                        discount: 1,
+                        ranges: [
+                            {value: 100, price: 0.714},
+                            {value: 600, price: 1.29},
+                        ],
+                    },
+                    half_peak: {
+                        price: 1.638,
+                        discount: 0.5,
+                        ranges: [
+                            {value: 100, price: 0.714},
+                            {value: 600, price: 1.29},
+                        ],
+                    }
                 },
-                half_peak: {
-                    price: 1.638,
-                    discount: 1,
-                    ranges: [
-                        {value: 100, price: 0.714},
-                        {value: 600, price: 1.29},
-                    ],
+                three: {
+                    full_peak: {
+                        price: 1.638,
+                        discount: 1.5,
+                        ranges: [
+                            {value: 100, price: 0.714},
+                            {value: 600, price: 1.29},
+                        ],
+                    },
+                    half_peak: {
+                        price: 1.638,
+                        discount: 1,
+                        ranges: [
+                            {value: 100, price: 0.714},
+                            {value: 600, price: 1.29},
+                        ],
+                    },
+                    low_peak: {
+                        price: 1.638,
+                        discount: .4,
+                        ranges: [
+                            {value: 100, price: 0.714},
+                            {value: 600, price: 1.29},
+                        ],
+                    }
                 },
-                low_peak: {
-                    price: 1.638,
-                    discount: .4,
-                    ranges: [
-                        {value: 100, price: 0.714},
-                        {value: 600, price: 1.29},
-                    ],
-                }
-            },
+            }
         },
         201603: {
-            one: {
-                full_peak: {
-                    price: 1.56,
-                    discount: 1,
-                    ranges: [
-                        {value: 100, price: 0.57},
-                        {value: 600, price: 1.29},
-                    ],
-                }
-            },
-            two: {
-                full_peak: {
-                    price: 1.56,
-                    discount: 1,
-                    ranges: [
-                        {value: 100, price: 0.57},
-                        {value: 600, price: .99},
-                    ],
+            city: {
+                one: {
+                    full_peak: {
+                        price: 1.56,
+                        discount: 1,
+                        ranges: [
+                            {value: 100, price: 0.57},
+                            {value: 600, price: 1.29},
+                        ],
+                    }
                 },
-                half_peak: {
-                    price: 1.56,
-                    discount: 0.5,
-                    ranges: [
-                        {value: 100, price: 0.57},
-                        {value: 600, price: .99},
-                    ],
-                }
-            },
-            three: {
-                full_peak: {
-                    price: 1.56,
-                    discount: 1.5,
-                    ranges: [
-                        {value: 100, price: 0.57},
-                        {value: 600, price: .99},
-                    ],
+                two: {
+                    full_peak: {
+                        price: 1.56,
+                        discount: 1,
+                        ranges: [
+                            {value: 100, price: 0.57},
+                            {value: 600, price: .99},
+                        ],
+                    },
+                    half_peak: {
+                        price: 1.56,
+                        discount: 0.5,
+                        ranges: [
+                            {value: 100, price: 0.57},
+                            {value: 600, price: .99},
+                        ],
+                    }
                 },
-                half_peak: {
-                    price: 1.56,
-                    discount: 1,
-                    ranges: [
-                        {value: 100, price: 0.57},
-                        {value: 600, price: .99},
-                    ],
+                three: {
+                    full_peak: {
+                        price: 1.56,
+                        discount: 1.5,
+                        ranges: [
+                            {value: 100, price: 0.57},
+                            {value: 600, price: .99},
+                        ],
+                    },
+                    half_peak: {
+                        price: 1.56,
+                        discount: 1,
+                        ranges: [
+                            {value: 100, price: 0.57},
+                            {value: 600, price: .99},
+                        ],
+                    },
+                    low_peak: {
+                        price: 1.56,
+                        discount: .4,
+                        ranges: [
+                            {value: 100, price: 0.57},
+                            {value: 600, price: .99},
+                        ],
+                    }
                 },
-                low_peak: {
-                    price: 1.56,
-                    discount: .4,
-                    ranges: [
-                        {value: 100, price: 0.57},
-                        {value: 600, price: .99},
-                    ],
-                }
-            },
+            }
         },
     };
     return {
@@ -182,16 +188,21 @@ function tariffRepository(db) {
         return Math.max(...lessKeys);
     }
 
-    function _transform(tariff) {
+    function _transform(yearmon, tariff) {
         const ret = [];
         Object.keys(tariff)
-            .map(zone => {
-                Object.keys(tariff[zone])
-                    .map(peak => {
-                        const value = tariff[zone][peak];
-                        value.zone = zone;
-                        value.peak = peak;
-                        ret.push(value);
+            .map(location => {
+                Object.keys(tariff[location])
+                    .map(zone => {
+                        Object.keys(tariff[location][zone])
+                            .map(peak => {
+                                const value = tariff[location][zone][peak];
+                                value.zone = zone;
+                                value.peak = peak;
+                                value.yearmon = yearmon;
+                                value.location = location;
+                                ret.push(value);
+                            });
                     });
             });
         return ret;
@@ -207,8 +218,8 @@ function tariffRepository(db) {
             if (!tariff) {
                 maxKey = _max(keys);
             }
-            tariff = _transform(db.get(maxKey));
-            return tariff;
+            tariff = _transform(yearmon, db.get(maxKey));
+            return {data: tariff};
         },
         all: () => db.getAll()
     };
@@ -293,6 +304,7 @@ app.get('/', (req, res) => {
     const api = VersionFactory(params.version, tariffRepository(tariffDB()))
         .create();
 
+    res.setHeader('Content-Type', 'application/json');
     res.json(
         (req.query.hasOwnProperty('all') && req.query.all === '1')
             ? api.all()

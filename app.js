@@ -1,7 +1,8 @@
-import YearMon from './src/YearMon';
 import VersionFactory from './src/VersionFactory';
+import express from 'express';
 
-const express = require('express');
+import RequestParams from './src/RequestParams';
+
 const app = express();
 
 function tariffDB() {
@@ -228,34 +229,9 @@ function tariffRepository(db) {
     };
 }
 
-/**
- *
- * @param  query
- * @returns {{yearmon: number, version: string}}
- * @constructor
- */
-function RequestParams(query) {
-    const params = {
-        version: '1',
-        yearmon: new YearMon().toInt()
-    };
-
-    if (query.hasOwnProperty('version')) {
-        params.version = query.version;
-    }
-    if (query.hasOwnProperty('yearmon')) {
-        params.yearmon = new YearMon(query.yearmon).toInt();
-    }
-
-    return {
-        version: params.version,
-        yearmon: params.yearmon
-    };
-}
-
 app.get('/', (req, res) => {
-    const params = RequestParams(req.query);
-    const api = new VersionFactory(params.version, tariffRepository(tariffDB()))
+    const params = new RequestParams(req.query);
+    const api = new VersionFactory(params.getVersion(), tariffRepository(tariffDB()))
         .create();
 
     res.setHeader('Content-Type', 'application/json');
@@ -266,6 +242,4 @@ app.get('/', (req, res) => {
     );
 });
 
-app.listen(3000, () => {
-    console.log('Server running on port 3000');
-});
+app.listen(3000, () => console.log('Server running on port 3000'));

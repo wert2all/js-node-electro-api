@@ -1,4 +1,5 @@
-import YearMon from './src/yearMon';
+import YearMon from './src/YearMon';
+import VersionFactory from './src/VersionFactory';
 
 const express = require('express');
 const app = express();
@@ -252,30 +253,9 @@ function RequestParams(query) {
     };
 }
 
-function VersionFactory(version, tariffRepository) {
-    const className = 'Api_' + version;
-    const latest = function (tariffRepository) {
-        return {
-            result: params => tariffRepository.get(params.yearmon),
-            all: () => tariffRepository.all()
-        };
-    };
-    const classes = {
-        Api_1: latest,
-        Api_latest: latest
-    };
-    return {
-        create: () => {
-            return classes.hasOwnProperty(className)
-                ? new classes[className](tariffRepository)
-                : new classes['Api_latest'](tariffRepository);
-        }
-    };
-}
-
 app.get('/', (req, res) => {
     const params = RequestParams(req.query);
-    const api = VersionFactory(params.version, tariffRepository(tariffDB()))
+    const api = new VersionFactory(params.version, tariffRepository(tariffDB()))
         .create();
 
     res.setHeader('Content-Type', 'application/json');

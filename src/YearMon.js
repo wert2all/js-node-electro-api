@@ -1,5 +1,6 @@
 /**
- * @return {number}
+ * @class YearMon
+ * @type YearMon
  */
 export default class YearMon {
     constructor(yearMon = '') {

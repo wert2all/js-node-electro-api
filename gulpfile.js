@@ -25,6 +25,7 @@ gulp.task('default', gulp.series('build', 'copy'));
 // Watch files
 function watchFiles() {
     gulp.watch('./src/**/*', gulp.series('build'));
+    gulp.watch('./app.js', gulp.series('build'));
 }
 
 const watch = gulp.series(watchFiles);

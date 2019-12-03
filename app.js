@@ -1,3 +1,5 @@
+import YearMon from './src/yearMon';
+
 const express = require('express');
 const app = express();
 
@@ -226,34 +228,6 @@ function tariffRepository(db) {
 }
 
 /**
- * @return {number}
- */
-function YearMon(yearmon = '') {
-    let date = new Date();
-    if (yearmon.length === 6) {
-        if (parseInt(yearmon.substr(0, 4), 10) > 1970) {
-            if (parseInt(yearmon.substr(4, 2), 10) > 0
-                && parseInt(yearmon.substr(4, 2), 10) <= 12
-            ) {
-                date.setFullYear(
-                    parseInt(yearmon.substr(0, 4), 10),
-                    parseInt(yearmon.substr(4, 2), 10),
-                    1
-                );
-            }
-        }
-    }
-
-    function _parseDate(date) {
-        return '' + date.getFullYear()
-            + ((date.getMonth() < 10) ? '0' : '')
-            + date.getMonth();
-    }
-
-    return parseInt(_parseDate(date), 10);
-}
-
-/**
  *
  * @param  query
  * @returns {{yearmon: number, version: string}}
@@ -262,14 +236,14 @@ function YearMon(yearmon = '') {
 function RequestParams(query) {
     const params = {
         version: '1',
-        yearmon: YearMon()
+        yearmon: new YearMon().toInt()
     };
 
     if (query.hasOwnProperty('version')) {
         params.version = query.version;
     }
     if (query.hasOwnProperty('yearmon')) {
-        params.yearmon = YearMon(query.yearmon);
+        params.yearmon = new YearMon(query.yearmon).toInt();
     }
 
     return {

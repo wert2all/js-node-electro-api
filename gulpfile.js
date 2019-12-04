@@ -13,7 +13,7 @@ gulp.task('build:root', () =>
         .pipe(gulp.dest('dist/')));
 
 gulp.task('build:src', () =>
-    gulp.src(['src/*'])
+    gulp.src(['src/**/*'])
         .pipe(babel())
         .pipe(gulp.dest('dist/src/')));
 

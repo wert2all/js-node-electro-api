@@ -1,5 +1,6 @@
 const gulp = require('gulp');
 const babel = require('gulp-babel');
+const clean = require('gulp-clean');
 
 gulp.task('copy:package', () =>
     gulp.src(['package.json'])
@@ -21,6 +22,10 @@ gulp.task('build:src', () =>
 gulp.task('build', gulp.series('build:root', 'build:src'));
 
 gulp.task('default', gulp.series('build', 'copy'));
+
+gulp.task('clean', () =>
+    gulp.src('dist/*')
+        .pipe(clean()));
 
 // Watch files
 function watchFiles() {

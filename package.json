@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "nodemon app.js",
-    "build": "gulp default",
+    "build": "gulp clean default",
     "dev": "gulp dev",
     "test": "eslint app.js"
   },
@@ -20,6 +20,7 @@
     "eslint": "^6.7.2",
     "gulp": "^4.0.2",
     "gulp-babel": "^8.0.0",
+    "gulp-clean": "^0.4.0",
     "gulp-cli": "^2.2.0",
     "nodemon": "^2.0.1"
   }

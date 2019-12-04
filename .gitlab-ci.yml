@@ -32,5 +32,6 @@ deploy_release:
         - echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
         - chmod 644 ~/.ssh/known_hosts
         - scp -r -P $DEPLOY_PORT ./dist/* $DEPLOY_URL
-    only:
-        - tags
+        - ssh $DEPLOY_URL  -P $DEPLOY_PORT npm install
+#    only:
+#        - tags

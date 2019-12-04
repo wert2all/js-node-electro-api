@@ -6,6 +6,7 @@ stages:
 
 cache:
     paths:
+        - dist/
         - node_modules/
 
 build:

@@ -3,7 +3,7 @@ const babel = require('gulp-babel');
 const clean = require('gulp-clean');
 
 gulp.task('copy:package', () =>
-    gulp.src(['package.json'])
+    gulp.src('package.json')
         .pipe(gulp.dest('dist/')));
 
 gulp.task('copy', gulp.parallel('copy:package'));

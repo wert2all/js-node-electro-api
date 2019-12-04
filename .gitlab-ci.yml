@@ -1,39 +1,35 @@
 image: node:latest
 stages:
-- build
-- test
-- deploy
-
+    - build
+    - test
+    - deploy
 
 cache:
     paths:
-    - dist/
-    - node_modules/
+        - node_modules/
 
 build:
     stage: build
     script:
-    - npm set registry "http://rpm.kiev.ua:4873"
-    - npm config set //rpm.kiev.ua:4873/:_authToken $NPM_AUTH_TOKEN
-    - npm install
-    - npm run build
+        - npm install
+        - npm run build
 
 testing_testing:
     stage: test
     script:
-    - npm test
+        - npm test
 
 deploy_release:
     stage: deploy
     script:
-    - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
-    - eval $(ssh-agent -s)
-    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
-    - mkdir -p ~/.ssh
-    - chmod 700 ~/.ssh
+        - which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )
+        - eval $(ssh-agent -s)
+        - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+        - mkdir -p ~/.ssh
+        - chmod 700 ~/.ssh
 
-    - echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
-    - chmod 644 ~/.ssh/known_hosts
-    - scp -r -P $DEPLOY_PORT ./dist/* $DEPLOY_URL
-    only:
-    - tags
+        - echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
+        - chmod 644 ~/.ssh/known_hosts
+        - scp -r -P $DEPLOY_PORT ./dist/* $DEPLOY_URL
+#    only:
+#        - tags

@@ -1,6 +1,6 @@
-import VersionFactory from './src/VersionFactory';
 import express from 'express';
 
+import VersionFactory from './src/VersionFactory';
 import RequestParams from './src/RequestParams';
 import TariffDB from './src/db/TariffDB';
 

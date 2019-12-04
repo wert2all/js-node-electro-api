@@ -14,6 +14,7 @@ build:
     script:
         - npm install
         - npm run build
+        - echo $DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH
 
 testing_testing:
     stage: test

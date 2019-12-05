@@ -20,8 +20,8 @@ export default class VersionFactory {
         this.className = 'Api_' + version;
 
         this.classes = {
-            Api_1: new ApiDataVersion1(tariffRepository),
-            Api_latest: new ApiDataVersion1(tariffRepository)
+            Api_1: ApiDataVersion1,
+            Api_latest: ApiDataVersion1
         };
     }
 

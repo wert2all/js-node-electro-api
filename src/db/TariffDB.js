@@ -119,7 +119,39 @@ export default class TariffDB {
                             discount: 0.4,
                         }
                     }
-                }
+                },
+                as_organisation: {
+                    one: {
+                        full_peak: {
+                            price: 1.68,
+                            discount: 1,
+                        }
+                    },
+                    two: {
+                        full_peak: {
+                            price: 1.68,
+                            discount: 1
+                        },
+                        half_peak: {
+                            price: 1.68,
+                            discount: .05
+                        }
+                    },
+                    three: {
+                        full_peak: {
+                            price: 1.68,
+                            discount: 1.5,
+                        },
+                        half_peak: {
+                            price: 1.68,
+                            discount: 1,
+                        },
+                        low_peak: {
+                            price: 1.68,
+                            discount: 0.4,
+                        }
+                    }
+                },
             },
             201609: {
                 city: {
@@ -242,6 +274,38 @@ export default class TariffDB {
                         }
                     }
                 },
+                as_organisation: {
+                    one: {
+                        full_peak: {
+                            price: 1.29,
+                            discount: 1,
+                        }
+                    },
+                    two: {
+                        full_peak: {
+                            price: 1.29,
+                            discount: 1
+                        },
+                        half_peak: {
+                            price: 1.29,
+                            discount: .05
+                        }
+                    },
+                    three: {
+                        full_peak: {
+                            price: 1.29,
+                            discount: 1.5,
+                        },
+                        half_peak: {
+                            price: 1.29,
+                            discount: 1,
+                        },
+                        low_peak: {
+                            price: 1.29,
+                            discount: 0.4,
+                        }
+                    }
+                },
             },
             201603: {
                 city: {
@@ -360,6 +424,38 @@ export default class TariffDB {
                         },
                         low_peak: {
                             price: 0.57,
+                            discount: 0.4,
+                        }
+                    }
+                },
+                as_organisation: {
+                    one: {
+                        full_peak: {
+                            price: 0.99,
+                            discount: 1,
+                        }
+                    },
+                    two: {
+                        full_peak: {
+                            price: 0.99,
+                            discount: 1
+                        },
+                        half_peak: {
+                            price: 0.99,
+                            discount: .05
+                        }
+                    },
+                    three: {
+                        full_peak: {
+                            price: 0.99,
+                            discount: 1.5,
+                        },
+                        half_peak: {
+                            price: 0.99,
+                            discount: 1,
+                        },
+                        low_peak: {
+                            price: 0.99,
                             discount: 0.4,
                         }
                     }

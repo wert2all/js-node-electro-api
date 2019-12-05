@@ -1,5 +1,6 @@
 /**
  * @class VersionFactory
+ * @type VersionFactory
  */
 export default class VersionFactory {
 

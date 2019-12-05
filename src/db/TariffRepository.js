@@ -1,5 +1,17 @@
-export default class tariffRepository {
+/**
+ * @class TariffRepository
+ * @type TariffRepository
+ */
+export default class TariffRepository {
+    /**
+     *
+     * @param {TariffDB} db
+     */
     constructor(db) {
+        /**
+         *
+         * @type {TariffDB}
+         */
         this.db = db;
     }
 

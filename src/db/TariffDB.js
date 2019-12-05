@@ -1,3 +1,7 @@
+/**
+ * @class TariffDB
+ * @type TariffDB
+ */
 export default class TariffDB {
     constructor() {
 

@@ -9,6 +9,10 @@ const app = express();
 
 app.get('/', (req, res) => {
     const params = new RequestParams(req.query);
+    /**
+     *
+     * @type {ApiDataInterface}
+     */
     const api = new VersionFactory(params.getVersion(), new TariffRepository(new TariffDB()))
         .create();
 

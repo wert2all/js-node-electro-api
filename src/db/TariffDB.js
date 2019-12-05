@@ -4,7 +4,6 @@
  */
 export default class TariffDB {
     constructor() {
-
         this.tariff = {
             201703: {
                 city: {
@@ -58,6 +57,38 @@ export default class TariffDB {
                     },
                 },
                 dormitories: {
+                    one: {
+                        full_peak: {
+                            price: 0.9,
+                            discount: 1,
+                        }
+                    },
+                    two: {
+                        full_peak: {
+                            price: 0.9,
+                            discount: 1
+                        },
+                        half_peak: {
+                            price: 0.9,
+                            discount: .05
+                        }
+                    },
+                    three: {
+                        full_peak: {
+                            price: 0.9,
+                            discount: 1.5,
+                        },
+                        half_peak: {
+                            price: 0.9,
+                            discount: 1,
+                        },
+                        low_peak: {
+                            price: 0.9,
+                            discount: 0.4,
+                        }
+                    }
+                },
+                many_children: {
                     one: {
                         full_peak: {
                             price: 0.9,
@@ -178,7 +209,39 @@ export default class TariffDB {
                             discount: 0.4,
                         }
                     }
-                }
+                },
+                many_children: {
+                    one: {
+                        full_peak: {
+                            price: 0.714,
+                            discount: 1,
+                        }
+                    },
+                    two: {
+                        full_peak: {
+                            price: 0.714,
+                            discount: 1
+                        },
+                        half_peak: {
+                            price: 0.714,
+                            discount: .05
+                        }
+                    },
+                    three: {
+                        full_peak: {
+                            price: 0.714,
+                            discount: 1.5,
+                        },
+                        half_peak: {
+                            price: 0.714,
+                            discount: 1,
+                        },
+                        low_peak: {
+                            price: 0.714,
+                            discount: 0.4,
+                        }
+                    }
+                },
             },
             201603: {
                 city: {
@@ -268,7 +331,39 @@ export default class TariffDB {
                             discount: 0.4,
                         }
                     }
-                }
+                },
+                many_children: {
+                    one: {
+                        full_peak: {
+                            price: 0.57,
+                            discount: 1,
+                        }
+                    },
+                    two: {
+                        full_peak: {
+                            price: 0.57,
+                            discount: 1
+                        },
+                        half_peak: {
+                            price: 0.57,
+                            discount: .05
+                        }
+                    },
+                    three: {
+                        full_peak: {
+                            price: 0.57,
+                            discount: 1.5,
+                        },
+                        half_peak: {
+                            price: 0.57,
+                            discount: 1,
+                        },
+                        low_peak: {
+                            price: 0.57,
+                            discount: 0.4,
+                        }
+                    }
+                },
             },
         };
     }

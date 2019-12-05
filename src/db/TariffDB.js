@@ -56,6 +56,38 @@ export default class TariffDB {
                             ],
                         }
                     },
+                },
+                dormitories: {
+                    one: {
+                        full_peak: {
+                            price: 0.9,
+                            discount: 1,
+                        }
+                    },
+                    two: {
+                        full_peak: {
+                            price: 0.9,
+                            discount: 1
+                        },
+                        half_peak: {
+                            price: 0.9,
+                            discount: .05
+                        }
+                    },
+                    three: {
+                        full_peak: {
+                            price: 0.9,
+                            discount: 1.5,
+                        },
+                        half_peak: {
+                            price: 0.9,
+                            discount: 1,
+                        },
+                        low_peak: {
+                            price: 0.9,
+                            discount: 0.4,
+                        }
+                    }
                 }
             },
             201609: {

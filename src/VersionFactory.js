@@ -3,6 +3,7 @@
  * @type VersionFactory
  */
 import ApiDataVersion1 from './Api/ApiDataVersion1';
+import ApiDataVersion2 from './Api/ApiDataVersion2';
 
 export default class VersionFactory {
 
@@ -21,6 +22,7 @@ export default class VersionFactory {
 
         this.classes = {
             Api_1: ApiDataVersion1,
+            Api_2: ApiDataVersion2,
             Api_latest: ApiDataVersion1
         };
     }

@@ -25,10 +25,12 @@ export default class ApiDataVersion2 extends ApiDataInterface {
      * @param {RequestParams} params
      */
     result(params) {
-        return this.tariffRepository
-            .get(params.getYearMon())
-            .data
-            .map(item => item)
-            .filter(item => !!item);
+        return {
+            data: this.tariffRepository
+                .get(params.getYearMon())
+                .data
+                .map(item => item)
+                .filter(item => !!item)
+        };
     }
 }

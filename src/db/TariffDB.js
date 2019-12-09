@@ -152,6 +152,118 @@ export default class TariffDB {
                         }
                     }
                 },
+                electric: {
+                    one: {
+                        full_peak: {
+                            price: 1.68,
+                            discount: 1,
+                            ranges: [
+                                {value: 100, price: 0.9, from: 5, to: 10},
+                                {value: 3000, price: 0.9, from: 11, to: 4},
+                            ],
+                        }
+                    },
+                    two: {
+                        full_peak: {
+                            price: 1.68,
+                            discount: 1,
+                            ranges: [
+                                {value: 100, price: 0.9, from: 5, to: 10},
+                                {value: 3000, price: 0.9, from: 11, to: 4},
+                            ],
+                        },
+                        half_peak: {
+                            price: 1.68,
+                            discount: 0.5,
+                            ranges: [
+                                {value: 100, price: 0.9, from: 5, to: 10},
+                                {value: 3000, price: 0.9, from: 11, to: 4},
+                            ],
+                        }
+                    },
+                    three: {
+                        full_peak: {
+                            price: 1.68,
+                            discount: 1.5,
+                            ranges: [
+                                {value: 100, price: 0.9, from: 5, to: 10},
+                                {value: 3000, price: 0.9, from: 11, to: 4},
+                            ],
+                        },
+                        half_peak: {
+                            price: 1.68,
+                            discount: 1,
+                            ranges: [
+                                {value: 100, price: 0.9, from: 5, to: 10},
+                                {value: 3000, price: 0.9, from: 11, to: 4},
+                            ],
+                        },
+                        low_peak: {
+                            price: 1.68,
+                            discount: .4,
+                            ranges: [
+                                {value: 100, price: 0.9, from: 5, to: 10},
+                                {value: 3000, price: 0.9, from: 11, to: 4},
+                            ],
+                        }
+                    },
+                },
+                witout_gaz: {
+                    one: {
+                        full_peak: {
+                            price: 1.68,
+                            discount: 1,
+                            ranges: [
+                                {value: 100, price: 0.9, from: 5, to: 10},
+                                {value: 3000, price: 0.9, from: 11, to: 4},
+                            ],
+                        }
+                    },
+                    two: {
+                        full_peak: {
+                            price: 1.68,
+                            discount: 1,
+                            ranges: [
+                                {value: 100, price: 0.9, from: 5, to: 10},
+                                {value: 3000, price: 0.9, from: 11, to: 4},
+                            ],
+                        },
+                        half_peak: {
+                            price: 1.68,
+                            discount: 0.5,
+                            ranges: [
+                                {value: 100, price: 0.9, from: 5, to: 10},
+                                {value: 3000, price: 0.9, from: 11, to: 4},
+                            ],
+                        }
+                    },
+                    three: {
+                        full_peak: {
+                            price: 1.68,
+                            discount: 1.5,
+                            ranges: [
+                                {value: 100, price: 0.9, from: 5, to: 10},
+                                {value: 3000, price: 0.9, from: 11, to: 4},
+                            ],
+                        },
+                        half_peak: {
+                            price: 1.68,
+                            discount: 1,
+                            ranges: [
+                                {value: 100, price: 0.9, from: 5, to: 10},
+                                {value: 3000, price: 0.9, from: 11, to: 4},
+                            ],
+                        },
+                        low_peak: {
+                            price: 1.68,
+                            discount: .4,
+                            ranges: [
+                                {value: 100, price: 0.9, from: 5, to: 10},
+                                {value: 3000, price: 0.9, from: 11, to: 4},
+                            ],
+                        }
+                    },
+                }
             },
             201609: {
                 city: {
@@ -476,5 +588,4 @@ export default class TariffDB {
     getAll() {
         return this.tariff;
     }
-
 }

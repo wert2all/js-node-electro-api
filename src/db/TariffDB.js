@@ -152,7 +152,7 @@ export default class TariffDB {
                         }
                     }
                 },
-                electric: {
+                electricity: {
                     one: {
                         full_peak: {
                             price: 1.68,
@@ -208,7 +208,7 @@ export default class TariffDB {
                         }
                     },
                 },
-                witout_gaz: {
+                without_gaz: {
                     one: {
                         full_peak: {
                             price: 1.68,

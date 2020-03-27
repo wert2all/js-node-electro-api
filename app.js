@@ -1,26 +1,13 @@
 import express from 'express';
 
-import VersionFactory from './src/VersionFactory';
-import RequestParams from './src/RequestParams';
-import TariffDB from './src/db/TariffDB';
-import TariffRepository from './src/db/TariffRepository';
+import TariffRequest from './src/request/TariffRequest';
 
 const app = express();
 
 app.get('/', (req, res) => {
-    const params = new RequestParams(req.query);
-    /**
-     *
-     * @type {ApiDataInterface}
-     */
-    const api = new VersionFactory(params.getVersion(), new TariffRepository(new TariffDB()))
-        .create();
-
     res.setHeader('Content-Type', 'application/json');
     res.json(
-        (req.query.hasOwnProperty('all') && req.query.all === '1')
-            ? api.all()
-            : api.result(params)
+        new TariffRequest().createResponse(req)
     );
 });
 

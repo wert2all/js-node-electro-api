@@ -5,11 +5,11 @@ export default class Application {
     /**
      *
      * @param expressApp
-     * @param {RoutersInterface[]} routers
+     * @param {RoutersProvider} routersProvider
      */
-    constructor(expressApp, routers) {
-        this.routers = routers;
+    constructor(expressApp, routersProvider) {
         this.app = expressApp;
+        this.routersProvider = routersProvider;
     }
 
     run() {
@@ -18,15 +18,19 @@ export default class Application {
     }
 
     _applyRouters() {
-        for (const key in this.routers) {
-            this.app.get(this.routers[key].getURL(), (req, res) => {
-                res.setHeader('Content-Type', 'application/json');
-                res.json(
-                    this.routers[key]
-                        .getRequest()
-                        .createResponse(req)
-                );
-            });
+        const routers = this.routersProvider.fetch();
+
+        for (const key in routers) {
+            if (routers.hasOwnProperty(key)) {
+                this.app.get(routers[key].getURL(), (req, res) => {
+                    res.setHeader('Content-Type', 'application/json');
+                    res.json(
+                        routers[key]
+                            .getRequest()
+                            .createResponse(req)
+                    );
+                });
+            }
         }
     }
 

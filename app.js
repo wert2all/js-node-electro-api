@@ -1,8 +1,7 @@
 import express from 'express';
 
-import TariffRequest from './src/request/TariffRequest';
 import Application from './src/Application';
-import Route from './src/routers/Route';
+import RoutersProvider from './src/routers/RoutersProvider';
 
-new Application(express(), [new Route('/', new TariffRequest())])
+new Application(express(), new RoutersProvider())
     .run();

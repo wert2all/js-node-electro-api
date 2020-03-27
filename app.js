@@ -1,14 +1,8 @@
 import express from 'express';
 
 import TariffRequest from './src/request/TariffRequest';
+import Application from './src/Application';
+import Route from './src/routers/Route';
 
-const app = express();
-
-app.get('/', (req, res) => {
-    res.setHeader('Content-Type', 'application/json');
-    res.json(
-        new TariffRequest().createResponse(req)
-    );
-});
-
-app.listen(3000, () => console.log('Server running on port 3000'));
+new Application(express(), [new Route('/', new TariffRequest())])
+    .run();

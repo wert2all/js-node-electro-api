@@ -10,6 +10,19 @@ import TariffDB from '../db/TariffDB';
  */
 export default class TariffRequest extends RequestInterface {
     /**
+     *
+     * @param {StorageProvider} storageProvider
+     */
+    constructor(storageProvider) {
+        super();
+        /**
+         *
+         * @type {StorageProvider}
+         */
+        this.storageProvider = storageProvider;
+    }
+
+    /**
      * @request {*} request
      * @return {{}}
      * @public

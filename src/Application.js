@@ -1,3 +1,4 @@
+const bodyParser = require('body-parser');
 /**
  * @class Application
  */
@@ -9,6 +10,9 @@ export default class Application {
      */
     constructor(expressApp, routersProvider) {
         this.app = expressApp;
+        this.app.use(bodyParser.urlencoded({extended: false}));
+        this.app.use(bodyParser.json());
+        
         this.routersProvider = routersProvider;
     }
 

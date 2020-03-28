@@ -12,6 +12,7 @@
     "registry": "http://rpm.kiev.ua:4873"
   },
   "dependencies": {
+    "@babel/plugin-transform-runtime": "^7.9.0",
     "express": "~4.17.1",
     "google-auth-library": "^6.0.0"
   },

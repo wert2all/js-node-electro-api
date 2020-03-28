@@ -10,7 +10,7 @@ export default class AuthParamsFactory {
      * @return {AuthParams}
      */
     create(request) {
-        if (request.query.hasOwnProperty('token')) {
+        if (request.body.hasOwnProperty('token')) {
             return new AuthParams(request.query.token);
         }
         throw new Error('Bad request');

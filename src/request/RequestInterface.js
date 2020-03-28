@@ -6,7 +6,7 @@
 export default class RequestInterface {
     /**
      * @request {*} request
-     * @return {{}}
+     * @return {Promise}
      * @public
      * @abstract
      */

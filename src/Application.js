@@ -24,11 +24,10 @@ export default class Application {
             if (routers.hasOwnProperty(key)) {
                 this.app.get(routers[key].getURL(), (req, res) => {
                     res.setHeader('Content-Type', 'application/json');
-                    res.json(
-                        routers[key]
-                            .getRequest()
-                            .createResponse(req)
-                    );
+                    routers[key]
+                        .getRequest()
+                        .createResponse(req)
+                        .then(result => res.json(result));
                 });
             }
         }

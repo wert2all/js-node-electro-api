@@ -23,23 +23,30 @@ export default class AuthRequest extends RequestInterface {
 
     /**
      * @request {*} request
-     * @return {{}}
+     * @return {Promise}
      * @public
      */
     createResponse(request) {
-        const ret = {status: true};
-        try {
-            this._checkRequestMethod(request);
-            const params = new AuthParamsFactory().create(request);
-            const apiKey = new ApiKeyProvider(this.storageProvider).get();
-            new AuthCheck(apiKey)
-                .check(params);
-        } catch (e) {
-            ret.status = false;
-            ret.error = e.message;
-        }
-        ret.dump = request.query;
-        return ret;
+        return new Promise(result => {
+            const ret = {status: true};
+            try {
+                this._checkRequestMethod(request);
+                const params = new AuthParamsFactory().create(request);
+                const apiKey = new ApiKeyProvider(this.storageProvider).get();
+                new AuthCheck(apiKey)
+                    .check(params)
+                    .then(res => result(res))
+                    .catch(e => {
+                        ret.status = false;
+                        ret.error = e.message;
+                        result(ret);
+                    });
+            } catch (e) {
+                ret.status = false;
+                ret.error = e.message;
+                result(ret);
+            }
+        });
     }
 
     /**

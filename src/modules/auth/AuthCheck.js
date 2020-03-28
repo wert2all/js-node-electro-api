@@ -13,6 +13,7 @@ export default class AuthCheck {
     /**
      *
      * @param {AuthParams} params
+     * @return {Promise}
      */
     check(params) {
 

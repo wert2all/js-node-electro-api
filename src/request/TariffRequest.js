@@ -24,19 +24,20 @@ export default class TariffRequest extends RequestInterface {
 
     /**
      * @request {*} request
-     * @return {{}}
+     * @return {Promise}
      * @public
      */
     createResponse(request) {
-        const params = new RequestParams(request.query);
-        /**
-         * @type {ApiDataInterface}
-         */
-        const api = new VersionFactory(params.getVersion(), new TariffRepository(new TariffDB()))
-            .create();
-
-        return (request.query.hasOwnProperty('all') && request.query.all === '1')
-            ? api.all()
-            : api.result(params);
+        return new Promise((result) => {
+            const params = new RequestParams(request.query);
+            /**
+             * @type {ApiDataInterface}
+             */
+            const api = new VersionFactory(params.getVersion(), new TariffRepository(new TariffDB()))
+                .create();
+            result((request.query.hasOwnProperty('all') && request.query.all === '1')
+                ? api.all()
+                : api.result(params));
+        });
     }
 }

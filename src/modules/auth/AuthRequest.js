@@ -43,8 +43,7 @@ export default class AuthRequest extends RequestInterface {
                 new AuthCheck(apiKey)
                     .check(params)
                     .then(res => {
-                        ret.result = res;
-                        ret.token = params.token;
+                        ret.token = res;
                         result(ret);
                     })
                     .catch(e => {

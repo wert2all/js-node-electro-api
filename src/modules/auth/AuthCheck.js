@@ -19,26 +19,45 @@ export default class AuthCheck {
      * @return {Promise}
      */
     check(params) {
-        /**
-         *
-         * @param {AuthCheck} self
-         * @param {AuthParams} params
-         * @return {Promise<void>}
-         */
-        async function verify(self, params) {
-            const ticket = await self.client.verifyIdToken({
+        return this.client
+            .verifyIdToken({
                 idToken: params.token,
-                audience: self.apiKey,  // Specify the CLIENT_ID of the app that accesses the backend
-                // Or, if multiple clients access the backend:
-                //[CLIENT_ID_1, CLIENT_ID_2, CLIENT_ID_3]
+                audience: this.apiKey,
             });
-            const payload = ticket.getPayload();
-            const userid = payload['sub'];
-            // If request specified a G Suite domain:
-            //const domain = payload['hd'];
-        }
 
-        console.log(verify(this, params));
-        // verify(this, params).catch(console.error);
+        return this.client.verifyIdToken({
+            idToken: params.token,
+            audience: this.apiKey,
+        }).then(ticket => {
+            console.log(ticket);
+            console.log(this);
+
+            return ticket;
+        })
+            .catch(() => {
+                return console.error;
+            });
+
+        // /**
+        //  *
+        //  * @param {AuthCheck} self
+        //  * @param {AuthParams} params
+        //  * @return {Promise<void>}
+        //  */
+        // async function verify(self, params) {
+        //     const ticket = await self.client.verifyIdToken({
+        //         idToken: params.token,
+        //         audience: self.apiKey,  // Specify the CLIENT_ID of the app that accesses the backend
+        //         // Or, if multiple clients access the backend:
+        //         //[CLIENT_ID_1, CLIENT_ID_2, CLIENT_ID_3]
+        //     });
+        //     const payload = ticket.getPayload();
+        //     const userid = payload['sub'];
+        //     // If request specified a G Suite domain:
+        //     //const domain = payload['hd'];
+        // }
+        //
+        // console.log(verify(this, params));
+        // // verify(this, params).catch(console.error);
     }
 }

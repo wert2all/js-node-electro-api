@@ -28,14 +28,20 @@ export default class AuthRequest extends RequestInterface {
      */
     createResponse(request) {
         return new Promise(result => {
-            const ret = {status: true};
+            const ret = {
+                status: true,
+                error: ''
+            };
             try {
                 this._checkRequestMethod(request);
                 const params = new AuthParamsFactory().create(request);
                 const apiKey = new ApiKeyProvider(this.storageProvider).get();
                 new AuthCheck(apiKey)
                     .check(params)
-                    .then(res => result(res))
+                    .then(res => {
+                        ret.result = res;
+                        result(ret);
+                    })
                     .catch(e => {
                         ret.status = false;
                         ret.error = e.message;
@@ -55,8 +61,7 @@ export default class AuthRequest extends RequestInterface {
      * @private
      */
     _checkRequestMethod(request) {
-        //FIXME
-        if (request.method === 'POST') {
+        if (request.method !== 'POST') {
             throw new Error('Bad request');
         }
     }

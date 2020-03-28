@@ -14,8 +14,8 @@ export default class RoutersProvider {
      */
     constructor(storageProvider) {
         this.routers = [
-            new Route('/', new TariffRequest(storageProvider)),
-            new Route('/auth/', new AuthRequest(storageProvider)),
+            new Route('/', TariffRequest, storageProvider),
+            new Route('/auth/', AuthRequest, storageProvider),
         ];
     }
 

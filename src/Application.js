@@ -22,18 +22,26 @@ export default class Application {
 
         for (const key in routers) {
             if (routers.hasOwnProperty(key)) {
-                this.app.get(routers[key].getURL(), (req, res) => {
-                    res.setHeader('Content-Type', 'application/json');
-                    routers[key]
-                        .getRequest()
-                        .createResponse(req)
-                        .then(result => res.json(result));
-                });
+                const route = routers[key];
+                if (route.method === 'get') {
+                    this.app.get(routers[key].getURL(), this._generateRun(routers[key].getRequest()));
+                } else {
+                    this.app.post(routers[key].getURL(), this._generateRun(routers[key].getRequest()));
+                }
             }
         }
     }
 
     _run() {
         this.app.listen(3000, () => console.log('Server running on port 3000'));
+    }
+
+    _generateRun(request) {
+        return (req, res) => {
+            res.setHeader('Content-Type', 'application/json');
+            request
+                .createResponse(req)
+                .then(result => res.json(result));
+        };
     }
 }

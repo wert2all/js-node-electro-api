@@ -33,9 +33,6 @@ export default class AuthRequest extends RequestInterface {
                 error: '',
                 token: '',
             };
-            result({
-                body: request.body
-            });
             try {
                 this._checkRequestMethod(request);
                 const params = new AuthParamsFactory().create(request);

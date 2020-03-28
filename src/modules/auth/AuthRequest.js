@@ -30,7 +30,8 @@ export default class AuthRequest extends RequestInterface {
         return new Promise(result => {
             const ret = {
                 status: true,
-                error: ''
+                error: '',
+                token: '',
             };
             try {
                 this._checkRequestMethod(request);
@@ -40,6 +41,7 @@ export default class AuthRequest extends RequestInterface {
                     .check(params)
                     .then(res => {
                         ret.result = res;
+                        ret.token = params.token;
                         result(ret);
                     })
                     .catch(e => {

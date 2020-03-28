@@ -6,11 +6,7 @@ gulp.task('copy:package', () =>
     gulp.src('package.json')
         .pipe(gulp.dest('dist/')));
 
-gulp.task('copy:storage', () =>
-    gulp.src('secret.json')
-        .pipe(gulp.dest('dist/')));
-
-gulp.task('copy', gulp.parallel('copy:package', 'copy:storage'));
+gulp.task('copy', gulp.parallel('copy:package'));
 
 gulp.task('build:root', () =>
     gulp.src(['app.js'])

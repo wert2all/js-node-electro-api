@@ -1,6 +1,6 @@
 import Route from './Route';
 import TariffRequest from '../request/TariffRequest';
-import AuthRequest from '../request/AuthRequest';
+import AuthRequest from '../modules/auth/AuthRequest';
 
 /**
  * @class RoutersProvider
@@ -8,10 +8,14 @@ import AuthRequest from '../request/AuthRequest';
  */
 export default class RoutersProvider {
 
-    constructor() {
+    /**
+     *
+     * @param {StorageProvider} storageProvider
+     */
+    constructor(storageProvider) {
         this.routers = [
-            new Route('/', new TariffRequest()),
-            new Route('/auth/', new AuthRequest()),
+            new Route('/', new TariffRequest(storageProvider)),
+            new Route('/auth/', new AuthRequest(storageProvider)),
         ];
     }
 

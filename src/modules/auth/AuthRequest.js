@@ -41,7 +41,7 @@ export default class AuthRequest extends RequestInterface {
                     .check(params)
                     .then(res => {
                         ret.result = res;
-                        ret.token = params.token;
+                        ret.token = request.body;
                         result(ret);
                     })
                     .catch(e => {

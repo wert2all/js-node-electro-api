@@ -10,10 +10,6 @@ export default class AuthParamsFactory {
      * @return {AuthParams}
      */
     create(request) {
-        if (request.body.hasOwnProperty('token')) {
-            const buff = new Buffer(request.body.token, 'base64');
-            return new AuthParams(buff.toString('ascii'));
-        }
-        throw new Error('Bad request: token');
+        return new AuthParams(Buffer.from(request.body.token, 'base64'));
     }
 }

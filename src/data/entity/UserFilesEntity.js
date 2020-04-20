@@ -1,8 +1,13 @@
 /**
  * @class UserFilesEntity
+ * @type EntityInterface
+ * @extends EntityInterface
  */
-export default class UserFilesEntity {
+import EntityInterface from '../../lib/db-entity/EntityInterface';
+
+export default class UserFilesEntity extends EntityInterface {
     constructor() {
+        super();
         /**
          *
          * @type {UserEntity||null}

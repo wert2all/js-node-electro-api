@@ -2,15 +2,16 @@
  * @class FilesRepository
  *
  */
-export default class FilesRepository {
+import RepositoryAbstract from '../../lib/db-repository/ReposytoryAbstract';
+
+export default class FilesRepository extends RepositoryAbstract {
 
     /**
      *
-     * @param {UserFilesEntity} userFiles
-     * @return {UserFilesEntity[]}
+     * @param {EntityInterface} userFilesEntity
+     * @return {Promise<EntityInterface[]>}
      */
-    fetchData(userFiles) {
-        //TODO
-        return [];
+    async fetchData(userFilesEntity) {
+        return super.fetchData(userFilesEntity);
     }
 }

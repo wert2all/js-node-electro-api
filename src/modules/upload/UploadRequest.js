@@ -47,10 +47,13 @@ export default class UploadRequest extends RequestInterface {
             const userFiles = new UserFilesEntity()
                 .setUser(userEntity)
                 .setYearMon(yearMon);
-
-            const userFileList = new FilesRepository().fetchData(userFiles);
+            const repository = new FilesRepository(this.storageProvider.getConnection());
+            /**
+             * @type {EntityInterface[]}
+             */
+            const userFileList = await repository.fetchData(userFiles);
             if (userFileList.length === 0) {
-                this._saveFile(requestData, userFiles);
+                await this._saveFile(requestData, userFiles);
             }
 
             response.status = true;
@@ -81,7 +84,7 @@ export default class UploadRequest extends RequestInterface {
      * @param {UserFilesEntity} userFiles
      * @private
      */
-    _saveFile(requestData, userFiles) {
+    async _saveFile(requestData, userFiles) {
         //TODO
     }
 }

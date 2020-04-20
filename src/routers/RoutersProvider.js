@@ -1,6 +1,7 @@
 import Route from './Route';
 import TariffRequest from '../request/TariffRequest';
 import AuthRequest from '../modules/auth/AuthRequest';
+import UploadRequest from '../modules/upload/UploadRequest';
 
 /**
  * @class RoutersProvider
@@ -20,6 +21,7 @@ export default class RoutersProvider {
         this.routers = [
             new Route('/', 'get', TariffRequest, storageProvider),
             new Route('/auth/', 'post', AuthRequest, storageProvider),
+            new Route('/upload/', 'post', UploadRequest, storageProvider),
         ];
     }
 

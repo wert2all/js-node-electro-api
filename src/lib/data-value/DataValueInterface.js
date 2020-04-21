@@ -11,6 +11,7 @@ export default class DataValueInterface {
      * @param  {string} key
      * @return {string|null}
      */
+    // eslint-disable-next-line no-unused-vars
     getData(key) {
         throw new ImplementationError(this, 'getData');
     }
@@ -20,6 +21,7 @@ export default class DataValueInterface {
      * @param {string} key
      * @param {string} value
      */
+    // eslint-disable-next-line no-unused-vars
     setData(key, value) {
         throw new ImplementationError(this, 'setData');
     }

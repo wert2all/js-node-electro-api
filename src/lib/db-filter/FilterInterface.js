@@ -11,6 +11,7 @@ export default class FilterInterface {
      * @param {DefinitionColumnInterface} column
      * @param {string} value
      */
+    // eslint-disable-next-line no-unused-vars
     addColumn(column, value) {
         throw new ImplementationError(this, 'addFilterData');
     }

@@ -30,6 +30,7 @@ export default class Filter extends FilterInterface {
      * @return {Array<FilterData>}
      */
     getFilterData() {
-        return Object.keys(this._filters).map(key => new FilterData(key, '=', this._filters[key]));
+        return Object.keys(this._filters)
+            .map(key => new FilterData(key, '=', this._filters[key]));
     }
 }

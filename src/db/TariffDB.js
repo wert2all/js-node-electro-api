@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /**
  * @class TariffDB
  * @type TariffDB

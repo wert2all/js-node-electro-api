@@ -9,6 +9,7 @@ export default class ApiDataInterface {
      * @public
      * @abstract
      */
+    // eslint-disable-next-line no-unused-vars
     result(params) {
         throw Error('Implement ApiDataInterface:result');
     }

@@ -33,8 +33,10 @@ export default class TariffRequest extends RequestInterface {
             /**
              * @type {ApiDataInterface}
              */
-            const api = new VersionFactory(params.getVersion(), new TariffRepository(new TariffDB()))
-                .create();
+            const api = new VersionFactory(
+                params.getVersion(),
+                new TariffRepository(new TariffDB())
+            ).create();
             result((request.query.hasOwnProperty('all') && request.query.all === '1')
                 ? api.all()
                 : api.result(params));

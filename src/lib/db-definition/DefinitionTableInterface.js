@@ -21,12 +21,4 @@ export default class DefinitionTableInterface {
     getTableName() {
         throw new ImplementationError(this, 'getTableName');
     }
-
-    /**
-     * @abstract
-     * @return DefinitionTableSQLFactoryInterface
-     */
-    createFactory() {
-        throw new ImplementationError(this, 'createFactory');
-    }
 }

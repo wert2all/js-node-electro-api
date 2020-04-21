@@ -13,4 +13,36 @@ export default class DefinitionColumnInterface {
     getColumnName() {
         throw new ImplementationError(this, 'getColumnName');
     }
+
+    /**
+     * @abstract
+     * @return {string}
+     */
+    getType() {
+        throw new ImplementationError(this, 'getType');
+    }
+
+    /**
+     * @abstract
+     * @return boolean
+     */
+    isNull() {
+        throw new ImplementationError(this, 'isNull');
+    }
+
+    /**
+     * @abstract
+     * @return {*|boolean}
+     */
+    getDefault() {
+        throw new ImplementationError(this, 'getDefault');
+    }
+
+    /**
+     * @abstract
+     * @return boolean
+     */
+    isPrimary() {
+        throw new ImplementationError(this, 'isPrimary');
+    }
 }

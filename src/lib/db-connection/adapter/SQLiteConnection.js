@@ -52,7 +52,6 @@ export default class SQLiteConnection extends ConnectionInterface {
      */
     async _query(sql, whereData) {
         const connection = await this._connect();
-
         return Promise.reject(new ImplementationError(this, '_query'));
     }
 

@@ -1,4 +1,5 @@
 import FilterInterface from './FilterInterface';
+import FilterData from './FilterData';
 
 /**
  * @class Filter
@@ -22,5 +23,13 @@ export default class Filter extends FilterInterface {
      */
     addColumn(column, value) {
         this._filters[column.getColumnName()] = value;
+    }
+
+    /**
+     *
+     * @return {Array<FilterData>}
+     */
+    getFilterData() {
+        return Object.keys(this._filters).map(key => new FilterData(key, '=', this._filters[key]));
     }
 }

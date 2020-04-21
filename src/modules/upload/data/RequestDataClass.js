@@ -11,7 +11,6 @@ export default class RequestDataClass {
     constructor(authToken, billFile) {
         this.token = authToken;
         this.billFile = billFile;
-        this.googleUserID = null
     }
 
 

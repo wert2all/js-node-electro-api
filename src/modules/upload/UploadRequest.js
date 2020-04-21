@@ -40,7 +40,6 @@ export default class UploadRequest extends RequestInterface {
         try {
             const requestData = RequestDataClass.factory(request);
             const googleUserAccount = await this._getGoogleAccount(requestData);
-            requestData.googleUserID = googleUserAccount.getGoogleUserId();
 
             const yearMon = new YearMon();
             const userEntity = new UserEntity()

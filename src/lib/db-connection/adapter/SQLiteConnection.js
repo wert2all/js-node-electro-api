@@ -13,6 +13,12 @@ export default class SQLiteConnection extends ConnectionInterface {
      */
     constructor(connectionURI) {
         super();
+        /**
+         *
+         * @type {string}
+         * @private
+         */
+        this._connectionURI = connectionURI;
     }
 
     /**
@@ -57,11 +63,19 @@ export default class SQLiteConnection extends ConnectionInterface {
 
     /**
      *
-     * @return {Promise<>}
+     * @return {Promise<*>}
      * @private
      */
     async _connect() {
-        return Promise.reject(new ImplementationError(this, '_connect'));
+        return new Promise((resolve, reject) => {
+            const sqlite3 = require('sqlite3').verbose();
+            const db = new sqlite3.Database(this._connectionURI, err => {
+                if (err) {
+                    reject(new Error(err.message));
+                }
+                resolve(db);
+            });
+        });
     }
 
     /**

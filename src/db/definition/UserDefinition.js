@@ -8,6 +8,8 @@ import DefinitionTableInterface from '../../lib/db-definition/DefinitionTableInt
 export default class UserDefinition extends DefinitionTableInterface {
     static TABLE_NAME = 'users';
     static COLUMN_GOOGLE_ID = 'google_user_id';
+    static COLUMN_GOOGLE_NAME = 'name';
+    static COLUMN_GOOGLE_EMAIL = 'email';
 
     /**
      *

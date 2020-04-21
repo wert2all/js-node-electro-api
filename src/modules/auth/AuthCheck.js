@@ -1,3 +1,5 @@
+import GoogleAccount from '../../data/GoogleAccount';
+
 const {OAuth2Client} = require('google-auth-library');
 
 /**
@@ -16,7 +18,7 @@ export default class AuthCheck {
     /**
      *
      * @param {AuthParams} params
-     * @return {Promise}
+     * @return {Promise<GoogleAccount>}
      */
     check(params) {
         return this.client
@@ -24,6 +26,6 @@ export default class AuthCheck {
                 idToken: params.token,
                 audience: this.apiKey,
             })
-            .then(ticket => ticket.getPayload().sub);
+            .then(ticket => GoogleAccount.create(ticket.getPayload()));
     }
 }

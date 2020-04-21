@@ -1,17 +1,30 @@
+import ImplementationError from '../../lib/implementation-error/ImplementationError';
+
 /**
+ * @interface
+ * @abstract
  * @class RequestInterface
  * @type RequestInterface
- * @abstract
  */
 export default class RequestInterface {
     /**
+     * @abstract
+     * @param {StorageProvider} storageProvider
+     * @return RequestInterface
+     */
+    // eslint-disable-next-line no-unused-vars
+    init(storageProvider) {
+        throw new ImplementationError(this, 'init');
+    }
+
+    /**
+     * @abstract
      * @request {*} request
      * @return {Promise}
      * @public
-     * @abstract
      */
     // eslint-disable-next-line no-unused-vars
     createResponse(request) {
-        throw Error('Implement RequestInterface:createResponse');
+        throw new ImplementationError(this, 'createResponse');
     }
 }

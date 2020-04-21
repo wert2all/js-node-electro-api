@@ -15,21 +15,9 @@ import UploadRequestBadSize from './error/UploadRequestBadSize';
 /**
  * @class UploadRequest
  * @type RequestInterface
+ * @extends RequestInterface
  */
 export default class UploadRequest extends RequestInterface {
-
-    /**
-     *
-     * @param {StorageProvider} storageProvider
-     */
-    constructor(storageProvider) {
-        super();
-        /**
-         *
-         * @type {StorageProvider}
-         */
-        this.storageProvider = storageProvider;
-    }
 
     /**
      * @request {*} request
@@ -113,5 +101,19 @@ export default class UploadRequest extends RequestInterface {
         ) {
             return Promise.reject(new UploadRequestBadSize());
         }
+    }
+
+    /**
+     *
+     * @param {StorageProvider} storageProvider
+     * @return {UploadRequest}
+     */
+    init(storageProvider) {
+        /**
+         *
+         * @type {StorageProvider}
+         */
+        this.storageProvider = storageProvider;
+        return this;
     }
 }

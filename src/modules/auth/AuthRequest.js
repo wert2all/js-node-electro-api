@@ -6,20 +6,9 @@ import AuthCheck from './AuthCheck';
 /**
  * @class AuthRequest
  * @type RequestInterface
+ * @extends RequestInterface
  */
 export default class AuthRequest extends RequestInterface {
-    /**
-     *
-     * @param {StorageProvider} storageProvider
-     */
-    constructor(storageProvider) {
-        super();
-        /**
-         *
-         * @type {StorageProvider}
-         */
-        this.storageProvider = storageProvider;
-    }
 
     /**
      * @request {*} request
@@ -65,5 +54,15 @@ export default class AuthRequest extends RequestInterface {
         if (request.method !== 'POST') {
             throw new Error('Bad request');
         }
+    }
+
+    /**
+     *
+     * @param {StorageProvider} storageProvider
+     * @return RequestInterface
+     */
+    init(storageProvider) {
+        this.storageProvider = storageProvider;
+        return this;
     }
 }

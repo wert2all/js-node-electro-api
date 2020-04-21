@@ -62,6 +62,7 @@ export default class SQLiteConnection extends ConnectionInterface {
      */
     async _query(connection, sql, whereData) {
         return new Promise((resolve, reject) => {
+            console.info(sql);
             connection.all(sql, whereData, (err, rows) => {
                 if (err) {
                     reject(new Error(err.message));
@@ -138,7 +139,6 @@ export default class SQLiteConnection extends ConnectionInterface {
      */
     async _createTable(definition, connection) {
         const tableSQl = this._createTableFactory().createSQL(definition);
-        console.log(tableSQl);
         return this._query(connection, tableSQl, []);
     }
 

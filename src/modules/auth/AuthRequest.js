@@ -40,7 +40,7 @@ export default class AuthRequest extends RequestInterface {
                 new AuthCheck(apiKey)
                     .check(params)
                     .then(res => {
-                        ret.token = res;
+                        ret.token = res.getGoogleUserId();
                         result(ret);
                     })
                     .catch(e => {

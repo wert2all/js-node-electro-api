@@ -39,11 +39,12 @@ export default class UploadRequest extends RequestInterface {
         const response = new ResponseDataClass();
         try {
             const requestData = RequestDataClass.factory(request);
-            requestData.googleUserID = await this._getGoogleUserId(requestData);
+            const googleUserAccount = await this._getGoogleAccount(requestData);
+            requestData.googleUserID = googleUserAccount.getGoogleUserId();
 
             const yearMon = new YearMon();
             const userEntity = new UserEntity()
-                .setGoogleUserId(requestData.googleUserID);
+                .setGoogleAccount(googleUserAccount);
             const userFiles = new UserFilesEntity()
                 .setUser(userEntity)
                 .setYearMon(yearMon);
@@ -68,10 +69,10 @@ export default class UploadRequest extends RequestInterface {
     /**
      *
      * @param {RequestDataClass} requestData
-     * @return {null}
+     * @return {GoogleAccount}
      * @private
      */
-    async _getGoogleUserId(requestData) {
+    async _getGoogleAccount(requestData) {
         const apiKey = new ApiKeyProvider(this.storageProvider).get();
         return await new AuthCheck(apiKey)
             .check(

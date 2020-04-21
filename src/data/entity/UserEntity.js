@@ -13,12 +13,6 @@ export default class UserEntity extends EntityInterface {
         super();
         /**
          *
-         * @type {string|null}
-         * @private
-         */
-        this._googleUserId = null;
-        /**
-         *
          * @type {DataValueInterface}
          * @private
          */
@@ -27,12 +21,13 @@ export default class UserEntity extends EntityInterface {
 
     /**
      *
-     * @param {string} googleUserID
+     * @param {GoogleAccount} googleAccount
      * @return {UserEntity}
      */
-    setGoogleUserId(googleUserID) {
-        this._googleUserId = googleUserID;
-        this._data.setData(UserDefinition.COLUMN_GOOGLE_ID, googleUserID);
+    setGoogleAccount(googleAccount) {
+        this._data.setData(UserDefinition.COLUMN_GOOGLE_ID, googleAccount.getGoogleUserId());
+        this._data.setData(UserDefinition.COLUMN_GOOGLE_NAME, googleAccount.getName());
+        this._data.setData(UserDefinition.COLUMN_GOOGLE_EMAIL, googleAccount.getEmail());
         return this;
     }
 

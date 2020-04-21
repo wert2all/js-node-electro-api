@@ -57,7 +57,6 @@ export default class GoogleAccount {
      * @return GoogleAccount
      */
     static create(tokenPayload) {
-        console.log(tokenPayload);
         return new GoogleAccount(tokenPayload.sub, tokenPayload.name, tokenPayload.email);
     }
 }

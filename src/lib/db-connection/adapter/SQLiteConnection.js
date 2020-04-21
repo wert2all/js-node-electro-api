@@ -23,7 +23,7 @@ export default class SQLiteConnection extends ConnectionInterface {
      */
     async select(definition, filter) {
         const sql = this._buildSelect(definition, filter);
-        return this._query(sql, this._buildDataWhere(filter));
+        return this._query(sql, this._buildWhereData(filter));
     }
 
     /**
@@ -71,7 +71,7 @@ export default class SQLiteConnection extends ConnectionInterface {
      * @private
      */
     _buildWhere(whereCond) {
-        throw  new ImplementationError(this, '_buildWhere');
+        return whereCond.length > 0 ? ' where ' + whereCond.join(' and ') : '';
     }
 
     /**
@@ -80,7 +80,7 @@ export default class SQLiteConnection extends ConnectionInterface {
      * @private
      */
     _buildOrder() {
-        throw  new ImplementationError(this, '_buildOrder');
+        //TODO
         return '';
     }
 
@@ -90,8 +90,8 @@ export default class SQLiteConnection extends ConnectionInterface {
      * @private
      */
     _buildLimit() {
-        throw  new ImplementationError(this, '_buildLimit');
-        return '';
+        //TODO
+        return ' ';
     }
 
     /**
@@ -100,8 +100,8 @@ export default class SQLiteConnection extends ConnectionInterface {
      * @return {*[]}
      * @private
      */
-    _buildDataWhere(filter) {
-        throw  new ImplementationError(this, '_buildLimit');
+    _buildWhereData(filter) {
+        throw  new ImplementationError(this, '_buildWhereData');
         return [];
     }
 }

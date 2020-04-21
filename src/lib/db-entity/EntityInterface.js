@@ -22,4 +22,13 @@ export default class EntityInterface {
     getData() {
         throw new ImplementationError(this, 'getData');
     }
+
+    /**
+     *
+     * @param {string} key
+     * @return {string|null}
+     */
+    getValue(key) {
+        throw new ImplementationError(this, 'getValue');
+    }
 }

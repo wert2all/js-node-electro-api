@@ -9,7 +9,7 @@ export default class DataValueInterface {
     /**
      * @abstract
      * @param  {string} key
-     * @return {string||null}
+     * @return {string|null}
      */
     getData(key) {
         throw new ImplementationError(this, 'getData');

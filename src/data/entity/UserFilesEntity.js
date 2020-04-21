@@ -4,6 +4,9 @@
  * @extends EntityInterface
  */
 import EntityInterface from '../../lib/db-entity/EntityInterface';
+import DataValue from '../../lib/data-value/DataValue';
+import UserFilesDefinition from '../../db/definition/UserFilesDefinition';
+import UserDefinition from '../../db/definition/UserDefinition';
 
 export default class UserFilesEntity extends EntityInterface {
     constructor() {
@@ -11,13 +14,21 @@ export default class UserFilesEntity extends EntityInterface {
         /**
          *
          * @type {UserEntity||null}
+         * @private
          */
-        this.user = null;
+        this._user = null;
         /**
          *
          * @type {YearMon||null}
+         * @private
          */
-        this.yearMon = null;
+        this._yearMon = null;
+        /**
+         *
+         * @type {DataValue}
+         * @private
+         */
+        this._data = new DataValue();
     }
 
     /**
@@ -26,7 +37,11 @@ export default class UserFilesEntity extends EntityInterface {
      * @return {UserFilesEntity}
      */
     setUser(userEntity) {
-        this.user = userEntity;
+        this._user = userEntity;
+        this._data.setData(
+            UserFilesDefinition.COLUMN_GOOGLE_USER_ID,
+            userEntity.getValue(UserDefinition.COLUMN_GOOGLE_ID)
+        );
         return this;
     }
 
@@ -36,7 +51,7 @@ export default class UserFilesEntity extends EntityInterface {
      * @return {UserFilesEntity}
      */
     setYearMon(yearMon) {
-        this.yearMon = yearMon;
+        this._yearMon = yearMon;
         return this;
     }
 }

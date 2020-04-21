@@ -1,14 +1,27 @@
+import EntityInterface from '../../lib/db-entity/EntityInterface';
+import DataValue from '../../lib/data-value/DataValue';
+import UserDefinition from '../../db/definition/UserDefinition';
+
 /**
  * @class UserEntity
- *
+ * @type EntityInterface
+ * @extends EntityInterface
  */
-export default class UserEntity {
+export default class UserEntity extends EntityInterface {
     constructor() {
+        super();
         /**
          *
-         * @type {string||null}
+         * @type {string|null}
+         * @private
          */
-        this.googleUserId = null;
+        this._googleUserId = null;
+        /**
+         *
+         * @type {DataValue}
+         * @private
+         */
+        this._data = new DataValue();
     }
 
     /**
@@ -17,7 +30,8 @@ export default class UserEntity {
      * @return {UserEntity}
      */
     setGoogleUserId(googleUserID) {
-        this.googleUserId = googleUserID;
+        this._googleUserId = googleUserID;
+        this._data.setData(UserDefinition.COLUMN_GOOGLE_ID, googleUserID);
         return this;
     }
 }

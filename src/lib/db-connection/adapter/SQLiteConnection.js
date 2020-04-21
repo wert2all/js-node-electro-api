@@ -28,8 +28,10 @@ export default class SQLiteConnection extends ConnectionInterface {
      * @return {Promise<Array>}
      */
     async select(definition, filter) {
+        const connection = await this._connect();
+        await this._createTable(definition, connection);
         const sql = this._buildSelect(definition, filter);
-        return this._query(sql, this._buildWhereData(filter));
+        return this._query(connection, sql, this._buildWhereData(filter));
     }
 
     /**
@@ -51,13 +53,13 @@ export default class SQLiteConnection extends ConnectionInterface {
 
     /**
      *
+     * @param {*} connection
      * @param {string} sql
      * @param {Array<string>} whereData
      * @return {Promise<Array>}
      * @private
      */
-    async _query(sql, whereData) {
-        const connection = await this._connect();
+    async _query(connection, sql, whereData) {
         return new Promise((resolve, reject) => {
             connection.all(sql, whereData, (err, rows) => {
                 if (err) {
@@ -124,5 +126,17 @@ export default class SQLiteConnection extends ConnectionInterface {
      */
     _buildWhereData(filter) {
         return filter.getFilterData().map(filterData => filterData.value);
+    }
+
+    /**
+     *
+     * @param {DefinitionTableInterface} definition
+     * @param {*} connection
+     * @return {Promise<void>}
+     * @private
+     */
+    async _createTable(definition, connection) {
+        const tableSQl = definition.createFactory().create();
+        return this._query(connection, tableSQl, []);
     }
 }

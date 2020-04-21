@@ -4,6 +4,7 @@
  */
 import RepositoryAbstract from '../../lib/db-repository/ReposytoryAbstract';
 import FilterFactory from '../../lib/db-filter/FilterFactory';
+import UserFilesDefinition from '../definition/UserFilesDefinition';
 
 export default class FilesRepository extends RepositoryAbstract {
 
@@ -13,6 +14,12 @@ export default class FilesRepository extends RepositoryAbstract {
      */
     constructor(connection) {
         super(connection);
+        /**
+         *
+         * @type {DefinitionTableInterface}
+         * @private
+         */
+        this._definition = new UserFilesDefinition();
         /**
          *
          * @type {FilterFactoryInterface}
@@ -38,4 +45,12 @@ export default class FilesRepository extends RepositoryAbstract {
         return this._filterFactoryObject;
     }
 
+    /**
+     *
+     * @protected
+     * @return DefinitionTableInterface
+     */
+    _getDefinition() {
+        return this._definition;
+    }
 }

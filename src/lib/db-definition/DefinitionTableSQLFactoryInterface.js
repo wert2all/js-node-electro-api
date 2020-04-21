@@ -8,9 +8,10 @@ import ImplementationError from '../implementation-error/ImplementationError';
 export default class DefinitionTableSQLFactoryInterface {
     /**
      * @abstract
+     * @param {DefinitionTableInterface} definition
      * @return string
      */
-    create() {
+    createSQL(definition) {
         throw new ImplementationError(this, 'create');
     }
 }

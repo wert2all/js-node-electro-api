@@ -1,5 +1,6 @@
 import ConnectionInterface from '../ConnectionInterface';
 import ImplementationError from '../../implementation-error/ImplementationError';
+import SQLiteTableSQLFactory from './SQLiteTableSQLFactory';
 
 /**
  * @class SQLiteConnection
@@ -136,7 +137,15 @@ export default class SQLiteConnection extends ConnectionInterface {
      * @private
      */
     async _createTable(definition, connection) {
-        const tableSQl = definition.createFactory().create();
+        const tableSQl = this._createTableFactory().createSQL(definition);
         return this._query(connection, tableSQl, []);
+    }
+
+    /**
+     * @return DefinitionTableSQLFactoryInterface
+     * @private
+     */
+    _createTableFactory() {
+        return new SQLiteTableSQLFactory();
     }
 }

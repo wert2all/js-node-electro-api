@@ -46,7 +46,7 @@ export default class SQLiteConnection extends ConnectionInterface {
     /**
      *
      * @param {string} sql
-     * @param {Array} whereData
+     * @param {Array<string>} whereData
      * @return {Promise<Array>}
      * @private
      */
@@ -97,11 +97,10 @@ export default class SQLiteConnection extends ConnectionInterface {
     /**
      *
      * @param {FilterInterface} filter
-     * @return {*[]}
+     * @return {Array<string>}
      * @private
      */
     _buildWhereData(filter) {
-        throw  new ImplementationError(this, '_buildWhereData');
-        return [];
+        return filter.getFilterData().map(filterData => filterData.value);
     }
 }

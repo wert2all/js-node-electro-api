@@ -5,13 +5,18 @@ export default class StorageProvider {
     /**
      *
      * @param {SecretStorage} secretStorage
+     * @param {ConnectionInterface} connection
      */
-    constructor(secretStorage) {
+    constructor(secretStorage, connection) {
         /**
          *
          * @type {SecretStorage}
          */
         this.secret = secretStorage;
+        /**
+         * @type {ConnectionInterface}
+         */
+        this.connection = connection;
     }
 
     /**
@@ -20,5 +25,13 @@ export default class StorageProvider {
      */
     getSecretStorage() {
         return this.secret;
+    }
+
+    /**
+     *
+     * @return {ConnectionInterface}
+     */
+    getConnection() {
+        return this.connection;
     }
 }

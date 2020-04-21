@@ -5,6 +5,10 @@ import RequestDataClass from './data/RequestDataClass';
 import AuthCheck from '../auth/AuthCheck';
 import ApiKeyProvider from '../auth/key/KeyProvider';
 import AuthParams from '../auth/params/Params';
+import YearMon from '../../data/YearMon';
+import UserEntity from '../../data/entity/UserEntity';
+import UserFilesEntity from '../../data/entity/UserFilesEntity';
+import FilesRepository from '../../db/repository/FilesRepository';
 
 /**
  * @class UploadRequest
@@ -36,6 +40,23 @@ export default class UploadRequest extends RequestInterface {
         try {
             const requestData = RequestDataClass.factory(request);
             requestData.googleUserID = this._getGoogleUserId(requestData);
+
+            const yearMon = new YearMon();
+            const userEntity = new UserEntity()
+                .setGoogleUserId(requestData.googleUserID);
+            const userFiles = new UserFilesEntity()
+                .setUser(userEntity)
+                .setYearMon(yearMon);
+            const repository = new FilesRepository(this.storageProvider.getConnection());
+            /**
+             * @type {EntityInterface[]}
+             */
+            const userFileList = await repository.fetchData(userFiles);
+            if (userFileList.length === 0) {
+                await this._saveFile(requestData, userFiles);
+            }
+
+            response.status = true;
         } catch (e) {
             response.status = false;
             response.message = e.message;
@@ -55,5 +76,15 @@ export default class UploadRequest extends RequestInterface {
             .check(
                 new AuthParams(requestData.token)
             );
+    }
+
+    /**
+     *
+     * @param {RequestDataClass} requestData
+     * @param {UserFilesEntity} userFiles
+     * @private
+     */
+    async _saveFile(requestData, userFiles) {
+        //TODO
     }
 }

@@ -1,5 +1,6 @@
 import DefinitionTableInterface from '../../lib/db-definition/DefinitionTableInterface';
 import DefinitionColumn from '../../lib/db-definition/DefinitionColumn';
+import ImplementationError from '../../lib/implementation-error/ImplementationError';
 
 /**
  * @class UserFilesDefinition
@@ -13,7 +14,13 @@ export default class UserFilesDefinition extends DefinitionTableInterface {
     constructor() {
         super();
         this._columns = [
-            new DefinitionColumn(UserFilesDefinition.COLUMN_GOOGLE_USER_ID)
+            new DefinitionColumn(
+                UserFilesDefinition.COLUMN_GOOGLE_USER_ID,
+                DefinitionColumn.COLUMN_TYPE_VARCHAR,
+                false,
+                false,
+                true
+            )
         ];
     }
 

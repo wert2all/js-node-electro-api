@@ -138,6 +138,7 @@ export default class SQLiteConnection extends ConnectionInterface {
      */
     async _createTable(definition, connection) {
         const tableSQl = this._createTableFactory().createSQL(definition);
+        console.log(tableSQl);
         return this._query(connection, tableSQl, []);
     }
 

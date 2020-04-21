@@ -2,8 +2,8 @@
  * @class VersionFactory
  * @type VersionFactory
  */
-import ApiDataVersion1 from './Api/ApiDataVersion1';
-import ApiDataVersion2 from './Api/ApiDataVersion2';
+import ApiDataVersion1 from './api/ApiDataVersion1';
+import ApiDataVersion2 from './api/ApiDataVersion2';
 
 export default class VersionFactory {
 

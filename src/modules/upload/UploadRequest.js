@@ -1,5 +1,5 @@
 'use strict';
-import RequestInterface from '../../request/RequestInterface';
+import RequestInterface from '../../routers/request/RequestInterface';
 import ResponseDataClass from './data/ResponseDataClass';
 import RequestDataClass from './data/RequestDataClass';
 import AuthCheck from '../auth/AuthCheck';

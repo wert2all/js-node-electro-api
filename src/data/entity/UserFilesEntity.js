@@ -13,18 +13,6 @@ export default class UserFilesEntity extends EntityInterface {
         super();
         /**
          *
-         * @type {UserEntity||null}
-         * @private
-         */
-        this._user = null;
-        /**
-         *
-         * @type {YearMon||null}
-         * @private
-         */
-        this._yearMon = null;
-        /**
-         *
          * @type {DataValueInterface}
          * @private
          */
@@ -37,7 +25,6 @@ export default class UserFilesEntity extends EntityInterface {
      * @return {UserFilesEntity}
      */
     setUser(userEntity) {
-        this._user = userEntity;
         this._data.setData(
             UserFilesDefinition.COLUMN_GOOGLE_USER_ID,
             userEntity.getValue(UserDefinition.COLUMN_GOOGLE_ID)
@@ -51,7 +38,10 @@ export default class UserFilesEntity extends EntityInterface {
      * @return {UserFilesEntity}
      */
     setYearMon(yearMon) {
-        this._yearMon = yearMon;
+        this._data.setData(
+            UserFilesDefinition.COLUMN_YEARMON,
+            yearMon.toString()
+        );
         return this;
     }
 

@@ -11,7 +11,7 @@ new Application(
     new RoutersProvider(
         new StorageProvider(
             new SecretStorage('./../../secret.json'),
-            new SQLiteConnection( './../../secret.sqlite')
+            new SQLiteConnection( './../secret.sqlite')
         )
     ))
     .run();

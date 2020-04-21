@@ -1,6 +1,5 @@
 import DefinitionTableInterface from '../../lib/db-definition/DefinitionTableInterface';
 import DefinitionColumn from '../../lib/db-definition/DefinitionColumn';
-import ImplementationError from '../../lib/implementation-error/ImplementationError';
 
 /**
  * @class UserFilesDefinition
@@ -10,6 +9,7 @@ import ImplementationError from '../../lib/implementation-error/ImplementationEr
 export default class UserFilesDefinition extends DefinitionTableInterface {
     static TABLE_NAME = 'user_files';
     static COLUMN_GOOGLE_USER_ID = 'google_user_id';
+    static COLUMN_YEARMON = 'yearmon';
 
     constructor() {
         super();
@@ -20,6 +20,12 @@ export default class UserFilesDefinition extends DefinitionTableInterface {
                 false,
                 false,
                 true
+            ),
+            new DefinitionColumn(
+                UserFilesDefinition.COLUMN_YEARMON,
+                DefinitionColumn.COLUMN_TYPE_VARCHAR,
+                false,
+                false
             )
         ];
     }

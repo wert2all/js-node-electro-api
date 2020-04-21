@@ -50,6 +50,6 @@ export default class UserEntity extends EntityInterface {
      * @return {string|null}
      */
     getValue(key) {
-        throw this._data.getData(key);
+        return this._data.getData(key);
     }
 }

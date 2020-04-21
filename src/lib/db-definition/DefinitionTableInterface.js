@@ -1,9 +1,9 @@
 import ImplementationError from '../implementation-error/ImplementationError';
 
 /**
- * @class DefinitionTableInterface
  * @interface
  * @abstract
+ * @class DefinitionTableInterface
  */
 export default class DefinitionTableInterface {
     /**

@@ -5,10 +5,9 @@ export default class Route extends RoutersInterface {
      *
      * @param {string} route
      * @param {string} method
-     * @param RequestClass
-     * @param {StorageProvider} storageProvider
+     * @param {RequestInterface} request
      */
-    constructor(route, method, RequestClass, storageProvider) {
+    constructor(route, method, request) {
         super();
         /**
          *
@@ -20,7 +19,7 @@ export default class Route extends RoutersInterface {
          *
          * @type {RequestInterface}
          */
-        this.request = new RequestClass(storageProvider);
+        this.request = request;
     }
 
     /**

@@ -7,19 +7,14 @@ import TariffDB from './db/TariffDB';
 /**
  * @class TariffRequest
  * @type RequestInterface
+ * @extends RequestInterface
  */
 export default class TariffRequest extends RequestInterface {
     /**
      *
-     * @param {StorageProvider} storageProvider
      */
-    constructor(storageProvider) {
+    constructor() {
         super();
-        /**
-         *
-         * @type {StorageProvider}
-         */
-        this.storageProvider = storageProvider;
     }
 
     /**
@@ -41,5 +36,15 @@ export default class TariffRequest extends RequestInterface {
                 ? api.all()
                 : api.result(params));
         });
+    }
+
+    /**
+     *
+     * @param {StorageProvider} storageProvider
+     * @return RequestInterface
+     */
+    // eslint-disable-next-line no-unused-vars
+    init(storageProvider) {
+        return this;
     }
 }

@@ -1,8 +1,8 @@
-import RequestInterface from './RequestInterface';
-import RequestParams from '../RequestParams';
-import VersionFactory from '../VersionFactory';
-import TariffRepository from '../db/TariffRepository';
-import TariffDB from '../db/TariffDB';
+import RequestInterface from '../../routers/request/RequestInterface';
+import RequestParams from './request/RequestParams';
+import VersionFactory from './VersionFactory';
+import TariffRepository from './db/TariffRepository';
+import TariffDB from './db/TariffDB';
 
 /**
  * @class TariffRequest

@@ -1,4 +1,4 @@
-import RequestInterface from '../../request/RequestInterface';
+import RequestInterface from '../../routers/request/RequestInterface';
 import AuthParamsFactory from './params/Factory';
 import ApiKeyProvider from './key/KeyProvider';
 import AuthCheck from './AuthCheck';

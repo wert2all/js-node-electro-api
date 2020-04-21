@@ -1,5 +1,5 @@
 import Route from './Route';
-import TariffRequest from '../request/TariffRequest';
+import TariffRequest from '../modules/tariff/TariffRequest';
 import AuthRequest from '../modules/auth/AuthRequest';
 import UploadRequest from '../modules/upload/UploadRequest';
 

@@ -18,7 +18,7 @@ export default class FilesRepository extends RepositoryAbstract {
          * @type {FilterFactoryInterface}
          * @private
          */
-        this._filterFactoryObject = new FilterFactory();
+        this._filterFactoryObject = new FilterFactory(this._getDefinition());
     }
 
     /**

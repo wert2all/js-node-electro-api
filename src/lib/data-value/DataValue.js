@@ -32,4 +32,12 @@ export default class DataValue extends DataValueInterface {
     setData(key, value) {
         this._data[key] = value;
     }
+
+    /**
+     *
+     * @return {Object<string,string>}
+     */
+    toHash() {
+        return this._data;
+    }
 }

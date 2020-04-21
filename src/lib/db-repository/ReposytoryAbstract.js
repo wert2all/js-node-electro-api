@@ -1,5 +1,9 @@
 import ImplementationError from '../implementation-error/ImplementationError';
 
+/**
+ * @abstract
+ * @class RepositoryAbstract
+ */
 export default class RepositoryAbstract {
     /**
      *

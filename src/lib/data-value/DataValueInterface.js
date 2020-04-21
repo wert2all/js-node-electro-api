@@ -24,4 +24,12 @@ export default class DataValueInterface {
         throw new ImplementationError(this, 'setData');
     }
 
+    /**
+     * @abstract
+     * @return {Object<string,string>}
+     */
+    toHash() {
+        throw new ImplementationError(this, 'toHash');
+    }
+
 }

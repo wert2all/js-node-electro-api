@@ -24,7 +24,7 @@ export default class EntityInterface {
     }
 
     /**
-     *
+     * @abstract
      * @param {string} key
      * @return {string|null}
      */

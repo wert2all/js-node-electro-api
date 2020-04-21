@@ -1,5 +1,9 @@
 import ImplementationError from '../implementation-error/ImplementationError';
 
+/**
+ * @interface
+ * @class ConnectionInterface
+ */
 export default class ConnectionInterface {
     /**
      *

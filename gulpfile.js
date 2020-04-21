@@ -8,18 +8,12 @@ gulp.task('copy:package', () =>
 
 gulp.task('copy', gulp.parallel('copy:package'));
 
-gulp.task('build:root', () =>
-    gulp.src(['app.js'])
-        .pipe(babel())
-        .pipe(gulp.dest('dist/')));
-
 gulp.task('build:src', () =>
     gulp.src(['src/**/*'])
         .pipe(babel())
         .pipe(gulp.dest('dist/src/')));
 
-
-gulp.task('build', gulp.series('build:root', 'build:src'));
+gulp.task('build', gulp.series('build:src'));
 
 gulp.task('default', gulp.series('build', 'copy'));
 

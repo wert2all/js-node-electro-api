@@ -3,10 +3,10 @@
   "version": "0.2.2",
   "private": true,
   "scripts": {
-    "start": "nodemon app.js",
+    "start": "node dist/src/cluster/cluster.js",
     "build": "gulp clean && gulp default",
     "dev": "gulp dev",
-    "test": "eslint app.js"
+    "test": "eslint src/"
   },
   "publishConfig": {
     "registry": "http://rpm.kiev.ua:4873"

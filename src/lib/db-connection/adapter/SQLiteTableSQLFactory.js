@@ -11,13 +11,20 @@ export default class SQLiteTableSQLFactory extends DefinitionTableSQLFactoryInte
      * @return string
      */
     createSQL(definition) {
-        return 'CREATE TABLE IF NOT EXISTS ' + definition.getTableName() + ' (\n' +
-            definition.getColumns().map(column => {
-                return ' ' + column.getColumnName() + ' ' + column.getType() + ' '
-                + (!column.isNull()) ? ' not null ' : ' '
-                + (column.getDefault() !== false) ? ' default ' + column.getDefault() : ' '
-                + (column.isPrimary()) ? ' primary key ' : ' ';
-            }).join(',\n')
-            + ') ';
+        return `CREATE TABLE IF NOT EXISTS ${definition.getTableName()} (${this._columnsSQL(definition)})`;
+    }
+
+    /**
+     * @param {DefinitionTableInterface} definition
+     * @return string
+     */
+    _columnsSQL(definition) {
+        return definition.getColumns().map(column => {
+            let columnSQL = ' ' + column.getColumnName() + ' ' + column.getType() + ' ';
+            columnSQL += (!column.isNull()) ? ' not null ' : ' ';
+            columnSQL += (column.getDefault() !== false) ? ' default ' + column.getDefault() : ' ';
+            columnSQL += (column.isPrimary()) ? ' primary key ' : ' ';
+            return columnSQL;
+        }).join(',\n');
     }
 }

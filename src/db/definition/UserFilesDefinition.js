@@ -7,6 +7,7 @@ import DefinitionColumn from '../../lib/db-definition/DefinitionColumn';
  * @extends DefinitionTableInterface
  */
 export default class UserFilesDefinition extends DefinitionTableInterface {
+    static TABLE_NAME = 'user_files';
     static COLUMN_GOOGLE_USER_ID = 'google_user_id';
 
     constructor() {
@@ -21,5 +22,13 @@ export default class UserFilesDefinition extends DefinitionTableInterface {
      */
     getColumns() {
         return this._columns;
+    }
+
+    /**
+     *
+     * @return {string}
+     */
+    getTableName() {
+        return UserFilesDefinition.TABLE_NAME;
     }
 }

@@ -9,6 +9,8 @@ import YearMon from '../../data/YearMon';
 import UserEntity from '../../data/entity/UserEntity';
 import UserFilesEntity from '../../data/entity/UserFilesEntity';
 import FilesRepository from '../../db/repository/FilesRepository';
+import UploadRequestBadMime from './error/UploadRequestBadMime';
+import UploadRequestBadSize from './error/UploadRequestBadSize';
 
 /**
  * @class UploadRequest
@@ -41,12 +43,13 @@ export default class UploadRequest extends RequestInterface {
             const requestData = RequestDataClass.factory(request);
             const googleUserAccount = await this._getGoogleAccount(requestData);
 
-            const yearMon = new YearMon();
+            await this._checkFile(requestData);
+
             const userEntity = new UserEntity()
                 .setGoogleAccount(googleUserAccount);
             const userFiles = new UserFilesEntity()
                 .setUser(userEntity)
-                .setYearMon(yearMon);
+                .setYearMon(new YearMon());
             const repository = new FilesRepository(this.storageProvider.getConnection());
             /**
              * @type {EntityInterface[]}
@@ -87,5 +90,20 @@ export default class UploadRequest extends RequestInterface {
      */
     async _saveFile(requestData, userFiles) {
         //TODO
+    }
+
+    /**
+     *
+     * @param {RequestDataClass} requestData
+     * @return {Promise<void>}
+     * @private
+     */
+    async _checkFile(requestData) {
+        if (!requestData.billFile.hasOwnProperty('mimetype') || requestData.billFile.mimetype !== 'image/jpeg') {
+            return Promise.reject(new UploadRequestBadMime());
+        }
+        if (!requestData.billFile.hasOwnProperty(('size')) || requestData.billFile.size > 5242880) {
+            return Promise.reject(new UploadRequestBadSize());
+        }
     }
 }

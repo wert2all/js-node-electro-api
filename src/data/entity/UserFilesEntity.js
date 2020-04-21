@@ -25,7 +25,7 @@ export default class UserFilesEntity extends EntityInterface {
         this._yearMon = null;
         /**
          *
-         * @type {DataValue}
+         * @type {DataValueInterface}
          * @private
          */
         this._data = new DataValue();
@@ -53,5 +53,13 @@ export default class UserFilesEntity extends EntityInterface {
     setYearMon(yearMon) {
         this._yearMon = yearMon;
         return this;
+    }
+
+    /**
+     *
+     * @return {Object<string, string>}
+     */
+    getData() {
+        return this._data.toHash();
     }
 }

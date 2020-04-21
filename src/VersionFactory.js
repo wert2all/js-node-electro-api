@@ -21,8 +21,11 @@ export default class VersionFactory {
         this.className = 'Api_' + version;
 
         this.classes = {
+            // eslint-disable-next-line camelcase
             Api_1: ApiDataVersion1,
+            // eslint-disable-next-line camelcase
             Api_2: ApiDataVersion2,
+            // eslint-disable-next-line camelcase
             Api_latest: ApiDataVersion1
         };
     }

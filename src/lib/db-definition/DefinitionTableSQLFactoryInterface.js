@@ -11,6 +11,7 @@ export default class DefinitionTableSQLFactoryInterface {
      * @param {DefinitionTableInterface} definition
      * @return string
      */
+    // eslint-disable-next-line no-unused-vars
     createSQL(definition) {
         throw new ImplementationError(this, 'create');
     }

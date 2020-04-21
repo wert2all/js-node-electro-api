@@ -10,6 +10,7 @@ export default class RequestInterface {
      * @public
      * @abstract
      */
+    // eslint-disable-next-line no-unused-vars
     createResponse(request) {
         throw Error('Implement RequestInterface:createResponse');
     }

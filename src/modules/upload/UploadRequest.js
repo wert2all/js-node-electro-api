@@ -44,12 +44,7 @@ export default class UploadRequest extends RequestInterface {
             const googleUserAccount = await this._getGoogleAccount(requestData);
 
             await this._checkFile(requestData);
-
-            const userEntity = new UserEntity()
-                .setGoogleAccount(googleUserAccount);
-            const userFiles = new UserFilesEntity()
-                .setUser(userEntity)
-                .setYearMon(new YearMon());
+            const userFiles = this.makeUserFilesEntity(googleUserAccount);
             const repository = new FilesRepository(this.storageProvider.getConnection());
             /**
              * @type {EntityInterface[]}
@@ -66,6 +61,14 @@ export default class UploadRequest extends RequestInterface {
             response.message = e.message;
         }
         return Promise.resolve(response.toHash());
+    }
+
+    makeUserFilesEntity(googleUserAccount) {
+        const userEntity = new UserEntity()
+            .setGoogleAccount(googleUserAccount);
+        return new UserFilesEntity()
+            .setUser(userEntity)
+            .setYearMon(new YearMon());
     }
 
     /**
@@ -88,6 +91,7 @@ export default class UploadRequest extends RequestInterface {
      * @param {UserFilesEntity} userFiles
      * @private
      */
+    // eslint-disable-next-line no-unused-vars
     async _saveFile(requestData, userFiles) {
         //TODO
     }
@@ -99,10 +103,14 @@ export default class UploadRequest extends RequestInterface {
      * @private
      */
     async _checkFile(requestData) {
-        if (!requestData.billFile.hasOwnProperty('mimetype') || requestData.billFile.mimetype !== 'image/jpeg') {
+        if (!requestData.billFile.hasOwnProperty('mimetype')
+            || requestData.billFile.mimetype !== 'image/jpeg'
+        ) {
             return Promise.reject(new UploadRequestBadMime());
         }
-        if (!requestData.billFile.hasOwnProperty(('size')) || requestData.billFile.size > 5242880) {
+        if (!requestData.billFile.hasOwnProperty(('size'))
+            || requestData.billFile.size > 5242880
+        ) {
             return Promise.reject(new UploadRequestBadSize());
         }
     }

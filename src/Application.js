@@ -32,16 +32,18 @@ export default class Application {
             if (routers.hasOwnProperty(key)) {
                 const route = routers[key];
                 if (route.method === 'get') {
-                    this.app.get(routers[key].getURL(), this._generateRun(routers[key].getRequest()));
+                    this.app.get(
+                        routers[key].getURL(),
+                        this._generateRun(routers[key].getRequest())
+                    );
                 } else {
-                    this.app.post(routers[key].getURL(), this._generateRun(routers[key].getRequest()));
+                    this.app.post(
+                        routers[key].getURL(),
+                        this._generateRun(routers[key].getRequest())
+                    );
                 }
             }
         }
-    }
-
-    _run() {
-        this.app.listen(3000, () => console.log('Server running on port 3000'));
     }
 
     _generateRun(request) {

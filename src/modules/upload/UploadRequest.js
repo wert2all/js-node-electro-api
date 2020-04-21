@@ -58,6 +58,7 @@ export default class UploadRequest extends RequestInterface {
 
             response.status = true;
         } catch (e) {
+            response.dump = e;
             response.status = false;
             response.message = e.message;
         }

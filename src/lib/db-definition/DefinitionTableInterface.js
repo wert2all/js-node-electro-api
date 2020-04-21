@@ -13,4 +13,12 @@ export default class DefinitionTableInterface {
     getColumns() {
         throw new ImplementationError(this, 'getColumns');
     }
+
+    /**
+     * @abstract
+     * @return {string}
+     */
+    getTableName() {
+        throw new ImplementationError(this, 'getTableName');
+    }
 }

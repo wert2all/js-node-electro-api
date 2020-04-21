@@ -14,4 +14,12 @@ export default class FilterInterface {
     addColumn(column, value) {
         throw new ImplementationError(this, 'addFilterData');
     }
+
+    /**
+     * @abstract
+     * @return {Array<FilterData>}
+     */
+    getFilterData() {
+        throw new ImplementationError(this, 'getFilterData');
+    }
 }

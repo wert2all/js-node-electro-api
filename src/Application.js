@@ -22,7 +22,7 @@ export default class Application {
 
     run() {
         this._applyRouters();
-        this._run();
+        return this;
     }
 
     _applyRouters() {

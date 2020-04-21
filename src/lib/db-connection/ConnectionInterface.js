@@ -12,6 +12,7 @@ export default class ConnectionInterface {
      * @param {FilterInterface} filter
      * @return {Promise<Array>}
      */
+    // eslint-disable-next-line no-unused-vars
     async select(definition, filter) {
         throw new ImplementationError(this, 'select');
     }

@@ -11,6 +11,7 @@ export default class YearMon {
     }
 
     toString() {
-        return this.date.getFullYear() + (this.date.getMonth() < 10) ? '0' : '' + this.date.getMonth();
+        return this.date.getFullYear()
+            + ((this.date.getMonth() < 10) ? '0' : '' + this.date.getMonth());
     }
 }

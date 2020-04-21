@@ -12,6 +12,7 @@ export default class FilterFactoryInterface {
      * @return FilterInterface
      * @abstract
      */
+    // eslint-disable-next-line no-unused-vars
     create(entity) {
         throw new ImplementationError(this, 'create');
     }

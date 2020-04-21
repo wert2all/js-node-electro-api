@@ -1,5 +1,4 @@
 import ConnectionInterface from '../ConnectionInterface';
-import ImplementationError from '../../implementation-error/ImplementationError';
 import SQLiteTableSQLFactory from './SQLiteTableSQLFactory';
 
 /**

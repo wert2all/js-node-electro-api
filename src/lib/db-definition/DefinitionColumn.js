@@ -1,5 +1,4 @@
 import DefinitionColumnInterface from './DefinitionColumnInterface';
-import ImplementationError from '../implementation-error/ImplementationError';
 
 /**
  * @class DefinitionColumn
@@ -18,7 +17,13 @@ export default class DefinitionColumn extends DefinitionColumnInterface {
      * @param {string|boolean} defaultValue
      * @param {boolean} isPrimary
      */
-    constructor(columnName, columnType, isNull = true, defaultValue = false, isPrimary = false) {
+    constructor(
+        columnName,
+        columnType,
+        isNull = true,
+        defaultValue = false,
+        isPrimary = false
+    ) {
         super();
         /**
          *

@@ -11,6 +11,7 @@ export default class EntityInterface {
      * @param {{}}value
      * @return EntityInterface
      */
+    // eslint-disable-next-line no-unused-vars
     create(value) {
         throw new ImplementationError(this, 'create');
     }
@@ -28,6 +29,7 @@ export default class EntityInterface {
      * @param {string} key
      * @return {string|null}
      */
+    // eslint-disable-next-line no-unused-vars
     getValue(key) {
         throw new ImplementationError(this, 'getValue');
     }

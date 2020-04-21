@@ -37,7 +37,7 @@ export default class RepositoryAbstract {
      *
      * @abstract
      * @protected
-     * @return DefinitionInterface
+     * @return DefinitionTableInterface
      */
     _getDefinition() {
         throw new ImplementationError(this, '_getDefinition');

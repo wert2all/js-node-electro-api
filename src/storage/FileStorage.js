@@ -1,4 +1,3 @@
-import path from 'path';
 import DefaultFileNameProvider from './file/nameprovider/DefaultFileNameProvider';
 import ErrorFileStorageProcessType from './file/error/ErrorFileStorageProcessType';
 import FileProcessFactory from './file/FileProcessFactory';
@@ -10,25 +9,15 @@ import NullPostProcessor from './file/process/post/NullPostProcessor';
 export default class FileStorage {
     /**
      *
-     * @param {string} storagePath
-     * @param {string} tmpSubDirectory
+     * @param {FileStorageConfig} config
      */
-    constructor(storagePath, tmpSubDirectory = 'tmp') {
+    constructor(config) {
         /**
          *
-         * @type {string}
+         * @type {FileStorageConfig}
          * @private
          */
-        this._storagePath = storagePath;
-        /**
-         *
-         * @type {string}
-         * @private
-         */
-        this._tmpPath = path.normalize(
-            this._storagePath + path.sep + tmpSubDirectory + path.sep
-        );
-
+        this._config = config;
         /**
          *
          * @type {FileProcessFactory}
@@ -39,10 +28,10 @@ export default class FileStorage {
 
     /**
      *
-     * @return {string}
+     * @return {FileStorageConfig}
      */
-    getTmpDirectory() {
-        return this._tmpPath;
+    getConfig() {
+        return this._config;
     }
 
     /**
@@ -60,11 +49,12 @@ export default class FileStorage {
          *
          * @type {FileProcessInterface|boolean}
          */
-        const fileProcessor = this._fileProcessorFactory.create(fileData.getType());
+        const fileProcessor = this._fileProcessorFactory
+            .create(fileData.getType());
         if (fileProcessor === false) {
             return Promise.reject(new ErrorFileStorageProcessType());
         }
-
+        fileProcessor.setConfig(this._config);
         fileData = await fileProcessor.process(fileData, fileNameProvider);
         fileData = await postProcessor.postProcess(fileData);
         return Promise.resolve(fileData);

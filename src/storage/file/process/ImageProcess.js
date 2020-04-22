@@ -14,4 +14,13 @@ export default class ImageProcess extends FileProcessInterface {
     checkType(type) {
         return (FileTypeImage.TYPE === type.getType());
     }
+
+    setConfig(config) {
+        /**
+         *
+         * @type {FileStorageConfig}
+         * @private
+         */
+        this._config = config;
+    }
 }

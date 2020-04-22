@@ -147,7 +147,10 @@ export default class UploadRequest extends RequestInterface {
      * @private
      */
     _getTmpFilePath(fileName) {
-        const tmpDirectory = this._storageProvider.getFileStorage().getTmpDirectory();
+        const tmpDirectory = this._storageProvider
+            .getFileStorage()
+            .getConfig()
+            .getTmpDirectory();
         return tmpDirectory + new Date().valueOf().toString() + '_' + fileName;
     }
 

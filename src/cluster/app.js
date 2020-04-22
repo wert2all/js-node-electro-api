@@ -11,6 +11,7 @@ import RouteDefinition from '../routers/RouteDefinition';
 import AuthRequest from '../modules/auth/AuthRequest';
 import UploadRequest from '../modules/upload/UploadRequest';
 import FileStorage from '../storage/FileStorage';
+import FileStorageConfig from '../storage/file/FileStorageConfig';
 
 export default new Application(
     express(),
@@ -23,7 +24,11 @@ export default new Application(
         .create(
             new StorageProvider(
                 new SecretStorage('./../../secret.json'),
-                new FileStorage(path.normalize(__dirname + '/../../../data/files/')),
+                new FileStorage(
+                    new FileStorageConfig(
+                        path.normalize(__dirname + '/../../../data/files/')
+                    )
+                ),
                 new SQLiteConnection('./../secret.sqlite')
             )
         ))

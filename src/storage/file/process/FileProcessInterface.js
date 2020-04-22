@@ -26,4 +26,13 @@ export default class FileProcessInterface {
     checkType(type) {
         throw new ImplementationError(this, 'checkType');
     }
+
+    /**
+     * @abstract
+     * @param {FileStorageConfig} config
+     */
+    // eslint-disable-next-line no-unused-vars
+    setConfig(config) {
+        throw new ImplementationError(this, 'setConfig');
+    }
 }

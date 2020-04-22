@@ -1,5 +1,6 @@
 import ConnectionInterface from '../ConnectionInterface';
 import SQLiteTableSQLFactory from './SQLiteTableSQLFactory';
+const sqlite3 = require('sqlite3').verbose();
 
 /**
  * @class SQLiteConnection
@@ -79,7 +80,6 @@ export default class SQLiteConnection extends ConnectionInterface {
      */
     async _connect() {
         return new Promise((resolve, reject) => {
-            const sqlite3 = require('sqlite3').verbose();
             const db = new sqlite3.Database(this._connectionURI, err => {
                 if (err) {
                     reject(new Error(err.message));

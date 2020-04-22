@@ -1,4 +1,5 @@
 import ImplementationError from '../implementation-error/ImplementationError';
+import RepositoryErrorNoConnection from './error/RepositoryErrorNoConnection';
 
 /**
  * @abstract
@@ -9,12 +10,21 @@ export default class RepositoryAbstract {
      *
      * @param {ConnectionInterface} connection
      */
-    constructor(connection) {
+    constructor(connection = null) {
         /**
          *
-         * @type {ConnectionInterface}
+         * @type {ConnectionInterface|null}
+         * @private
          */
-        this.connection = connection;
+        this._connection = connection;
+    }
+
+    /**
+     *
+     * @param {ConnectionInterface} connection
+     */
+    setConnection(connection) {
+        this._connection = connection;
     }
 
     /**
@@ -23,8 +33,11 @@ export default class RepositoryAbstract {
      * @return {Promise<EntityInterface[]>}
      */
     async fetchData(entity) {
+        if (this._connection == null) {
+            return Promise.reject(new RepositoryErrorNoConnection());
+        }
         const filter = this._filterFactory().create(entity);
-        const list = await this.connection.select(this._getDefinition(), filter);
+        const list = await this._connection.select(this._getDefinition(), filter);
         return Promise.resolve(list.map(value => entity.create(value)));
     }
 

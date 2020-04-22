@@ -10,10 +10,9 @@ export default class FilesRepository extends RepositoryAbstract {
 
     /**
      *
-     * @param {ConnectionInterface} connection
      */
-    constructor(connection) {
-        super(connection);
+    constructor() {
+        super();
         /**
          *
          * @type {DefinitionTableInterface}

@@ -95,7 +95,8 @@ export default class UploadRequest extends RequestInterface {
     async _saveFile(fileData, userFiles) {
         //TODO
         fileData = await this._storageProvider.getFileStorage()
-            .moveFile(fileData, new ImageFileNameProvider());
+            .moveFile(fileData, new ImageFileNameProvider(userFiles));
+        console.log(fileData);
     }
 
     /**

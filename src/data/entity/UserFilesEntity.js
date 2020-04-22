@@ -17,6 +17,12 @@ export default class UserFilesEntity extends EntityInterface {
          * @private
          */
         this._data = new DataValue();
+        /**
+         *
+         * @type {UserEntity|null}
+         * @private
+         */
+        this._user = null;
     }
 
     /**
@@ -25,6 +31,7 @@ export default class UserFilesEntity extends EntityInterface {
      * @return {UserFilesEntity}
      */
     setUser(userEntity) {
+        this._user = userEntity;
         this._data.setData(
             UserFilesDefinition.COLUMN_GOOGLE_USER_ID,
             userEntity.getValue(UserDefinition.COLUMN_GOOGLE_ID)
@@ -51,5 +58,13 @@ export default class UserFilesEntity extends EntityInterface {
      */
     getData() {
         return this._data.toHash();
+    }
+
+    /**
+     *
+     * @return {UserEntity|null}
+     */
+    getUser() {
+        return this._user;
     }
 }

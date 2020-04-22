@@ -28,6 +28,12 @@ export default class FileData {
          * @private
          */
         this._type = type;
+        /**
+         *
+         * @type {string|boolean}
+         * @private
+         */
+        this._filepath = false;
     }
 
     /**
@@ -36,5 +42,21 @@ export default class FileData {
      */
     getType() {
         return this._type;
+    }
+
+    /**
+     *
+     * @param {string} path
+     */
+    setPath(path) {
+        this._filepath = path;
+    }
+
+    /**
+     *
+     * @return {string}
+     */
+    getName() {
+        return this._name;
     }
 }

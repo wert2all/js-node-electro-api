@@ -15,6 +15,7 @@ import FileTypeImage from '../../data/files/types/FileTypeImage';
 import FileData from '../../data/files/FileData';
 import FileSize from '../../data/files/size/FileSize';
 import UploadRequestCantTmpUpload from './error/UploadRequestCantTmpUpload';
+import ImageFileNameProvider from './imageprocess/ImageFileNameProvider';
 
 /**
  * @class UploadRequest
@@ -93,6 +94,8 @@ export default class UploadRequest extends RequestInterface {
     // eslint-disable-next-line no-unused-vars
     async _saveFile(fileData, userFiles) {
         //TODO
+        fileData = await this._storageProvider.getFileStorage()
+            .moveFile(fileData, new ImageFileNameProvider());
     }
 
     /**

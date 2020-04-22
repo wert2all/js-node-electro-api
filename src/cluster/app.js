@@ -1,4 +1,5 @@
 import express from 'express';
+import path from 'path';
 
 import Application from '../Application';
 import StorageProvider from '../storage/Provider';
@@ -9,6 +10,7 @@ import TariffRequest from '../modules/tariff/TariffRequest';
 import RouteDefinition from '../routers/RouteDefinition';
 import AuthRequest from '../modules/auth/AuthRequest';
 import UploadRequest from '../modules/upload/UploadRequest';
+import FileStorage from '../storage/FileStorage';
 
 export default new Application(
     express(),
@@ -21,6 +23,7 @@ export default new Application(
         .create(
             new StorageProvider(
                 new SecretStorage('./../../secret.json'),
+                new FileStorage(path.normalize(__dirname + '/../../../data/files/')),
                 new SQLiteConnection('./../secret.sqlite')
             )
         ))

@@ -5,18 +5,27 @@ export default class StorageProvider {
     /**
      *
      * @param {SecretStorage} secretStorage
+     * @param {FileStorage} fileStorage
      * @param {ConnectionInterface} connection
      */
-    constructor(secretStorage, connection) {
+    constructor(secretStorage, fileStorage, connection) {
         /**
          *
          * @type {SecretStorage}
+         * @private
          */
-        this.secret = secretStorage;
+        this._secret = secretStorage;
         /**
          * @type {ConnectionInterface}
+         * @private
          */
-        this.connection = connection;
+        this._connection = connection;
+        /**
+         *
+         * @type {FileStorage}
+         * @private
+         */
+        this._fileStorage = fileStorage;
     }
 
     /**
@@ -24,7 +33,7 @@ export default class StorageProvider {
      * @return {SecretStorage}
      */
     getSecretStorage() {
-        return this.secret;
+        return this._secret;
     }
 
     /**
@@ -32,6 +41,14 @@ export default class StorageProvider {
      * @return {ConnectionInterface}
      */
     getConnection() {
-        return this.connection;
+        return this._connection;
+    }
+
+    /**
+     *
+     * @return {FileStorage}
+     */
+    getFileStorage() {
+        return this._fileStorage;
     }
 }

@@ -24,6 +24,16 @@ import ImageFileNameProvider from './imageprocess/ImageFileNameProvider';
  */
 export default class UploadRequest extends RequestInterface {
 
+    constructor() {
+        super();
+        /**
+         *
+         * @type {FilesRepository}
+         * @private
+         */
+        this._repository = new FilesRepository();
+    }
+
     /**
      * @request {*} request
      * @return {Promise}
@@ -38,11 +48,11 @@ export default class UploadRequest extends RequestInterface {
 
             const fileData = await this._getFileData(requestData);
             const userFiles = this.makeUserFilesEntity(googleUserAccount);
-            const repository = new FilesRepository(this._storageProvider.getConnection());
+            this._repository.setConnection(this._storageProvider.getConnection());
             /**
              * @type {EntityInterface[]}
              */
-            const userFileList = await repository.fetchData(userFiles);
+            const userFileList = await this._repository.fetchData(userFiles);
             if (userFileList.length === 0) {
                 fileData.setPath(
                     await this._moveFileToTmpDirectory(
@@ -96,7 +106,7 @@ export default class UploadRequest extends RequestInterface {
         //TODO
         fileData = await this._storageProvider.getFileStorage()
             .moveFile(fileData, new ImageFileNameProvider(userFiles));
-        console.log(fileData);
+        const userEntity = userFiles.getUser();
     }
 
     /**

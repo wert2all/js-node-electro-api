@@ -7,7 +7,7 @@ import ImplementationError from '../../../lib/implementation-error/Implementatio
  */
 export default class FileProcessInterface {
     /**
-     *
+     * @abstract
      * @param {FileData}fileData
      * @param {FileNameProviderInterface} fileNameProvider
      * @return {Promise<FileData>}

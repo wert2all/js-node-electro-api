@@ -59,4 +59,12 @@ export default class FileData {
     getName() {
         return this._name;
     }
+
+    /**
+     *
+     * @return {string|boolean}
+     */
+    getPath() {
+        return this._filepath;
+    }
 }

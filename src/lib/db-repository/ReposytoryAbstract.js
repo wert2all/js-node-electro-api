@@ -29,6 +29,14 @@ export default class RepositoryAbstract {
 
     /**
      *
+     * @return {ConnectionInterface|null}
+     */
+    getConnection() {
+        return this._connection;
+    }
+
+    /**
+     *
      * @param {EntityInterface} entity
      * @return {Promise<EntityInterface[]>}
      */
@@ -37,7 +45,7 @@ export default class RepositoryAbstract {
             return Promise.reject(new RepositoryErrorNoConnection());
         }
         const filter = this._filterFactory().create(entity);
-        const list = await this._connection.select(this._getDefinition(), filter);
+        const list = await this._connection.select(this.getDefinition(), filter);
         return Promise.resolve(list.map(value => entity.create(value)));
     }
 
@@ -53,10 +61,9 @@ export default class RepositoryAbstract {
     /**
      *
      * @abstract
-     * @protected
      * @return DefinitionTableInterface
      */
-    _getDefinition() {
+    getDefinition() {
         throw new ImplementationError(this, '_getDefinition');
     }
 }

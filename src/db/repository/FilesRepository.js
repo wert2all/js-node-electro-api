@@ -24,7 +24,7 @@ export default class FilesRepository extends RepositoryAbstract {
          * @type {FilterFactoryInterface}
          * @private
          */
-        this._filterFactoryObject = new FilterFactory(this._getDefinition());
+        this._filterFactoryObject = new FilterFactory(this.getDefinition());
     }
 
     /**
@@ -49,7 +49,7 @@ export default class FilesRepository extends RepositoryAbstract {
      * @protected
      * @return DefinitionTableInterface
      */
-    _getDefinition() {
+    getDefinition() {
         return this._definition;
     }
 }

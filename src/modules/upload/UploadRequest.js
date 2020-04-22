@@ -13,6 +13,7 @@ import UploadRequestBadMime from './error/UploadRequestBadMime';
 import UploadRequestBadSize from './error/UploadRequestBadSize';
 import FileTypeImage from '../../data/files/types/FileTypeImage';
 import FileData from '../../data/files/FileData';
+import FileSize from '../../data/files/size/FileSize';
 
 /**
  * @class UploadRequest
@@ -41,9 +42,9 @@ export default class UploadRequest extends RequestInterface {
              */
             const userFileList = await repository.fetchData(userFiles);
             if (userFileList.length === 0) {
-                await this._saveFile(requestData, userFiles);
+                await this._saveFile(requestData.billFile.data, fileData, userFiles);
             }
-
+            response.dump = fileData;
             response.status = true;
         } catch (e) {
             response.dump = e;
@@ -77,19 +78,20 @@ export default class UploadRequest extends RequestInterface {
 
     /**
      *
-     * @param {RequestDataClass} requestData
+     * @param {{mv:function(string, function)}} fileObj
+     * @param {FileData} fileData
      * @param {UserFilesEntity} userFiles
      * @private
      */
     // eslint-disable-next-line no-unused-vars
-    async _saveFile(requestData, userFiles) {
+    async _saveFile(fileObj, fileData, userFiles) {
         //TODO
     }
 
     /**
      *
      * @param {RequestDataClass} requestData
-     * @return {Promise<FileTypeInterface>}
+     * @return {Promise<FileData>}
      * @private
      */
     async _getFileData(requestData) {
@@ -100,14 +102,17 @@ export default class UploadRequest extends RequestInterface {
         if (fileType === false) {
             return Promise.reject(new UploadRequestBadMime());
         }
-        if (!requestData.billFile.hasOwnProperty(('size'))
-            || requestData.billFile.size > 5242880
-        ) {
+        if (!requestData.billFile.hasOwnProperty(('size'))) {
             return Promise.reject(new UploadRequestBadSize());
         }
-        new FileData(fileType);
+        const fileSize = FileSize.fabric(requestData.billFile.size);
+        if (fileSize === false) {
+            return Promise.reject(new UploadRequestBadSize());
+        }
 
-        return Promise.resolve(fileType);
+        return Promise.resolve(
+            new FileData(requestData.billFile.name, fileType, fileSize)
+        );
     }
 
     /**

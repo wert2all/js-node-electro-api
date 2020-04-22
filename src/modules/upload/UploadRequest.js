@@ -11,6 +11,8 @@ import UserFilesEntity from '../../data/entity/UserFilesEntity';
 import FilesRepository from '../../db/repository/FilesRepository';
 import UploadRequestBadMime from './error/UploadRequestBadMime';
 import UploadRequestBadSize from './error/UploadRequestBadSize';
+import FileTypeImage from '../../data/files/types/FileTypeImage';
+import FileData from '../../data/files/FileData';
 
 /**
  * @class UploadRequest
@@ -31,7 +33,7 @@ export default class UploadRequest extends RequestInterface {
             const requestData = RequestDataClass.factory(request);
             const googleUserAccount = await this._getGoogleAccount(requestData);
 
-            await this._checkFile(requestData);
+            const fileData = await this._getFileData(requestData);
             const userFiles = this.makeUserFilesEntity(googleUserAccount);
             const repository = new FilesRepository(this.storageProvider.getConnection());
             /**
@@ -87,13 +89,15 @@ export default class UploadRequest extends RequestInterface {
     /**
      *
      * @param {RequestDataClass} requestData
-     * @return {Promise<void>}
+     * @return {Promise<FileTypeInterface>}
      * @private
      */
-    async _checkFile(requestData) {
-        if (!requestData.billFile.hasOwnProperty('mimetype')
-            || requestData.billFile.mimetype !== 'image/jpeg'
-        ) {
+    async _getFileData(requestData) {
+        if (!requestData.billFile.hasOwnProperty('mimetype')) {
+            return Promise.reject(new UploadRequestBadMime());
+        }
+        const fileType = FileTypeImage.fabric(requestData.billFile.mimetype);
+        if (fileType === false) {
             return Promise.reject(new UploadRequestBadMime());
         }
         if (!requestData.billFile.hasOwnProperty(('size'))
@@ -101,6 +105,9 @@ export default class UploadRequest extends RequestInterface {
         ) {
             return Promise.reject(new UploadRequestBadSize());
         }
+        new FileData(fileType);
+
+        return Promise.resolve(fileType);
     }
 
     /**

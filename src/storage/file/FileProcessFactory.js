@@ -1,7 +1,7 @@
 /**
  * @class FileProcessFactory
  */
-import ImplementationError from '../../lib/implementation-error/ImplementationError';
+import ImageProcess from './process/ImageProcess';
 
 export default class FileProcessFactory {
     /**
@@ -10,7 +10,9 @@ export default class FileProcessFactory {
      * @return {FileProcessInterface|boolean}
      */
     create(type) {
-        throw new ImplementationError(this, 'create');
+        if (new ImageProcess().checkType(type)) {
+            return new ImageProcess();
+        }
         return false;
     }
 }

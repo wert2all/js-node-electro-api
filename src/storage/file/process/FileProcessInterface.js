@@ -16,4 +16,14 @@ export default class FileProcessInterface {
     async process(fileData, fileNameProvider) {
         throw new ImplementationError(this, 'process');
     }
+
+    /**
+     * @abstract
+     * @param {FileTypeInterface} type
+     * @return {boolean}
+     */
+    // eslint-disable-next-line no-unused-vars
+    checkType(type) {
+        throw new ImplementationError(this, 'checkType');
+    }
 }

@@ -16,6 +16,8 @@ import FileData from '../../data/files/FileData';
 import FileSize from '../../data/files/size/FileSize';
 import UploadRequestCantTmpUpload from './error/UploadRequestCantTmpUpload';
 import ImageFileNameProvider from './imageprocess/ImageFileNameProvider';
+import EntityManager from '../../lib/db-entity-manager/EntityManager';
+import UserRepository from '../../db/repository/UserRepository';
 
 /**
  * @class UploadRequest
@@ -106,7 +108,15 @@ export default class UploadRequest extends RequestInterface {
         //TODO
         fileData = await this._storageProvider.getFileStorage()
             .moveFile(fileData, new ImageFileNameProvider(userFiles));
-        const userEntity = userFiles.getUser();
+
+        const entityManager = new EntityManager(this._repository.getConnection());
+        const userEntity = await entityManager
+            .save(new UserRepository().getDefinition(), userFiles.getUser());
+        userFiles.setUser(userEntity)
+            .setFilePath(fileData.getPath());
+        await entityManager
+            .save(this._repository.getDefinition(), userFiles);
+        return Promise.resolve();
     }
 
     /**

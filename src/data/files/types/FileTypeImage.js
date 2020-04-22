@@ -4,6 +4,8 @@ import FileTypeInterface from './FileTypeInterface';
  * @class FileTypeImage
  */
 export default class FileTypeImage extends FileTypeInterface {
+    static TYPE = 'image';
+
     constructor(mimeType) {
         super();
         this._mimeType = mimeType;
@@ -17,5 +19,9 @@ export default class FileTypeImage extends FileTypeInterface {
             default:
                 return false;
         }
+    }
+
+    getType() {
+        return FileTypeImage.TYPE;
     }
 }

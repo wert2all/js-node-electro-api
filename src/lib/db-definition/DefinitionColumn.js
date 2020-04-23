@@ -7,6 +7,7 @@ import DefinitionColumnInterface from './DefinitionColumnInterface';
  */
 export default class DefinitionColumn extends DefinitionColumnInterface {
     static COLUMN_TYPE_VARCHAR = 'varchar';
+    static COLUMN_TYPE_INTEGER = 'INTEGER';
 
 
     /**

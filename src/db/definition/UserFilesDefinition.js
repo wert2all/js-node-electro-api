@@ -8,6 +8,7 @@ import DefinitionColumn from '../../lib/db-definition/DefinitionColumn';
  */
 export default class UserFilesDefinition extends DefinitionTableInterface {
     static TABLE_NAME = 'user_files';
+    static COLUMN_ID = 'id';
     static COLUMN_GOOGLE_USER_ID = 'google_user_id';
     static COLUMN_YEARMON = 'yearmon';
     static COLUMN_PATH = 'path';
@@ -16,11 +17,18 @@ export default class UserFilesDefinition extends DefinitionTableInterface {
         super();
         this._columns = [
             new DefinitionColumn(
+                UserFilesDefinition.COLUMN_ID,
+                DefinitionColumn.COLUMN_TYPE_INTEGER,
+                false,
+                false,
+                true
+            ),
+            new DefinitionColumn(
                 UserFilesDefinition.COLUMN_GOOGLE_USER_ID,
                 DefinitionColumn.COLUMN_TYPE_VARCHAR,
                 false,
                 false,
-                true
+                false
             ),
             new DefinitionColumn(
                 UserFilesDefinition.COLUMN_YEARMON,
@@ -50,5 +58,12 @@ export default class UserFilesDefinition extends DefinitionTableInterface {
      */
     getTableName() {
         return UserFilesDefinition.TABLE_NAME;
+    }
+
+    /**
+     * @return {string}
+     */
+    getPrimaryField() {
+        return UserFilesDefinition.COLUMN_ID;
     }
 }

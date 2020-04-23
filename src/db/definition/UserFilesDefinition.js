@@ -15,14 +15,20 @@ export default class UserFilesDefinition extends DefinitionTableInterface {
 
     constructor() {
         super();
+        /**
+         *
+         * @type {DefinitionColumn}
+         * @private
+         */
+        this._primaryColumn = new DefinitionColumn(
+            UserFilesDefinition.COLUMN_ID,
+            DefinitionColumn.COLUMN_TYPE_INTEGER,
+            false,
+            false,
+            true
+        );
         this._columns = [
-            new DefinitionColumn(
-                UserFilesDefinition.COLUMN_ID,
-                DefinitionColumn.COLUMN_TYPE_INTEGER,
-                false,
-                false,
-                true
-            ),
+            this._primaryColumn,
             new DefinitionColumn(
                 UserFilesDefinition.COLUMN_GOOGLE_USER_ID,
                 DefinitionColumn.COLUMN_TYPE_VARCHAR,
@@ -61,9 +67,10 @@ export default class UserFilesDefinition extends DefinitionTableInterface {
     }
 
     /**
-     * @return {string}
+     *
+     * @return {DefinitionColumn}
      */
-    getPrimaryField() {
-        return UserFilesDefinition.COLUMN_ID;
+    getPrimaryColumn() {
+        return this._primaryColumn;
     }
 }

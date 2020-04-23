@@ -1,13 +1,13 @@
-/**
- * @class UserFilesEntity
- * @type EntityInterface
- * @extends EntityInterface
- */
 import EntityInterface from '../../lib/db-entity/EntityInterface';
 import DataValue from '../../lib/data-value/DataValue';
 import UserFilesDefinition from '../../db/definition/UserFilesDefinition';
 import UserDefinition from '../../db/definition/UserDefinition';
 
+/**
+ * @class UserFilesEntity
+ * @type EntityInterface
+ * @extends EntityInterface
+ */
 export default class UserFilesEntity extends EntityInterface {
     constructor() {
         super();
@@ -82,26 +82,11 @@ export default class UserFilesEntity extends EntityInterface {
     }
 
     /**
-     * @return {boolean}
-     */
-    isLoaded() {
-        return this._isLoaded;
-    }
-
-    /**
-     * @return {EntityInterface}
-     */
-    setLoaded() {
-        this._isLoaded = true;
-        return this;
-    }
-
-    /**
      *
-     * @return {EntityInterface}
+     * @param {string} key
+     * @return {string}
      */
-    setNoLoaded() {
-        this._isLoaded = false;
-        return this;
+    getValue(key) {
+        return this._data.getData(key);
     }
 }

@@ -115,8 +115,7 @@ export default class UploadRequest extends RequestInterface {
         const userEntity = await entityManager
             .save(new UserRepository().getDefinition(), userFiles.getUser());
         userFiles.setUser(userEntity)
-            .setFilePath(fileData.getPath())
-            .setNoLoaded();
+            .setFilePath(fileData.getPath());
         await entityManager
             .save(this._repository.getDefinition(), userFiles);
         return Promise.resolve();

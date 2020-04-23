@@ -7,13 +7,24 @@ import DefinitionSQLBuilderInterface from '../../../db-definition/DefinitionSQLB
  * @extends DefinitionSQLBuilderInterface
  */
 export default class SQLiteInsertSQLBuilder extends DefinitionSQLBuilderInterface {
-    // /**
-    //  *
-    //  * @param {DefinitionTableInterface} definition
-    //  * @param {Object<string, string>} data
-    //  * @return string
-    //  */
-    // buildSQL(definition, data) {
-    //     return '';
-    // }
+    /**
+     *
+     * @param {DefinitionTableInterface} definition
+     * @param {Object<string, string>} data
+     * @return string
+     */
+    buildSQL(definition, data) {
+        let sql = ' insert into ' + definition.getTableName() + ' ( ';
+        sql += definition.getColumns().map(column =>
+            data.hasOwnProperty(column.getColumnName())
+                ? column.getColumnName()
+                : false
+        )
+            .filter(value => !!value)
+            .join(',');
+        sql += ' ) values (';
+        sql += definition.getColumns().map(() => ' ?').join(',');
+        sql += ' )';
+        return sql;
+    }
 }

@@ -2,6 +2,7 @@
  * @class EntityManager
  */
 import EntityManagerError from './error/EntityManagerError';
+import ImplementationError from '../implementation-error/ImplementationError';
 
 export default class EntityManager {
     /**
@@ -25,7 +26,7 @@ export default class EntityManager {
      */
     async save(definition, entity) {
         if (this._connection !== null) {
-            if (entity.isLoaded()) {
+            if (await this._isExist(definition, entity)) {
                 await this._connection.update(definition, entity.getData());
             } else {
                 const primaryFieldValue = await this._connection
@@ -36,5 +37,16 @@ export default class EntityManager {
         } else {
             return Promise.reject(new EntityManagerError());
         }
+    }
+
+    /**
+     *
+     * @param {DefinitionTableInterface} definition
+     * @param {EntityInterface} entity
+     * @return Promise<boolean>}
+     * @private
+     */
+    async _isExist(definition, entity) {
+        throw new ImplementationError(this, '_isExist');
     }
 }

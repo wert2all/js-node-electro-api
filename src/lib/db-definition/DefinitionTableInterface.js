@@ -21,4 +21,12 @@ export default class DefinitionTableInterface {
     getTableName() {
         throw new ImplementationError(this, 'getTableName');
     }
+
+    /**
+     * @abstract
+     * @return {string}
+     */
+    getPrimaryField() {
+        throw new ImplementationError(this, 'getTableName');
+    }
 }

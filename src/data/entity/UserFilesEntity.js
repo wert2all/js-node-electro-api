@@ -78,7 +78,7 @@ export default class UserFilesEntity extends EntityInterface {
             UserFilesDefinition.COLUMN_PATH,
             path
         );
-        return this
+        return this;
     }
 
 }

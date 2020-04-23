@@ -45,24 +45,19 @@ export default class UploadRequest extends RequestInterface {
     async createResponse(request) {
         const response = new ResponseDataClass();
         try {
-            const requestData = RequestDataClass.factory(request);
-            const googleUserAccount = await this._getGoogleAccount(requestData);
-
+            const requestData = await this._prepareRequest(request);
+            const userFilesEntity = this.makeUserFilesEntity(
+                requestData.getGoogleAccount()
+            );
             const fileData = await this._getFileData(requestData);
-            const userFiles = this.makeUserFilesEntity(googleUserAccount);
+
             this._repository.setConnection(this._storageProvider.getConnection());
             /**
              * @type {EntityInterface[]}
              */
-            const userFileList = await this._repository.fetchData(userFiles);
+            const userFileList = await this._repository.fetchData(userFilesEntity);
             if (userFileList.length === 0) {
-                fileData.setPath(
-                    await this._moveFileToTmpDirectory(
-                        requestData.billFile,
-                        fileData.getName()
-                    )
-                );
-                await this._saveFile(fileData, userFiles);
+                await this._saveFile(fileData, userFilesEntity);
             }
             response.dump = fileData;
             response.status = true;
@@ -105,9 +100,16 @@ export default class UploadRequest extends RequestInterface {
      */
     // eslint-disable-next-line no-unused-vars
     async _saveFile(fileData, userFiles) {
-        //TODO
-        fileData = await this._storageProvider.getFileStorage()
-            .moveFile(fileData, new ImageFileNameProvider(userFiles));
+        const tmpFilePath = await this._moveFileToTmpDirectory(
+            fileData.getFsLink(),
+            fileData.getName()
+        );
+        fileData = await this._storageProvider
+            .getFileStorage()
+            .moveFile(
+                fileData.setPath(tmpFilePath),
+                new ImageFileNameProvider(userFiles)
+            );
 
         const entityManager = new EntityManager(this._repository.getConnection());
         const userEntity = await entityManager
@@ -143,6 +145,7 @@ export default class UploadRequest extends RequestInterface {
 
         return Promise.resolve(
             new FileData(requestData.billFile.name, fileType, fileSize)
+                .setFileFsLink(requestData.billFile)
         );
     }
 
@@ -192,5 +195,19 @@ export default class UploadRequest extends RequestInterface {
                 resolve(tmpFileName);
             });
         });
+    }
+
+    /**
+     *
+     * @param request
+     * @return {Promise<RequestDataClass>}
+     * @private
+     */
+    async _prepareRequest(request) {
+        const requestData = RequestDataClass.factory(request);
+        requestData.setGoogleAccount(
+            await this._getGoogleAccount(requestData)
+        );
+        return Promise.resolve(requestData);
     }
 }

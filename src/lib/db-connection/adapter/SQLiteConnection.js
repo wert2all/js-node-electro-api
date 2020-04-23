@@ -1,5 +1,7 @@
 import ConnectionInterface from '../ConnectionInterface';
 import SQLiteTableSQLFactory from './SQLiteTableSQLFactory';
+import ImplementationError from '../../implementation-error/ImplementationError';
+
 const sqlite3 = require('sqlite3').verbose();
 
 /**
@@ -33,6 +35,20 @@ export default class SQLiteConnection extends ConnectionInterface {
         await this._createTable(definition, connection);
         const sql = this._buildSelect(definition, filter);
         return this._query(connection, sql, this._buildWhereData(filter));
+    }
+
+    /**
+     *
+     * @param {DefinitionTableInterface} definition
+     * @param {Object<string, string>} data
+     * @return {Promise<string>}
+     */
+    // eslint-disable-next-line no-unused-vars
+    async insert(definition, data) {
+        const connection = await this._connect();
+        await this._createTable(definition, connection);
+        const sql = this._buildInsert(definition, data);
+        return this._query(connection, sql, this._buildInsertData(data));
     }
 
     /**
@@ -147,5 +163,28 @@ export default class SQLiteConnection extends ConnectionInterface {
      */
     _createTableFactory() {
         return new SQLiteTableSQLFactory();
+    }
+
+    /**
+     *
+     * @param {DefinitionTableInterface} definition
+     * @param {Object<string, string>} data
+     * @return {string}
+     * @private
+     */
+    // eslint-disable-next-line no-unused-vars
+    _buildInsert(definition, data) {
+        throw new ImplementationError(this, '_buildInsert');
+    }
+
+    /**
+     *
+     *@param {Object<string, string>} data
+     * @return {Array<string>}
+     * @private
+     */
+    // eslint-disable-next-line no-unused-vars
+    _buildInsertData(data) {
+        throw new ImplementationError(this, '_buildInsertData');
     }
 }

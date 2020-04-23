@@ -1,6 +1,9 @@
 import ConnectionInterface from '../ConnectionInterface';
-import SQLiteTableSQLFactory from './SQLiteTableSQLFactory';
+import SQLiteTableSQLBuilder from './builder/SQLiteTableSQLBuilder';
+import SQLiteSelectSQLBuilder from './builder/SQLiteSelectSQLBuilder';
+import SQLiteInsertSQLBuilder from './builder/SQLiteInsertSQLBuilder';
 import ImplementationError from '../../implementation-error/ImplementationError';
+import SQLiteUpdateSQLBuilder from './builder/SQLiteUpdateSQLBuilder';
 
 const sqlite3 = require('sqlite3').verbose();
 
@@ -22,6 +25,31 @@ export default class SQLiteConnection extends ConnectionInterface {
          * @private
          */
         this._connectionURI = connectionURI;
+
+        /**
+         *
+         * @type {SQLiteTableSQLBuilder}
+         * @private
+         */
+        this._builderCreateTable = new SQLiteTableSQLBuilder();
+        /**
+         *
+         * @type {SQLiteSelectSQLBuilder}
+         * @private
+         */
+        this._buiderSelect = new SQLiteSelectSQLBuilder();
+        /**
+         *
+         * @type {SQLiteInsertSQLBuilder}
+         * @private
+         */
+        this._builderInsert = new SQLiteInsertSQLBuilder();
+        /**
+         *
+         * @type {SQLiteUpdateSQLBuilder}
+         * @private
+         */
+        this._builderUpdate = new SQLiteUpdateSQLBuilder();
     }
 
     /**
@@ -33,8 +61,13 @@ export default class SQLiteConnection extends ConnectionInterface {
     async select(definition, filter) {
         const connection = await this._connect();
         await this._createTable(definition, connection);
-        const sql = this._buildSelect(definition, filter);
-        return this._query(connection, sql, this._buildWhereData(filter));
+        const data = {};
+        filter.getFilterData().forEach(filter => {
+            data[filter.field] = ' ' + filter.sign + ' ?';
+        });
+
+        const sql = this._buiderSelect.buildSQL(definition, data);
+        return this._query(connection, sql, this._buildQueryData(data));
     }
 
     /**
@@ -47,25 +80,21 @@ export default class SQLiteConnection extends ConnectionInterface {
     async insert(definition, data) {
         const connection = await this._connect();
         await this._createTable(definition, connection);
-        const sql = this._buildInsert(definition, data);
-        return this._query(connection, sql, this._buildInsertData(data));
+        const sql = this._builderInsert.buildSQL(definition, data);
+        return this._query(connection, sql, this._buildQueryData(data));
     }
 
     /**
-     *
      * @param {DefinitionTableInterface} definition
-     * @param {FilterInterface} filter
-     * @return {string}
-     * @private
+     * @param {Object<string, string>} data
+     * @return {Promise<void>}
      */
-    _buildSelect(definition, filter) {
-        const whereCond = filter.getFilterData()
-            .map(filterData => filterData.field + filterData.sign + '?');
-        return 'Select * from '
-            + definition.getTableName()
-            + this._buildWhere(whereCond)
-            + this._buildOrder()
-            + this._buildLimit();
+    // eslint-disable-next-line no-unused-vars
+    async update(definition, data) {
+        const connection = await this._connect();
+        await this._createTable(definition, connection);
+        const sql = this._builderUpdate.buildSQL(definition, data);
+        return this._query(connection, sql, this._buildQueryData(data));
     }
 
     /**
@@ -107,42 +136,12 @@ export default class SQLiteConnection extends ConnectionInterface {
 
     /**
      *
-     * @param {Array<string>} whereCond
-     * @return {string}
-     * @private
-     */
-    _buildWhere(whereCond) {
-        return whereCond.length > 0 ? ' where ' + whereCond.join(' and ') : '';
-    }
-
-    /**
-     *
-     * @return {string}
-     * @private
-     */
-    _buildOrder() {
-        //TODO
-        return '';
-    }
-
-    /**
-     *
-     * @return {string}
-     * @private
-     */
-    _buildLimit() {
-        //TODO
-        return ' ';
-    }
-
-    /**
-     *
-     * @param {FilterInterface} filter
      * @return {Array<string>}
      * @private
+     * @param {Object<string, string>}data
      */
-    _buildWhereData(filter) {
-        return filter.getFilterData().map(filterData => filterData.value);
+    _buildQueryData(data) {
+        return Object.keys(data).map(key => data[key]);
     }
 
     /**
@@ -153,38 +152,7 @@ export default class SQLiteConnection extends ConnectionInterface {
      * @private
      */
     async _createTable(definition, connection) {
-        const tableSQl = this._createTableFactory().createSQL(definition);
+        const tableSQl = this._builderCreateTable.buildSQL(definition, null);
         return this._query(connection, tableSQl, []);
-    }
-
-    /**
-     * @return DefinitionTableSQLFactoryInterface
-     * @private
-     */
-    _createTableFactory() {
-        return new SQLiteTableSQLFactory();
-    }
-
-    /**
-     *
-     * @param {DefinitionTableInterface} definition
-     * @param {Object<string, string>} data
-     * @return {string}
-     * @private
-     */
-    // eslint-disable-next-line no-unused-vars
-    _buildInsert(definition, data) {
-        throw new ImplementationError(this, '_buildInsert');
-    }
-
-    /**
-     *
-     *@param {Object<string, string>} data
-     * @return {Array<string>}
-     * @private
-     */
-    // eslint-disable-next-line no-unused-vars
-    _buildInsertData(data) {
-        throw new ImplementationError(this, '_buildInsertData');
     }
 }

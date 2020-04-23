@@ -1,22 +1,21 @@
 // eslint-disable-next-line max-len
-import TableSQLFactoryInterface from '../../db-definition/DefinitionTableSQLFactoryInterface';
-import DefinitionColumn from '../../db-definition/DefinitionColumn';
+import DefinitionSQLBuilderInterface from '../../../db-definition/DefinitionSQLBuilderInterface';
+import DefinitionColumn from '../../../db-definition/DefinitionColumn';
 
 /**
- * @class SQLiteTableSQLFactory
- * @type TableSQLFactoryInterface
- * @extends TableSQLFactoryInterface
+ * @class SQLiteTableSQLBuilder
+ * @type DefinitionSQLBuilderInterface
+ * @extends DefinitionSQLBuilderInterface
  */
-export default class SQLiteTableSQLFactory extends TableSQLFactoryInterface {
+export default class SQLiteTableSQLBuilder extends DefinitionSQLBuilderInterface {
     /**
      * @param {DefinitionTableInterface} definition
      * @return string
      */
-    createSQL(definition) {
-        return `CREATE TABLE IF NOT EXISTS ${definition.getTableName()}
-            (
-                ${this._columnsSQL(definition)}
-            )`;
+    // eslint-disable-next-line no-unused-vars
+    buildSQL(definition, data) {
+        return 'CREATE TABLE IF NOT EXISTS ' + definition.getTableName() +
+            '(' + this._columnsSQL(definition) + ')';
     }
 
     /**

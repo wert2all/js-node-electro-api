@@ -2,6 +2,7 @@
  * @class EntityManager
  */
 import EntityManagerError from './error/EntityManagerError';
+import ImplementationError from '../implementation-error/ImplementationError';
 
 export default class EntityManager {
     /**

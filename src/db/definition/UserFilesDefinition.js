@@ -10,6 +10,7 @@ export default class UserFilesDefinition extends DefinitionTableInterface {
     static TABLE_NAME = 'user_files';
     static COLUMN_GOOGLE_USER_ID = 'google_user_id';
     static COLUMN_YEARMON = 'yearmon';
+    static COLUMN_PATH = 'path';
 
     constructor() {
         super();
@@ -23,6 +24,12 @@ export default class UserFilesDefinition extends DefinitionTableInterface {
             ),
             new DefinitionColumn(
                 UserFilesDefinition.COLUMN_YEARMON,
+                DefinitionColumn.COLUMN_TYPE_VARCHAR,
+                false,
+                false
+            ),
+            new DefinitionColumn(
+                UserFilesDefinition.COLUMN_PATH,
                 DefinitionColumn.COLUMN_TYPE_VARCHAR,
                 false,
                 false

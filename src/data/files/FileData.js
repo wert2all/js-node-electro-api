@@ -47,9 +47,11 @@ export default class FileData {
     /**
      *
      * @param {string} path
+     * @return {FileData}
      */
     setPath(path) {
         this._filepath = path;
+        return this;
     }
 
     /**
@@ -66,5 +68,27 @@ export default class FileData {
      */
     getPath() {
         return this._filepath;
+    }
+
+    /**
+     *
+     * @param link
+     * @return {FileData}
+     */
+    setFileFsLink(link) {
+        /**
+         * @type {*}
+         * @private
+         */
+        this._fsLink = link;
+        return this;
+    }
+
+    /**
+     *
+     * @return {*}
+     */
+    getFsLink() {
+        return this._fsLink;
     }
 }

@@ -97,7 +97,6 @@ export default class UserFilesEntity extends EntityInterface {
      * @param {string} value
      * @return {EntityInterface}
      */
-    // eslint-disable-next-line no-unused-vars
     setValue(key, value) {
         this._data.setData(key, value);
         return this;

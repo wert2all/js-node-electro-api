@@ -2,6 +2,7 @@ import EntityInterface from '../../lib/db-entity/EntityInterface';
 import DataValue from '../../lib/data-value/DataValue';
 import UserFilesDefinition from '../../db/definition/UserFilesDefinition';
 import UserDefinition from '../../db/definition/UserDefinition';
+import ImplementationError from '../../lib/implementation-error/ImplementationError';
 
 /**
  * @class UserFilesEntity
@@ -88,5 +89,16 @@ export default class UserFilesEntity extends EntityInterface {
      */
     getValue(key) {
         return this._data.getData(key);
+    }
+
+    /**
+     *
+     * @param {string} key
+     * @param {string} value
+     * @return {EntityInterface}
+     */
+    setValue(key, value) {
+        this._data.setData(key, value);
+        return this;
     }
 }

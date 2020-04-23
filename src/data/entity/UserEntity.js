@@ -49,4 +49,15 @@ export default class UserEntity extends EntityInterface {
     getValue(key) {
         return this._data.getData(key);
     }
+
+    /**
+     *
+     * @param {string} key
+     * @param {string} value
+     * @return {EntityInterface}
+     */
+    setValue(key, value) {
+        this._data.setData(key, value);
+        return this;
+    }
 }

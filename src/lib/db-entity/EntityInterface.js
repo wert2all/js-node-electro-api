@@ -38,9 +38,34 @@ export default class EntityInterface {
      *
      * @param {string} key
      * @param {string} value
+     * @return {EntityInterface}
      */
     // eslint-disable-next-line no-unused-vars
     setValue(key, value) {
         throw new ImplementationError(this, 'setValue');
+    }
+
+    /**
+     * @abstract
+     * @return {boolean}
+     */
+    isLoaded() {
+        throw new ImplementationError(this, 'isLoaded');
+    }
+
+    /**
+     * @abstract
+     * @return {EntityInterface}
+     */
+    setLoaded() {
+        throw new ImplementationError(this, 'setLoaded');
+    }
+
+    /**
+     * @abstract
+     * @return {EntityInterface}
+     */
+    setNoLoaded() {
+        throw new ImplementationError(this, 'setNoLoaded');
     }
 }

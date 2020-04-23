@@ -1,7 +1,6 @@
 /**
  * @class EntityManager
  */
-import ImplementationError from '../implementation-error/ImplementationError';
 import EntityManagerError from './error/EntityManagerError';
 
 export default class EntityManager {
@@ -26,8 +25,7 @@ export default class EntityManager {
      */
     async save(definition, entity) {
         if (this._connection !== null) {
-            const primaryFieldValue = entity.getValue(definition.getPrimaryField());
-            if (primaryFieldValue !== null) {
+            if (entity.isLoaded()) {
                 await this._connection.update(definition, entity.getData());
             } else {
                 const primaryFieldValue = await this._connection

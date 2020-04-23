@@ -2,7 +2,6 @@ import ConnectionInterface from '../ConnectionInterface';
 import SQLiteTableSQLBuilder from './builder/SQLiteTableSQLBuilder';
 import SQLiteSelectSQLBuilder from './builder/SQLiteSelectSQLBuilder';
 import SQLiteInsertSQLBuilder from './builder/SQLiteInsertSQLBuilder';
-import ImplementationError from '../../implementation-error/ImplementationError';
 import SQLiteUpdateSQLBuilder from './builder/SQLiteUpdateSQLBuilder';
 
 const sqlite3 = require('sqlite3').verbose();
@@ -97,7 +96,9 @@ export default class SQLiteConnection extends ConnectionInterface {
         const connection = await this._connect();
         await this._createTable(definition, connection);
         const sql = this._builderUpdate.buildSQL(definition, data);
-        return this._query(connection, sql, this._buildQueryData(data));
+        const prepareValues = this._buildQueryData(data);
+        prepareValues.push(data[definition.getPrimaryColumn().getColumnName()]);
+        return this._query(connection, sql, prepareValues);
     }
 
     /**

@@ -29,7 +29,7 @@ export default new Application(
                         path.normalize(__dirname + '/../../../data/files/')
                     )
                 ),
-                new SQLiteConnection('./../secret.sqlite')
+                new SQLiteConnection('./secret.sqlite')
             )
         ))
     .run()

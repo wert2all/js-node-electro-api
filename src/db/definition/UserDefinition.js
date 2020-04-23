@@ -1,4 +1,5 @@
 import DefinitionTableInterface from '../../lib/db-definition/DefinitionTableInterface';
+import DefinitionColumn from '../../lib/db-definition/DefinitionColumn';
 
 /**
  * @class UserDefinition
@@ -11,11 +12,57 @@ export default class UserDefinition extends DefinitionTableInterface {
     static COLUMN_GOOGLE_NAME = 'name';
     static COLUMN_GOOGLE_EMAIL = 'email';
 
+    constructor() {
+        super();
+        /**
+         *
+         * @type {DefinitionColumnInterface[]}
+         * @private
+         */
+        this._columns = [
+            new DefinitionColumn(
+                UserDefinition.COLUMN_GOOGLE_ID,
+                DefinitionColumn.COLUMN_TYPE_VARCHAR,
+                false,
+                false,
+                true
+            ),
+            new DefinitionColumn(
+                UserDefinition.COLUMN_GOOGLE_NAME,
+                DefinitionColumn.COLUMN_TYPE_VARCHAR,
+                true,
+                '',
+                false
+            ),
+            new DefinitionColumn(
+                UserDefinition.COLUMN_GOOGLE_EMAIL,
+                DefinitionColumn.COLUMN_TYPE_VARCHAR,
+                true,
+                '',
+                false
+            ),
+        ];
+    }
+
     /**
      *
      * @return {string}
      */
     getTableName() {
         return UserDefinition.TABLE_NAME;
+    }
+
+    /**
+     * @return {DefinitionColumnInterface[]}
+     */
+    getColumns() {
+        return this._columns;
+    }
+
+    /**
+     * @return {string}
+     */
+    getPrimaryField() {
+        return UserDefinition.COLUMN_GOOGLE_ID;
     }
 }

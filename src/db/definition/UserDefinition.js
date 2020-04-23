@@ -16,17 +16,23 @@ export default class UserDefinition extends DefinitionTableInterface {
         super();
         /**
          *
+         * @type {DefinitionColumn}
+         * @private
+         */
+        this._primaryColumn = new DefinitionColumn(
+            UserDefinition.COLUMN_GOOGLE_ID,
+            DefinitionColumn.COLUMN_TYPE_VARCHAR,
+            false,
+            false,
+            true
+        );
+        /**
+         *
          * @type {DefinitionColumnInterface[]}
          * @private
          */
         this._columns = [
-            new DefinitionColumn(
-                UserDefinition.COLUMN_GOOGLE_ID,
-                DefinitionColumn.COLUMN_TYPE_VARCHAR,
-                false,
-                false,
-                true
-            ),
+            this._primaryColumn,
             new DefinitionColumn(
                 UserDefinition.COLUMN_GOOGLE_NAME,
                 DefinitionColumn.COLUMN_TYPE_VARCHAR,
@@ -60,9 +66,11 @@ export default class UserDefinition extends DefinitionTableInterface {
     }
 
     /**
-     * @return {string}
+     *
+     * @return {DefinitionColumn}
      */
-    getPrimaryField() {
-        return UserDefinition.COLUMN_GOOGLE_ID;
+    getPrimaryColumn() {
+        return this._primaryColumn;
     }
+
 }

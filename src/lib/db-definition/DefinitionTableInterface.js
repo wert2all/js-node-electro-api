@@ -24,14 +24,6 @@ export default class DefinitionTableInterface {
 
     /**
      * @abstract
-     * @return {string}
-     */
-    getPrimaryField() {
-        throw new ImplementationError(this, 'getPrimaryField');
-    }
-
-    /**
-     * @abstract
      * @return {DefinitionColumnInterface}
      */
     getPrimaryColumn() {

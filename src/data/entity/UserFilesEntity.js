@@ -81,4 +81,27 @@ export default class UserFilesEntity extends EntityInterface {
         return this;
     }
 
+    /**
+     * @return {boolean}
+     */
+    isLoaded() {
+        return this._isLoaded;
+    }
+
+    /**
+     * @return {EntityInterface}
+     */
+    setLoaded() {
+        this._isLoaded = true;
+        return this;
+    }
+
+    /**
+     *
+     * @return {EntityInterface}
+     */
+    setNoLoaded() {
+        this._isLoaded = false;
+        return this;
+    }
 }

@@ -16,6 +16,12 @@ export default class UserEntity extends EntityInterface {
          * @private
          */
         this._data = new DataValue();
+        /**
+         *
+         * @type {boolean}
+         * @private
+         */
+        this._isLoaded = false;
     }
 
     /**
@@ -48,5 +54,29 @@ export default class UserEntity extends EntityInterface {
      */
     getValue(key) {
         return this._data.getData(key);
+    }
+
+    /**
+     * @return {boolean}
+     */
+    isLoaded() {
+        return this._isLoaded;
+    }
+
+    /**
+     * @return {EntityInterface}
+     */
+    setLoaded() {
+        this._isLoaded = true;
+        return this;
+    }
+
+    /**
+     *
+     * @return {EntityInterface}
+     */
+    setNoLoaded() {
+        this._isLoaded = false;
+        return this;
     }
 }

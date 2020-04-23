@@ -29,4 +29,12 @@ export default class DefinitionTableInterface {
     getPrimaryField() {
         throw new ImplementationError(this, 'getPrimaryField');
     }
+
+    /**
+     * @abstract
+     * @return {DefinitionColumnInterface}
+     */
+    getPrimaryColumn() {
+        throw new ImplementationError(this, 'getPrimaryColumn');
+    }
 }

@@ -3,6 +3,8 @@
  */
 import EntityManagerError from './error/EntityManagerError';
 import ImplementationError from '../implementation-error/ImplementationError';
+import FilterData from '../db-filter/FilterData';
+import Filter from '../db-filter/Filter';
 
 export default class EntityManager {
     /**
@@ -47,6 +49,16 @@ export default class EntityManager {
      * @private
      */
     async _isExist(definition, entity) {
-        throw new ImplementationError(this, '_isExist');
+        const primaryValue = entity.getValue(
+            definition.getPrimaryColumn().getColumnName()
+        );
+        if (primaryValue !== null) {
+            const filter = new Filter();
+            filter.addColumn(definition.getPrimaryColumn(), primaryValue);
+            const entityDbValue = await this._connection.select(definition, filter);
+            return Promise.resolve(entityDbValue.length > 0);
+        } else {
+            return Promise.resolve(false);
+        }
     }
 }

@@ -83,6 +83,8 @@ export default class SQLiteConnection extends ConnectionInterface {
         const connection = await this._connect();
         await this._createTable(definition, connection);
         const sql = this._builderInsert.buildSQL(definition, data);
+        const prepareValues = this._buildQueryData(data);
+        console.log(prepareValues);
         return this._query(connection, sql, this._buildQueryData(data));
     }
 

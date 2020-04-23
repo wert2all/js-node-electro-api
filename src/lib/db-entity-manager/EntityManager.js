@@ -31,6 +31,7 @@ export default class EntityManager {
             } else {
                 const primaryFieldValue = await this._connection
                     .insert(definition, entity.getData());
+                console.log(primaryFieldValue);
                 entity.setValue(
                     definition.getPrimaryColumn().getColumnName(),
                     primaryFieldValue

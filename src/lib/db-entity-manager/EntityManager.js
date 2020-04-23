@@ -2,8 +2,6 @@
  * @class EntityManager
  */
 import EntityManagerError from './error/EntityManagerError';
-import ImplementationError from '../implementation-error/ImplementationError';
-import FilterData from '../db-filter/FilterData';
 import Filter from '../db-filter/Filter';
 
 export default class EntityManager {
@@ -33,7 +31,10 @@ export default class EntityManager {
             } else {
                 const primaryFieldValue = await this._connection
                     .insert(definition, entity.getData());
-                entity.setValue(definition.getPrimaryField(), primaryFieldValue);
+                entity.setValue(
+                    definition.getPrimaryColumn().getColumnName(),
+                    primaryFieldValue
+                );
             }
             return Promise.resolve(entity);
         } else {

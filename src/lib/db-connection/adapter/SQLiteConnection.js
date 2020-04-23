@@ -61,12 +61,15 @@ export default class SQLiteConnection extends ConnectionInterface {
     async select(definition, filter) {
         const connection = await this._connect();
         await this._createTable(definition, connection);
-        const data = {};
+        let data = {};
         filter.getFilterData().forEach(filter => {
             data[filter.field] = ' ' + filter.sign + ' ?';
         });
-
         const sql = this._buiderSelect.buildSQL(definition, data);
+        data = {};
+        filter.getFilterData().map(filter => {
+            data[filter.field] = filter.value;
+        });
         return this._query(connection, sql, this._buildQueryData(data));
     }
 

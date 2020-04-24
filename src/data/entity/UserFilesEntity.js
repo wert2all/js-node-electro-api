@@ -2,7 +2,6 @@ import EntityInterface from '../../lib/db-entity/EntityInterface';
 import DataValue from '../../lib/data-value/DataValue';
 import UserFilesDefinition from '../../db/definition/UserFilesDefinition';
 import UserDefinition from '../../db/definition/UserDefinition';
-import ImplementationError from '../../lib/implementation-error/ImplementationError';
 
 /**
  * @class UserFilesEntity
@@ -100,5 +99,17 @@ export default class UserFilesEntity extends EntityInterface {
     setValue(key, value) {
         this._data.setData(key, value);
         return this;
+    }
+
+    /**
+     * @param {Object<string,string>}value
+     * @return EntityInterface
+     */
+    create(value) {
+        const newObj = new UserFilesEntity();
+        Object.keys(value).map(key => {
+            newObj.setValue(key, value[key]);
+        });
+        return newObj;
     }
 }

@@ -60,4 +60,16 @@ export default class UserEntity extends EntityInterface {
         this._data.setData(key, value);
         return this;
     }
+
+    /**
+     * @param {Object<string,string>}value
+     * @return EntityInterface
+     */
+    create(value) {
+        const newObj = new UserEntity();
+        Object.keys(value).map(key => {
+            newObj.setValue(key, value[key]);
+        });
+        return newObj;
+    }
 }

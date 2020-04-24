@@ -18,6 +18,7 @@ import UploadRequestCantTmpUpload from './error/UploadRequestCantTmpUpload';
 import ImageFileNameProvider from './imageprocess/ImageFileNameProvider';
 import EntityManager from '../../lib/db-entity-manager/EntityManager';
 import UserRepository from '../../db/repository/UserRepository';
+import UploadRequestCantSave from './error/UploadRequestCantSave';
 
 /**
  * @class UploadRequest
@@ -61,7 +62,7 @@ export default class UploadRequest extends RequestInterface {
             }
             response.status = true;
         } catch (e) {
-            response.dump = e;
+            console.log(e.message);
             response.status = false;
             response.message = e.message;
         }
@@ -99,24 +100,30 @@ export default class UploadRequest extends RequestInterface {
      */
     // eslint-disable-next-line no-unused-vars
     async _saveFile(fileData, userFiles) {
-        const tmpFilePath = await this._moveFileToTmpDirectory(
-            fileData.getFsLink(),
-            fileData.getName()
-        );
-        fileData = await this._storageProvider
-            .getFileStorage()
-            .moveFile(
-                fileData.setPath(tmpFilePath),
-                new ImageFileNameProvider(userFiles)
+        try {
+            const tmpFilePath = await this._moveFileToTmpDirectory(
+                fileData.getFsLink(),
+                fileData.getName()
             );
+            fileData = await this._storageProvider
+                .getFileStorage()
+                .moveFile(
+                    fileData.setPath(tmpFilePath),
+                    new ImageFileNameProvider(userFiles)
+                );
 
-        const entityManager = new EntityManager(this._repository.getConnection());
-        const userEntity = await entityManager
-            .save(new UserRepository().getDefinition(), userFiles.getUser());
-        userFiles.setUser(userEntity)
-            .setFilePath(fileData.getPath());
-        await entityManager
-            .save(this._repository.getDefinition(), userFiles);
+            const entityManager = new EntityManager(this._repository.getConnection());
+            const userEntity = await entityManager
+                .save(new UserRepository().getDefinition(), userFiles.getUser());
+            userFiles.setUser(userEntity)
+                .setFilePath(fileData.getPath());
+            await entityManager
+                .save(this._repository.getDefinition(), userFiles);
+        } catch (e) {
+            console.log(e.message);
+            return Promise.reject(new UploadRequestCantSave());
+        }
+
         return Promise.resolve();
     }
 

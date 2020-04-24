@@ -6,6 +6,8 @@ import ImplementationError from '../implementation-error/ImplementationError';
  * @abstract
  */
 export default class EntityInterface {
+    static ROW_ID = 'rowId';
+
     /**
      * @abstract
      * @param {{}}value

@@ -59,7 +59,6 @@ export default class UploadRequest extends RequestInterface {
             if (userFileList.length === 0) {
                 await this._saveFile(fileData, userFilesEntity);
             }
-            response.dump = fileData;
             response.status = true;
         } catch (e) {
             response.dump = e;

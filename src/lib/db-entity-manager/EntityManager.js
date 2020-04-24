@@ -3,6 +3,7 @@
  */
 import EntityManagerError from './error/EntityManagerError';
 import Filter from '../db-filter/Filter';
+import EntityInterface from '../db-entity/EntityInterface';
 
 export default class EntityManager {
     /**
@@ -29,13 +30,9 @@ export default class EntityManager {
             if (await this._isExist(definition, entity)) {
                 await this._connection.update(definition, entity.getData());
             } else {
-                const primaryFieldValue = await this._connection
+                const rowIdValue = await this._connection
                     .insert(definition, entity.getData());
-                console.log(primaryFieldValue);
-                entity.setValue(
-                    definition.getPrimaryColumn().getColumnName(),
-                    primaryFieldValue
-                );
+                entity.setValue(EntityInterface.ROW_ID, rowIdValue);
             }
             return Promise.resolve(entity);
         } else {

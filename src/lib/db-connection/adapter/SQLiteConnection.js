@@ -69,7 +69,7 @@ export default class SQLiteConnection extends ConnectionInterface {
         filter.getFilterData().map(filter => {
             data[filter.field] = filter.value;
         });
-        return this._query(connection, sql, this._buildQueryData(data));
+        return this._fetch(connection, sql, this._buildQueryData(data));
     }
 
     /**
@@ -84,8 +84,8 @@ export default class SQLiteConnection extends ConnectionInterface {
         await this._createTable(definition, connection);
         const sql = this._builderInsert.buildSQL(definition, data);
         const prepareValues = this._buildQueryData(data);
-        console.log(prepareValues);
-        return this._query(connection, sql, this._buildQueryData(data));
+        const insertData = await this._exec(connection, sql, prepareValues);
+        return Promise.resolve(insertData.lastID);
     }
 
     /**
@@ -100,7 +100,7 @@ export default class SQLiteConnection extends ConnectionInterface {
         const sql = this._builderUpdate.buildSQL(definition, data);
         const prepareValues = this._buildQueryData(data);
         prepareValues.push(data[definition.getPrimaryColumn().getColumnName()]);
-        return this._query(connection, sql, prepareValues);
+        return this._exec(connection, sql, prepareValues);
     }
 
     /**
@@ -111,14 +111,37 @@ export default class SQLiteConnection extends ConnectionInterface {
      * @return {Promise<Array>}
      * @private
      */
-    async _query(connection, sql, whereData) {
+    async _fetch(connection, sql, whereData) {
         return new Promise((resolve, reject) => {
             console.info(sql);
-            connection.all(sql, whereData, (err, rows) => {
+            const stmt = connection.prepare(sql, whereData);
+            stmt.all(whereData, (err, rows) => {
                 if (err) {
-                    reject(new Error(err.message));
+                    reject(err);
                 } else {
                     resolve(rows);
+                }
+            });
+        });
+    }
+
+    /**
+     *
+     * @param {*} connection
+     * @param {string} sql
+     * @param {Array<string>} whereData
+     * @return {Promise<*>}
+     * @private
+     */
+    async _exec(connection, sql, whereData) {
+        return new Promise((resolve, reject) => {
+            console.info(sql);
+            const stmt = connection.prepare(sql, whereData);
+            stmt.run(whereData, err => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(stmt);
                 }
             });
         });
@@ -159,6 +182,6 @@ export default class SQLiteConnection extends ConnectionInterface {
      */
     async _createTable(definition, connection) {
         const tableSQl = this._builderCreateTable.buildSQL(definition, null);
-        return this._query(connection, tableSQl, []);
+        return this._exec(connection, tableSQl, []);
     }
 }

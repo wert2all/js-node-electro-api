@@ -10,7 +10,7 @@ export default class EntityInterface {
 
     /**
      * @abstract
-     * @param {{}}value
+     * @param {Object<string,string>}value
      * @return EntityInterface
      */
     // eslint-disable-next-line no-unused-vars

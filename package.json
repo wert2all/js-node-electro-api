@@ -3,7 +3,7 @@
   "version": "0.2.2",
   "private": true,
   "scripts": {
-    "start": "node dist/src/cluster/cluster.js",
+    "start": "node dist/src/run.js",
     "build": "gulp clean && gulp default",
     "dev": "gulp dev",
     "test": "eslint src/"

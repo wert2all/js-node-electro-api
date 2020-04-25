@@ -7,6 +7,15 @@ import ImplementationError from '../implementation-error/ImplementationError';
  */
 export default class ConnectionInterface {
     /**
+     *
+     * @param serverConnection
+     */
+    // eslint-disable-next-line no-unused-vars
+    setServer(serverConnection) {
+        throw new ImplementationError(this, 'setServer');
+    }
+
+    /**
      * @abstract
      * @param {DefinitionTableInterface} definition
      * @param {FilterInterface} filter

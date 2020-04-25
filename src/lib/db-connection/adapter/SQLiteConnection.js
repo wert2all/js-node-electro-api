@@ -4,8 +4,6 @@ import SQLiteSelectSQLBuilder from './builder/SQLiteSelectSQLBuilder';
 import SQLiteInsertSQLBuilder from './builder/SQLiteInsertSQLBuilder';
 import SQLiteUpdateSQLBuilder from './builder/SQLiteUpdateSQLBuilder';
 
-const sqlite3 = require('sqlite3').verbose();
-
 /**
  * @class SQLiteConnection
  * @type ConnectionInterface
@@ -14,17 +12,15 @@ const sqlite3 = require('sqlite3').verbose();
 export default class SQLiteConnection extends ConnectionInterface {
     /**
      *
-     * @param {string} connectionURI
+     * @param serverConnect
      */
-    constructor(connectionURI) {
+    constructor(serverConnect = null) {
         super();
         /**
-         *
-         * @type {string}
+         * @param {*}
          * @private
          */
-        this._connectionURI = connectionURI;
-
+        this._server = serverConnect;
         /**
          *
          * @type {SQLiteTableSQLBuilder}
@@ -53,13 +49,20 @@ export default class SQLiteConnection extends ConnectionInterface {
 
     /**
      *
+     * @param serverConnection
+     */
+    setServer(serverConnection) {
+        this._server = serverConnection;
+    }
+
+    /**
+     *
      * @param {DefinitionTableInterface} definition
      * @param {FilterInterface} filter
      * @return {Promise<Array>}
      */
     async select(definition, filter) {
-        const connection = await this._connect();
-        await this._createTable(definition, connection);
+        await this._createTable(definition, this._server);
         let data = {};
         filter.getFilterData().forEach(filter => {
             data[filter.field] = ' ' + filter.sign + ' ?';
@@ -69,7 +72,7 @@ export default class SQLiteConnection extends ConnectionInterface {
         filter.getFilterData().map(filter => {
             data[filter.field] = filter.value;
         });
-        return this._fetch(connection, sql, this._buildQueryData(data));
+        return this._fetch(this._server, sql, this._buildQueryData(data));
     }
 
     /**
@@ -80,11 +83,10 @@ export default class SQLiteConnection extends ConnectionInterface {
      */
     // eslint-disable-next-line no-unused-vars
     async insert(definition, data) {
-        const connection = await this._connect();
-        await this._createTable(definition, connection);
+        await this._createTable(definition, this._server);
         const sql = this._builderInsert.buildSQL(definition, data);
         const prepareValues = this._buildQueryData(data);
-        const insertData = await this._exec(connection, sql, prepareValues);
+        const insertData = await this._exec(this._server, sql, prepareValues);
         return Promise.resolve(insertData.lastID);
     }
 
@@ -95,12 +97,11 @@ export default class SQLiteConnection extends ConnectionInterface {
      */
     // eslint-disable-next-line no-unused-vars
     async update(definition, data) {
-        const connection = await this._connect();
-        await this._createTable(definition, connection);
+        await this._createTable(definition, this._server);
         const sql = this._builderUpdate.buildSQL(definition, data);
         const prepareValues = this._buildQueryData(data);
         prepareValues.push(data[definition.getPrimaryColumn().getColumnName()]);
-        return this._exec(connection, sql, prepareValues);
+        return this._exec(this._server, sql, prepareValues);
     }
 
     /**
@@ -143,22 +144,6 @@ export default class SQLiteConnection extends ConnectionInterface {
                 } else {
                     resolve(stmt);
                 }
-            });
-        });
-    }
-
-    /**
-     *
-     * @return {Promise<*>}
-     * @private
-     */
-    async _connect() {
-        return new Promise((resolve, reject) => {
-            const db = new sqlite3.Database(this._connectionURI, err => {
-                if (err) {
-                    reject(new Error(err.message));
-                }
-                resolve(db);
             });
         });
     }

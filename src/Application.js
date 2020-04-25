@@ -1,15 +1,19 @@
+import ServerApplicationInterface from './server/ServerApplicationInterface';
+
 const bodyParser = require('body-parser');
 const fileUpload = require('express-fileupload');
 /**
  * @class Application
  */
-export default class Application {
+export default class Application extends ServerApplicationInterface {
     /**
      *
      * @param expressApp
-     * @param {RoutersProvider} routersProvider
+     * @param {RoutersProviderFactory} routersFactory
+     * @param {StorageProvider} storageProvider
      */
-    constructor(expressApp, routersProvider) {
+    constructor(expressApp, routersFactory, storageProvider) {
+        super();
         this.app = expressApp;
         this.app.use(bodyParser.urlencoded({extended: false}));
         this.app.use(bodyParser.json());
@@ -17,16 +21,43 @@ export default class Application {
             createParentPath: true
         }));
 
-        this.routersProvider = routersProvider;
+        /**
+         *
+         * @type {RoutersProviderFactory}
+         * @private
+         */
+        this._routersFactory = routersFactory;
+        /**
+         *
+         * @type {StorageProvider}
+         * @private
+         */
+        this._storageProvider = storageProvider;
     }
 
+    /**
+     * @param connection
+     * @return ServerApplicationInterface
+     */
+    init(connection) {
+        this._storageProvider.getConnection().setServer(connection);
+        return this;
+    }
+
+    /**
+     * @return ServerApplicationInterface
+     */
     run() {
         this._applyRouters();
         return this;
     }
 
+    /**
+     *
+     * @private
+     */
     _applyRouters() {
-        const routers = this.routersProvider.fetch();
+        const routers = this._routersFactory.create(this._storageProvider).fetch();
 
         for (const key in routers) {
             if (routers.hasOwnProperty(key)) {
@@ -46,6 +77,12 @@ export default class Application {
         }
     }
 
+    /**
+     *
+     * @param request
+     * @return {function(...[*]=)}
+     * @private
+     */
     _generateRun(request) {
         return (req, res) => {
             res.setHeader('Content-Type', 'application/json');
@@ -53,5 +90,13 @@ export default class Application {
                 .createResponse(req)
                 .then(result => res.json(result));
         };
+    }
+
+    /**
+     *
+     * @return {*}
+     */
+    getRequestListener() {
+        return this.app;
     }
 }

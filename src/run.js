@@ -1,0 +1,56 @@
+import os from 'os';
+import sqlite3 from 'sqlite3';
+import path from 'path';
+import express from 'express';
+
+import ServerCluster from './server/ServerCluster';
+import ServerWorker from './server/ServerWorker';
+import Application from './Application';
+import RoutersProviderFactory from './routers/RoutersProviderFactory';
+import RouteDefinition from './routers/RouteDefinition';
+import TariffRequest from './modules/tariff/TariffRequest';
+import AuthRequest from './modules/auth/AuthRequest';
+import UploadRequest from './modules/upload/UploadRequest';
+import StorageProvider from './storage/Provider';
+import SecretStorage from './storage/Secret';
+import FileStorage from './storage/FileStorage';
+import FileStorageConfig from './storage/file/FileStorageConfig';
+import SQLiteConnection from './lib/db-connection/adapter/SQLiteConnection';
+
+const connectDB = path => new Promise((resolve, reject) => {
+    const db = new sqlite3.Database(path, err => {
+        if (err) {
+            reject(err);
+        }
+        resolve(db);
+    });
+});
+
+connectDB('./../secret.sqlite')
+    .then(connection => {
+        new ServerCluster(
+            new ServerWorker(
+                new Application(
+                    express(),
+                    new RoutersProviderFactory(
+                        [
+                            new RouteDefinition('/', 'get', new TariffRequest()),
+                            new RouteDefinition('/auth/', 'post', new AuthRequest()),
+                            new RouteDefinition('/upload/', 'post', new UploadRequest()),
+                        ]),
+                    new StorageProvider(
+                        new SecretStorage('./../../secret.json'),
+                        new FileStorage(
+                            new FileStorageConfig(
+                                path.normalize(__dirname + '/../../../data/files/')
+                            )
+                        ),
+                        new SQLiteConnection()
+                    )
+                )
+            ),
+            os.cpus().length
+        )
+            .run(connection);
+    })
+    .catch(err => console.log(err));

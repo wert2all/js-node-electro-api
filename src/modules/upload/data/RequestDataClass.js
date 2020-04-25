@@ -2,6 +2,7 @@
 
 import UploadRequestNoToken from '../error/UploadRequestNoToken';
 import UploadRequestNoFiles from '../error/UploadRequestNoFiles';
+import YearMon from '../../../data/YearMon';
 
 /**
  * @class RequestDataClass
@@ -13,15 +14,21 @@ export default class RequestDataClass {
         this.billFile = billFile;
         /**
          *
-         * @type {string|null}
+         * @type {GoogleAccount|null}
          * @private
          */
         this._account = null;
+        /**
+         *
+         * @type {YearMon}
+         * @private
+         */
+        this._yearMon = new YearMon();
     }
 
     /**
      *
-     * @param {string} account
+     * @param {GoogleAccount} account
      * @return {RequestDataClass}
      */
     setGoogleAccount(account) {
@@ -36,10 +43,28 @@ export default class RequestDataClass {
 
     /**
      *
-     * @return {string|null}
+     * @return {GoogleAccount|null}
      */
     getGoogleAccount() {
         return this._account;
+    }
+
+    /**
+     *
+     * @param {YearMon} yearmon
+     * @return {RequestDataClass}
+     */
+    setYearMon(yearmon) {
+        this._yearMon = yearmon;
+        return this;
+    }
+
+    /**
+     *
+     * @return {YearMon}
+     */
+    getYearMon() {
+        return this._yearMon;
     }
 
     /**
@@ -59,7 +84,13 @@ export default class RequestDataClass {
         if (!request.files.bill) {
             throw new UploadRequestNoFiles();
         }
-
-        return new RequestDataClass(authToken, request.files.bill);
+        const requestData = new RequestDataClass(authToken, request.files.bill);
+        if (request.body.yearmon) {
+            const yearMon = YearMon.create(request.body.yearmon);
+            if (yearMon != null) {
+                requestData.setYearMon(yearMon);
+            }
+        }
+        return requestData;
     }
 }

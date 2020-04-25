@@ -46,9 +46,7 @@ export default class UploadRequest extends RequestInterface {
         const response = new ResponseDataClass();
         try {
             const requestData = await this._prepareRequest(request);
-            const userFilesEntity = this.makeUserFilesEntity(
-                requestData.getGoogleAccount()
-            );
+            const userFilesEntity = this.makeUserFilesEntity(requestData);
             const fileData = await this._getFileData(requestData);
 
             this._repository.setConnection(this._storageProvider.getConnection());
@@ -68,12 +66,17 @@ export default class UploadRequest extends RequestInterface {
         return Promise.resolve(response.toHash());
     }
 
-    makeUserFilesEntity(googleUserAccount) {
+    /**
+     *
+     * @param {RequestDataClass} requestData
+     * @return {UserFilesEntity}
+     */
+    makeUserFilesEntity(requestData) {
         const userEntity = new UserEntity()
-            .setGoogleAccount(googleUserAccount);
+            .setGoogleAccount(requestData.getGoogleAccount());
         return new UserFilesEntity()
             .setUser(userEntity)
-            .setYearMon(new YearMon());
+            .setYearMon(requestData.getYearMon());
     }
 
     /**

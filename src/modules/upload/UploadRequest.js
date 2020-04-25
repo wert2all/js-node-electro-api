@@ -60,7 +60,7 @@ export default class UploadRequest extends RequestInterface {
             }
             response.status = true;
         } catch (e) {
-            console.log(e.message);
+            console.log(e);
             response.status = false;
             response.message = e.message;
         }

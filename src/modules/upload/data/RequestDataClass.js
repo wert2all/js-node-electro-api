@@ -73,7 +73,8 @@ export default class RequestDataClass {
      * @return {RequestDataClass}
      */
     static factory(request) {
-        const authToken = request.body.token;
+        console.log(request.body);
+        const authToken = Buffer.from(request.body.token, 'base64').toString();
         if (!authToken) {
             throw new UploadRequestNoToken();
         }
@@ -81,10 +82,10 @@ export default class RequestDataClass {
         if (!request.files) {
             throw new UploadRequestNoFiles();
         }
-        if (!request.files.bill) {
+        if (!request.files.images) {
             throw new UploadRequestNoFiles();
         }
-        const requestData = new RequestDataClass(authToken, request.files.bill);
+        const requestData = new RequestDataClass(authToken, request.files.images);
         if (request.body.yearmon) {
             const yearMon = YearMon.create(request.body.yearmon);
             if (yearMon != null) {

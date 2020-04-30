@@ -72,6 +72,7 @@ export default class RequestDataClass {
      * @param request
      * @return {RequestDataClass}
      */
+    // eslint-disable-next-line max-statements
     static factory(request) {
         console.log(request.body);
         const authToken = Buffer.from(
@@ -87,8 +88,8 @@ export default class RequestDataClass {
         if (!request.files.images) {
             throw new UploadRequestNoFiles();
         }
-        console.log(request.files)
-        console.log(request.files.images)
+        console.log(request.files);
+        console.log(request.files.images);
         const requestData = new RequestDataClass(authToken, request.files.images);
         if (request.body.yearmon) {
             const yearMon = YearMon.create(request.body.yearmon.replace('"', ''));
@@ -96,7 +97,7 @@ export default class RequestDataClass {
                 requestData.setYearMon(yearMon);
             }
         }
-        console.log( requestData )
+        console.log(requestData);
         return requestData;
     }
 }

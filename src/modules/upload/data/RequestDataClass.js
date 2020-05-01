@@ -3,6 +3,7 @@
 import UploadRequestNoToken from '../error/UploadRequestNoToken';
 import UploadRequestNoFiles from '../error/UploadRequestNoFiles';
 import YearMon from '../../../data/YearMon';
+import StringExt from '../../../lib/utils/StringExt';
 
 /**
  * @class RequestDataClass
@@ -75,7 +76,9 @@ export default class RequestDataClass {
     // eslint-disable-next-line max-statements
     static factory(request) {
         const authToken = Buffer.from(
-            request.body.token.replace('"', ''), 'base64'
+            new StringExt(request.body.token)
+                .replaceAll('"', ''),
+            'base64'
         ).toString();
         if (!authToken) {
             throw new UploadRequestNoToken();
@@ -89,7 +92,10 @@ export default class RequestDataClass {
         }
         const requestData = new RequestDataClass(authToken, request.files.images);
         if (request.body.yearmon) {
-            const yearMon = YearMon.create(request.body.yearmon.replace('"', ''));
+            const yearMon = YearMon.create(
+                new StringExt(request.body.yearmon)
+                    .replaceAll('"', '')
+            );
             if (yearMon != null) {
                 requestData.setYearMon(yearMon);
             }

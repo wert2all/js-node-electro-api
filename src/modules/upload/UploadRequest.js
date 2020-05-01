@@ -77,6 +77,7 @@ export default class UploadRequest extends RequestInterface {
             .setGoogleAccount(requestData.getGoogleAccount());
         return new UserFilesEntity()
             .setUser(userEntity)
+            .setType( requestData.getType() )
             .setYearMon(requestData.getYearMon());
     }
 

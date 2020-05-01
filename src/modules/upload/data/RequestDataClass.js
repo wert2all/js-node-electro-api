@@ -25,6 +25,12 @@ export default class RequestDataClass {
          * @private
          */
         this._yearMon = new YearMon();
+        /**
+         *
+         * @type {string}
+         * @private
+         */
+        this._type = 'bill';
     }
 
     /**
@@ -70,6 +76,24 @@ export default class RequestDataClass {
 
     /**
      *
+     * @param {string} type
+     * @return {RequestDataClass}
+     */
+    setType(type) {
+        this._type = type;
+        return this;
+    }
+
+    /**
+     *
+     * @return {string}
+     */
+    getType() {
+        return this._type;
+    }
+
+    /**
+     *
      * @param request
      * @return {RequestDataClass}
      */
@@ -99,6 +123,13 @@ export default class RequestDataClass {
             if (yearMon != null) {
                 requestData.setYearMon(yearMon);
             }
+        }
+        if (request.body.type) {
+            requestData.setType(
+                (new StringExt(request.body.type).replaceAll('"', '') === 'meter')
+                    ? 'meter'
+                    : 'bill'
+            );
         }
         return requestData;
     }

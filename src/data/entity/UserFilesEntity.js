@@ -54,6 +54,19 @@ export default class UserFilesEntity extends EntityInterface {
 
     /**
      *
+     * @param {string} type
+     * @return {UserFilesEntity}
+     */
+    setType(type) {
+        this._data.setData(
+            UserFilesDefinition.COLUMN_TYPE,
+            type
+        );
+        return this;
+    }
+
+    /**
+     *
      * @return {Object<string, string>}
      */
     getData() {

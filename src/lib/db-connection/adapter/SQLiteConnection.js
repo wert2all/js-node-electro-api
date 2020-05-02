@@ -103,6 +103,7 @@ export default class SQLiteConnection extends ConnectionInterface {
         delete (prepareValues[definition.getPrimaryColumn().getColumnName()]);
         prepareValues[definition.getPrimaryColumn().getColumnName()] =
             data[definition.getPrimaryColumn().getColumnName()];
+        console.log(prepareValues);
         return this._exec(this._server, sql, prepareValues);
     }
 

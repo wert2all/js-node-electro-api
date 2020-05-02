@@ -6,10 +6,10 @@ import YearMon from '../../../data/YearMon';
 import StringExt from '../../../lib/utils/StringExt';
 
 /**
- * @class RequestDataClass
+ * @class UploadRequestDataClass
  *
  */
-export default class RequestDataClass {
+export default class UploadRequestDataClass {
     constructor(authToken, billFile) {
         this.token = authToken;
         this.billFile = billFile;
@@ -36,7 +36,7 @@ export default class RequestDataClass {
     /**
      *
      * @param {GoogleAccount} account
-     * @return {RequestDataClass}
+     * @return {UploadRequestDataClass}
      */
     setGoogleAccount(account) {
         /**
@@ -59,7 +59,7 @@ export default class RequestDataClass {
     /**
      *
      * @param {YearMon} yearmon
-     * @return {RequestDataClass}
+     * @return {UploadRequestDataClass}
      */
     setYearMon(yearmon) {
         this._yearMon = yearmon;
@@ -77,7 +77,7 @@ export default class RequestDataClass {
     /**
      *
      * @param {string} type
-     * @return {RequestDataClass}
+     * @return {UploadRequestDataClass}
      */
     setType(type) {
         this._type = type;
@@ -95,7 +95,7 @@ export default class RequestDataClass {
     /**
      *
      * @param request
-     * @return {RequestDataClass}
+     * @return {UploadRequestDataClass}
      */
     // eslint-disable-next-line max-statements
     static factory(request) {
@@ -108,13 +108,16 @@ export default class RequestDataClass {
             throw new UploadRequestNoToken();
         }
 
+        console.log(request.files);
+
         if (!request.files) {
             throw new UploadRequestNoFiles();
         }
         if (!request.files.images) {
             throw new UploadRequestNoFiles();
         }
-        const requestData = new RequestDataClass(authToken, request.files.images);
+
+        const requestData = new UploadRequestDataClass(authToken, request.files.images);
         if (request.body.yearmon) {
             const yearMon = YearMon.create(
                 new StringExt(request.body.yearmon)

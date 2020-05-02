@@ -16,6 +16,7 @@ import SecretStorage from './storage/Secret';
 import FileStorage from './storage/FileStorage';
 import FileStorageConfig from './storage/file/FileStorageConfig';
 import SQLiteConnection from './lib/db-connection/adapter/SQLiteConnection';
+import BillCountRequest from './modules/bill/count/BillCountRequest';
 
 const connectDB = path => new Promise((resolve, reject) => {
     const db = new sqlite3.Database(path, err => {
@@ -36,6 +37,11 @@ connectDB('./../secret.sqlite')
                         [
                             new RouteDefinition('/', 'get', new TariffRequest()),
                             new RouteDefinition('/auth/', 'post', new AuthRequest()),
+                            new RouteDefinition(
+                                '/bill/count/',
+                                'get',
+                                new BillCountRequest()
+                            ),
                             new RouteDefinition('/upload/', 'post', new UploadRequest()),
                         ]),
                     new StorageProvider(

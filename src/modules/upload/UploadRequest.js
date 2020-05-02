@@ -1,7 +1,7 @@
 'use strict';
 import RequestInterface from '../../routers/request/RequestInterface';
-import ResponseDataClass from './data/ResponseDataClass';
-import RequestDataClass from './data/RequestDataClass';
+import UploadResponseDataClass from './data/UploadResponseDataClass';
+import UploadRequestDataClass from './data/UploadRequestDataClass';
 import AuthCheck from '../auth/AuthCheck';
 import ApiKeyProvider from '../auth/key/KeyProvider';
 import AuthParams from '../auth/params/Params';
@@ -44,7 +44,7 @@ export default class UploadRequest extends RequestInterface {
      * @abstract
      */
     async createResponse(request) {
-        const response = new ResponseDataClass();
+        const response = new UploadResponseDataClass();
         try {
             const requestData = await this._prepareRequest(request);
             const userFilesEntity = this.makeUserFilesEntity(requestData);
@@ -69,7 +69,7 @@ export default class UploadRequest extends RequestInterface {
 
     /**
      *
-     * @param {RequestDataClass} requestData
+     * @param {UploadRequestDataClass} requestData
      * @return {UserFilesEntity}
      */
     makeUserFilesEntity(requestData) {
@@ -77,13 +77,13 @@ export default class UploadRequest extends RequestInterface {
             .setGoogleAccount(requestData.getGoogleAccount());
         return new UserFilesEntity()
             .setUser(userEntity)
-            .setType( requestData.getType() )
+            .setType(requestData.getType())
             .setYearMon(requestData.getYearMon());
     }
 
     /**
      *
-     * @param {RequestDataClass} requestData
+     * @param {UploadRequestDataClass} requestData
      * @return {GoogleAccount}
      * @private
      */
@@ -133,7 +133,7 @@ export default class UploadRequest extends RequestInterface {
 
     /**
      *
-     * @param {RequestDataClass} requestData
+     * @param {UploadRequestDataClass} requestData
      * @return {Promise<FileData>}
      * @private
      */
@@ -210,11 +210,11 @@ export default class UploadRequest extends RequestInterface {
     /**
      *
      * @param request
-     * @return {Promise<RequestDataClass>}
+     * @return {Promise<UploadRequestDataClass>}
      * @private
      */
     async _prepareRequest(request) {
-        const requestData = RequestDataClass.factory(request);
+        const requestData = UploadRequestDataClass.factory(request);
         requestData.setGoogleAccount(
             await this._getGoogleAccount(requestData)
         );

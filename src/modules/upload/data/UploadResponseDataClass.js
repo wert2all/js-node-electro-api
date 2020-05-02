@@ -1,9 +1,9 @@
 'use strict';
 /**
- * @class ResponseDataClass
+ * @class UploadResponseDataClass
  *
  */
-export default class ResponseDataClass {
+export default class UploadResponseDataClass {
     constructor() {
         this.status = false;
         this.message = '';

@@ -12,7 +12,7 @@ export default class StringExt {
          * @type {string}
          * @private
          */
-        this._string = value;
+        this._string = (value) ? value : '';
     }
 
     /**

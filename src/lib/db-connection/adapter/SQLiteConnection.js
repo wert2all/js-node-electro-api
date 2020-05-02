@@ -101,8 +101,8 @@ export default class SQLiteConnection extends ConnectionInterface {
         const sql = this._builderUpdate.buildSQL(definition, data);
         const prepareValues = this._buildQueryData(data);
         delete (prepareValues[definition.getPrimaryColumn().getColumnName()]);
-        prepareValues[definition.getPrimaryColumn().getColumnName()] =
-            data[definition.getPrimaryColumn().getColumnName()];
+        // prepareValues[definition.getPrimaryColumn().getColumnName()] =
+        //     data[definition.getPrimaryColumn().getColumnName()];
         console.log(prepareValues);
         return this._exec(this._server, sql, prepareValues);
     }

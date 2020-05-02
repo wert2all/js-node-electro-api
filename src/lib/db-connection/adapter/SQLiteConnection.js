@@ -100,7 +100,8 @@ export default class SQLiteConnection extends ConnectionInterface {
         await this._createTable(definition, this._server);
         const sql = this._builderUpdate.buildSQL(definition, data);
         const prepareValues = this._buildQueryData(data);
-        prepareValues.push(data[definition.getPrimaryColumn().getColumnName()]);
+        prepareValues[definition.getPrimaryColumn().getColumnName()] =
+            data[definition.getPrimaryColumn().getColumnName()];
         return this._exec(this._server, sql, prepareValues);
     }
 
@@ -131,7 +132,7 @@ export default class SQLiteConnection extends ConnectionInterface {
      *
      * @param {*} connection
      * @param {string} sql
-     * @param {Array<string>} whereData
+     * @param {Object<string,string>} whereData
      * @return {Promise<*>}
      * @private
      */

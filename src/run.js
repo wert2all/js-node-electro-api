@@ -18,6 +18,7 @@ import FileStorageConfig from './storage/file/FileStorageConfig';
 import SQLiteConnection from './lib/db-connection/adapter/SQLiteConnection';
 import BillCountRequest from './modules/bill/count/BillCountRequest';
 
+const rootPath = path.normalize(__dirname + path.sep + '..' + path.sep + '..' + path.sep);
 const connectDB = path => new Promise((resolve, reject) => {
     const db = new sqlite3.Database(path, err => {
         if (err) {
@@ -26,8 +27,7 @@ const connectDB = path => new Promise((resolve, reject) => {
         resolve(db);
     });
 });
-
-connectDB('./../secret.sqlite')
+connectDB(rootPath + 'secret.sqlite')
     .then(connection => {
         new ServerCluster(
             new ServerWorker(
@@ -45,10 +45,10 @@ connectDB('./../secret.sqlite')
                             new RouteDefinition('/upload/', 'post', new UploadRequest()),
                         ]),
                     new StorageProvider(
-                        new SecretStorage('./../../secret.json'),
+                        new SecretStorage(rootPath + 'secret.json'),
                         new FileStorage(
                             new FileStorageConfig(
-                                path.normalize(__dirname + '/../../../data/files/')
+                                path.normalize(rootPath + 'data/files/')
                             )
                         ),
                         new SQLiteConnection()

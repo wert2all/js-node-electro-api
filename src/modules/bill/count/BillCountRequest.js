@@ -4,7 +4,6 @@ import ApiKeyProvider from '../../auth/key/KeyProvider';
 import AuthCheck from '../../auth/AuthCheck';
 import AuthParams from '../../auth/params/Params';
 import BillRequestDataClass from './data/BillRequestDataClass';
-import EntityManager from '../../../lib/db-entity-manager/EntityManager';
 import FilesRepository from '../../../db/repository/FilesRepository';
 import UserEntity from '../../../data/entity/UserEntity';
 import UserFilesEntity from '../../../data/entity/UserFilesEntity';
@@ -52,8 +51,7 @@ export default class BillCountRequest extends RequestInterface {
             const requestData = await this._prepareRequest(request);
             this._repository.setConnection(this._storageProvider.getConnection());
             const userData = await this._fetchUserData(requestData);
-            response.setData('request', requestData);
-            response.setData('files', userData);
+            response.setData('count', userData.length);
         } catch (e) {
             console.log(e);
             response.setStatus(false);
@@ -104,7 +102,6 @@ export default class BillCountRequest extends RequestInterface {
             .setUser(userEntity)
             .setType(requestData.getType())
             .setYearMon(requestData.getYearMon());
-        console.log(await this._repository.fetchData(userFilesEntity));
         return Promise.resolve(this._repository.fetchData(userFilesEntity));
     }
 }

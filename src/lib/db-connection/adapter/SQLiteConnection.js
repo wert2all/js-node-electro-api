@@ -141,6 +141,7 @@ export default class SQLiteConnection extends ConnectionInterface {
     async _exec(connection, sql, whereData) {
         return new Promise((resolve, reject) => {
             console.info(sql);
+            console.info(whereData);
             const stmt = connection.prepare(sql, whereData);
             stmt.run(whereData, err => {
                 if (err) {

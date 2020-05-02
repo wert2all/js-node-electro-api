@@ -15,15 +15,17 @@ export default class SQLiteInsertSQLBuilder extends DefinitionSQLBuilderInterfac
      */
     buildSQL(definition, data) {
         let sql = ' insert into ' + definition.getTableName() + ' ( ';
-        sql += definition.getColumns().map(column =>
-            data.hasOwnProperty(column.getColumnName())
-                ? column.getColumnName()
-                : false
-        )
-            .filter(value => !!value)
-            .join(',');
+        const columns = {};
+        definition.getColumns().map(col => {
+            columns[col.getColumnName()] = true;
+        });
+
+        const cols = Object.keys(data)
+            .map(key => columns.hasOwnProperty(key) ? key : false)
+            .filter(index => !!index);
+        sql += cols.join(',');
         sql += ' ) values (';
-        sql += Object.keys(data).map((key) => ' :' + key).join(',');
+        sql += cols.map(key => ':' + key).join(',');
         sql += ' )';
         return sql;
     }

@@ -65,7 +65,7 @@ export default class SQLiteConnection extends ConnectionInterface {
         await this._createTable(definition, this._server);
         let data = {};
         filter.getFilterData().forEach(filter => {
-            data[filter.field] = ' ' + filter.sign + ' ?';
+            data[filter.field] = ' ' + filter.sign + ' :' + filter.field;
         });
         const sql = this._buiderSelect.buildSQL(definition, data);
         data = {};
@@ -108,22 +108,23 @@ export default class SQLiteConnection extends ConnectionInterface {
      *
      * @param {*} connection
      * @param {string} sql
-     * @param {Array<string>} whereData
+     * @param {Object<string,string>} whereData
      * @return {Promise<Array>}
      * @private
      */
     async _fetch(connection, sql, whereData) {
         return new Promise((resolve, reject) => {
-            console.info(sql);
-            const stmt = connection.prepare(sql, whereData);
-            stmt.all(whereData, (err, rows) => {
-                if (err) {
-                    reject(err);
-                } else {
-                    resolve(rows);
-                }
-            });
-        });
+                console.info(sql);
+                const stmt = connection.prepare(sql, whereData);
+                stmt.all(whereData, (err, rows) => {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        resolve(rows);
+                    }
+                });
+            }
+        );
     }
 
     /**
@@ -150,12 +151,16 @@ export default class SQLiteConnection extends ConnectionInterface {
 
     /**
      *
-     * @return {Array<string>}
+     * @return {Object<string, string>}
      * @private
      * @param {Object<string, string>}data
      */
     _buildQueryData(data) {
-        return Object.keys(data).map(key => data[key]);
+        const ret = {};
+        Object.keys(data).forEach(key => {
+            ret[':' + key] = data[key];
+        });
+        return ret;
     }
 
     /**

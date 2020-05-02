@@ -23,7 +23,7 @@ export default class SQLiteInsertSQLBuilder extends DefinitionSQLBuilderInterfac
             .filter(value => !!value)
             .join(',');
         sql += ' ) values (';
-        sql += Object.keys(data).map(() => ' ?').join(',');
+        sql += Object.keys(data).map((key) => ' :' + key).join(',');
         sql += ' )';
         return sql;
     }

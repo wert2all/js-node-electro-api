@@ -26,10 +26,11 @@ export default class SQLiteUpdateSQLBuilder extends DefinitionSQLBuilderInterfac
             let sql = 'update ' + definition.getTableName() + ' set ';
             sql += definition.getColumns()
                 .map(column => {
-                    return column.getColumnName() + ' = ?';
+                    return column.getColumnName() + ' = :' + column.getColumnName();
                 })
                 .join(',');
-            sql += ' where ' + definition.getPrimaryColumn().getColumnName() + ' = ?';
+            sql += ' where ' + definition.getPrimaryColumn().getColumnName() +
+                ' = :' + definition.getPrimaryColumn().getColumnName();
             return sql;
         } else {
             throw new ErrorConnection();

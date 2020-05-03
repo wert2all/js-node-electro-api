@@ -51,7 +51,7 @@ export default class UploadGetCountRequest extends RequestInterface {
             const requestData = await this._prepareRequest(request);
             this._repository.setConnection(this._storageProvider.getConnection());
             const userData = await this._fetchUserData(requestData);
-            response.setData('count', userData.length);
+            response.setData('counts', this._groupData(userData));
             response.setStatus(true);
         } catch (e) {
             console.log(e);
@@ -101,8 +101,26 @@ export default class UploadGetCountRequest extends RequestInterface {
             .setGoogleAccount(requestData.getGoogleAccount());
         const userFilesEntity = new UserFilesEntity()
             .setUser(userEntity)
-            .setType(requestData.getType())
             .setYearMon(requestData.getYearMon());
         return Promise.resolve(this._repository.fetchData(userFilesEntity));
+    }
+
+    /**
+     *
+     * @param {UserFilesEntity[]}userData
+     * @returns {{meter: number, bill: number}}
+     * @private
+     */
+    _groupData(userData) {
+        const ret = {
+            bill: 0,
+            meter: 0
+        };
+        userData.forEach(fileData => {
+            if (ret.hasOwnProperty(fileData.getValue('type'))) {
+                ret[fileData.getValue('type')]++;
+            }
+        });
+        return ret;
     }
 }

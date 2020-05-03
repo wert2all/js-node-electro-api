@@ -22,12 +22,6 @@ export default class UploadGetCountRequestDataClass {
          * @private
          */
         this._yearMon = new YearMon();
-        /**
-         *
-         * @type {string}
-         * @private
-         */
-        this._type = 'bill';
     }
 
     /**
@@ -65,28 +59,10 @@ export default class UploadGetCountRequestDataClass {
 
     /**
      *
-     * @param {string} type
-     * @return {UploadGetCountRequestDataClass}
-     */
-    setType(type) {
-        this._type = type;
-        return this;
-    }
-
-    /**
-     *
      * @return {GoogleAccount|null}
      */
     getGoogleAccount() {
         return this._account;
-    }
-
-    /**
-     *
-     * @return {string}
-     */
-    getType() {
-        return this._type;
     }
 
     /**
@@ -119,14 +95,6 @@ export default class UploadGetCountRequestDataClass {
         }
         const requestData = new UploadGetCountRequestDataClass(authToken);
         requestData.setYearMon(yearMon);
-        if (request.query.type) {
-            requestData.setType(
-                (new StringExt(request.query.type).replaceAll('"', '') === 'meter')
-                    ? 'meter'
-                    : 'bill'
-            );
-        }
-
         return requestData;
     }
 }

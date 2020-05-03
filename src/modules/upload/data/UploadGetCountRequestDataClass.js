@@ -1,13 +1,13 @@
-import StringExt from '../../../../lib/utils/StringExt';
-import BillCountRequestNoToken from '../error/BillCountRequestNoToken';
-import YearMon from '../../../../data/YearMon';
-import BillCountRequestNoYearMon from '../error/BillCountRequestNoYearmon';
+import StringExt from '../../../lib/utils/StringExt';
+import UploadGetCountRequestNoToken from '../error/get/UploadGetCountRequestNoToken';
+import YearMon from '../../../data/YearMon';
+import UploadGetCountRequestNoYearMon from '../error/get/UploadGetCountRequestNoYearMon';
 
 /**
- * @class BillRequestDataClass
+ * @class UploadGetCountRequestDataClass
  *
  */
-export default class BillRequestDataClass {
+export default class UploadGetCountRequestDataClass {
     constructor(authToken) {
         this.token = authToken;
         /**
@@ -33,7 +33,7 @@ export default class BillRequestDataClass {
     /**
      *
      * @param {YearMon} yearMon
-     * @return {BillRequestDataClass}
+     * @return {UploadGetCountRequestDataClass}
      */
     setYearMon(yearMon) {
         this._yearMon = yearMon;
@@ -43,7 +43,7 @@ export default class BillRequestDataClass {
     /**
      *
      * @param {GoogleAccount} account
-     * @return {BillRequestDataClass}
+     * @return {UploadGetCountRequestDataClass}
      */
     setGoogleAccount(account) {
         /**
@@ -66,7 +66,7 @@ export default class BillRequestDataClass {
     /**
      *
      * @param {string} type
-     * @return {BillRequestDataClass}
+     * @return {UploadGetCountRequestDataClass}
      */
     setType(type) {
         this._type = type;
@@ -92,7 +92,7 @@ export default class BillRequestDataClass {
     /**
      *
      * @param request
-     * @return BillRequestDataClass
+     * @return UploadGetCountRequestDataClass
      */
     static factory(request) {
         const authToken = Buffer.from(
@@ -101,7 +101,7 @@ export default class BillRequestDataClass {
             'base64'
         ).toString();
         if (!authToken) {
-            throw new BillCountRequestNoToken();
+            throw new UploadGetCountRequestNoToken();
         }
         /**
          *
@@ -115,9 +115,9 @@ export default class BillRequestDataClass {
             );
         }
         if (yearMon == null) {
-            throw new BillCountRequestNoYearMon();
+            throw new UploadGetCountRequestNoYearMon();
         }
-        const requestData = new BillRequestDataClass(authToken);
+        const requestData = new UploadGetCountRequestDataClass(authToken);
         requestData.setYearMon(yearMon);
         if (request.query.type) {
             requestData.setType(

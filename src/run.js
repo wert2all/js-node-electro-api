@@ -10,13 +10,13 @@ import RoutersProviderFactory from './routers/RoutersProviderFactory';
 import RouteDefinition from './routers/RouteDefinition';
 import TariffRequest from './modules/tariff/TariffRequest';
 import AuthRequest from './modules/auth/AuthRequest';
-import UploadRequest from './modules/upload/UploadRequest';
+import UploadPostRequest from './modules/upload/UploadPostRequest';
 import StorageProvider from './storage/Provider';
 import SecretStorage from './storage/Secret';
 import FileStorage from './storage/FileStorage';
 import FileStorageConfig from './storage/file/FileStorageConfig';
 import SQLiteConnection from './lib/db-connection/adapter/SQLiteConnection';
-import BillCountRequest from './modules/bill/count/BillCountRequest';
+import UploadGetCountRequest from './modules/upload/UploadGetCountRequest';
 
 const rootPath = path.normalize(__dirname + path.sep + '..' + path.sep + '..' + path.sep);
 const connectDB = path => new Promise((resolve, reject) => {
@@ -38,11 +38,14 @@ connectDB(rootPath + 'secret.sqlite')
                             new RouteDefinition('/', 'get', new TariffRequest()),
                             new RouteDefinition('/auth/', 'post', new AuthRequest()),
                             new RouteDefinition(
-                                '/bill/count/',
+                                '/upload/count/',
                                 'get',
-                                new BillCountRequest()
+                                new UploadGetCountRequest()
                             ),
-                            new RouteDefinition('/upload/', 'post', new UploadRequest()),
+                            new RouteDefinition('/upload/',
+                                'post',
+                                new UploadPostRequest()
+                            ),
                         ]),
                     new StorageProvider(
                         new SecretStorage(rootPath + 'secret.json'),

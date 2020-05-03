@@ -1,4 +1,4 @@
-export default class BillCountRequestNoToken extends Error {
+export default class UploadGetCountRequestNoToken extends Error {
     constructor() {
         super('Bad request: No token');
     }

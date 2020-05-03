@@ -52,6 +52,7 @@ export default class BillCountRequest extends RequestInterface {
             this._repository.setConnection(this._storageProvider.getConnection());
             const userData = await this._fetchUserData(requestData);
             response.setData('count', userData.length);
+            response.setStatus(true);
         } catch (e) {
             console.log(e);
             response.setStatus(false);

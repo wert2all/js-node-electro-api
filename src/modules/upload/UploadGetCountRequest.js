@@ -1,19 +1,19 @@
-import RequestInterface from '../../../routers/request/RequestInterface';
-import ResponseDataClass from '../../../routers/response/ResponseDataClass';
-import ApiKeyProvider from '../../auth/key/KeyProvider';
-import AuthCheck from '../../auth/AuthCheck';
-import AuthParams from '../../auth/params/Params';
-import BillRequestDataClass from './data/BillRequestDataClass';
-import FilesRepository from '../../../db/repository/FilesRepository';
-import UserEntity from '../../../data/entity/UserEntity';
-import UserFilesEntity from '../../../data/entity/UserFilesEntity';
+import RequestInterface from '../../routers/request/RequestInterface';
+import ResponseDataClass from '../../routers/response/ResponseDataClass';
+import ApiKeyProvider from '../auth/key/KeyProvider';
+import AuthCheck from '../auth/AuthCheck';
+import AuthParams from '../auth/params/Params';
+import UploadGetCountRequestDataClass from './data/UploadGetCountRequestDataClass';
+import FilesRepository from '../../db/repository/FilesRepository';
+import UserEntity from '../../data/entity/UserEntity';
+import UserFilesEntity from '../../data/entity/UserFilesEntity';
 
 /**
- * @class BillCountRequest
+ * @class UploadGetCountRequest
  * @type RequestInterface
  * @extends RequestInterface
  */
-export default class BillCountRequest extends RequestInterface {
+export default class UploadGetCountRequest extends RequestInterface {
     constructor() {
         super();
         /**
@@ -27,7 +27,7 @@ export default class BillCountRequest extends RequestInterface {
     /**
      *
      * @param {StorageProvider} storageProvider
-     * @return {BillCountRequest}
+     * @return {UploadGetCountRequest}
      */
     init(storageProvider) {
         /**
@@ -65,11 +65,11 @@ export default class BillCountRequest extends RequestInterface {
     /**
      *
      * @param request
-     * @return {Promise<BillRequestDataClass>}
+     * @return {Promise<UploadGetCountRequestDataClass>}
      * @private
      */
     async _prepareRequest(request) {
-        const requestData = BillRequestDataClass.factory(request);
+        const requestData = UploadGetCountRequestDataClass.factory(request);
         requestData.setGoogleAccount(
             await this._getGoogleAccount(requestData)
         );
@@ -78,7 +78,7 @@ export default class BillCountRequest extends RequestInterface {
 
     /**
      *
-     * @param {BillRequestDataClass} requestData
+     * @param {UploadGetCountRequestDataClass} requestData
      * @return {GoogleAccount}
      * @private
      */
@@ -92,7 +92,7 @@ export default class BillCountRequest extends RequestInterface {
 
     /**
      *
-     * @param {BillRequestDataClass} requestData
+     * @param {UploadGetCountRequestDataClass} requestData
      * @returns {Promise<EntityInterface[]>}
      * @private
      */

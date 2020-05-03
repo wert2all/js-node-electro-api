@@ -5,7 +5,6 @@ import UploadRequestDataClass from './data/UploadRequestDataClass';
 import AuthCheck from '../auth/AuthCheck';
 import ApiKeyProvider from '../auth/key/KeyProvider';
 import AuthParams from '../auth/params/Params';
-import YearMon from '../../data/YearMon';
 import UserEntity from '../../data/entity/UserEntity';
 import UserFilesEntity from '../../data/entity/UserFilesEntity';
 import FilesRepository from '../../db/repository/FilesRepository';
@@ -21,11 +20,11 @@ import UserRepository from '../../db/repository/UserRepository';
 import UploadRequestCantSave from './error/UploadRequestCantSave';
 
 /**
- * @class UploadRequest
+ * @class UploadPostRequest
  * @type RequestInterface
  * @extends RequestInterface
  */
-export default class UploadRequest extends RequestInterface {
+export default class UploadPostRequest extends RequestInterface {
 
     constructor() {
         super();
@@ -162,7 +161,7 @@ export default class UploadRequest extends RequestInterface {
     /**
      *
      * @param {StorageProvider} storageProvider
-     * @return {UploadRequest}
+     * @return {UploadPostRequest}
      */
     init(storageProvider) {
         /**

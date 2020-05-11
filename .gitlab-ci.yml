@@ -33,7 +33,7 @@ deploy_release:
         - echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
         - chmod 644 ~/.ssh/known_hosts
         - echo $DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_SERVER_PATH
-        - rsync -vrzh ./package.json $DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_SERVER_PATH
-        - rsync -vrzh ./dist/* $DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_SERVER_PATH
-#    only:
-#        - tags
+        - rsync -vrzh -e 'ssh -p $DEPLOY_PORT' --progress ./package.json $DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH
+        - rsync -vrzh -e 'ssh -p $DEPLOY_PORT' --progress ./dist/* $DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH
+    only:
+        - tags

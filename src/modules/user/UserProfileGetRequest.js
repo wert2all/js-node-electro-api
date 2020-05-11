@@ -6,6 +6,9 @@ import AuthCheck from '../auth/AuthCheck';
 import AuthParams from '../auth/params/Params';
 import UserProfileRequestDataClass from './data/UserProfileRequestDataClass';
 import UserProfileRepository from '../../db/repository/UserProfileRepository';
+import UserProfileEntity from '../../data/entity/UserProfileEntity';
+import UserEntity from '../../data/entity/UserEntity';
+import UserProfileDefinition from '../../db/definition/UserProfileDefinition';
 
 /**
  * @class UserProfileGetRequest
@@ -35,8 +38,9 @@ export default class UserProfileGetRequest extends RequestInterface {
             // eslint-disable-next-line no-unused-vars
             const requestData = await this._prepareRequest(request);
             this._repository.setConnection(this._storageProvider.getConnection());
-            const userPaymentData = new UserPaymentDataClass();
-            response.setData('payment', userPaymentData.toHash());
+            const userProfileList = await this._fetchUserProfile(requestData);
+            const ret = this._convertToResponseData(userProfileList);
+            response.setData('payment', ret.payment.toHash());
             response.setStatus(true);
         } catch (e) {
             console.log(e);
@@ -88,5 +92,42 @@ export default class UserProfileGetRequest extends RequestInterface {
          */
         this._storageProvider = storageProvider;
         return this;
+    }
+
+    /**
+     *
+     * @param {UploadGetCountRequestDataClass} requestData
+     * @returns {Promise<EntityInterface[]>}
+     * @private
+     */
+    async _fetchUserProfile(requestData) {
+        const userEntity = new UserEntity()
+            .setGoogleAccount(requestData.getGoogleAccount());
+        const userProfileEntity = new UserProfileEntity();
+        userProfileEntity.setUser(userEntity);
+        return Promise.resolve(this._repository.fetchData(userProfileEntity));
+    }
+
+    /**
+     *
+     * @param {EntityInterface[]} userProfileList
+     * @returns {{"payment":  UserPaymentDataClass}}
+     * @private
+     */
+    _convertToResponseData(userProfileList) {
+        const ret = {
+            'payment': new UserPaymentDataClass()
+        };
+        userProfileList.map(profileValue => {
+            const profileDataHash = profileValue.getData();
+            if (profileDataHash[UserProfileDefinition.COLUMN_VALUE_TYPE] === 'payment') {
+                ret.payment
+                    .setData(
+                        profileDataHash[UserProfileDefinition.COLUMN_VALUE_NAME],
+                        profileDataHash[UserProfileDefinition.COLUMN_VALUE_VALUE]
+                    );
+            }
+        });
+        return ret;
     }
 }

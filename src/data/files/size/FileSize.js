@@ -26,6 +26,6 @@ export default class FileSize extends FileSizeInterface {
      * @param {number} size
      */
     static fabric(size) {
-        return size <= 5242880 ? new FileSize(size) : false;
+        return size <= 10242880 ? new FileSize(size) : false;
     }
 }

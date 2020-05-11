@@ -32,6 +32,7 @@ export default class UserProfileGetRequest extends RequestInterface {
     async createResponse(request) {
         const response = new ResponseDataClass();
         try {
+            // eslint-disable-next-line no-unused-vars
             const requestData = await this._prepareRequest(request);
             this._repository.setConnection(this._storageProvider.getConnection());
             const userPaymentData = new UserPaymentDataClass();

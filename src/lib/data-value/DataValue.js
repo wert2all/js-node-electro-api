@@ -25,7 +25,6 @@ export default class DataValue extends DataValueInterface {
     }
 
     /**
-     * @abstract
      * @param {string} key
      * @param {string} value
      */

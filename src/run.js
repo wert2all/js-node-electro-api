@@ -17,6 +17,7 @@ import FileStorage from './storage/FileStorage';
 import FileStorageConfig from './storage/file/FileStorageConfig';
 import SQLiteConnection from './lib/db-connection/adapter/SQLiteConnection';
 import UploadGetCountRequest from './modules/upload/UploadGetCountRequest';
+import UserProfileGetRequest from './modules/user/UserProfileGetRequest';
 
 const rootPath = path.normalize(__dirname + path.sep + '..' + path.sep + '..' + path.sep);
 const connectDB = path => new Promise((resolve, reject) => {
@@ -45,6 +46,10 @@ connectDB(rootPath + 'secret.sqlite')
                             new RouteDefinition('/upload/',
                                 'post',
                                 new UploadPostRequest()
+                            ),
+                            new RouteDefinition('/user/profile/',
+                                'get',
+                                new UserProfileGetRequest()
                             ),
                         ]),
                     new StorageProvider(

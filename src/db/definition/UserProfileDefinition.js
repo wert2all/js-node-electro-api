@@ -9,7 +9,7 @@ import DefinitionColumn from '../../lib/db-definition/DefinitionColumn';
 export default class UserProfileDefinition extends DefinitionTableInterface {
     static TABLE_NAME = 'user_profile';
     static COLUMN_ID = 'id';
-    static COLUMN_GOOGLE_ID = 'google_user_id';
+    static COLUMN_GOOGLE_USER_ID = 'google_user_id';
     static COLUMN_VALUE_TYPE = 'value_type';
     static COLUMN_VALUE_NAME = 'value_name';
     static COLUMN_VALUE_VALUE = 'value';
@@ -32,7 +32,7 @@ export default class UserProfileDefinition extends DefinitionTableInterface {
 
         this._columns = [
             new DefinitionColumn(
-                UserProfileDefinition.COLUMN_GOOGLE_ID,
+                UserProfileDefinition.COLUMN_GOOGLE_USER_ID,
                 DefinitionColumn.COLUMN_TYPE_VARCHAR,
                 false,
                 false,
@@ -66,7 +66,7 @@ export default class UserProfileDefinition extends DefinitionTableInterface {
      * @return {DefinitionColumnInterface[]}
      */
     getColumns() {
-        return [];
+        return this._columns;
     }
 
     /**

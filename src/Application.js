@@ -1,4 +1,5 @@
 import ServerApplicationInterface from './server/ServerApplicationInterface';
+import * as Sentry from '@sentry/node';
 
 const bodyParser = require('body-parser');
 const fileUpload = require('express-fileupload');
@@ -20,6 +21,9 @@ export default class Application extends ServerApplicationInterface {
         this.app.use(fileUpload({
             createParentPath: true
         }));
+        Sentry.init({
+            dsn: storageProvider.getSecretStorage().fetch('sentry:api:dsn')
+        });
 
         /**
          *

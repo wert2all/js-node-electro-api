@@ -1,5 +1,6 @@
 import RequestInterface from '../../routers/request/RequestInterface';
 import ResponseDataClass from '../../routers/response/ResponseDataClass';
+import UserPaymentDataClass from './data/UserPaymentDataClass';
 
 /**
  * @class UserProfileGetRequest
@@ -16,6 +17,8 @@ export default class UserProfileGetRequest extends RequestInterface {
     async createResponse(request) {
         const response = new ResponseDataClass();
         try {
+            const userPaymentData = new UserPaymentDataClass();
+            response.setData('payment', userPaymentData.toHash());
             response.setStatus(true);
         } catch (e) {
             console.log(e);

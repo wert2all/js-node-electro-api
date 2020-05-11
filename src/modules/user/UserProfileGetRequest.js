@@ -1,11 +1,11 @@
 import RequestInterface from '../../routers/request/RequestInterface';
 import ResponseDataClass from '../../routers/response/ResponseDataClass';
 import UserPaymentDataClass from './data/UserPaymentDataClass';
-import UploadGetCountRequestDataClass from '../upload/data/UploadGetCountRequestDataClass';
 import ApiKeyProvider from '../auth/key/KeyProvider';
 import AuthCheck from '../auth/AuthCheck';
 import AuthParams from '../auth/params/Params';
 import UserProfileRequestDataClass from './data/UserProfileRequestDataClass';
+import UserProfileRepository from '../../db/repository/UserProfileRepository';
 
 /**
  * @class UserProfileGetRequest
@@ -13,6 +13,16 @@ import UserProfileRequestDataClass from './data/UserProfileRequestDataClass';
  * @extends RequestInterface
  */
 export default class UserProfileGetRequest extends RequestInterface {
+    constructor() {
+        super();
+        /**
+         *
+         * @type {UserProfileRepository}
+         * @private
+         */
+        this._repository = new UserProfileRepository();
+    }
+
     /**
      * @request {*} request
      * @return {Promise<ResponseDataClass>}
@@ -23,6 +33,7 @@ export default class UserProfileGetRequest extends RequestInterface {
         const response = new ResponseDataClass();
         try {
             const requestData = await this._prepareRequest(request);
+            this._repository.setConnection(this._storageProvider.getConnection());
             const userPaymentData = new UserPaymentDataClass();
             response.setData('payment', userPaymentData.toHash());
             response.setStatus(true);

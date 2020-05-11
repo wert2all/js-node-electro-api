@@ -1,6 +1,5 @@
 import EntityInterface from '../../lib/db-entity/EntityInterface';
 import DataValue from '../../lib/data-value/DataValue';
-import UserFilesDefinition from '../../db/definition/UserFilesDefinition';
 import UserDefinition from '../../db/definition/UserDefinition';
 import UserProfileDefinition from '../../db/definition/UserProfileDefinition';
 

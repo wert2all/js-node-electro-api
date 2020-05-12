@@ -12,7 +12,7 @@ export default class UserPaymentDataClass extends DataValue {
         this.setData('payment_account', '');
         this.setData('bic', '');
         this.setData('edrpou', '');
-        this.setData('recipient_payment_account', '');
+        this.setData('personal_number', '');
         this.setData('cs', '');
     }
 }

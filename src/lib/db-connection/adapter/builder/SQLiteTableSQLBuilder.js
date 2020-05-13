@@ -10,6 +10,7 @@ import DefinitionColumn from '../../../db-definition/DefinitionColumn';
 export default class SQLiteTableSQLBuilder extends DefinitionSQLBuilderInterface {
     /**
      * @param {DefinitionTableInterface} definition
+     * @param {Object<string,string>}data
      * @return string
      */
     // eslint-disable-next-line no-unused-vars
@@ -23,7 +24,6 @@ export default class SQLiteTableSQLBuilder extends DefinitionSQLBuilderInterface
      * @return string
      */
     _columnsSQL(definition) {
-        console.log();
         return definition.getColumns().map(column => {
             let columnSQL = ' ' + column.getColumnName() + ' ' + column.getType() + ' ';
             columnSQL += (!column.isNull()) ? ' not null ' : ' ';

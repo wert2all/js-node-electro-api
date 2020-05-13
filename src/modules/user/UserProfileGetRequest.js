@@ -122,7 +122,9 @@ export default class UserProfileGetRequest extends RequestInterface {
             };
             userProfileList.map(profileValue => {
                 const profileDataHash = profileValue.getData();
-                if (profileDataHash[UserProfileDefinition.COLUMN_VALUE_TYPE] === 'payment') {
+                if (
+                    profileDataHash[UserProfileDefinition.COLUMN_VALUE_TYPE] === 'payment'
+                ) {
                     ret.payment
                         .setData(
                             profileDataHash[UserProfileDefinition.COLUMN_VALUE_NAME],

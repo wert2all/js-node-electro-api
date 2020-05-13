@@ -31,11 +31,9 @@ export default class UserProfileGetRequest extends RequestInterface {
      * @return {Promise<ResponseDataClass>}
      * @public
      */
-    // eslint-disable-next-line no-unused-vars
     async createResponse(request) {
         const response = new ResponseDataClass();
         try {
-            // eslint-disable-next-line no-unused-vars
             const requestData = await this._prepareRequest(request);
             this._repository.setConnection(this._storageProvider.getConnection());
             const userProfileList = await this._fetchUserProfile(requestData);

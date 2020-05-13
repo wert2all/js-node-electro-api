@@ -31,6 +31,7 @@ export default class UserProfileDefinition extends DefinitionTableInterface {
         );
 
         this._columns = [
+            this._primaryColumn,
             new DefinitionColumn(
                 UserProfileDefinition.COLUMN_GOOGLE_USER_ID,
                 DefinitionColumn.COLUMN_TYPE_VARCHAR,

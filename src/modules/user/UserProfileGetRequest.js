@@ -38,7 +38,9 @@ export default class UserProfileGetRequest extends RequestInterface {
             this._repository.setConnection(this._storageProvider.getConnection());
             const userProfileList = await this._fetchUserProfile(requestData);
             const ret = this._convertToResponseData(userProfileList);
-            response.setData('payment', ret.payment.toHash());
+            if (ret !== null) {
+                response.setData('payment', ret.payment.toHash());
+            }
             response.setStatus(true);
         } catch (e) {
             console.log(e);
@@ -109,23 +111,27 @@ export default class UserProfileGetRequest extends RequestInterface {
     /**
      *
      * @param {EntityInterface[]} userProfileList
-     * @returns {{"payment":  UserPaymentDataClass}}
+     * @returns {{"payment":  UserPaymentDataClass}|null}
      * @private
      */
     _convertToResponseData(userProfileList) {
-        const ret = {
-            'payment': new UserPaymentDataClass()
-        };
-        userProfileList.map(profileValue => {
-            const profileDataHash = profileValue.getData();
-            if (profileDataHash[UserProfileDefinition.COLUMN_VALUE_TYPE] === 'payment') {
-                ret.payment
-                    .setData(
-                        profileDataHash[UserProfileDefinition.COLUMN_VALUE_NAME],
-                        profileDataHash[UserProfileDefinition.COLUMN_VALUE_VALUE]
-                    );
-            }
-        });
+        let ret = null;
+        if (userProfileList.length > 0) {
+            ret = {
+                'payment': new UserPaymentDataClass()
+            };
+            userProfileList.map(profileValue => {
+                const profileDataHash = profileValue.getData();
+                if (profileDataHash[UserProfileDefinition.COLUMN_VALUE_TYPE] === 'payment') {
+                    ret.payment
+                        .setData(
+                            profileDataHash[UserProfileDefinition.COLUMN_VALUE_NAME],
+                            profileDataHash[UserProfileDefinition.COLUMN_VALUE_VALUE]
+                        );
+                }
+            });
+        }
+
         return ret;
     }
 }

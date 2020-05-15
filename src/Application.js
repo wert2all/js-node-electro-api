@@ -94,10 +94,7 @@ export default class Application extends ServerApplicationInterface {
             res.setHeader('Content-Type', 'application/json');
             request
                 .createResponse(req)
-                .then(result => {
-                    console.log(JSON.stringify(result));
-                    return res.json(result);
-                });
+                .then(result => res.json(result));
         };
     }
 

@@ -18,7 +18,7 @@ import ImageFileNameProvider from './imageprocess/ImageFileNameProvider';
 import EntityManager from '../../lib/db-entity-manager/EntityManager';
 import UserRepository from '../../db/repository/UserRepository';
 import UploadRequestCantSave from './error/UploadRequestCantSave';
-import EventFileUpload from './event/EventFileUpload';
+import EventFileUpload from './dispatch/event/EventFileUpload';
 
 /**
  * @class UploadPostRequest
@@ -55,9 +55,9 @@ export default class UploadPostRequest extends RequestInterface {
              * @type {EntityInterface[]}
              */
             const userFileList = await this._repository.fetchData(userFilesEntity);
-            if (userFileList.length === 0) {
-                await this._saveFile(fileData, userFilesEntity);
-            }
+            // if (userFileList.length === 0) {
+            await this._saveFile(fileData, userFilesEntity);
+            // }
             response.status = true;
         } catch (e) {
             console.log(e);
@@ -123,7 +123,7 @@ export default class UploadPostRequest extends RequestInterface {
                 .setFilePath(fileData.getPath());
             const file = await entityManager
                 .save(this._repository.getDefinition(), userFiles);
-            this._dispatcher.dispatch(new EventFileUpload(file));
+            await this._dispatcher.dispatch(new EventFileUpload(file));
         } catch (e) {
             console.log(e.message);
             return Promise.reject(new UploadRequestCantSave());

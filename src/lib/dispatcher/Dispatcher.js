@@ -6,23 +6,20 @@ import DispatchInterface from './DispatchInterface';
  * @type DispatchInterface
  */
 export default class Dispatcher extends DispatchInterface {
-    constructor() {
+    /**
+     *
+     * @param {Object<string, ObserverInterface[]>} observers
+     */
+    constructor(observers = {}) {
         super();
         /**
          *
          * @type {Object<string, ObserverInterface[]>}
          * @private
          */
-        this._observers = {};
+        this._observers = observers;
     }
 
-    /**
-     *
-     * @param {EventInterface} event
-     */
-    dispatch(event) {
-        this._getEventObservers(event).forEach(observer => observer.notify(event));
-    }
 
     /**
      *
@@ -34,5 +31,18 @@ export default class Dispatcher extends DispatchInterface {
         return this._observers.hasOwnProperty(event.getEventName())
             ? this._observers[event.getEventName()]
             : [];
+    }
+
+    /**
+     *
+     * @param {EventInterface} event
+     * @return {Promise<*>}
+     */
+    dispatch(event) {
+        Promise.all(
+            this._getEventObservers(event).map(observer => observer.notify(event))
+        )
+            .then(data => Promise.resolve(data))
+            .catch(e => Promise.reject(e));
     }
 }

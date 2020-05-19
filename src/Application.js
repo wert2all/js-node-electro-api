@@ -12,8 +12,9 @@ export default class Application extends ServerApplicationInterface {
      * @param expressApp
      * @param {RoutersProviderFactory} routersFactory
      * @param {StorageProvider} storageProvider
+     * @param {DispatchInterface} dispatcher
      */
-    constructor(expressApp, routersFactory, storageProvider) {
+    constructor(expressApp, routersFactory, storageProvider, dispatcher) {
         super();
         this.app = expressApp;
         this.app.use(bodyParser.urlencoded({extended: false}));
@@ -37,6 +38,13 @@ export default class Application extends ServerApplicationInterface {
          * @private
          */
         this._storageProvider = storageProvider;
+
+        /**
+         *
+         * @type {DispatchInterface}
+         * @private
+         */
+        this._dispatcher = dispatcher;
     }
 
     /**
@@ -63,7 +71,9 @@ export default class Application extends ServerApplicationInterface {
      * @private
      */
     _applyRouters() {
-        const routers = this._routersFactory.create(this._storageProvider).fetch();
+        const routers = this._routersFactory
+            .create(this._storageProvider, this._dispatcher)
+            .fetch();
 
         for (const key in routers) {
             if (routers.hasOwnProperty(key)) {

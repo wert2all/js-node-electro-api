@@ -59,9 +59,15 @@ export default class AuthRequest extends RequestInterface {
     /**
      *
      * @param {StorageProvider} storageProvider
+     * @param {DispatchInterface} dispatcher
      * @return RequestInterface
      */
-    init(storageProvider) {
+    // eslint-disable-next-line no-unused-vars
+    init(storageProvider, dispatcher) {
+        /**
+         *
+         * @type {StorageProvider}
+         */
         this.storageProvider = storageProvider;
         return this;
     }

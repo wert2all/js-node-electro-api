@@ -108,8 +108,6 @@ export default class UploadRequestDataClass {
             throw new UploadRequestNoToken();
         }
 
-        console.log(request.files);
-
         if (!request.files) {
             throw new UploadRequestNoFiles();
         }

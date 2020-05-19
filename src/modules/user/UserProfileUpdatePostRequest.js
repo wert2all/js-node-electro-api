@@ -28,9 +28,11 @@ export default class UserProfileUpdatePostRequest extends RequestInterface {
     /**
      *
      * @param {StorageProvider} storageProvider
+     * @param {DispatchInterface} dispatcher
      * @return {UserProfileUpdatePostRequest}
      */
-    init(storageProvider) {
+    // eslint-disable-next-line no-unused-vars
+    init(storageProvider, dispatcher) {
         /**
          *
          * @type {StorageProvider}

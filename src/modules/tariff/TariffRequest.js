@@ -41,10 +41,11 @@ export default class TariffRequest extends RequestInterface {
     /**
      *
      * @param {StorageProvider} storageProvider
+     * @param {DispatchInterface} dispatcher
      * @return RequestInterface
      */
     // eslint-disable-next-line no-unused-vars
-    init(storageProvider) {
+    init(storageProvider, dispatcher) {
         return this;
     }
 }

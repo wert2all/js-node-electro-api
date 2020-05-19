@@ -21,7 +21,8 @@ import UserProfileGetRequest from './modules/user/UserProfileGetRequest';
 import UserProfileUpdatePostRequest from './modules/user/UserProfileUpdatePostRequest';
 import Dispatcher from './lib/dispatcher/Dispatcher';
 import EventFileUpload from './modules/upload/dispatch/event/EventFileUpload';
-import FileUploadedObserver from './modules/upload/dispatch/observers/FileUploadedObserver';
+import FileUploadedObserver from
+        './modules/upload/dispatch/observers/FileUploadedObserver';
 import TelegramApi from './lib/telegram/TelegramApi';
 
 const rootPath = path.normalize(__dirname + path.sep + '..' + path.sep + '..' + path.sep);

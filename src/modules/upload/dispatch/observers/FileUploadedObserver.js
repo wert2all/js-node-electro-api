@@ -27,7 +27,7 @@ export default class FileUploadedObserver extends ObserverInterface {
      *  @param {EventInterface} event
      */
     notify(event) {
-        const photoPromise = this._telegram
+        this._telegram
             .sendPhoto(this._getPhotoPath(event), this._createMessageText(event));
         return Promise.resolve();
     }

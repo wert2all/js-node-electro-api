@@ -27,7 +27,8 @@ export default class FileUploadedObserver extends ObserverInterface {
      *  @param {EventInterface} event
      */
     notify(event) {
-        const promise = this._telegram.sendMessage(this._createMessageText(event));
+        const photoPromise = this._telegram
+            .sendPhoto(this._getPhotoPath(event), this._createMessageText(event));
         return Promise.resolve();
     }
 
@@ -52,5 +53,14 @@ export default class FileUploadedObserver extends ObserverInterface {
         (id: ${user.getValue(UserDefinition.COLUMN_GOOGLE_ID)} )
         send a ${userFilesEntity.getValue(UserFilesDefinition.COLUMN_TYPE)} file
         ( path: ${userFilesEntity.getValue(UserFilesDefinition.COLUMN_PATH)})`;
+    }
+
+    _getPhotoPath(event) {
+        /**
+         *
+         * @type {UserFilesEntity}
+         */
+        const userFilesEntity = event.getEventData();
+        return userFilesEntity.getValue(UserFilesDefinition.COLUMN_PATH);
     }
 }

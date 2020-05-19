@@ -55,9 +55,9 @@ export default class UploadPostRequest extends RequestInterface {
              * @type {EntityInterface[]}
              */
             const userFileList = await this._repository.fetchData(userFilesEntity);
-            // if (userFileList.length === 0) {
-            await this._saveFile(fileData, userFilesEntity);
-            // }
+            if (userFileList.length === 0) {
+                await this._saveFile(fileData, userFilesEntity);
+            }
             response.status = true;
         } catch (e) {
             console.log(e);

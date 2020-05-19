@@ -82,9 +82,11 @@ export default class UserProfileGetRequest extends RequestInterface {
     /**
      *
      * @param {StorageProvider} storageProvider
+     * @param {DispatchInterface} dispatcher
      * @return {UserProfileGetRequest}
      */
-    init(storageProvider) {
+    // eslint-disable-next-line no-unused-vars
+    init(storageProvider, dispatcher) {
         /**
          *
          * @type {StorageProvider}

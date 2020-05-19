@@ -19,6 +19,7 @@ import SQLiteConnection from './lib/db-connection/adapter/SQLiteConnection';
 import UploadGetCountRequest from './modules/upload/UploadGetCountRequest';
 import UserProfileGetRequest from './modules/user/UserProfileGetRequest';
 import UserProfileUpdatePostRequest from './modules/user/UserProfileUpdatePostRequest';
+import Dispatcher from './lib/dispatcher/Dispatcher';
 
 const rootPath = path.normalize(__dirname + path.sep + '..' + path.sep + '..' + path.sep);
 const connectDB = path => new Promise((resolve, reject) => {
@@ -65,7 +66,8 @@ connectDB(rootPath + 'secret.sqlite')
                             )
                         ),
                         new SQLiteConnection()
-                    )
+                    ),
+                    new Dispatcher()
                 )
             ),
             os.cpus().length

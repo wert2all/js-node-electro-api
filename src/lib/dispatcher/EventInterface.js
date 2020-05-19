@@ -13,4 +13,13 @@ export default class EventInterface {
     getEventName() {
         throw new ImplementationError(this, 'getEventName');
     }
+
+    /**
+     * @abstract
+     * @return {*}
+     */
+    getEventData() {
+        throw new ImplementationError(this, 'getEventData');
+    }
+
 }

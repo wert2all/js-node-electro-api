@@ -1,4 +1,4 @@
-import EventInterface from '../../../lib/dispatcher/EventInterface';
+import EventInterface from '../../../../lib/dispatcher/EventInterface';
 
 /**
  * @class EventFileUpload
@@ -25,5 +25,13 @@ export default class EventFileUpload extends EventInterface {
 
     getEventName() {
         return EventFileUpload.EVENT_NAME;
+    }
+
+    /**
+     *
+     * @return {EntityInterface}
+     */
+    getEventData() {
+        return this._file;
     }
 }

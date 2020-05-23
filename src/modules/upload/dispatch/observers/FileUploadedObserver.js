@@ -1,6 +1,7 @@
 import ObserverInterface from '../../../../lib/dispatcher/ObserverInterface';
 import UserFilesDefinition from '../../../../db/definition/UserFilesDefinition';
 import UserDefinition from '../../../../db/definition/UserDefinition';
+import EntityInterface from '../../../../lib/db-entity/EntityInterface';
 
 /**
  * @class FileUploadedObserver
@@ -52,7 +53,10 @@ export default class FileUploadedObserver extends ObserverInterface {
         return `User ${user.getValue(UserDefinition.COLUMN_GOOGLE_NAME)}
         (id: ${user.getValue(UserDefinition.COLUMN_GOOGLE_ID)} )
         send a ${userFilesEntity.getValue(UserFilesDefinition.COLUMN_TYPE)} file
-        ( path: ${userFilesEntity.getValue(UserFilesDefinition.COLUMN_PATH)})`;
+        (
+            path: ${userFilesEntity.getValue(UserFilesDefinition.COLUMN_PATH)}
+            rowId: ${userFilesEntity.getValue(EntityInterface.ROW_ID)}
+        )`;
     }
 
     _getPhotoPath(event) {

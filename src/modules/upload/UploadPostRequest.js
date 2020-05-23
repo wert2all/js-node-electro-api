@@ -121,8 +121,13 @@ export default class UploadPostRequest extends RequestInterface {
                 .save(new UserRepository().getDefinition(), userFiles.getUser());
             userFiles.setUser(userEntity)
                 .setFilePath(fileData.getPath());
+            /**
+             *
+             * @type {EntityInterface}
+             */
             const file = await entityManager
                 .save(this._repository.getDefinition(), userFiles);
+            console.log(file.getData());
             await this._dispatcher.dispatch(new EventFileUpload(file));
         } catch (e) {
             console.log(e.message);

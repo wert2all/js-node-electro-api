@@ -19,6 +19,7 @@
     "form-data": "^3.0.0",
     "google-auth-library": "^6.0.0",
     "node-fetch": "^2.6.0",
+    "npm-check-updates": "^6.0.1",
     "sqlite3": "^4.2.0"
   },
   "devDependencies": {
@@ -27,13 +28,13 @@
     "@babel/plugin-transform-runtime": "^7.9.6",
     "@babel/preset-env": "^7.9.6",
     "babel-eslint": "^10.1.0",
-    "eslint": "^7.0.0",
+    "eslint": "^7.1.0",
     "gulp": "^4.0.2",
     "gulp-babel": "^8.0.0",
     "gulp-clean": "^0.4.0",
-    "gulp-cli": "^2.2.0",
+    "gulp-cli": "^2.2.1",
     "gulp-eslint": "^6.0.0",
-    "nodemon": "^2.0.3",
+    "nodemon": "^2.0.4",
     "plugin-error": "^1.0.1"
   }
 }

@@ -127,7 +127,11 @@ export default class UploadRequestDataClass {
         }
         if (request.body.type) {
             requestData.setType(
-                (new StringExt(request.body.type).replaceAll('"', '') === 'meter')
+                (
+                    new StringExt(request.body.type)
+                        .replaceAll('"', '')
+                        .toLowerCase() === 'meter'
+                )
                     ? 'meter'
                     : 'bill'
             );

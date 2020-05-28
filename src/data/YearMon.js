@@ -52,7 +52,7 @@ export default class YearMon {
                 ) {
                     date.setFullYear(
                         parseInt(yearMonString.substr(0, 4), 10),
-                        parseInt(yearMonString.substr(4, 2), 10),
+                        parseInt(yearMonString.substr(4, 2), 10) - 1,
                         1
                     );
                     return new YearMon(date);

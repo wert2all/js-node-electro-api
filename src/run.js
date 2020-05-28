@@ -24,6 +24,7 @@ import EventFileUpload from './modules/upload/dispatch/event/EventFileUpload';
 import FileUploadedObserver from
         './modules/upload/dispatch/observers/FileUploadedObserver';
 import TelegramApi from './lib/telegram/TelegramApi';
+import UploadGetFilesRequest from './modules/upload/UploadGetFilesRequest';
 
 const rootPath = path.normalize(__dirname + path.sep + '..' + path.sep + '..' + path.sep);
 const connectDB = path => new Promise((resolve, reject) => {
@@ -80,8 +81,12 @@ connectDB(rootPath + 'secret.sqlite')
                                 new UserProfileGetRequest()
                             ),
                             new RouteDefinition('/user/profile/update/',
-                                'poSt',
+                                'post',
                                 new UserProfileUpdatePostRequest()
+                            ),
+                            new RouteDefinition('/upload/files/',
+                                'get',
+                                new UploadGetFilesRequest()
                             ),
                         ]),
                     storage,

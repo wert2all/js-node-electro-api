@@ -4,10 +4,10 @@ import YearMon from '../../../data/YearMon';
 import UploadRequestNoYearMon from '../error/get/UploadRequestNoYearMon';
 
 /**
- * @class UploadGetCountRequestDataClass
+ * @class UploadFilesRequestDataClass
  *
  */
-export default class UploadGetCountRequestDataClass {
+export default class UploadFilesRequestDataClass {
     constructor(authToken) {
         this.token = authToken;
         /**
@@ -27,7 +27,7 @@ export default class UploadGetCountRequestDataClass {
     /**
      *
      * @param {YearMon} yearMon
-     * @return {UploadGetCountRequestDataClass}
+     * @return {UploadFilesRequestDataClass}
      */
     setYearMon(yearMon) {
         this._yearMon = yearMon;
@@ -37,7 +37,7 @@ export default class UploadGetCountRequestDataClass {
     /**
      *
      * @param {GoogleAccount} account
-     * @return {UploadGetCountRequestDataClass}
+     * @return {UploadFilesRequestDataClass}
      */
     setGoogleAccount(account) {
         /**
@@ -68,7 +68,7 @@ export default class UploadGetCountRequestDataClass {
     /**
      *
      * @param request
-     * @return UploadGetCountRequestDataClass
+     * @return UploadFilesRequestDataClass
      */
     static factory(request) {
         const authToken = Buffer.from(
@@ -93,7 +93,7 @@ export default class UploadGetCountRequestDataClass {
         if (yearMon == null) {
             throw new UploadRequestNoYearMon();
         }
-        const requestData = new UploadGetCountRequestDataClass(authToken);
+        const requestData = new UploadFilesRequestDataClass(authToken);
         requestData.setYearMon(yearMon);
         return requestData;
     }

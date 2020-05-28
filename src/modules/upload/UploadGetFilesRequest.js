@@ -3,10 +3,10 @@ import ResponseDataClass from '../../routers/response/ResponseDataClass';
 import ApiKeyProvider from '../auth/key/KeyProvider';
 import AuthCheck from '../auth/AuthCheck';
 import AuthParams from '../auth/params/Params';
-import UploadGetCountRequestDataClass from './data/UploadGetCountRequestDataClass';
 import FilesRepository from '../../db/repository/FilesRepository';
 import UserEntity from '../../data/entity/UserEntity';
 import UserFilesEntity from '../../data/entity/UserFilesEntity';
+import UploadFilesRequestDataClass from './data/UploadFilesRequestDataClass';
 
 /**
  * @class UploadGetFilesRequest
@@ -67,11 +67,11 @@ export default class UploadGetFilesRequest extends RequestInterface {
     /**
      *
      * @param request
-     * @return {Promise<UploadGetCountRequestDataClass>}
+     * @return {Promise<UploadFilesRequestDataClass>}
      * @private
      */
     async _prepareRequest(request) {
-        const requestData = UploadGetCountRequestDataClass.factory(request);
+        const requestData = UploadFilesRequestDataClass.factory(request);
         requestData.setGoogleAccount(
             await this._getGoogleAccount(requestData)
         );
@@ -80,7 +80,7 @@ export default class UploadGetFilesRequest extends RequestInterface {
 
     /**
      *
-     * @param {UploadGetCountRequestDataClass} requestData
+     * @param {UploadFilesRequestDataClass} requestData
      * @return {GoogleAccount}
      * @private
      */
@@ -94,7 +94,7 @@ export default class UploadGetFilesRequest extends RequestInterface {
 
     /**
      *
-     * @param {UploadGetCountRequestDataClass} requestData
+     * @param {UploadFilesRequestDataClass} requestData
      * @returns {Promise<EntityInterface[]>}
      * @private
      */

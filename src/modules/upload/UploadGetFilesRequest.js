@@ -7,6 +7,7 @@ import FilesRepository from '../../db/repository/FilesRepository';
 import UserEntity from '../../data/entity/UserEntity';
 import UserFilesEntity from '../../data/entity/UserFilesEntity';
 import UploadFilesRequestDataClass from './data/UploadFilesRequestDataClass';
+import UserFilesDefinition from '../../db/definition/UserFilesDefinition';
 
 /**
  * @class UploadGetFilesRequest
@@ -53,7 +54,7 @@ export default class UploadGetFilesRequest extends RequestInterface {
             const requestData = await this._prepareRequest(request);
             this._repository.setConnection(this._storageProvider.getConnection());
             const userData = await this._fetchUserData(requestData);
-            response.setData('counts', this._groupData(userData));
+            response.setData('files', this._formatFiles(userData));
             response.setStatus(true);
         } catch (e) {
             console.log(e);
@@ -109,20 +110,28 @@ export default class UploadGetFilesRequest extends RequestInterface {
 
     /**
      *
-     * @param {UserFilesEntity[]}userData
-     * @returns {{meter: number, bill: number}}
+     * @param {UserFilesEntity[]} userData
+     * @return {Object<string, string>[]}
      * @private
      */
-    _groupData(userData) {
-        const ret = {
-            bill: 0,
-            meter: 0
-        };
-        userData.forEach(fileData => {
-            if (ret.hasOwnProperty(fileData.getValue('type'))) {
-                ret[fileData.getValue('type')]++;
-            }
+    _formatFiles(userData) {
+        return userData.map(fileData => {
+            return {
+                id: fileData.getValue(UserFilesDefinition.COLUMN_ID),
+                type: fileData.getValue(UserFilesDefinition.COLUMN_TYPE),
+                url: this._makeUrl(fileData)
+            };
         });
-        return ret;
+    }
+
+    /**
+     *
+     * @param {UserFilesEntity} fileData
+     * @private {string}
+     */
+    // eslint-disable-next-line no-unused-vars
+    _makeUrl(fileData) {
+        //TODO
+        return 'https://google.com';
     }
 }

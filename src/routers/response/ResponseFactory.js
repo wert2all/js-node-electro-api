@@ -1,4 +1,5 @@
 import ResponseProcessorJson from './proseccor/ResponseProcessorJson';
+import ResponseResult from './ResponseResult';
 
 /**
  * @class ResponseFactory
@@ -6,11 +7,16 @@ import ResponseProcessorJson from './proseccor/ResponseProcessorJson';
 export default class ResponseFactory {
     /**
      *
-     * @param result
+     * @param {ResponseResult} result
      * @return ResponseProcessorInterface
      */
     create(result) {
-        //TODO
-        return new ResponseProcessorJson(result);
+        switch (result.getResultType()) {
+            case ResponseResult.TYPE_JSON: {
+                return new ResponseProcessorJson(result);
+            }
+            default:
+                return new ResponseProcessorJson(result);
+        }
     }
 }

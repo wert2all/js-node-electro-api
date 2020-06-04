@@ -11,6 +11,7 @@ import UserFilesDefinition from '../../db/definition/UserFilesDefinition';
 import path from 'path';
 import ImageProcessDirectoryProcessor
     from '../../storage/file/process/image/ImageProcessDirectoryProcessor';
+import ResponseResult from '../../routers/response/ResponseResult';
 
 /**
  * @class UploadGetFilesRequest
@@ -47,7 +48,7 @@ export default class UploadGetFilesRequest extends RequestInterface {
 
     /**
      * @request {*} request
-     * @return {Promise<ResponseDataClass>}
+     * @return {Promise<ResponseResult>}
      * @public
      */
     // eslint-disable-next-line no-unused-vars
@@ -65,7 +66,9 @@ export default class UploadGetFilesRequest extends RequestInterface {
             response.setMessage(e.message);
         }
 
-        return Promise.resolve(response.toHash());
+        return Promise.resolve(
+            new ResponseResult(ResponseResult.TYPE_JSON, response.getData())
+        );
     }
 
     /**

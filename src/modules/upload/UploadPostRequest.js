@@ -19,6 +19,7 @@ import EntityManager from '../../lib/db-entity-manager/EntityManager';
 import UserRepository from '../../db/repository/UserRepository';
 import UploadRequestCantSave from './error/UploadRequestCantSave';
 import EventFileUpload from './dispatch/event/EventFileUpload';
+import ResponseResult from '../../routers/response/ResponseResult';
 
 /**
  * @class UploadPostRequest
@@ -39,7 +40,7 @@ export default class UploadPostRequest extends RequestInterface {
 
     /**
      * @request {*} request
-     * @return {Promise}
+     * @return {Promise<ResponseResult>}
      * @public
      * @abstract
      */
@@ -64,7 +65,10 @@ export default class UploadPostRequest extends RequestInterface {
             response.status = false;
             response.message = e.message;
         }
-        return Promise.resolve(response.toHash());
+
+        return Promise.resolve(
+            new ResponseResult(ResponseResult.TYPE_JSON, response.getData())
+        );
     }
 
     /**

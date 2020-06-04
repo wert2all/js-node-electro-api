@@ -39,6 +39,10 @@ const connectDB = path => new Promise((resolve, reject) => {
 });
 connectDB(rootPath + 'secret.sqlite')
     .then(connection => {
+        const expressInstance = express();
+        // static middleware
+        expressInstance.use('/images', express.static(rootPath + 'data/files/images/'));
+
         /**
          *
          * @type {StorageProvider}
@@ -67,7 +71,7 @@ connectDB(rootPath + 'secret.sqlite')
         new ServerCluster(
             new ServerWorker(
                 new Application(
-                    express(),
+                    expressInstance,
                     new RoutersProviderFactory(
                         [
                             new RouteDefinition('/', 'get', new TariffRequest()),

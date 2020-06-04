@@ -13,8 +13,14 @@ export default class Application extends ServerApplicationInterface {
      * @param {RoutersProviderFactory} routersFactory
      * @param {StorageProvider} storageProvider
      * @param {DispatchInterface} dispatcher
+     * @param {ResponseFactory} responseFactory
      */
-    constructor(expressApp, routersFactory, storageProvider, dispatcher) {
+    constructor(expressApp,
+                routersFactory,
+                storageProvider,
+                dispatcher,
+                responseFactory
+    ) {
         super();
         this.app = expressApp;
         this.app.use(bodyParser.urlencoded({extended: false}));
@@ -48,6 +54,12 @@ export default class Application extends ServerApplicationInterface {
          * @private
          */
         this._dispatcher = dispatcher;
+        /**
+         *
+         * @type {ResponseFactory}
+         * @private
+         */
+        this._responseFactory = responseFactory;
     }
 
     /**
@@ -98,16 +110,19 @@ export default class Application extends ServerApplicationInterface {
 
     /**
      *
-     * @param request
+     * @param {RequestInterface} request
      * @return {function(...[*]=)}
      * @private
      */
     _generateRun(request) {
         return (req, res) => {
-            res.setHeader('Content-Type', 'application/json');
             request
                 .createResponse(req)
-                .then(result => res.json(result));
+                .then(result =>
+                    this._responseFactory
+                        .create(result)
+                        .send(res)
+                );
         };
     }
 

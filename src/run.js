@@ -27,6 +27,7 @@ import TelegramApi from './lib/telegram/TelegramApi';
 import UploadGetFilesRequest from './modules/upload/UploadGetFilesRequest';
 import Configuration from './storage/configuration/Configuration';
 import ConfigStorage from './storage/keyvalue/ConfigStorage';
+import ResponseFactory from './routers/response/ResponseFactory';
 
 const rootPath = path.normalize(__dirname + path.sep + '..' + path.sep + '..' + path.sep);
 const connectDB = path => new Promise((resolve, reject) => {
@@ -105,7 +106,8 @@ connectDB(rootPath + 'secret.sqlite')
                             ),
                         ]),
                     storage,
-                    new Dispatcher(observers)
+                    new Dispatcher(observers),
+                    new ResponseFactory()
                 )
             ),
             os.cpus().length

@@ -9,9 +9,9 @@ export default class ApiKeyProvider {
     constructor(storageProvider) {
         /**
          *
-         * @type {SecretStorage}
+         * @type {KeyValueStorageInterface}
          */
-        this.secretStorage = storageProvider.getSecretStorage();
+        this.secretStorage = storageProvider.getConfiguration().getSecretStorage();
     }
 
     /**

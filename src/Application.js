@@ -23,7 +23,10 @@ export default class Application extends ServerApplicationInterface {
             createParentPath: true
         }));
         Sentry.init({
-            dsn: storageProvider.getSecretStorage().fetch('sentry:api:dsn')
+            dsn: storageProvider
+                .getConfiguration()
+                .getSecretStorage()
+                .fetch('sentry:api:dsn')
         });
 
         /**

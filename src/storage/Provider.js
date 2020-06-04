@@ -31,7 +31,7 @@ export default class StorageProvider {
 
     /**
      * @deprecated use getConfiguration()
-     * @return {SecretStorage}
+     * @return {KeyValueStorageInterface}
      */
     getSecretStorage() {
         return this.getConfiguration().getSecretStorage();

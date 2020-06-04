@@ -63,8 +63,14 @@ connectDB(rootPath + 'secret.sqlite')
         observers[EventFileUpload.EVENT_NAME] = [
             new FileUploadedObserver(
                 new TelegramApi(
-                    storage.getSecretStorage().fetch('telegram.bot.token'),
-                    storage.getSecretStorage().fetch('telegram.bot.chat'),
+                    storage
+                        .getConfiguration()
+                        .getSecretStorage()
+                        .fetch('telegram.bot.token'),
+                    storage
+                        .getConfiguration()
+                        .getSecretStorage()
+                        .fetch('telegram.bot.chat'),
                 )
             )
         ];

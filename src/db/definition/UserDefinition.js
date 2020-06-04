@@ -11,6 +11,7 @@ export default class UserDefinition extends DefinitionTableInterface {
     static COLUMN_GOOGLE_ID = 'google_user_id';
     static COLUMN_GOOGLE_NAME = 'name';
     static COLUMN_GOOGLE_EMAIL = 'email';
+    static COLUMN_IS_ADMIN = 'isAdmin';
 
     constructor() {
         super();
@@ -45,6 +46,13 @@ export default class UserDefinition extends DefinitionTableInterface {
                 DefinitionColumn.COLUMN_TYPE_VARCHAR,
                 true,
                 '',
+                false
+            ),
+            new DefinitionColumn(
+                UserDefinition.COLUMN_IS_ADMIN,
+                DefinitionColumn.COLUMN_TYPE_VARCHAR,
+                false,
+                'n',
                 false
             ),
         ];

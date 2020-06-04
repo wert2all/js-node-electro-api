@@ -20,6 +20,7 @@ export default class DataValueInterface {
      * @abstract
      * @param {string} key
      * @param {string} value
+     * @return {DataValueInterface}
      */
     // eslint-disable-next-line no-unused-vars
     setData(key, value) {

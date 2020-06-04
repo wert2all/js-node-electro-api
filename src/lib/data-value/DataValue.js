@@ -30,6 +30,7 @@ export default class DataValue extends DataValueInterface {
      */
     setData(key, value) {
         this._data[key] = value;
+        return this;
     }
 
     /**
@@ -38,5 +39,16 @@ export default class DataValue extends DataValueInterface {
      */
     toHash() {
         return this._data;
+    }
+
+    /**
+     *
+     * @param {*} hash
+     * @return {DataValue}
+     */
+    static create(hash) {
+        return Object.keys(hash)
+            .reduce((prev, key) =>
+                prev.setData(key, hash[key]), new DataValue());
     }
 }

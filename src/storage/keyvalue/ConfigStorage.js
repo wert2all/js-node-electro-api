@@ -27,9 +27,7 @@ export default class ConfigStorage extends FileKeyValueStorage {
         if (defaultConfig === null) {
             defaultConfig = {};
         }
-        console.log(this._storageFilePath + 'config.default.json');
-        console.log(defaultConfig);
-        console.log(extendedConfig);
+
         this._registry = Object.assign(defaultConfig, extendedConfig);
     }
 

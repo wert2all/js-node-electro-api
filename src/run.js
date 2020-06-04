@@ -12,7 +12,7 @@ import TariffRequest from './modules/tariff/TariffRequest';
 import AuthRequest from './modules/auth/AuthRequest';
 import UploadPostRequest from './modules/upload/UploadPostRequest';
 import StorageProvider from './storage/Provider';
-import SecretStorage from './storage/Secret';
+import SecretStorage from './storage/keyvalue/SecretStorage';
 import FileStorage from './storage/FileStorage';
 import FileStorageConfig from './storage/file/FileStorageConfig';
 import SQLiteConnection from './lib/db-connection/adapter/SQLiteConnection';
@@ -25,6 +25,8 @@ import FileUploadedObserver from
         './modules/upload/dispatch/observers/FileUploadedObserver';
 import TelegramApi from './lib/telegram/TelegramApi';
 import UploadGetFilesRequest from './modules/upload/UploadGetFilesRequest';
+import Configuration from './storage/configuration/Configuration';
+import ConfigStorage from './storage/keyvalue/ConfigStorage';
 
 const rootPath = path.normalize(__dirname + path.sep + '..' + path.sep + '..' + path.sep);
 const connectDB = path => new Promise((resolve, reject) => {
@@ -42,7 +44,10 @@ connectDB(rootPath + 'secret.sqlite')
          * @type {StorageProvider}
          */
         const storage = new StorageProvider(
-            new SecretStorage(rootPath + 'secret.json'),
+            new Configuration(
+                new SecretStorage(rootPath + 'secret.json'),
+                new ConfigStorage(rootPath)
+            ),
             new FileStorage(
                 new FileStorageConfig(
                     path.normalize(rootPath + 'data/files/')

@@ -2,7 +2,7 @@
 import DataValue from '../../lib/data-value/DataValue';
 
 /**
- * @class UploadResponseDataClass
+ * @class ResponseDataClass
  *
  */
 export default class ResponseDataClass {

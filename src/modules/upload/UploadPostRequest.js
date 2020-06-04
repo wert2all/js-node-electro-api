@@ -1,6 +1,5 @@
 'use strict';
 import RequestInterface from '../../routers/request/RequestInterface';
-import UploadResponseDataClass from './data/UploadResponseDataClass';
 import UploadRequestDataClass from './data/UploadRequestDataClass';
 import AuthCheck from '../auth/AuthCheck';
 import ApiKeyProvider from '../auth/key/KeyProvider';
@@ -20,6 +19,7 @@ import UserRepository from '../../db/repository/UserRepository';
 import UploadRequestCantSave from './error/UploadRequestCantSave';
 import EventFileUpload from './dispatch/event/EventFileUpload';
 import ResponseResult from '../../routers/response/ResponseResult';
+import ResponseDataClass from '../../routers/response/ResponseDataClass';
 
 /**
  * @class UploadPostRequest
@@ -45,7 +45,7 @@ export default class UploadPostRequest extends RequestInterface {
      * @abstract
      */
     async createResponse(request) {
-        const response = new UploadResponseDataClass();
+        const response = new ResponseDataClass();
         try {
             const requestData = await this._prepareRequest(request);
             const userFilesEntity = this.makeUserFilesEntity(requestData);
@@ -59,11 +59,11 @@ export default class UploadPostRequest extends RequestInterface {
             if (userFileList.length === 0) {
                 await this._saveFile(fileData, userFilesEntity);
             }
-            response.status = true;
+            response.setStatus(true);
         } catch (e) {
             console.log(e);
-            response.status = false;
-            response.message = e.message;
+            response.setStatus(false);
+            response.setMessage(e.message);
         }
 
         return Promise.resolve(

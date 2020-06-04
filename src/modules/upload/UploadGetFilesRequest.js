@@ -8,6 +8,9 @@ import UserEntity from '../../data/entity/UserEntity';
 import UserFilesEntity from '../../data/entity/UserFilesEntity';
 import UploadFilesRequestDataClass from './data/UploadFilesRequestDataClass';
 import UserFilesDefinition from '../../db/definition/UserFilesDefinition';
+import path from 'path';
+import ImageProcessDirectoryProcessor
+    from '../../storage/file/process/image/ImageProcessDirectoryProcessor';
 
 /**
  * @class UploadGetFilesRequest
@@ -131,7 +134,34 @@ export default class UploadGetFilesRequest extends RequestInterface {
      */
     // eslint-disable-next-line no-unused-vars
     _makeUrl(fileData) {
-        //TODO
-        return 'https://google.com';
+        return this._makeAbsolutePath(
+            this._makeRelativePath(path.normalize(
+                fileData.getValue(UserFilesDefinition.COLUMN_PATH)
+            )));
+    }
+
+    /**
+     *
+     * @param {string} imagePath
+     * @returns {string}
+     * @private
+     */
+    _makeRelativePath(imagePath) {
+        const rootPath = new ImageProcessDirectoryProcessor()
+            .getDirectoryRoot(this._storageProvider.getFileStorage().getConfig());
+        return imagePath.substr(rootPath.length, imagePath.length);
+    }
+
+    /**
+     *
+     * @param {string} relativePath
+     * @returns {string}
+     * @private
+     */
+    _makeAbsolutePath(relativePath) {
+        return this._storageProvider
+            .getConfiguration()
+            .getConfig()
+            .fetch('api:url:static:image') + relativePath;
     }
 }

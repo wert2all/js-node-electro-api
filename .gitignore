@@ -6,3 +6,4 @@ dist/
 /secret.json
 /secret.sqlite
 /data/files/
+/config.json

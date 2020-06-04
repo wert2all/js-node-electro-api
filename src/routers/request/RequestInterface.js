@@ -21,7 +21,7 @@ export default class RequestInterface {
     /**
      * @abstract
      * @request {*} request
-     * @return {Promise}
+     * @return {Promise<ResponseResult>}
      * @public
      */
     // eslint-disable-next-line no-unused-vars

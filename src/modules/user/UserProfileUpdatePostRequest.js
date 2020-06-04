@@ -8,6 +8,7 @@ import UserProfileUpdateRequestDataClass from './data/UserProfileUpdateRequestDa
 import UserEntity from '../../data/entity/UserEntity';
 import UserProfileEntity from '../../data/entity/UserProfileEntity';
 import EntityManager from '../../lib/db-entity-manager/EntityManager';
+import ResponseResult from '../../routers/response/ResponseResult';
 
 /**
  * @class UserProfileUpdatePostRequest
@@ -45,7 +46,7 @@ export default class UserProfileUpdatePostRequest extends RequestInterface {
 
     /**
      * @request {*} request
-     * @return {Promise<ResponseDataClass>}
+     * @return {Promise<ResponseResult>}
      * @public
      */
     // eslint-disable-next-line no-unused-vars
@@ -68,7 +69,9 @@ export default class UserProfileUpdatePostRequest extends RequestInterface {
             response.setMessage(e.message);
         }
 
-        return Promise.resolve(response.toHash());
+        return Promise.resolve(
+            new ResponseResult(ResponseResult.TYPE_JSON, response.getData())
+        );
     }
 
     /**

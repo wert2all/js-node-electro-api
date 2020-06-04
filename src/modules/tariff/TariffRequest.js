@@ -3,6 +3,8 @@ import RequestParams from './request/RequestParams';
 import VersionFactory from './VersionFactory';
 import TariffRepository from './db/TariffRepository';
 import TariffDB from './db/TariffDB';
+import ResponseResult from '../../routers/response/ResponseResult';
+import DataValue from '../../lib/data-value/DataValue';
 
 /**
  * @class TariffRequest
@@ -19,7 +21,7 @@ export default class TariffRequest extends RequestInterface {
 
     /**
      * @request {*} request
-     * @return {Promise}
+     * @return {Promise<ResponseResult>}
      * @public
      */
     createResponse(request) {
@@ -32,9 +34,15 @@ export default class TariffRequest extends RequestInterface {
                 params.getVersion(),
                 new TariffRepository(new TariffDB())
             ).create();
-            result((request.query.hasOwnProperty('all') && request.query.all === '1')
-                ? api.all()
-                : api.result(params));
+
+            const resultHash =
+                (request.query.hasOwnProperty('all') && request.query.all === '1')
+                    ? api.all()
+                    : api.result(params);
+
+            result(
+                new ResponseResult(ResponseResult.TYPE_JSON, DataValue.create(resultHash))
+            );
         });
     }
 

@@ -2,6 +2,8 @@ import RequestInterface from '../../routers/request/RequestInterface';
 import AuthParamsFactory from './params/Factory';
 import ApiKeyProvider from './key/KeyProvider';
 import AuthCheck from './AuthCheck';
+import ResponseResult from '../../routers/response/ResponseResult';
+import DataValue from '../../lib/data-value/DataValue';
 
 /**
  * @class AuthRequest
@@ -12,7 +14,7 @@ export default class AuthRequest extends RequestInterface {
 
     /**
      * @request {*} request
-     * @return {Promise}
+     * @return {Promise<ResponseResult>}
      * @public
      */
     createResponse(request) {
@@ -30,17 +32,32 @@ export default class AuthRequest extends RequestInterface {
                     .check(params)
                     .then(res => {
                         ret.token = res.getGoogleUserId();
-                        result(ret);
+                        result(
+                            new ResponseResult(
+                                ResponseResult.TYPE_JSON,
+                                DataValue.create(ret)
+                            )
+                        );
                     })
                     .catch(e => {
                         ret.status = false;
                         ret.error = e.message;
-                        result(ret);
+                        result(
+                            new ResponseResult(
+                                ResponseResult.TYPE_JSON,
+                                DataValue.create(ret)
+                            )
+                        );
                     });
             } catch (e) {
                 ret.status = false;
                 ret.error = e.message;
-                result(ret);
+                result(
+                    new ResponseResult(
+                        ResponseResult.TYPE_JSON,
+                        DataValue.create(ret)
+                    )
+                );
             }
         });
     }

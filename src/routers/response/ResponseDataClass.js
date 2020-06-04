@@ -75,4 +75,12 @@ export default class ResponseDataClass {
         this._message = message;
         return this;
     }
+
+    /**
+     *
+     * @return {DataValueInterface}
+     */
+    getData() {
+        return DataValue.create(this.toHash());
+    }
 }

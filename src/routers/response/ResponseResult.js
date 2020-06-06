@@ -3,6 +3,7 @@
  */
 export default class ResponseResult {
     static TYPE_JSON = 'json';
+    static TYPE_HTML = 'html';
 
     /**
      *

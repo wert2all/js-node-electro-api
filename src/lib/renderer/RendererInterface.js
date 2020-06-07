@@ -8,6 +8,7 @@ import ImplementationError from '../implementation-error/ImplementationError';
 export default class RendererInterface {
     /**
      * @abstract
+     * @return RendererInterface
      */
     init() {
         throw new ImplementationError(this, 'init');

@@ -1,4 +1,6 @@
 import ResponseProcessorInterface from '../ResponseProcessorInterface';
+import RendererInterface from '../../../lib/renderer/RendererInterface';
+import DI from '../../../lib/di/DI';
 
 /**
  * @class ResponseProcessorHtml
@@ -12,7 +14,18 @@ export default class ResponseProcessorHtml extends ResponseProcessorInterface {
      */
     constructor(result) {
         super();
+        /**
+         *
+         * @type {ResponseResult}
+         * @private
+         */
         this._result = result;
+        /**
+         *
+         * @type {RendererInterface}
+         * @private
+         */
+        this._renderer = DI.getInstance().get(RendererInterface);
     }
 
     /**
@@ -21,6 +34,10 @@ export default class ResponseProcessorHtml extends ResponseProcessorInterface {
      * @return {*}
      */
     send(response) {
-        return response.send(this._result.getData().toHash());
+        return response.send(
+            this._renderer
+                .setValues(this._result.getData())
+                .render()
+        );
     }
 }

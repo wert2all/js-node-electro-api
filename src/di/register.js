@@ -15,6 +15,8 @@ import TelegramApi from '../lib/telegram/TelegramApi';
 import StorageProvider from '../storage/Provider';
 import Configuration from '../storage/configuration/Configuration';
 import SecretStorage from '../storage/keyvalue/SecretStorage';
+import RendererInterface from '../lib/renderer/RendererInterface';
+import PugAdapter from '../lib/renderer/adapter/PugAdapter';
 
 export function diInit(rootPath) {
     const di = DI.getInstance();
@@ -49,4 +51,10 @@ export function diInit(rootPath) {
         ];
         return new Dispatcher(observers);
     })());
+
+    di.register(RendererInterface, new PugAdapter(
+        rootPath
+        + di.get(KeyValueStorageInterface).fetch('render.pug.template.directory')
+        + di.get(KeyValueStorageInterface).fetch('render.pug.template.name')
+    ));
 }

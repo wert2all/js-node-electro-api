@@ -20,6 +20,7 @@ import ResponseFactory from './routers/response/ResponseFactory';
 import {diInit} from './di/register';
 import DI from './lib/di/DI';
 import DispatchInterface from './lib/dispatcher/DispatchInterface';
+import UIRequest from './modules/ui/UIRequest';
 
 const rootPath = path.normalize(__dirname + path.sep + '..' + path.sep + '..' + path.sep);
 const connectDB = path => new Promise((resolve, reject) => {
@@ -37,6 +38,7 @@ connectDB(rootPath + 'secret.sqlite')
         const expressInstance = express();
         // static middleware
         expressInstance.use('/images', express.static(rootPath + 'data/files/images/'));
+        expressInstance.use('/assets', express.static(rootPath + 'dist/assets/'));
 
         new ServerCluster(
             new ServerWorker(
@@ -66,6 +68,10 @@ connectDB(rootPath + 'secret.sqlite')
                             new RouteDefinition('/upload/files/',
                                 'get',
                                 new UploadGetFilesRequest()
+                            ),
+                            new RouteDefinition('/ui/',
+                                'get',
+                                new UIRequest()
                             ),
                         ]),
                     DI.getInstance().get(StorageProvider),

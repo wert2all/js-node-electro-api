@@ -21,7 +21,8 @@
     "node-fetch": "^2.6.0",
     "npm-check-updates": "^6.0.1",
     "pug": "^3.0.0",
-    "sqlite3": "^4.2.0"
+    "sqlite3": "^4.2.0",
+    "uikit": "^3.5.3"
   },
   "devDependencies": {
     "@babel/core": "^7.10.2",
@@ -29,6 +30,8 @@
     "@babel/plugin-transform-runtime": "^7.10.1",
     "@babel/preset-env": "^7.10.2",
     "babel-eslint": "^10.1.0",
+    "browser-sync": "^2.26.7",
+    "css-loader": "^3.5.3",
     "eslint": "^7.1.0",
     "gulp": "^4.0.2",
     "gulp-babel": "^8.0.0",
@@ -36,6 +39,9 @@
     "gulp-cli": "^2.2.1",
     "gulp-eslint": "^6.0.0",
     "nodemon": "^2.0.4",
-    "plugin-error": "^1.0.1"
+    "plugin-error": "^1.0.1",
+    "style-loader": "^1.2.1",
+    "webpack": "^4.43.0",
+    "webpack-stream": "^5.2.1"
   }
 }

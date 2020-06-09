@@ -49,7 +49,6 @@ export default class UserProfileUpdatePostRequest extends RequestInterface {
      * @return {Promise<ResponseResult>}
      * @public
      */
-    // eslint-disable-next-line no-unused-vars
     async createResponse(request) {
         const response = new ResponseDataClass();
         try {

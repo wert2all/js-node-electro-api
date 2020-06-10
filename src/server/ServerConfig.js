@@ -26,4 +26,12 @@ export default class ServerConfig {
     getApplicationDirectory() {
         return this._applicationDirectoryPath;
     }
+
+    /**
+     *
+     * @return {string}
+     */
+    getWebserverDirectory() {
+        return this._webserverDirectory;
+    }
 }

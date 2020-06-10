@@ -63,7 +63,7 @@ export function diInit(serverConfig) {
     })());
 
     di.register(RendererInterface, new PugAdapter(
-        serverConfig.getApplicationDirectory()
+        serverConfig.getWebserverDirectory()
         + di.get(KeyValueStorageInterface).fetch('render.pug.template.directory')
         + di.get(KeyValueStorageInterface).fetch('render.pug.template.name')
     ));

@@ -63,7 +63,8 @@ gulp.task('clean', () =>
 
 gulp.task('serve:init', cb => {
     browserSync.init({
-        proxy: 'localhost:3000'
+        proxy: 'localhost:3000',
+        port: 3001
     });
     return cb();
 });

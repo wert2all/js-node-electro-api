@@ -17,17 +17,27 @@ import Configuration from '../storage/configuration/Configuration';
 import SecretStorage from '../storage/keyvalue/SecretStorage';
 import RendererInterface from '../lib/renderer/RendererInterface';
 import PugAdapter from '../lib/renderer/adapter/PugAdapter';
+import ServerConfig from '../server/ServerConfig';
 
-export function diInit(rootPath) {
+/**
+ *
+ * @param {ServerConfig} serverConfig
+ */
+export function diInit(serverConfig) {
     const di = DI.getInstance();
+    di.register(ServerConfig, serverConfig);
     di.register(ConnectionInterface, new SQLiteConnection());
-    di.register(KeyValueStorageInterface, new ConfigStorage(rootPath));
+    di.register(KeyValueStorageInterface, new ConfigStorage(
+        serverConfig.getApplicationDirectory())
+    );
     di.register(FileStorage, new FileStorage(
-        new FileStorageConfig(path.normalize(rootPath + 'data/files/'))
+        new FileStorageConfig(
+            path.normalize(serverConfig.getApplicationDirectory() + 'data/files/')
+        )
     ));
     di.register(StorageProvider, new StorageProvider(
         new Configuration(
-            new SecretStorage(rootPath + 'secret.json'),
+            new SecretStorage(serverConfig.getApplicationDirectory() + 'secret.json'),
             di.get(KeyValueStorageInterface)
         ),
         di.get(FileStorage),
@@ -53,7 +63,7 @@ export function diInit(rootPath) {
     })());
 
     di.register(RendererInterface, new PugAdapter(
-        rootPath
+        serverConfig.getApplicationDirectory()
         + di.get(KeyValueStorageInterface).fetch('render.pug.template.directory')
         + di.get(KeyValueStorageInterface).fetch('render.pug.template.name')
     ));

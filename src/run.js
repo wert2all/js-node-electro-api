@@ -48,6 +48,10 @@ connectDB(serverConfig.getApplicationDirectory() + 'secret.sqlite')
             '/assets',
             express.static(serverConfig.getApplicationDirectory() + 'dist/assets/')
         );
+        expressInstance.use(
+            '/error.html',
+            express.static(serverConfig.getWebserverDirectory() + 'templates/error.html')
+        );
 
         new ServerCluster(
             new ServerWorker(

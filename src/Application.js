@@ -118,11 +118,18 @@ export default class Application extends ServerApplicationInterface {
         return (req, res) => {
             request
                 .createResponse(req)
-                .then(result =>
-                    this._responseFactory
-                        .create(result)
-                        .send(res)
-                );
+                .then(result => {
+                    return new Promise(done =>
+                        done(this._responseFactory
+                            .create(result)
+                            .send(res)))
+                        .catch(e => {
+                            console.log(e);
+                            this._responseFactory
+                                .create(result)
+                                .sendError(e, res);
+                        });
+                });
         };
     }
 

@@ -1,0 +1,125 @@
+<html lang="en">
+<head>
+    <title>Something went wrong.</title>
+    <style>
+        html,
+        body {
+            background-color: #2f1e2e;
+            height: 100%;
+            width: 100%;
+            font-family: monospace, monospace;
+        }
+
+        .container {
+            align-items: center;
+            display: flex;
+            justify-content: center;
+            height: 100%;
+            width: 100%;
+        }
+
+        .centered {
+            width: 1000px;
+            margin: auto;
+
+            /*this to solve "the content will not be cut when the window is smaller than the content": */
+            max-width: 100%;
+            max-height: 100%;
+            overflow: auto;
+        }
+
+        .overflow {
+            background-color: #faa05a;
+            position: absolute;
+            width: 100%;
+            z-index: 100;
+            opacity: 0.3;
+            height: 100%;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 240px;
+            color: white;
+            z-index: 110;
+            text-align: center;
+            position: absolute;
+        }
+
+        h1 span {
+            font-size: 72px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>500 error: <br/><span>too lazy to work</span></h1>
+    <div class="overflow"></div>
+    <pre class="hljs centered"
+         style="display: block; overflow-x: auto; background: rgb(47, 30, 46); color: rgb(163, 158, 155); padding: 0.5em; width: 1000px; border: 1px solid #222A30"><span
+        class="hljs-keyword" style="color: rgb(129, 91, 164);">import</span> ServerWorkerInterface <span
+        class="hljs-keyword" style="color: rgb(129, 91, 164);">from</span> <span class="hljs-string"
+                                                                                 style="color: rgb(72, 182, 133);">'./ServerWorkerInterface'</span>;
+<span class="hljs-keyword" style="color: rgb(129, 91, 164);">import</span> http<span class="hljs-keyword"
+                                                                                     style="color: rgb(129, 91, 164);">from</span> <span
+            class="hljs-string" style="color: rgb(72, 182, 133);">'http'</span>;
+
+<span class="hljs-comment" style="color: rgb(141, 134, 135);">/**
+ * @class ServerWorker
+ * @extends ServerWorkerInterface
+ * @type ServerWorkerInterface
+ */</span>
+<span class="hljs-keyword" style="color: rgb(129, 91, 164);">export</span> <span class="hljs-keyword"
+                                                                                 style="color: rgb(129, 91, 164);">default</span> <span
+            class="hljs-class"><span class="hljs-keyword" style="color: rgb(129, 91, 164);">class</span> <span
+            class="hljs-title" style="color: rgb(254, 196, 24);">ServerWorker</span> <span class="hljs-keyword"
+                                                                                           style="color: rgb(129, 91, 164);">extends</span> <span
+            class="hljs-title" style="color: rgb(254, 196, 24);">ServerWorkerInterface</span> </span>{
+
+    <span class="hljs-comment" style="color: rgb(141, 134, 135);">/**
+     *
+     * @param {ServerApplicationInterface} application
+     */</span>
+    <span class="hljs-keyword" style="color: rgb(129, 91, 164);">constructor</span>(application) {
+        <span class="hljs-keyword" style="color: rgb(129, 91, 164);">super</span>();
+        <span class="hljs-keyword" style="color: rgb(129, 91, 164);">this</span>._application = application;
+    }
+
+    <span class="hljs-comment" style="color: rgb(141, 134, 135);">/**
+     *
+     * @param connection
+     */</span>
+    run(connection) {
+        <span class="hljs-keyword" style="color: rgb(129, 91, 164);">const</span> pid = process.pid;
+        <span class="hljs-keyword" style="color: rgb(129, 91, 164);">this</span>._application.init(connection).run();
+
+        <span class="hljs-keyword" style="color: rgb(129, 91, 164);">const</span> server = http.createServer(<span
+            class="hljs-keyword" style="color: rgb(129, 91, 164);">this</span>._application.getRequestListener())
+            .listen(<span class="hljs-number" style="color: rgb(249, 155, 21);">3000</span>, () =&gt; <span
+            class="hljs-built_in" style="color: rgb(249, 155, 21);">console</span>.log(<span class="hljs-string"
+                                                                                             style="color: rgb(72, 182, 133);">`Worker started. Pid: <span
+            class="hljs-subst">${pid}</span>`</span>));
+
+        process.on(<span class="hljs-string" style="color: rgb(72, 182, 133);">'SIGINT'</span>, () =&gt; {
+            <span class="hljs-built_in" style="color: rgb(249, 155, 21);">console</span>.log(<span class="hljs-string"
+                                                                                                   style="color: rgb(72, 182, 133);">'Signal is SIGINT'</span>);
+            server.close(() =&gt; process.exit(<span class="hljs-number" style="color: rgb(249, 155, 21);">0</span>));
+        });
+
+        process.on(<span class="hljs-string" style="color: rgb(72, 182, 133);">'SIGTERM'</span>, () =&gt; {
+            <span class="hljs-built_in" style="color: rgb(249, 155, 21);">console</span>.log(<span class="hljs-string"
+                                                                                                   style="color: rgb(72, 182, 133);">'Signal is SIGTERM'</span>);
+            server.close(() =&gt; process.exit(<span class="hljs-number" style="color: rgb(249, 155, 21);">0</span>));
+        });
+
+        process.on(<span class="hljs-string" style="color: rgb(72, 182, 133);">'SIGUSR2'</span>, () =&gt; {
+            <span class="hljs-built_in" style="color: rgb(249, 155, 21);">console</span>.log(<span class="hljs-string"
+                                                                                                   style="color: rgb(72, 182, 133);">'Signal is SIGUSR2'</span>);
+            server.close(() =&gt; process.exit(<span class="hljs-number" style="color: rgb(249, 155, 21);">1</span>));
+        });
+    }
+}
+</pre>
+</div>
+</body>
+</html>

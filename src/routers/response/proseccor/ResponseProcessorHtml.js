@@ -40,4 +40,13 @@ export default class ResponseProcessorHtml extends ResponseProcessorInterface {
                 .render()
         );
     }
+
+    /**
+     *
+     * @param {Error} error
+     * @param response
+     */
+    sendError(error, response) {
+        return response.redirect('/error.html');
+    }
 }

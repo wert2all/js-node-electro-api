@@ -24,4 +24,17 @@ export default class ResponseProcessorJson extends ResponseProcessorInterface {
         response.setHeader('Content-Type', 'application/json');
         return response.json(this._result.getData().toHash());
     }
+
+    /**
+     *
+     * @param {Error} error
+     * @param response
+     */
+    sendError(error, response) {
+        response.setHeader('Content-Type', 'application/json');
+        return response.json({
+            error: true,
+            message: error.message
+        });
+    }
 }

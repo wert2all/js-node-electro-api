@@ -21,8 +21,12 @@ import {diInit} from './di/register';
 import DI from './lib/di/DI';
 import DispatchInterface from './lib/dispatcher/DispatchInterface';
 import UIRequest from './modules/ui/UIRequest';
+import ServerConfig from './server/ServerConfig';
 
-const rootPath = path.normalize(__dirname + path.sep + '..' + path.sep + '..' + path.sep);
+const serverConfig = new ServerConfig(
+    path.normalize(__dirname + path.sep + '..' + path.sep),
+    path.normalize(__dirname + path.sep + '..' + path.sep + '..' + path.sep)
+);
 const connectDB = path => new Promise((resolve, reject) => {
     const db = new sqlite3.Database(path, err => {
         if (err) {
@@ -31,14 +35,19 @@ const connectDB = path => new Promise((resolve, reject) => {
         resolve(db);
     });
 });
-connectDB(rootPath + 'secret.sqlite')
+connectDB(serverConfig.getApplicationDirectory() + 'secret.sqlite')
     .then(connection => {
-        diInit(rootPath);
-
+        diInit(serverConfig);
         const expressInstance = express();
         // static middleware
-        expressInstance.use('/images', express.static(rootPath + 'data/files/images/'));
-        expressInstance.use('/assets', express.static(rootPath + 'dist/assets/'));
+        expressInstance.use(
+            '/images',
+            express.static(serverConfig.getApplicationDirectory() + 'data/files/images/')
+        );
+        expressInstance.use(
+            '/assets',
+            express.static(serverConfig.getApplicationDirectory() + 'dist/assets/')
+        );
 
         new ServerCluster(
             new ServerWorker(

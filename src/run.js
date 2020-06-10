@@ -1,7 +1,7 @@
 import os from 'os';
 import sqlite3 from 'sqlite3';
 import path from 'path';
-import express from 'express';
+
 
 import ServerCluster from './server/ServerCluster';
 import ServerWorker from './server/ServerWorker';
@@ -17,8 +17,8 @@ import UserProfileGetRequest from './modules/user/UserProfileGetRequest';
 import UserProfileUpdatePostRequest from './modules/user/UserProfileUpdatePostRequest';
 import UploadGetFilesRequest from './modules/upload/UploadGetFilesRequest';
 import ResponseFactory from './routers/response/ResponseFactory';
-import {diInit} from './di/register';
-import DI from './lib/di/DI';
+import diInit from './_init/DIInit';
+import expressInit from './_init/ExpressInit';
 import DispatchInterface from './lib/dispatcher/DispatchInterface';
 import UIRequest from './modules/ui/UIRequest';
 import ServerConfig from './server/ServerConfig';
@@ -37,21 +37,8 @@ const connectDB = path => new Promise((resolve, reject) => {
 });
 connectDB(serverConfig.getApplicationDirectory() + 'secret.sqlite')
     .then(connection => {
-        diInit(serverConfig);
-        const expressInstance = express();
-        // static middleware
-        expressInstance.use(
-            '/images',
-            express.static(serverConfig.getApplicationDirectory() + 'data/files/images/')
-        );
-        expressInstance.use(
-            '/assets',
-            express.static(serverConfig.getApplicationDirectory() + 'dist/assets/')
-        );
-        expressInstance.use(
-            '/error.html',
-            express.static(serverConfig.getWebserverDirectory() + 'templates/error.html')
-        );
+        const di = diInit(serverConfig);
+        const expressInstance = expressInit(serverConfig);
 
         new ServerCluster(
             new ServerWorker(
@@ -87,8 +74,8 @@ connectDB(serverConfig.getApplicationDirectory() + 'secret.sqlite')
                                 new UIRequest()
                             ),
                         ]),
-                    DI.getInstance().get(StorageProvider),
-                    DI.getInstance().get(DispatchInterface),
+                    di.get(StorageProvider),
+                    di.get(DispatchInterface),
                     new ResponseFactory()
                 )
             ),

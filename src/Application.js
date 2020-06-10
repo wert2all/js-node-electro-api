@@ -5,6 +5,8 @@ const bodyParser = require('body-parser');
 const fileUpload = require('express-fileupload');
 /**
  * @class Application
+ * @extends ServerApplicationInterface
+ * @type ServerApplicationInterface
  */
 export default class Application extends ServerApplicationInterface {
     /**

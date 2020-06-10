@@ -22,8 +22,9 @@ import ServerConfig from '../server/ServerConfig';
 /**
  *
  * @param {ServerConfig} serverConfig
+ * @return DI
  */
-export function diInit(serverConfig) {
+export default function diInit(serverConfig) {
     const di = DI.getInstance();
     di.register(ServerConfig, serverConfig);
     di.register(ConnectionInterface, new SQLiteConnection());
@@ -67,4 +68,5 @@ export function diInit(serverConfig) {
         + di.get(KeyValueStorageInterface).fetch('render.pug.template.directory')
         + di.get(KeyValueStorageInterface).fetch('render.pug.template.name')
     ));
+    return di;
 }

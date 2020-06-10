@@ -40,7 +40,11 @@ gulp.task('copy:images', () =>
     gulp.src('./assets/img/**/*')
         .pipe(gulp.dest('dist/assets/img/')));
 
-gulp.task('copy', gulp.parallel('copy:package', 'copy:images'));
+gulp.task('copy:templates', () =>
+    gulp.src('./templates/**/*')
+        .pipe(gulp.dest('dist/templates/')));
+
+gulp.task('copy', gulp.parallel('copy:package', 'copy:templates', 'copy:images'));
 
 gulp.task('build:webpack', () => {
     return gulp.src('assets/js.js')
@@ -81,7 +85,7 @@ function watchFiles() {
     gulp.watch('./assets/**/*',
         gulp.series('build:webpack', 'copy:images', 'serve:reload')
     );
-    gulp.watch('./templates/**/*', gulp.series('serve:reload'));
+    gulp.watch('./templates/**/*', gulp.series('copy:templates', 'serve:reload'));
 }
 
 const watch = gulp.series('serve', watchFiles);

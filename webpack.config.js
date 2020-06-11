@@ -1,12 +1,15 @@
 const path = require('path');
 const webpack = require('webpack');
+const TerserPlugin = require('terser-webpack-plugin');
+const production = (process.env.NODE_ENV === 'production');
 
 module.exports = {
-    mode: 'development',
+    mode: (production) ? 'production' : 'development',
     entry: {
         js: './assets/js.js',
         css: './assets/css.js'
     },
+    devtool: production ? false : 'source-map',
     output: {
         path: path.resolve(__dirname, 'dist/assets'),
         filename: '[name].bundle.js'
@@ -34,4 +37,7 @@ module.exports = {
             }
         ],
     },
+    optimization: {
+        minimizer: production ? [new TerserPlugin()] : []
+    }
 };

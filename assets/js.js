@@ -1,5 +1,3 @@
-import UIkit from 'uikit/dist/js/uikit';
-import UIIcons from 'uikit/dist/js/uikit-icons';
 import UIInit from './js/UIInit';
 import UIConfig from './js/config/UIConfig';
 import GApiConfig from './js/google/GApiConfig';
@@ -14,7 +12,6 @@ const config = new UIConfig(
         'https://apis.google.com/js/api.js?onload=onGApiLoad'
     )
 );
-UIkit.use(UIIcons);
 new UIInit(config)
     .init(window);
 

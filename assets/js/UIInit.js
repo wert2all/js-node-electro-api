@@ -1,7 +1,12 @@
 import GApiAuth from './google/auth/GApiAuth';
 import DomScript from './dom/Script';
 import AuthListener from './auth/AuthListener';
+import UIkit from 'uikit/dist/js/uikit';
+import UIIcons from 'uikit/dist/js/uikit-icons';
 
+/**
+ * @class UIInit
+ */
 export default class UIInit {
     /**
      *
@@ -18,6 +23,7 @@ export default class UIInit {
 
     init(window) {
         this._appendGApi(window);
+        this._initIcons();
     }
 
     _appendGApi(window) {
@@ -33,5 +39,9 @@ export default class UIInit {
 
         new DomScript(window.document)
             .create(this._config.getGoogleConfig().getApiUrl());
+    }
+
+    _initIcons() {
+        UIkit.use(UIIcons);
     }
 }

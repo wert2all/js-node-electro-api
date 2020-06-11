@@ -8,10 +8,10 @@ import OnSignInChangedInterface from '../google/auth/listeners/OnSignInChangedIn
 export default class AuthListener extends OnSignInChangedInterface {
 
     onAuth() {
-        console.log( 'auth')
+        console.log('auth');
     }
 
     onNonAuth() {
-        console.log( 'no auth')
+        console.log('no auth');
     }
 }

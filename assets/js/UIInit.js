@@ -3,6 +3,7 @@ import DomScript from './dom/Script';
 import AuthListener from './auth/AuthListener';
 import UIkit from 'uikit/dist/js/uikit';
 import UIIcons from 'uikit/dist/js/uikit-icons';
+import UIHolder from './ui/UIHolder';
 
 /**
  * @class UIInit
@@ -19,9 +20,16 @@ export default class UIInit {
          * @private
          */
         this._config = config;
+        /**
+         *
+         * @type {UIInterface}
+         * @private
+         */
+        this._ui = null;
     }
 
     init(window) {
+        this._initUI();
         this._appendGApi(window);
         this._initIcons();
     }
@@ -31,7 +39,7 @@ export default class UIInit {
         window.onGApiLoad = () => {
             window.gapi.load('client:auth2', {
                 'callback': () => {
-                    new GApiAuth(gaAuthConfig, window.gapi, new AuthListener())
+                    new GApiAuth(gaAuthConfig, window.gapi, new AuthListener(this._ui))
                         .init();
                 }
             });
@@ -43,5 +51,9 @@ export default class UIInit {
 
     _initIcons() {
         UIkit.use(UIIcons);
+    }
+
+    _initUI() {
+        this._ui = new UIHolder();
     }
 }

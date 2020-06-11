@@ -6,12 +6,20 @@ import OnSignInChangedInterface from '../google/auth/listeners/OnSignInChangedIn
  * @extends OnSignInChangedInterface
  */
 export default class AuthListener extends OnSignInChangedInterface {
-
-    onAuth() {
+    /**
+     * @param {AuthProviderInterface} authProvider
+     */
+    // eslint-disable-next-line no-unused-vars
+    onAuth(authProvider) {
         console.log('auth');
     }
 
-    onNonAuth() {
+    /**
+     * @param {AuthProviderInterface} authProvider
+     */
+    // eslint-disable-next-line no-unused-vars
+    onNonAuth(authProvider) {
         console.log('no auth');
+        authProvider.signIn();
     }
 }

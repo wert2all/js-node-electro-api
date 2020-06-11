@@ -1,7 +1,9 @@
+import AuthProviderInterface from '../../auth/AuthPrividerInterface';
+
 /**
  * @class GApiAuth
  */
-export default class GApiAuth {
+export default class GApiAuth extends AuthProviderInterface {
     /**
      *
      * @param {GApiAuthConfig} config
@@ -9,6 +11,7 @@ export default class GApiAuth {
      * @param {OnSignInChangedInterface} onSignInChanged
      */
     constructor(config, gapi, onSignInChanged) {
+        super();
         /**
          *
          * @type {GApiAuthConfig}
@@ -56,9 +59,9 @@ export default class GApiAuth {
             const user = GoogleAuth.currentUser.get();
             const isAuthorized = user.hasGrantedScopes(this._config.getScope());
             if (isAuthorized) {
-                this._onSignInStatusChanged.onAuth();
+                this._onSignInStatusChanged.onAuth(this);
             } else {
-                this._onSignInStatusChanged.onNonAuth();
+                this._onSignInStatusChanged.onNonAuth(this);
             }
         };
     }

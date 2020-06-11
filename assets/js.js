@@ -7,7 +7,7 @@ const config = new UIConfig(
     new GApiConfig(
         new GApiAuthConfig(
             '755367666560-pjv5gmfipr38211grj6vfchkmmvl527l.apps.googleusercontent.com',
-            'https://www.googleapis.com/auth/drive.metadata.readonly'
+            'https://www.googleapis.com/auth/userinfo.profile'
         ),
         'https://apis.google.com/js/api.js?onload=onGApiLoad'
     )

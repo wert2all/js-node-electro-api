@@ -1,7 +1,10 @@
 import AuthProviderInterface from '../../auth/AuthPrividerInterface';
+import UserProfile from '../../data/UserProfile';
 
 /**
  * @class GApiAuth
+ * @extends AuthProviderInterface
+ * @type AuthProviderInterface
  */
 export default class GApiAuth extends AuthProviderInterface {
     /**
@@ -80,4 +83,22 @@ export default class GApiAuth extends AuthProviderInterface {
         this._gapi.auth2.getAuthInstance().signOut();
     }
 
+    /**
+     * @return {UserProfile}
+     */
+    getUserProfile() {
+        const profile = this._gapi.auth2.getAuthInstance()
+            .currentUser
+            .get()
+            .getBasicProfile();
+        return new UserProfile(
+            profile.getId(),
+            profile.getName(),
+            profile.getEmail(),
+            profile.getImageUrl()
+        );
+    }
+
+    signOut() {
+    }
 }

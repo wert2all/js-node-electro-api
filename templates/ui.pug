@@ -18,6 +18,8 @@ html(lang='en')
                                 a(href='#', data-uk-icon='icon:user', title='Your profile', data-uk-tooltip='')
                             li
                                 a(href='#', data-uk-icon='icon:  sign-out', title='Sign Out', data-uk-tooltip='')
+                            li
+                                a.uk-navbar-toggle(data-uk-toggle='', data-uk-navbar-toggle-icon='', href='#offcanvas-nav', title='Offcanvas', data-uk-tooltip='')
         // /HEADER
         // LEFT BAR
         aside#left-col.uk-light(class='uk-visible@m')
@@ -79,5 +81,19 @@ html(lang='en')
                 a(href='http://getuikit.com', title='Visit UIkit 3 site', target='_blank', data-uk-tooltip='')
                     span(data-uk-icon='uikit')
         // /CONTENT
+        // OFFCANVAS
+        #offcanvas-nav(data-uk-offcanvas='flip: true; overlay: true')
+            .uk-offcanvas-bar.uk-offcanvas-bar-animation.uk-offcanvas-slide
+                button.uk-offcanvas-close.uk-close.uk-icon(type='button', data-uk-close='')
+                ul.uk-nav.uk-nav-default
+                    li.uk-active
+                        a(href='#')
+                            span.uk-margin-small-right(data-uk-icon='icon: comments')
+                            | Messages
+                    li
+                        a(href='#')
+                            span.uk-margin-small-right(data-uk-icon='icon: users')
+                            | Friends
+        // /OFFCANVAS
         // JS FILES
         script(src='../assets/js.bundle.js')

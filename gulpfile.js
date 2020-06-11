@@ -7,7 +7,7 @@ const webpack = require('webpack-stream');
 const browserSync = require('browser-sync').create();
 
 gulp.task('test:static', () => {
-    return gulp.src(['src/**/*.js'])
+    return gulp.src(['src/**/*.js', 'assets/js/**/*.js'])
         .pipe(eslint())
         .pipe(eslint.format())
         .pipe(eslint.failAfterError())

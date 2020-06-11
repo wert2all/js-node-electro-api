@@ -37,6 +37,7 @@
     "gulp-clean": "^0.4.0",
     "gulp-cli": "^2.3.0",
     "gulp-eslint": "^6.0.0",
+    "less-loader": "^6.1.0",
     "nodemon": "^2.0.4",
     "npm-check-updates": "^7.0.0",
     "plugin-error": "^1.0.1",

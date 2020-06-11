@@ -3,59 +3,19 @@ html(lang='en')
     head
         meta(charset='utf-8')
         meta(name='viewport', content='width=device-width, initial-scale=1')
+        meta(name='google-signin-client_id', content='755367666560-pkfr2nki51nehvsjsos0munoc65vqr82.apps.googleusercontent.com')
         title Dashboard
         script(src='../assets/css.bundle.js')
+        script(src='https://apis.google.com/js/platform.js', async='', defer='')
     body
         // HEADER
         header#top-head.uk-position-fixed
             .uk-container.uk-container-expand.uk-background-primary
                 nav.uk-navbar.uk-light(data-uk-navbar='mode:click; duration: 250')
-                    .uk-navbar-left
-                        .uk-navbar-item(class='uk-hidden@m')
-                            a.uk-logo(href='#')
-                                img.custom-logo(src='../assets/img/dashboard-logo-white.svg', alt='')
-                        ul.uk-navbar-nav(class='uk-visible@m')
-                            li
-                                a(href='#') Accounts
-                            li
-                                a(href='#')
-                                    | Settings
-                                    span(data-uk-icon='icon: triangle-down')
-                                .uk-navbar-dropdown
-                                    ul.uk-nav.uk-navbar-dropdown-nav
-                                        li.uk-nav-header YOUR ACCOUNT
-                                        li
-                                            a(href='#')
-                                                span(data-uk-icon='icon: info')
-                                                |  Summary
-                                        li
-                                            a(href='#')
-                                                span(data-uk-icon='icon: refresh')
-                                                |  Edit
-                                        li
-                                            a(href='#')
-                                                span(data-uk-icon='icon: settings')
-                                                |  Configuration
-                                        li.uk-nav-divider
-                                        li
-                                            a(href='#')
-                                                span(data-uk-icon='icon: image')
-                                                |  Your Data
-                                        li.uk-nav-divider
-                                        li
-                                            a(href='#')
-                                                span(data-uk-icon='icon: sign-out')
-                                                |  Logout
-                        .uk-navbar-item(class='uk-visible@s')
-                            form.uk-search.uk-search-default(action='dashboard.html')
-                                span(data-uk-search-icon='')
-                                input.uk-search-input.search-field(type='search', placeholder='Search')
                     .uk-navbar-right
                         ul.uk-navbar-nav
                             li
                                 a(href='#', data-uk-icon='icon:user', title='Your profile', data-uk-tooltip='')
-                            li
-                                a(href='#', data-uk-icon='icon: settings', title='Settings', data-uk-tooltip='')
                             li
                                 a(href='#', data-uk-icon='icon:  sign-out', title='Sign Out', data-uk-tooltip='')
                             li
@@ -73,19 +33,6 @@ html(lang='en')
                     // user dropdown
                     .uk-dropdown.user-drop(data-uk-dropdown='mode: click; pos: bottom-center; animation: uk-animation-slide-bottom-small; duration: 150')
                         ul.uk-nav.uk-dropdown-nav.uk-text-left
-                            li
-                                a(href='#')
-                                    span(data-uk-icon='icon: info')
-                                    |  Summary
-                            li
-                                a(href='#')
-                                    span(data-uk-icon='icon: refresh')
-                                    |  Edit
-                            li
-                                a(href='#')
-                                    span(data-uk-icon='icon: settings')
-                                    |  Configuration
-                            li.uk-nav-divider
                             li
                                 a(href='#')
                                     span(data-uk-icon='icon: image')
@@ -107,132 +54,32 @@ html(lang='en')
                         a(href='#')
                             span.uk-margin-small-right(data-uk-icon='icon: users')
                             | Friends
-                    li.uk-parent
-                        a(href='#')
-                            span.uk-margin-small-right(data-uk-icon='icon: thumbnails')
-                            | Templates
-                        ul.uk-nav-sub
-                            li
-                                a(title='Article', href='https://zzseba78.github.io/Kick-Off/article.html') Article
-                            li
-                                a(title='Album', href='https://zzseba78.github.io/Kick-Off/album.html') Album
-                            li
-                                a(title='Cover', href='https://zzseba78.github.io/Kick-Off/cover.html') Cover
-                            li
-                                a(title='Cards', href='https://zzseba78.github.io/Kick-Off/cards.html') Cards
-                            li
-                                a(title='News Blog', href='https://zzseba78.github.io/Kick-Off/newsBlog.html') News Blog
-                            li
-                                a(title='Price', href='https://zzseba78.github.io/Kick-Off/price.html') Price
-                            li
-                                a(title='Login', href='https://zzseba78.github.io/Kick-Off/login.html') Login
-                            li
-                                a(title='Login-Dark', href='https://zzseba78.github.io/Kick-Off/login-dark.html') Login - Dark
-                    li
-                        a(href='#')
-                            span.uk-margin-small-right(data-uk-icon='icon: album')
-                            | Albums
-                    li
-                        a(href='#')
-                            span.uk-margin-small-right(data-uk-icon='icon: thumbnails')
-                            | Featured Content
-                    li
-                        a(href='#')
-                            span.uk-margin-small-right(data-uk-icon='icon: lifesaver')
-                            | Tips
-                    li.uk-parent
-                        a(href='#')
-                            span.uk-margin-small-right(data-uk-icon='icon: comments')
-                            | Reports
-                        ul.uk-nav-sub
-                            li
-                                a(href='#') Sub item
-                            li
-                                a(href='#') Sub item
-                .left-content-box.uk-margin-top
-                    h5 Daily Reports
-                    div
-                        span.uk-text-small
-                            | Traffic
-                            small (+50)
-                        progress.uk-progress(value='50', max='100')
-                    div
-                        span.uk-text-small
-                            | Income
-                            small (+78)
-                        progress.uk-progress.success(value='78', max='100')
-                    div
-                        span.uk-text-small
-                            | Feedback
-                            small (-12)
-                        progress.uk-progress.warning(value='12', max='100')
             .bar-bottom
                 ul.uk-subnav.uk-flex.uk-flex-center.uk-child-width-1-5(data-uk-grid='')
                     li
                         a.uk-icon-link(href='#', data-uk-icon='icon: home', title='Home', data-uk-tooltip='')
                     li
-                        a.uk-icon-link(href='#', data-uk-icon='icon: settings', title='Settings', data-uk-tooltip='')
-                    li
                         a.uk-icon-link(href='#', data-uk-icon='icon: social', title='Social', data-uk-tooltip='')
+                    li
+                        a.uk-icon-link(href='#', data-uk-icon='icon:user', title='Your profile', data-uk-tooltip='')
                     li
                         a.uk-icon-link(href='#', data-uk-tooltip='Sign out', data-uk-icon='icon: sign-out')
         // /LEFT BAR
         // CONTENT
         #content(data-uk-height-viewport='expand: true')
             .uk-container.uk-container-expand
-                .uk-grid.uk-grid-divider.uk-grid-medium.uk-child-width-1-2(class='uk-child-width-1-4@l uk-child-width-1-5@xl', data-uk-grid='')
-                    div
-                        span.uk-text-small
-                            span.uk-margin-small-right.uk-text-primary(data-uk-icon='icon:users')
-                            | New Users
-                        h1.uk-heading-primary.uk-margin-remove.uk-text-primary 2.134
-                        .uk-text-small
-                            span.uk-text-success(data-uk-icon='icon: triangle-up') 15%
-                            |  more than last week.
-                    div
-                        span.uk-text-small
-                            span.uk-margin-small-right.uk-text-primary(data-uk-icon='icon:social')
-                            | Social Media
-                        h1.uk-heading-primary.uk-margin-remove.uk-text-primary 8.490
-                        .uk-text-small
-                            span.uk-text-warning(data-uk-icon='icon: triangle-down') -15%
-                            |  less than last week.
-                    div
-                        span.uk-text-small
-                            span.uk-margin-small-right.uk-text-primary(data-uk-icon='icon:clock')
-                            | Traffic hours
-                        h1.uk-heading-primary.uk-margin-remove.uk-text-primary
-                            | 12.00
-                            small.uk-text-small PM
-                        .uk-text-small
-                            span.uk-text-success(data-uk-icon='icon: triangle-up')  19%
-                            |  more than last week.
-                    div
-                        span.uk-text-small
-                            span.uk-margin-small-right.uk-text-primary(data-uk-icon='icon:search')
-                            | Week Search
-                        h1.uk-heading-primary.uk-margin-remove.uk-text-primary 9.543
-                        .uk-text-small
-                            span.uk-text-danger(data-uk-icon='icon: triangle-down')  -23%
-                            |  less than last week.
-                        span.uk-text-small
-                            span.uk-margin-small-right.uk-text-primary(data-uk-icon='icon:users')
-                            | Lorem ipsum
-                        h1.uk-heading-primary.uk-margin-remove.uk-text-primary 5.284
-                        .uk-text-small
-                            span.uk-text-success(data-uk-icon='icon: triangle-up')  7%
-                            |  more than last week.
                 hr
                 .uk-grid.uk-grid-medium(data-uk-grid='')
                     h1 main content
-                footer.uk-section.uk-section-small.uk-text-center
-                    hr
-                    p.uk-text-small.uk-text-center
-                        | Copyright 2019 -
-                        a(href='https://github.com/zzseba78/Kick-Off') Created by KickOff
-                        |  | Built with
-                        a(href='http://getuikit.com', title='Visit UIkit 3 site', target='_blank', data-uk-tooltip='')
-                            span(data-uk-icon='uikit')
+                    .g-signin2(data-onsuccess='onSignIn')
+        footer.uk-section.uk-section-small.uk-text-center
+            hr
+            p.uk-text-small.uk-text-center
+                | Copyright 2020 -
+                a(href='https://github.com/zzseba78/Kick-Off') Created by KickOff
+                |  | Built with
+                a(href='http://getuikit.com', title='Visit UIkit 3 site', target='_blank', data-uk-tooltip='')
+                    span(data-uk-icon='uikit')
         // /CONTENT
         // OFFCANVAS
         #offcanvas-nav(data-uk-offcanvas='flip: true; overlay: true')
@@ -240,34 +87,13 @@ html(lang='en')
                 button.uk-offcanvas-close.uk-close.uk-icon(type='button', data-uk-close='')
                 ul.uk-nav.uk-nav-default
                     li.uk-active
-                        a(href='#') Active
-                    li.uk-parent
-                        a(href='#') Parent
-                        ul.uk-nav-sub
-                            li
-                                a(href='#') Sub item
-                            li
-                                a(href='#') Sub item
-                    li.uk-nav-header Header
-                    li
-                        a(href='#js-options')
-                            span.uk-margin-small-right.uk-icon(data-uk-icon='icon: table')
-                            |  Item
+                        a(href='#')
+                            span.uk-margin-small-right(data-uk-icon='icon: comments')
+                            | Messages
                     li
                         a(href='#')
-                            span.uk-margin-small-right.uk-icon(data-uk-icon='icon: thumbnails')
-                            |  Item
-                    li.uk-nav-divider
-                    li
-                        a(href='#')
-                            span.uk-margin-small-right.uk-icon(data-uk-icon='icon: trash')
-                            |  Item
-                h3 Title
-                p
-                    | Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                    | sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                    | Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi
-                    | ut aliquip ex ea commodo consequat.
+                            span.uk-margin-small-right(data-uk-icon='icon: users')
+                            | Friends
         // /OFFCANVAS
         // JS FILES
         script(src='../assets/js.bundle.js')

@@ -12,6 +12,7 @@ export default class AuthListener extends OnSignInChangedInterface {
     // eslint-disable-next-line no-unused-vars
     onAuth(authProvider) {
         console.log('auth');
+        console.log(authProvider.getUserProfile());
     }
 
     /**

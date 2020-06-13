@@ -8,6 +8,12 @@
     "dev": "gulp dev",
     "test": "gulp test"
   },
+  "nodemonConfig": {
+    "ignore": [
+      "assets/*",
+      "templates/*"
+    ]
+  },
   "publishConfig": {
     "registry": "http://rpm.kiev.ua:4873"
   },

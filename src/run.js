@@ -2,7 +2,6 @@ import os from 'os';
 import sqlite3 from 'sqlite3';
 import path from 'path';
 
-
 import ServerCluster from './server/ServerCluster';
 import ServerWorker from './server/ServerWorker';
 import Application from './Application';

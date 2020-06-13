@@ -1,4 +1,4 @@
-import UIInterface from './UIInterface';
+import UIInterface from './interfaces/UIInterface';
 
 /**
  * @class UIHolder
@@ -6,7 +6,11 @@ import UIInterface from './UIInterface';
  * @type UIInterface
  */
 export default class UIHolder extends UIInterface {
-    constructor() {
+    /**
+     *
+     * @param {UIAuthElementInterface} authElement
+     */
+    constructor(authElement) {
         super();
         /**
          *
@@ -14,6 +18,13 @@ export default class UIHolder extends UIInterface {
          * @private
          */
         this._elements = [];
+        this._elements.push(authElement);
+        /**
+         *
+         * @type {number}
+         * @private
+         */
+        this._authIndex = this._elements.length - 1;
     }
 
     /**
@@ -28,5 +39,12 @@ export default class UIHolder extends UIInterface {
      */
     init() {
         this._elements.forEach(element => element.init());
+    }
+
+    /**
+     * @return {UIElementInterface}
+     */
+    getAuthElement() {
+        return this._elements[this._authIndex];
     }
 }

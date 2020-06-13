@@ -13,9 +13,9 @@ html(lang='en')
                     .uk-navbar-right
                         ul.uk-navbar-nav
                             li
-                                a(href='#', data-uk-icon='icon:user', title='Your profile', data-uk-tooltip='')
+                                a.profile_link(href='#', data-uk-icon='icon:user', title='Your profile', data-uk-tooltip='')
                             li
-                                a(href='#', data-uk-icon='icon:  sign-out', title='Sign Out', data-uk-tooltip='')
+                                a.profile_sign_out(href='#', data-uk-icon='icon:  sign-out', title='Sign Out', data-uk-tooltip='')
                             li
                                 a.uk-navbar-toggle(data-uk-toggle='', data-uk-navbar-toggle-icon='', href='#offcanvas-nav', title='Offcanvas', data-uk-tooltip='')
         // /HEADER
@@ -23,7 +23,7 @@ html(lang='en')
         aside#left-col.uk-light(class='uk-visible@m')
             .left-logo.uk-flex.uk-flex-middle
                 img.custom-logo(src='../assets/img/dashboard-logo.svg', alt='')
-            .left-content-box.content-box-dark
+            #userprofile_container.left-content-box.content-box-dark
                 img.uk-border-circle.profile-img(src='../assets/img/avatar.svg', alt='')
                 h4.uk-text-center.uk-margin-remove-vertical.text-light John Doe
                 .uk-position-relative.uk-text-center.uk-display-block
@@ -32,12 +32,12 @@ html(lang='en')
                     .uk-dropdown.user-drop(data-uk-dropdown='mode: click; pos: bottom-center; animation: uk-animation-slide-bottom-small; duration: 150')
                         ul.uk-nav.uk-dropdown-nav.uk-text-left
                             li
-                                a(href='#')
+                                a.profile_link(href='#')
                                     span(data-uk-icon='icon: image')
                                     |  Your Data
                             li.uk-nav-divider
                             li
-                                a(href='#')
+                                a.profile_sign_out(href='#')
                                     span(data-uk-icon='icon: sign-out')
                                     |  Sign Out
                     // /user dropdown
@@ -59,9 +59,9 @@ html(lang='en')
                     li
                         a.uk-icon-link(href='#', data-uk-icon='icon: social', title='Social', data-uk-tooltip='')
                     li
-                        a.uk-icon-link(href='#', data-uk-icon='icon:user', title='Your profile', data-uk-tooltip='')
+                        a.uk-icon-link.profile_link(href='#', data-uk-icon='icon:user', title='Your profile', data-uk-tooltip='')
                     li
-                        a.uk-icon-link(href='#', data-uk-tooltip='Sign out', data-uk-icon='icon: sign-out')
+                        a.uk-icon-link.profile_sign_out(href='#', data-uk-tooltip='Sign out', data-uk-icon='icon: sign-out')
         // /LEFT BAR
         // CONTENT
         #content(data-uk-height-viewport='expand: true')

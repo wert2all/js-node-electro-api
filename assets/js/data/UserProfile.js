@@ -40,7 +40,7 @@ export default class UserProfile {
      *
      * @return {string}
      */
-    get userId() {
+    getUserId() {
         return this._userId;
     }
 
@@ -48,7 +48,7 @@ export default class UserProfile {
      *
      * @return {string}
      */
-    get getUserEmail() {
+    getUserEmail() {
         return this._userEmail;
     }
 
@@ -56,7 +56,7 @@ export default class UserProfile {
      *
      * @return {string}
      */
-    get getUserName() {
+    getUserName() {
         return this._userName;
     }
 
@@ -64,7 +64,7 @@ export default class UserProfile {
      *
      * @return {string}
      */
-    get getUserImage() {
+    getUserImage() {
         return this._userImage;
     }
 }

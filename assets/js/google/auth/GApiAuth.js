@@ -79,7 +79,7 @@ export default class GApiAuth extends AuthProviderInterface {
     /**
      * @return {void}
      */
-    signOff() {
+    signOut() {
         this._gapi.auth2.getAuthInstance().signOut();
     }
 
@@ -97,8 +97,5 @@ export default class GApiAuth extends AuthProviderInterface {
             profile.getEmail(),
             profile.getImageUrl()
         );
-    }
-
-    signOut() {
     }
 }

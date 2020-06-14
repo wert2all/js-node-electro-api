@@ -8,6 +8,7 @@ import UIAuthElementComposite from './ui/auth/UIAuthElementComposite';
 import UIAuthElement from './ui/auth/UIAuthElement';
 import UiAuthNodesHolder from './ui/auth/element/UiAuthNodesHolder';
 import UiAuthElementDefaultValues from './ui/auth/element/UiAuthElementDefaultValues';
+import UIUserProfile from './module/profile/UIUserProfile';
 
 /**
  * @class UIInit
@@ -30,10 +31,17 @@ export default class UIInit {
          * @private
          */
         this._ui = null;
+        /**
+         *
+         * @type {UIUserProfile|null}
+         * @private
+         */
+        this._uiProfile = null;
     }
 
     init(window) {
         this._initUI(window.document);
+        this._initUIComponents();
         this._appendGApi(window);
         this._initIcons();
     }
@@ -75,7 +83,7 @@ export default class UIInit {
             'John Doe',
             (user) => {
                 console.log(user);
-                alert('profile');
+                this._uiProfile.show(user);
             }
         );
 
@@ -116,5 +124,13 @@ export default class UIInit {
         this._ui = new UIHolder(
             authElement
         );
+    }
+
+    _initUIComponents() {
+        this._uiProfile = new UIUserProfile(
+            document.querySelector('#modal_profile'),
+            UIkit
+        );
+        this._uiProfile.init();
     }
 }

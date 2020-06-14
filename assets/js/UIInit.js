@@ -129,6 +129,9 @@ export default class UIInit {
     _initUIComponents() {
         this._uiProfile = new UIUserProfile(
             document.querySelector('#modal_profile'),
+            document.querySelector('#modal_profile img.profile-img'),
+            document.querySelector('#modal_profile h4.uk-text-center.text-light'),
+            document.querySelector('#modal_profile p.uk-text-small.uk-text-center'),
             UIkit
         );
         this._uiProfile.init();

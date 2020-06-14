@@ -76,7 +76,31 @@ html(lang='en')
                     .uk-modal-header
                         h2.uk-modal-title User profile
                     .uk-modal-body
-                        h3 Profile form
+                        img.uk-border-circle.profile-img(src='../assets/img/avatar.svg', alt='')
+                        h4.uk-text-center.uk-margin-remove-vertical.text-light John Doe
+                        p.uk-text-small.uk-text-center.uk-margin-remove-top user@email.com
+
+                        form.uk-form-horizontal
+                            .uk-margin
+                                label.uk-form-label(for='profile_personal_number') Особистий номер
+                                .uk-form-controls
+                                    input#profile_personal_number.uk-input(type='text', placeholder='Особистий номер')
+                            .uk-margin
+                                label.uk-form-label(for='profile_KC') КС
+                                .uk-form-controls
+                                    input#profile_KC.uk-input(type='text', placeholder='КС')
+                            .uk-margin
+                                label.uk-form-label(for='profile_company_name') Назва постачальника
+                                .uk-form-controls
+                                    input#profile_company_name.uk-input(type='text', placeholder='Назва постачальника')
+                            .uk-margin
+                                label.uk-form-label(for='profile_iban') IBAN
+                                .uk-form-controls
+                                    input#profile_iban.uk-input(type='text', placeholder='IBAN')
+                            .uk-margin
+                                label.uk-form-label(for='profile_BIG') ЄДРПОУ
+                                .uk-form-controls
+                                    input#profile_BIG.uk-input(type='text', placeholder='ЄДРПОУ')
                     .uk-modal-footer.uk-text-right
                         button.uk-button.uk-button-primary(type='button') Save
         footer.uk-section.uk-section-small.uk-text-center

@@ -34,6 +34,86 @@ export default class UserProfile {
          * @private
          */
         this._userId = userId;
+        /**
+         *
+         * @type {string}
+         * @private
+         */
+        this._personalNumber = '';
+        /**
+         *
+         * @type {string}
+         * @private
+         */
+        this._KC = '';
+        /**
+         *
+         * @type {string}
+         * @private
+         */
+        this._companyName = '';
+        /**
+         *
+         * @type {string}
+         * @private
+         */
+        this._iban = '';
+        /**
+         *
+         * @type {string}
+         * @private
+         */
+        this._big = '';
+    }
+
+    /**
+     *
+     * @param {string} value
+     * @return {UserProfile}
+     */
+    setBIG(value) {
+        this._big = value;
+        return this;
+    }
+
+    /**
+     *
+     * @param {string} value
+     * @return {UserProfile}
+     */
+    setIBAN(value) {
+        this._iban = value;
+        return this;
+    }
+
+    /**
+     *
+     * @param {string} value
+     * @return {UserProfile}
+     */
+    setCompanyName(value) {
+        this._companyName = value;
+        return this;
+    }
+
+    /**
+     *
+     * @param {string} value
+     * @return {UserProfile}
+     */
+    setKC(value) {
+        this._KC = value;
+        return this;
+    }
+
+    /**
+     *
+     * @param {string} value
+     * @return UserProfile
+     */
+    setPersonalNumber(value) {
+        this._personalNumber = value;
+        return this;
     }
 
     /**
@@ -66,5 +146,45 @@ export default class UserProfile {
      */
     getUserImage() {
         return this._userImage;
+    }
+
+    /**
+     *
+     * @return {string}
+     */
+    getPersonalNumber() {
+        return this._personalNumber;
+    }
+
+    /**
+     *
+     * @return {string}
+     */
+    getKC() {
+        return this._KC;
+    }
+
+    /**
+     *
+     * @return {string}
+     */
+    getCompanyName() {
+        return this._companyName;
+    }
+
+    /**
+     *
+     * @return {string}
+     */
+    getIBAN() {
+        return this._iban;
+    }
+
+    /**
+     *
+     * @return {string}
+     */
+    getBIG() {
+        return this._big;
     }
 }

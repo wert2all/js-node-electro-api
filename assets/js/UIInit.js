@@ -9,6 +9,8 @@ import UIAuthElement from './ui/auth/UIAuthElement';
 import UiAuthNodesHolder from './ui/auth/element/UiAuthNodesHolder';
 import UiAuthElementDefaultValues from './ui/auth/element/UiAuthElementDefaultValues';
 import UIUserProfile from './module/profile/UIUserProfile';
+import DomForm from './dom/form/DomForm';
+import DomFormElement from './dom/form/DomFormElement';
 
 /**
  * @class UIInit
@@ -132,6 +134,20 @@ export default class UIInit {
             document.querySelector('#modal_profile img.profile-img'),
             document.querySelector('#modal_profile h4.uk-text-center.text-light'),
             document.querySelector('#modal_profile p.uk-text-small.uk-text-center'),
+            new DomForm({
+                'profile_personal_number':
+                    new DomFormElement(
+                        document.querySelector('#profile_personal_number')
+                    ),
+                'profile_KC':
+                    new DomFormElement(document.querySelector('#profile_KC')),
+                'profile_company_name':
+                    new DomFormElement(document.querySelector('#profile_company_name')),
+                'profile_iban':
+                    new DomFormElement(document.querySelector('#profile_iban')),
+                'profile_BIG':
+                    new DomFormElement(document.querySelector('#profile_BIG')),
+            }),
             UIkit
         );
         this._uiProfile.init();

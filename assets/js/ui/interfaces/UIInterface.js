@@ -12,4 +12,12 @@ export default class UIInterface extends UIElementInterface {
      */
     getAuthElement() {
     }
+
+    /**
+     * @abstract
+     * @return {UIGridElementInterface}
+     */
+    getGrid() {
+    }
+
 }

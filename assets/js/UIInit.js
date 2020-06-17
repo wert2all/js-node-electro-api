@@ -11,6 +11,7 @@ import UiAuthElementDefaultValues from './ui/auth/element/UiAuthElementDefaultVa
 import UIUserProfile from './module/profile/UIUserProfile';
 import DomForm from './dom/form/DomForm';
 import DomFormElement from './dom/form/DomFormElement';
+import UIGrid from './module/grid/UIGrid';
 
 /**
  * @class UIInit
@@ -122,10 +123,9 @@ export default class UIInit {
                 defaultAuthValues
             )
         ]);
+        const grid = new UIGrid(document.querySelector('#image_card_list'));
 
-        this._ui = new UIHolder(
-            authElement
-        );
+        this._ui = new UIHolder(authElement, grid);
     }
 
     _initUIComponents() {

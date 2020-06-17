@@ -20,4 +20,10 @@ export default class UIInterface extends UIElementInterface {
     getGrid() {
     }
 
+    /**
+     * @abstract
+     * @return {UIElementInterface}
+     */
+    getLoader() {
+    }
 }

@@ -67,16 +67,67 @@ html(lang='en')
         #content(data-uk-height-viewport='expand: true')
             .uk-container.uk-container-expand
                 hr
-                .uk-grid.uk-grid-medium(data-uk-grid='')
-                    h2 main content
+
         #system
+            #image_card_list.uk-grid.uk-grid-medium(data-uk-grid='')
+
+            #one_image_card.uk-grid-margin(class='uk-width-1-2@s uk-width-1-3@l uk-width-1-4@xl')
+                .uk-card.uk-card-default.uk-card-small.uk-card-hover.uk-custom-image-type-meter
+                    .uk-card-badge.uk-label Meter
+                    .uk-card-header
+                        .uk-grid-small.uk-flex-middle(uk-grid='')
+                            .uk-width-auto
+                                img.uk-border-circle(width='40', height='40', src='../assets/img/avatar.svg')
+                            .uk-width-expand
+                                h3.uk-card-title.uk-margin-remove-bottom Title
+                                    a.uk-icon-link.uk-icon.uk-margin-small-left(href='#', title='', data-uk-tooltip='', data-uk-icon='icon: user', aria-expanded='false')
+                                p.uk-text-meta.uk-margin-remove-top
+                                    time(datetime='2016-04-01T19:00') April 01, 2016
+                    .uk-card-body
+                        .chart-container
+                            .uk-width-auto.uk-text-right
+                                label.uk-switch.uk-switch-small(for='images_type')
+                                    input#images_type(type='checkbox')
+                                    .uk-switch-slider
+                            .uk-card-media-bottom
+                                img(src='../assets/img/avatar.svg', alt='')
+                    .uk-card-footer
+                        .uk-width-auto.uk-text-right
+                            a.uk-icon-link.uk-icon(href='#', title='', data-uk-tooltip='', data-uk-icon='icon: download', aria-expanded='false')
+                            a.uk-icon-link.uk-icon(href='#', title='', data-uk-tooltip='', data-uk-icon='icon: file-edit', aria-expanded='false')
+                            a.uk-icon-link.uk-icon(href='#', title='', data-uk-tooltip='', data-uk-icon='icon: trash', aria-expanded='false')
+
             #modal_profile(uk-modal='')
                 .uk-modal-dialog.uk-margin-auto-vertical
                     button.uk-modal-close-default(type='button', uk-close='')
                     .uk-modal-header
                         h2.uk-modal-title User profile
                     .uk-modal-body
-                        h3 Profile form
+                        img.uk-border-circle.profile-img(src='../assets/img/avatar.svg', alt='')
+                        h4.uk-text-center.uk-margin-remove-vertical.text-light John Doe
+                        p.uk-text-small.uk-text-center.uk-margin-remove-top user@email.com
+
+                        form.uk-form-horizontal
+                            .uk-margin
+                                label.uk-form-label(for='profile_personal_number') Особистий номер
+                                .uk-form-controls
+                                    input#profile_personal_number.uk-input(type='text', placeholder='Особистий номер')
+                            .uk-margin
+                                label.uk-form-label(for='profile_KC') КС
+                                .uk-form-controls
+                                    input#profile_KC.uk-input(type='text', placeholder='КС')
+                            .uk-margin
+                                label.uk-form-label(for='profile_company_name') Назва постачальника
+                                .uk-form-controls
+                                    input#profile_company_name.uk-input(type='text', placeholder='Назва постачальника')
+                            .uk-margin
+                                label.uk-form-label(for='profile_iban') IBAN
+                                .uk-form-controls
+                                    input#profile_iban.uk-input(type='text', placeholder='IBAN')
+                            .uk-margin
+                                label.uk-form-label(for='profile_BIG') ЄДРПОУ
+                                .uk-form-controls
+                                    input#profile_BIG.uk-input(type='text', placeholder='ЄДРПОУ')
                     .uk-modal-footer.uk-text-right
                         button.uk-button.uk-button-primary(type='button') Save
         footer.uk-section.uk-section-small.uk-text-center

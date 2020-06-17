@@ -12,6 +12,7 @@ import UIUserProfile from './module/profile/UIUserProfile';
 import DomForm from './dom/form/DomForm';
 import DomFormElement from './dom/form/DomFormElement';
 import UIGrid from './module/grid/UIGrid';
+import UILoader from './module/loader/UILoader';
 
 /**
  * @class UIInit
@@ -123,9 +124,9 @@ export default class UIInit {
                 defaultAuthValues
             )
         ]);
-        const grid = new UIGrid(document.querySelector('#image_card_list'));
-
-        this._ui = new UIHolder(authElement, grid);
+        const grid = new UIGrid(document.querySelector('#system .image_card_list'));
+        const loader = new UILoader(document.querySelector('#system .loader'));
+        this._ui = new UIHolder(authElement, grid, loader);
     }
 
     _initUIComponents() {

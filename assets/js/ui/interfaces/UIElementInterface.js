@@ -17,6 +17,12 @@ export default class UIElementInterface {
      * @return {void}
      */
     clean() {
+    }
 
+    /**
+     * @abstract
+     * @return {UIElementInterface}
+     */
+    clone() {
     }
 }

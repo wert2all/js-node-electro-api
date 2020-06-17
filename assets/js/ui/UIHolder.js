@@ -9,8 +9,9 @@ export default class UIHolder extends UIInterface {
     /**
      *
      * @param {UIAuthElementInterface} authElement
+     * @param {UIGridElementInterface} gridElement
      */
-    constructor(authElement) {
+    constructor(authElement, gridElement) {
         super();
         /**
          *
@@ -18,13 +19,18 @@ export default class UIHolder extends UIInterface {
          * @private
          */
         this._elements = [];
-        this._elements.push(authElement);
         /**
          *
          * @type {number}
          * @private
          */
-        this._authIndex = this._elements.length - 1;
+        this._authIndex = this._elements.push(authElement) - 1;
+        /**
+         *
+         * @type {number}
+         * @private
+         */
+        this._gridIndex = this._elements.push(gridElement) - 1;
     }
 
     /**
@@ -42,9 +48,16 @@ export default class UIHolder extends UIInterface {
     }
 
     /**
-     * @return {UIElementInterface}
+     * @return {UIAuthElementInterface}
      */
     getAuthElement() {
         return this._elements[this._authIndex];
+    }
+
+    /**
+     * @return {UIGridElementInterface}
+     */
+    getGrid() {
+        return this._elements[this._gridIndex];
     }
 }

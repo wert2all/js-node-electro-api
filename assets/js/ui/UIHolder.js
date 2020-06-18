@@ -11,8 +11,9 @@ export default class UIHolder extends UIInterface {
      * @param {UIAuthElementInterface} authElement
      * @param {UIGridElementInterface} gridElement
      * @param {UIElementInterface} loaderElement
+     * @param {UIContentElementInterface} contentElement
      */
-    constructor(authElement, gridElement, loaderElement) {
+    constructor(authElement, gridElement, loaderElement, contentElement) {
         super();
         /**
          *
@@ -38,6 +39,7 @@ export default class UIHolder extends UIInterface {
          * @private
          */
         this._loaderIndex = this._elements.push(loaderElement) - 1;
+        this._contentIndex = this._elements.push(contentElement) - 1;
     }
 
     /**
@@ -74,5 +76,12 @@ export default class UIHolder extends UIInterface {
      */
     getLoader() {
         return this._elements[this._loaderIndex];
+    }
+
+    /**
+     * @return {UIContentElementInterface}
+     */
+    getContent() {
+        return this._elements[this._contentIndex];
     }
 }

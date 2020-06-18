@@ -1,17 +1,11 @@
-import UIElementInterface from '../../ui/interfaces/UIElementInterface';
+import UIMutableElementInterface
+    from '../../ui/interfaces/element/UIMutableElementInterface';
 
 /**
  * @interface
  * @abstract
  * @class UIGridElementInterface
  */
-export default class UIGridElementInterface extends UIElementInterface {
-    /**
-     * @abstract
-     * @param {UIElementInterface} element
-     * @return UIGridElementInterface
-     */
-    // eslint-disable-next-line no-unused-vars
-    addElement(element) {
-    }
+export default class UIGridElementInterface extends UIMutableElementInterface {
+
 }

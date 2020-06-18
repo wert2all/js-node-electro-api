@@ -13,6 +13,7 @@ import DomForm from './dom/form/DomForm';
 import DomFormElement from './dom/form/DomFormElement';
 import UIGrid from './module/grid/UIGrid';
 import UILoader from './module/loader/UILoader';
+import UIContentElement from './module/content/UIContentElement';
 
 /**
  * @class UIInit
@@ -126,7 +127,8 @@ export default class UIInit {
         ]);
         const grid = new UIGrid(document.querySelector('#system .image_card_list'));
         const loader = new UILoader(document.querySelector('#system .loader'));
-        this._ui = new UIHolder(authElement, grid, loader);
+        const content = new UIContentElement(document.querySelector('#content'));
+        this._ui = new UIHolder(authElement, grid, loader, content);
     }
 
     _initUIComponents() {

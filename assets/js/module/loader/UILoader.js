@@ -19,4 +19,18 @@ export default class UILoader extends UIElementInterface {
          */
         this._loader = element;
     }
+
+    /**
+     * @abstract
+     * @return {UIElementInterface}
+     */
+    clone() {
+        return new UILoader(this._loader.cloneNode(true));
+    }
+
+    /**
+     * @return {void}
+     */
+    init() {
+    }
 }

@@ -68,7 +68,9 @@ export default class UIInit {
 
                     self._ui.getContent()
                         .addElement(
-                            self._ui.getGrid()
+                            self._ui
+                                .getGrid()
+                                .clone()
                                 .addElement(
                                     self._ui.getLoader()
                                         .clone()

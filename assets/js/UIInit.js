@@ -65,6 +65,17 @@ export default class UIInit {
                     authProvider.init();
                     self._ui.getAuthElement().setAuthProvider(authProvider);
                     self._ui.getAuthElement().init();
+
+                    self._ui.getContent()
+                        .addElement(
+                            self._ui
+                                .getGrid()
+                                .clone()
+                                .addElement(
+                                    self._ui.getLoader()
+                                        .clone()
+                                )
+                        );
                 }
             });
         };

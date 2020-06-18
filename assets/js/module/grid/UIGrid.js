@@ -32,4 +32,11 @@ export default class UIGrid extends UIGridElementInterface {
      */
     init() {
     }
+
+    /**
+     * @return {Node}
+     */
+    getNode() {
+        return this._grid;
+    }
 }

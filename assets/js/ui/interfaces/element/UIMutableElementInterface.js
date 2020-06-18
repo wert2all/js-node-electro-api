@@ -9,7 +9,7 @@ export default class UIMutableElementInterface extends UIElementInterface {
     /**
      * @abstract
      * @param {UIElementInterface} element
-     * @return UIGridElementInterface
+     * @return UIElementInterface
      */
     // eslint-disable-next-line no-unused-vars
     addElement(element) {

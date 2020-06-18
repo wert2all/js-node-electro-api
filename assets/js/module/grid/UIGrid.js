@@ -19,4 +19,17 @@ export default class UIGrid extends UIGridElementInterface {
          */
         this._grid = gridNode;
     }
+
+    /**
+     * @return {UIElementInterface}
+     */
+    clone() {
+        return new UIGrid(this._grid.cloneNode(true));
+    }
+
+    /**
+     * @return {void}
+     */
+    init() {
+    }
 }

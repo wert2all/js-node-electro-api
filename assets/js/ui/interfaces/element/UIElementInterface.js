@@ -25,4 +25,11 @@ export default class UIElementInterface {
      */
     clone() {
     }
+
+    /**
+     * @abstract
+     * @return {Node}
+     */
+    getNode() {
+    }
 }

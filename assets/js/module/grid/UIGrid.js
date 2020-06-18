@@ -18,6 +18,12 @@ export default class UIGrid extends UIGridElementInterface {
          * @private
          */
         this._grid = gridNode;
+        /**
+         *
+         * @type {UIElementInterface[]}
+         * @private
+         */
+        this._elements = [];
     }
 
     /**
@@ -31,5 +37,23 @@ export default class UIGrid extends UIGridElementInterface {
      * @return {void}
      */
     init() {
+    }
+
+    /**
+     * @return {Node}
+     */
+    getNode() {
+        return this._grid;
+    }
+
+    /**
+     *
+     * @param element
+     * @return {UIElementInterface}
+     */
+    addElement(element) {
+        this._elements.push(element);
+        this._grid.appendChild(element.getNode());
+        return this;
     }
 }

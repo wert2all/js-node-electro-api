@@ -33,4 +33,19 @@ export default class UILoader extends UIElementInterface {
      */
     init() {
     }
+
+    /**
+     * @abstract
+     * @return {Node}
+     */
+    getNode() {
+        return this._loader;
+    }
+
+    /**
+     * @abstract
+     * @return {void}
+     */
+    clean() {
+    }
 }

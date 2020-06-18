@@ -1,4 +1,4 @@
-import UIElementInterface from '../../ui/interfaces/UIElementInterface';
+import UIElementInterface from '../../ui/interfaces/element/UIElementInterface';
 
 /**
  * @class UIUserProfile

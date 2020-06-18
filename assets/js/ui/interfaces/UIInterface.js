@@ -1,4 +1,4 @@
-import UIElementInterface from './UIElementInterface';
+import UIElementInterface from './element/UIElementInterface';
 
 /**
  * @class UIInterface
@@ -25,5 +25,12 @@ export default class UIInterface extends UIElementInterface {
      * @return {UIElementInterface}
      */
     getLoader() {
+    }
+
+    /**
+     * @abstract
+     * @return {UIContentElementInterface}
+     */
+    getContent() {
     }
 }

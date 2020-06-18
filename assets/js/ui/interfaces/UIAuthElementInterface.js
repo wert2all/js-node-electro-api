@@ -1,4 +1,4 @@
-import UIElementInterface from './UIElementInterface';
+import UIElementInterface from './element/UIElementInterface';
 
 /**
  * @class UIAuthElementInterface

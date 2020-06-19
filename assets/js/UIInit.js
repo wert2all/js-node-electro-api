@@ -16,6 +16,8 @@ import UILoader from './module/loader/UILoader';
 import UIContentElement from './module/content/UIContentElement';
 import UIImageList from './module/imagelist/UIImageList';
 import Notify from './ui/notify/Notify';
+import Api from './module/api/Api';
+import ApiFetcher from './api/ApiFetcher';
 
 /**
  * @class UIInit
@@ -63,18 +65,25 @@ export default class UIInit {
                         gaAuthConfig,
                         window.gapi,
                         new AuthListener(this._ui)
+                            .addAfterAuth(authProvider => {
+                                new UIImageList(
+                                    this._ui.getContent(),
+                                    this._ui.getGrid().clone(),
+                                    this._ui.getLoader().clone(),
+                                    this._ui.getNotify(),
+                                    new Api(
+                                        new ApiFetcher(),
+                                        window.location.href + '/../'
+                                    ),
+                                    authProvider
+                                )
+                                    .init();
+                            })
                     );
                     authProvider.init();
                     self._ui.getAuthElement().setAuthProvider(authProvider);
                     self._ui.getAuthElement().init();
 
-                    new UIImageList(
-                        this._ui.getContent(),
-                        this._ui.getGrid().clone(),
-                        this._ui.getLoader().clone(),
-                        this._ui.getNotify()
-                    )
-                        .init();
                 }
             });
         };

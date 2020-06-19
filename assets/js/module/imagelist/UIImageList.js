@@ -12,8 +12,10 @@ export default class UIImageList extends UIElementInterface {
      * @param {UIGridElementInterface} grid
      * @param {UIElementInterface} loader
      * @param {UINotifyInterface} notify
+     * @param {Api} api
+     * @param {AuthProviderInterface} authProvider
      */
-    constructor(parentElement, grid, loader, notify) {
+    constructor(parentElement, grid, loader, notify, api, authProvider) {
         super();
         /**
          *
@@ -39,6 +41,19 @@ export default class UIImageList extends UIElementInterface {
          * @private
          */
         this._parentElement = parentElement;
+        /**
+         *
+         * @type {Api}
+         * @private
+         */
+        this._api = api;
+        /**
+         *
+         * @type {AuthProviderInterface}
+         * @private
+         */
+        this._authProvider = authProvider;
+
     }
 
     /**
@@ -89,8 +104,12 @@ export default class UIImageList extends UIElementInterface {
      * @private
      */
     _fetchData() {
-        //TODO
-        return Promise.resolve([]);
+        const returnData = [];
+        this._api.getImages(this._authProvider.getUserProfile())
+            .then(apiResult => {
+                console.log(apiResult);
+            });
+        return Promise.resolve(returnData);
     }
 
     /**

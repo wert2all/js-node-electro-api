@@ -8,8 +8,9 @@ export default class UserProfile {
      * @param {string} userName
      * @param {string} userEmail
      * @param {string} userImage
+     * @param {string} token
      */
-    constructor(userId, userName, userEmail, userImage) {
+    constructor(userId, userName, userEmail, userImage, token) {
         /**
          *
          * @type {string}
@@ -64,6 +65,20 @@ export default class UserProfile {
          * @private
          */
         this._big = '';
+        /**
+         *
+         * @type {string}
+         * @private
+         */
+        this._token = token;
+    }
+
+    /**
+     *
+     * @return {string}
+     */
+    getToken() {
+        return this._token;
     }
 
     /**

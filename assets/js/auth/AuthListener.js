@@ -18,6 +18,11 @@ export default class AuthListener extends OnSignInChangedInterface {
          * @private
          */
         this._ui = ui;
+        /**
+         *
+         * @private
+         */
+        this._afterAuth = Function.prototype;
     }
 
     /**
@@ -28,6 +33,7 @@ export default class AuthListener extends OnSignInChangedInterface {
         this._ui
             .getAuthElement()
             .setUser(authProvider.getUserProfile());
+        this._afterAuth(authProvider);
     }
 
     /**
@@ -38,5 +44,10 @@ export default class AuthListener extends OnSignInChangedInterface {
         console.log('no auth');
         this._ui.clean();
         authProvider.signIn();
+    }
+
+    addAfterAuth(afterAuthFunction) {
+        this._afterAuth = afterAuthFunction;
+        return this;
     }
 }

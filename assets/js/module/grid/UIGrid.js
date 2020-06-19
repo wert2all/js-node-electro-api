@@ -56,4 +56,15 @@ export default class UIGrid extends UIGridElementInterface {
         this._grid.appendChild(element.getNode());
         return this;
     }
+
+    /**
+     * @return {void}
+     */
+    clean() {
+        this._elements.forEach(element => {
+            element.clean();
+            this._grid.removeChild(element.getNode());
+        });
+        this._elements = [];
+    }
 }

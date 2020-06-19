@@ -7,7 +7,11 @@ import ApiFetchResult from './ApiFetchResult';
  * @extends ApiFetchInterface
  */
 export default class ApiFetcher extends ApiFetchInterface {
-
+    /**
+     * @param {string} url
+     * @param {Object} options
+     * @return Promise<ApiFetchResult>
+     */
     async fetch(url, options) {
         return new Promise((resolve) => {
             fetch(url, options)

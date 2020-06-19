@@ -47,4 +47,28 @@ export default class ApiFetchResult {
         return new ApiFetchResult(true, null, data);
     }
 
+    /**
+     *
+     * @return {null|*}
+     */
+    getData() {
+        return this._data;
+    }
+
+    /**
+     *
+     * @return {string}
+     */
+    getErrorMessage() {
+        return this._errorMessage;
+    }
+
+    /**
+     *
+     * @return {boolean}
+     */
+    getStatus() {
+        return this._status;
+    }
+
 }

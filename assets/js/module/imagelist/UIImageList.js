@@ -104,12 +104,16 @@ export default class UIImageList extends UIElementInterface {
      * @private
      */
     _fetchData() {
-        const returnData = [];
-        this._api.getImages(this._authProvider.getUserProfile())
+        return this._api
+            .getImages(this._authProvider.getUserProfile())
             .then(apiResult => {
-                console.log(apiResult);
+                if (apiResult.getStatus()) {
+                    console.log(apiResult);
+                    return [];
+                } else {
+                    throw new Error(apiResult.getErrorMessage());
+                }
             });
-        return Promise.resolve(returnData);
     }
 
     /**
@@ -121,6 +125,7 @@ export default class UIImageList extends UIElementInterface {
     // eslint-disable-next-line no-unused-vars
     _addData(data) {
         //TODO
+        console.log(data);
         if (data.length === 0) {
             this._notify.warning('No image data');
         }

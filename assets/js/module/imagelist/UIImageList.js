@@ -8,11 +8,12 @@ import UIElementInterface from '../../ui/interfaces/element/UIElementInterface';
 export default class UIImageList extends UIElementInterface {
     /**
      *
+     * @param {UIMutableElementInterface} parentElement
      * @param {UIGridElementInterface} grid
      * @param {UIElementInterface} loader
      * @param {UINotifyInterface} notify
      */
-    constructor(grid, loader, notify) {
+    constructor(parentElement, grid, loader, notify) {
         super();
         /**
          *
@@ -32,6 +33,12 @@ export default class UIImageList extends UIElementInterface {
          * @private
          */
         this._notify = notify;
+        /**
+         *
+         * @type {UIMutableElementInterface}
+         * @private
+         */
+        this._parentElement = parentElement;
     }
 
     /**
@@ -58,19 +65,23 @@ export default class UIImageList extends UIElementInterface {
     }
 
     init() {
+        this._parentElement.addElement(this._grid);
         this._showLoader();
         this._fetchData()
             .then(data => this._addData(data))
             .then(() => this._hideLoader())
-            .catch(error => this._notify.error(error.message));
+            .catch(error => {
+                this._hideLoader();
+                return this._notify.error(error.message);
+            });
     }
 
     _showLoader() {
-        //FIXME
+        this._grid.addElement(this._loader.clone());
     }
 
     _hideLoader() {
-        //FIXME
+        this._grid.clean();
     }
 
     /**

@@ -21,6 +21,7 @@ import expressInit from './_init/ExpressInit';
 import DispatchInterface from './lib/dispatcher/DispatchInterface';
 import UIRequest from './modules/ui/UIRequest';
 import ServerConfig from './server/ServerConfig';
+import ImagesGetRequest from './modules/images/ImagesGetRequest';
 
 const serverConfig = new ServerConfig(
     path.normalize(__dirname + path.sep + '..' + path.sep),
@@ -67,6 +68,10 @@ connectDB(serverConfig.getApplicationDirectory() + 'secret.sqlite')
                             new RouteDefinition('/upload/files/',
                                 'get',
                                 new UploadGetFilesRequest()
+                            ),
+                            new RouteDefinition('/images/get/',
+                                'get',
+                                new ImagesGetRequest()
                             ),
                             new RouteDefinition('/ui/',
                                 'get',

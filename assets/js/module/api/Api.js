@@ -32,7 +32,7 @@ export default class Api {
             method: 'GET'
         };
         return await this._fetcher.fetch(
-            this._createUrl('getImages/?token=' + this._createToken(userProfile)),
+            this._createUrl('images/get/?token=' + this._createToken(userProfile)),
             options
         );
     }

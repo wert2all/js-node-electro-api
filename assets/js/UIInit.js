@@ -18,6 +18,7 @@ import UIImageList from './module/imagelist/UIImageList';
 import Notify from './ui/notify/Notify';
 import Api from './module/api/Api';
 import ApiFetcher from './api/ApiFetcher';
+import ApiUrlFactory from './utils/ApiUrlFactory';
 
 /**
  * @class UIInit
@@ -73,7 +74,7 @@ export default class UIInit {
                                     this._ui.getNotify(),
                                     new Api(
                                         new ApiFetcher(),
-                                        window.location.href + '/../'
+                                        ApiUrlFactory.create(window)
                                     ),
                                     authProvider
                                 )

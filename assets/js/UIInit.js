@@ -70,7 +70,8 @@ export default class UIInit {
 
                     new UIImageList(
                         this._ui.getGrid().clone(),
-                        this._ui.getLoader().clone()
+                        this._ui.getLoader().clone(),
+                        this._ui.getNotify()
                     )
                         .init();
                 }

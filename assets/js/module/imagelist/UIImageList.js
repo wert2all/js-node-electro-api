@@ -10,8 +10,9 @@ export default class UIImageList extends UIElementInterface {
      *
      * @param {UIGridElementInterface} grid
      * @param {UIElementInterface} loader
+     * @param {UINotifyInterface} notify
      */
-    constructor(grid, loader) {
+    constructor(grid, loader, notify) {
         super();
         /**
          *
@@ -25,6 +26,12 @@ export default class UIImageList extends UIElementInterface {
          * @private
          */
         this._loader = loader;
+        /**
+         *
+         * @type {UINotifyInterface}
+         * @private
+         */
+        this._notify = notify;
     }
 
     /**
@@ -55,7 +62,7 @@ export default class UIImageList extends UIElementInterface {
         this._fetchData()
             .then(data => this._addData(data))
             .then(() => this._hideLoader())
-            .catch(error => this._showError(error));
+            .catch(error => this._notify.error(error.message));
     }
 
     _showLoader() {
@@ -84,17 +91,9 @@ export default class UIImageList extends UIElementInterface {
     // eslint-disable-next-line no-unused-vars
     _addData(data) {
         //TODO
+        if (data.length === 0) {
+            this._notify.warning('No image data');
+        }
         return Promise.resolve();
-    }
-
-    /**
-     *
-     * @param {Error} error
-     * @return {void}
-     * @private
-     */
-    // eslint-disable-next-line no-unused-vars
-    _showError(error) {
-        //FIXME
     }
 }

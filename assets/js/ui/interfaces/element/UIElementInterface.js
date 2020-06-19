@@ -21,7 +21,7 @@ export default class UIElementInterface {
 
     /**
      * @abstract
-     * @return {UIElementInterface}
+     * @return {UIElementInterface|null}
      */
     clone() {
     }

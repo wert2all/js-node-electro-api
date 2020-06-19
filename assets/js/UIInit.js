@@ -14,6 +14,7 @@ import DomFormElement from './dom/form/DomFormElement';
 import UIGrid from './module/grid/UIGrid';
 import UILoader from './module/loader/UILoader';
 import UIContentElement from './module/content/UIContentElement';
+import UIImageList from './module/imagelist/UIImageList';
 
 /**
  * @class UIInit
@@ -66,16 +67,11 @@ export default class UIInit {
                     self._ui.getAuthElement().setAuthProvider(authProvider);
                     self._ui.getAuthElement().init();
 
-                    self._ui.getContent()
-                        .addElement(
-                            self._ui
-                                .getGrid()
-                                .clone()
-                                .addElement(
-                                    self._ui.getLoader()
-                                        .clone()
-                                )
-                        );
+                    new UIImageList(
+                        this._ui.getGrid().clone(),
+                        this._ui.getLoader().clone()
+                    )
+                        .init();
                 }
             });
         };

@@ -22,7 +22,24 @@ export default class ApiFetcher extends ApiFetchInterface {
                         throw new Error(result.statusText);
                     }
                 })
-                .then(result => resolve(ApiFetchResult.createSuccess(result.json())))
+                .then(result => result.json())
+                .then(response => {
+                    console.log(response);
+                    if (response.hasOwnProperty('status')) {
+                        if (response.status === true) {
+                            if (response.hasOwnProperty('data')) {
+                                resolve(ApiFetchResult.createSuccess(response.data));
+                            } else {
+                                resolve(ApiFetchResult.createError(new Error('No data')));
+                            }
+                        } else {
+                            resolve(
+                                ApiFetchResult.createError(new Error(response.message)));
+                        }
+                    } else {
+                        resolve(ApiFetchResult.createError(new Error('Bad status')));
+                    }
+                })
                 .catch(e => resolve(ApiFetchResult.createError(e)));
         });
     }

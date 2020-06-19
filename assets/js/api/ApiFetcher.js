@@ -24,7 +24,6 @@ export default class ApiFetcher extends ApiFetchInterface {
                 })
                 .then(result => result.json())
                 .then(response => {
-                    console.log(response);
                     if (response.hasOwnProperty('status')) {
                         if (response.status === true) {
                             if (response.hasOwnProperty('data')) {

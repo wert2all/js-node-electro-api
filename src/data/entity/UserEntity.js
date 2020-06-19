@@ -62,6 +62,14 @@ export default class UserEntity extends EntityInterface {
     }
 
     /**
+     *
+     * @return {string}
+     */
+    getIsAdmin() {
+        return this._data.getData(UserDefinition.COLUMN_IS_ADMIN);
+    }
+
+    /**
      * @param {Object<string,string>}value
      * @return EntityInterface
      */

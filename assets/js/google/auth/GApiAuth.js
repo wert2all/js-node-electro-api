@@ -35,7 +35,6 @@ export default class GApiAuth extends AuthProviderInterface {
     }
 
     init() {
-        console.log('GAPI init');
         gapi.client.init({
             'clientId': this._config.getClientId(),
             'scope': this._config.getScope()

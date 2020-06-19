@@ -38,4 +38,13 @@ export default class ApiFetchResult {
         return new ApiFetchResult(false, error.message);
     }
 
+    /**
+     *
+     * @param {*} data
+     * @return {ApiFetchResult}
+     */
+    static createSuccess(data) {
+        return new ApiFetchResult(true, null, data);
+    }
+
 }

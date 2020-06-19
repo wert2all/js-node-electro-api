@@ -18,12 +18,8 @@ export default class ApiFetcher extends ApiFetchInterface {
                         throw new Error(result.statusText);
                     }
                 })
-                .then(result => {
-                    resolve(new ApiFetchResult(false));
-                })
-                .catch(e => {
-                    resolve(ApiFetchResult.createError(e));
-                });
+                .then(result => resolve(ApiFetchResult.createSuccess(result.json())))
+                .catch(e => resolve(ApiFetchResult.createError(e)));
         });
     }
 }

@@ -33,4 +33,11 @@ export default class UIInterface extends UIElementInterface {
      */
     getContent() {
     }
+
+    /**
+     * @abstract
+     * @return {UINotifyInterface}
+     */
+    getNotify() {
+    }
 }

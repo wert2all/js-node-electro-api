@@ -15,6 +15,7 @@ import UIGrid from './module/grid/UIGrid';
 import UILoader from './module/loader/UILoader';
 import UIContentElement from './module/content/UIContentElement';
 import UIImageList from './module/imagelist/UIImageList';
+import Notify from './ui/notify/Notify';
 
 /**
  * @class UIInit
@@ -135,7 +136,10 @@ export default class UIInit {
         const grid = new UIGrid(document.querySelector('#system .image_card_list'));
         const loader = new UILoader(document.querySelector('#system .loader'));
         const content = new UIContentElement(document.querySelector('#content'));
-        this._ui = new UIHolder(authElement, grid, loader, content);
+        this._ui = new UIHolder(authElement, grid, loader, content,
+            new Notify(UIkit, {
+                pos: 'top-right'
+            }));
     }
 
     _initUIComponents() {

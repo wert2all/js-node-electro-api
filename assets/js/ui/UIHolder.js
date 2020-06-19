@@ -12,8 +12,9 @@ export default class UIHolder extends UIInterface {
      * @param {UIGridElementInterface} gridElement
      * @param {UIElementInterface} loaderElement
      * @param {UIContentElementInterface} contentElement
+     * @param {UINotifyInterface} notify
      */
-    constructor(authElement, gridElement, loaderElement, contentElement) {
+    constructor(authElement, gridElement, loaderElement, contentElement, notify) {
         super();
         /**
          *
@@ -39,7 +40,18 @@ export default class UIHolder extends UIInterface {
          * @private
          */
         this._loaderIndex = this._elements.push(loaderElement) - 1;
+        /**
+         *
+         * @type {number}
+         * @private
+         */
         this._contentIndex = this._elements.push(contentElement) - 1;
+        /**
+         *
+         * @type {UINotifyInterface}
+         * @private
+         */
+        this._notify = notify;
     }
 
     /**
@@ -83,5 +95,13 @@ export default class UIHolder extends UIInterface {
      */
     getContent() {
         return this._elements[this._contentIndex];
+    }
+
+    /**
+     *
+     * @return {UINotifyInterface}
+     */
+    getNotify() {
+        return this._notify;
     }
 }

@@ -69,6 +69,7 @@ export default class UIInit {
                     self._ui.getAuthElement().init();
 
                     new UIImageList(
+                        this._ui.getContent(),
                         this._ui.getGrid().clone(),
                         this._ui.getLoader().clone(),
                         this._ui.getNotify()

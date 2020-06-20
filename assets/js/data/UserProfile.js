@@ -7,10 +7,10 @@ export default class UserProfile {
      * @param {string} userId
      * @param {string} userName
      * @param {string} userEmail
-     * @param {string} userImage
+     * @param {string|null} userImage
      * @param {string} token
      */
-    constructor(userId, userName, userEmail, userImage, token) {
+    constructor(userId, userName, userEmail, userImage = null, token = '') {
         /**
          *
          * @type {string}
@@ -25,7 +25,7 @@ export default class UserProfile {
         this._userEmail = userEmail;
         /**
          *
-         * @type {string}
+         * @type {string|null}
          * @private
          */
         this._userImage = userImage;
@@ -157,7 +157,7 @@ export default class UserProfile {
 
     /**
      *
-     * @return {string}
+     * @return {string|null}
      */
     getUserImage() {
         return this._userImage;

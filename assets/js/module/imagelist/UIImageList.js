@@ -1,4 +1,6 @@
 import UIElementInterface from '../../ui/interfaces/element/UIElementInterface';
+import ImageData from '../../data/ImageData';
+import UserProfile from '../../data/UserProfile';
 
 /**
  * @class UIImageList
@@ -110,8 +112,20 @@ export default class UIImageList extends UIElementInterface {
                 if (apiResult.getStatus()) {
                     if (apiResult.getData().hasOwnProperty('files')) {
                         return apiResult.getData().files.map(image => {
-                            console.log(image);
-                            return image;
+                            const imageObject = new ImageData(image.id, image.path)
+                                .setType(image.type)
+                                .setYearmon(image.yearmon);
+                            if (image.hasOwnProperty('user')) {
+                                imageObject.setUser(
+                                    new UserProfile(
+                                        image.user.id,
+                                        image.user.name,
+                                        image.user.email
+                                    )
+                                );
+                            }
+                            console.log(imageObject);
+                            return imageObject;
                         });
                     }
                     return [];

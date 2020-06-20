@@ -8,10 +8,9 @@ import UserEntity from '../../data/entity/UserEntity';
 import UserFilesEntity from '../../data/entity/UserFilesEntity';
 import UploadFilesRequestDataClass from './data/UploadFilesRequestDataClass';
 import UserFilesDefinition from '../../db/definition/UserFilesDefinition';
-import path from 'path';
-import ImageProcessDirectoryProcessor
-    from '../../storage/file/process/image/ImageProcessDirectoryProcessor';
 import ResponseResult from '../../routers/response/ResponseResult';
+import DI from '../../lib/di/DI';
+import ImageUrl from '../../data/images/ImageUrl';
 
 /**
  * @class UploadGetFilesRequest
@@ -27,6 +26,12 @@ export default class UploadGetFilesRequest extends RequestInterface {
          * @private
          */
         this._repository = new FilesRepository();
+        /**
+         *
+         * @type {ImageUrl}
+         * @private
+         */
+        this._imageUrlProvider = DI.getInstance().get(ImageUrl);
     }
 
     /**
@@ -125,46 +130,9 @@ export default class UploadGetFilesRequest extends RequestInterface {
             return {
                 id: fileData.getValue(UserFilesDefinition.COLUMN_ID),
                 type: fileData.getValue(UserFilesDefinition.COLUMN_TYPE),
-                url: this._makeUrl(fileData)
+                url: this._imageUrlProvider.getUrl(fileData)
             };
         });
     }
 
-    /**
-     *
-     * @param {UserFilesEntity} fileData
-     * @private {string}
-     */
-    // eslint-disable-next-line no-unused-vars
-    _makeUrl(fileData) {
-        return this._makeAbsolutePath(
-            this._makeRelativePath(path.normalize(
-                fileData.getValue(UserFilesDefinition.COLUMN_PATH)
-            )));
-    }
-
-    /**
-     *
-     * @param {string} imagePath
-     * @returns {string}
-     * @private
-     */
-    _makeRelativePath(imagePath) {
-        const rootPath = new ImageProcessDirectoryProcessor()
-            .getDirectoryRoot(this._storageProvider.getFileStorage().getConfig());
-        return imagePath.substr(rootPath.length, imagePath.length);
-    }
-
-    /**
-     *
-     * @param {string} relativePath
-     * @returns {string}
-     * @private
-     */
-    _makeAbsolutePath(relativePath) {
-        return this._storageProvider
-            .getConfiguration()
-            .getConfig()
-            .fetch('api:url:static:image') + relativePath;
-    }
 }

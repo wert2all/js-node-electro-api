@@ -10,6 +10,10 @@ import UserRepository from '../../db/repository/UserRepository';
 import UserEntity from '../../data/entity/UserEntity';
 import UserDefinition from '../../db/definition/UserDefinition';
 import ImagesGetNoAdmin from './error/ImagesGetNoAdmin';
+import UserFilesEntity from '../../data/entity/UserFilesEntity';
+import UserFilesDefinition from '../../db/definition/UserFilesDefinition';
+import DI from '../../lib/di/DI';
+import ImageUrl from '../../data/images/ImageUrl';
 
 /**
  * @class ImagesGetRequest
@@ -31,6 +35,12 @@ export default class ImagesGetRequest extends RequestInterface {
          * @private
          */
         this._usersRepository = new UserRepository();
+        /**
+         *
+         * @type {ImageUrl}
+         * @private
+         */
+        this._imageUrlProvider = DI.getInstance().get(ImageUrl);
     }
 
     /**
@@ -63,8 +73,8 @@ export default class ImagesGetRequest extends RequestInterface {
             this._repository.setConnection(this._storageProvider.getConnection());
             this._usersRepository.setConnection(this._storageProvider.getConnection());
             await this._checkAdmin(requestData);
-            // const userData = await this._fetchUserData(requestData);
-            response.setData('dump', requestData);
+            const files = await this._fetchData();
+            response.setData('files', files);
             response.setStatus(true);
         } catch (e) {
             console.log(e);
@@ -128,5 +138,49 @@ export default class ImagesGetRequest extends RequestInterface {
         if (isAdmin === false) {
             throw new ImagesGetNoAdmin();
         }
+    }
+
+    async _fetchData() {
+        const images = await this._repository.fetchData(new UserFilesEntity());
+        for (const userFileEntity of images) {
+            await this._extendUserData(userFileEntity);
+            userFileEntity.setValue(
+                UserFilesDefinition.COLUMN_PATH,
+                this._replacePath(userFileEntity)
+            );
+        }
+        return images.map(imageEntity => imageEntity.getData());
+    }
+
+    /**
+     *
+     * @param {UserFilesEntity} userFileEntity
+     * @return {Promise<void>}
+     * @private
+     */
+    async _extendUserData(userFileEntity) {
+        const userId = userFileEntity
+            .getValue(UserFilesDefinition.COLUMN_GOOGLE_USER_ID);
+        const user = new UserEntity();
+        user.setValue(UserDefinition.COLUMN_GOOGLE_ID, userId);
+        const userData = await this._usersRepository.fetchData(user);
+        const extendUserData = {name: null, email: null};
+        if (userData.length === 1) {
+            extendUserData.name = userData[0]
+                .getValue(UserDefinition.COLUMN_GOOGLE_NAME);
+            extendUserData.email = userData[0]
+                .getValue(UserDefinition.COLUMN_GOOGLE_EMAIL);
+        }
+        userFileEntity.setValue('user', extendUserData);
+    }
+
+    /**
+     *
+     * @param {UserFilesEntity} userFileEntity
+     * @return {string}
+     * @private
+     */
+    _replacePath(userFileEntity) {
+        return this._imageUrlProvider.getUrl(userFileEntity);
     }
 }

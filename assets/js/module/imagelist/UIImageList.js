@@ -108,7 +108,12 @@ export default class UIImageList extends UIElementInterface {
             .getImages(this._authProvider.getUserProfile())
             .then(apiResult => {
                 if (apiResult.getStatus()) {
-                    console.log(apiResult);
+                    if (apiResult.getData().hasOwnProperty('files')) {
+                        return apiResult.getData().files.map(image => {
+                            console.log(image);
+                            return image;
+                        });
+                    }
                     return [];
                 } else {
                     throw new Error(apiResult.getErrorMessage());
@@ -125,7 +130,6 @@ export default class UIImageList extends UIElementInterface {
     // eslint-disable-next-line no-unused-vars
     _addData(data) {
         //TODO
-        console.log(data);
         if (data.length === 0) {
             this._notify.warning('No image data');
         }

@@ -1,11 +1,15 @@
+/**
+ * @class GoogleAccount
+ */
 export default class GoogleAccount {
     /**
      *
      * @param {string} googleUserId
      * @param {string} name
      * @param {string} email
+     * @param {string} photo
      */
-    constructor(googleUserId, name, email) {
+    constructor(googleUserId, name, email, photo = '') {
         /**
          *
          * @type {string}
@@ -24,6 +28,34 @@ export default class GoogleAccount {
          * @private
          */
         this._email = email;
+        /**
+         *
+         * @type {string}
+         * @private
+         */
+        this._photo = photo;
+    }
+
+    /**
+     *
+     * @param {TokenPayload} tokenPayload
+     * @return GoogleAccount
+     */
+    static create(tokenPayload) {
+        return new GoogleAccount(
+            tokenPayload.sub,
+            tokenPayload.name,
+            tokenPayload.email,
+            tokenPayload.picture
+        );
+    }
+
+    /**
+     *
+     * @return {string}
+     */
+    getPhoto() {
+        return this._photo;
     }
 
     /**
@@ -48,15 +80,5 @@ export default class GoogleAccount {
      */
     getEmail() {
         return this._email;
-    }
-
-
-    /**
-     *
-     * @param {TokenPayload} tokenPayload
-     * @return GoogleAccount
-     */
-    static create(tokenPayload) {
-        return new GoogleAccount(tokenPayload.sub, tokenPayload.name, tokenPayload.email);
     }
 }

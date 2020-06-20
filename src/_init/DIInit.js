@@ -18,6 +18,7 @@ import SecretStorage from '../storage/keyvalue/SecretStorage';
 import RendererInterface from '../lib/renderer/RendererInterface';
 import PugAdapter from '../lib/renderer/adapter/PugAdapter';
 import ServerConfig from '../server/ServerConfig';
+import ImageUrl from '../data/images/ImageUrl';
 
 /**
  *
@@ -68,5 +69,7 @@ export default function diInit(serverConfig) {
         + di.get(KeyValueStorageInterface).fetch('render.pug.template.directory')
         + di.get(KeyValueStorageInterface).fetch('render.pug.template.name')
     ));
+
+    di.register(ImageUrl, new ImageUrl(di.get(StorageProvider)));
     return di;
 }

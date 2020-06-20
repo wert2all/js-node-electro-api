@@ -80,4 +80,13 @@ export default class UserEntity extends EntityInterface {
         });
         return newObj;
     }
+
+    /**
+     * @param {string} key
+     * @return {EntityInterface}
+     */
+    unset(key) {
+        this._data.unset(key);
+        return this;
+    }
 }

@@ -17,6 +17,17 @@ export default class DataValue extends DataValueInterface {
     }
 
     /**
+     *
+     * @param {*} hash
+     * @return {DataValue}
+     */
+    static create(hash) {
+        return Object.keys(hash)
+            .reduce((prev, key) =>
+                prev.setData(key, hash[key]), new DataValue());
+    }
+
+    /**
      * @param  {string} key
      * @return {string||null}
      */
@@ -43,12 +54,11 @@ export default class DataValue extends DataValueInterface {
 
     /**
      *
-     * @param {*} hash
+     * @param {string} key
      * @return {DataValue}
      */
-    static create(hash) {
-        return Object.keys(hash)
-            .reduce((prev, key) =>
-                prev.setData(key, hash[key]), new DataValue());
+    unset(key) {
+        delete this._data[key];
+        return this;
     }
 }

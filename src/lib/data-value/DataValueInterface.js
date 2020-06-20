@@ -1,10 +1,10 @@
+import ImplementationError from '../implementation-error/ImplementationError';
+
 /**
  * @interface
  * @abstract
  * @class DataValueInterface
  */
-import ImplementationError from '../implementation-error/ImplementationError';
-
 export default class DataValueInterface {
     /**
      * @abstract
@@ -35,4 +35,13 @@ export default class DataValueInterface {
         throw new ImplementationError(this, 'toHash');
     }
 
+    /**
+     * @abstract
+     * @param {string} key
+     * @return {DataValueInterface}
+     */
+    // eslint-disable-next-line no-unused-vars
+    unset(key) {
+        throw new ImplementationError(this, 'unset');
+    }
 }

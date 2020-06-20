@@ -1,5 +1,6 @@
 import UIElementInterface from '../../ui/interfaces/element/UIElementInterface';
 import ImageData from '../../data/ImageData';
+import UserProfile from '../../data/UserProfile';
 
 /**
  * @class UIImageList
@@ -114,8 +115,15 @@ export default class UIImageList extends UIElementInterface {
                             const imageObject = new ImageData(image.id, image.path)
                                 .setType(image.type)
                                 .setYearmon(image.yearmon);
-
-                            console.log(image);
+                            if (image.hasOwnProperty('user')) {
+                                imageObject.setUser(
+                                    new UserProfile(
+                                        image.user.id,
+                                        image.user.name,
+                                        image.user.email
+                                    )
+                                );
+                            }
                             console.log(imageObject);
                             return imageObject;
                         });

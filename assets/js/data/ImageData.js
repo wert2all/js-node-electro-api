@@ -42,6 +42,16 @@ export default class ImageData {
 
     /**
      *
+     * @param {UserProfile|null} user
+     * @return {ImageData}
+     */
+    setUser(user) {
+        this._user = user;
+        return this;
+    }
+
+    /**
+     *
      * @param {string} value
      * @return {ImageData}
      */

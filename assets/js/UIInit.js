@@ -11,6 +11,14 @@ import UiAuthElementDefaultValues from './ui/auth/element/UiAuthElementDefaultVa
 import UIUserProfile from './module/profile/UIUserProfile';
 import DomForm from './dom/form/DomForm';
 import DomFormElement from './dom/form/DomFormElement';
+import UIGrid from './module/grid/UIGrid';
+import UILoader from './module/loader/UILoader';
+import UIContentElement from './module/content/UIContentElement';
+import UIImageList from './module/imagelist/UIImageList';
+import Notify from './ui/notify/Notify';
+import Api from './module/api/Api';
+import ApiFetcher from './api/ApiFetcher';
+import ApiUrlFactory from './utils/ApiUrlFactory';
 
 /**
  * @class UIInit
@@ -58,10 +66,25 @@ export default class UIInit {
                         gaAuthConfig,
                         window.gapi,
                         new AuthListener(this._ui)
+                            .addAfterAuth(authProvider => {
+                                new UIImageList(
+                                    this._ui.getContent(),
+                                    this._ui.getGrid().clone(),
+                                    this._ui.getLoader().clone(),
+                                    this._ui.getNotify(),
+                                    new Api(
+                                        new ApiFetcher(),
+                                        ApiUrlFactory.create(window)
+                                    ),
+                                    authProvider
+                                )
+                                    .init();
+                            })
                     );
                     authProvider.init();
                     self._ui.getAuthElement().setAuthProvider(authProvider);
                     self._ui.getAuthElement().init();
+
                 }
             });
         };
@@ -122,10 +145,13 @@ export default class UIInit {
                 defaultAuthValues
             )
         ]);
-
-        this._ui = new UIHolder(
-            authElement
-        );
+        const grid = new UIGrid(document.querySelector('#system .image_card_list'));
+        const loader = new UILoader(document.querySelector('#system .loader'));
+        const content = new UIContentElement(document.querySelector('#content'));
+        this._ui = new UIHolder(authElement, grid, loader, content,
+            new Notify(UIkit, {
+                pos: 'top-right'
+            }));
     }
 
     _initUIComponents() {

@@ -5,13 +5,21 @@ export default class ApiKeyProvider {
     /**
      *
      * @param {StorageProvider} storageProvider
+     * @param {string} key
      */
-    constructor(storageProvider) {
+    constructor(storageProvider, key = 'google:api:signin:key') {
         /**
          *
          * @type {KeyValueStorageInterface}
+         * @private
          */
-        this.secretStorage = storageProvider.getConfiguration().getSecretStorage();
+        this._secretStorage = storageProvider.getConfiguration().getSecretStorage();
+        /**
+         *
+         * @type {string}
+         * @private
+         */
+        this._key = key;
     }
 
     /**
@@ -19,6 +27,6 @@ export default class ApiKeyProvider {
      * @return {string}
      */
     get() {
-        return this.secretStorage.fetch('google:api:signin:key');
+        return this._secretStorage.fetch(this._key);
     }
 }

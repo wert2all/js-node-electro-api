@@ -1,4 +1,4 @@
-import UIElementInterface from './UIElementInterface';
+import UIElementInterface from './element/UIElementInterface';
 
 /**
  * @class UIInterface
@@ -11,5 +11,33 @@ export default class UIInterface extends UIElementInterface {
      * @return {UIAuthElementInterface}
      */
     getAuthElement() {
+    }
+
+    /**
+     * @abstract
+     * @return {UIGridElementInterface}
+     */
+    getGrid() {
+    }
+
+    /**
+     * @abstract
+     * @return {UIElementInterface}
+     */
+    getLoader() {
+    }
+
+    /**
+     * @abstract
+     * @return {UIContentElementInterface}
+     */
+    getContent() {
+    }
+
+    /**
+     * @abstract
+     * @return {UINotifyInterface}
+     */
+    getNotify() {
     }
 }

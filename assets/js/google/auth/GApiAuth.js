@@ -35,7 +35,6 @@ export default class GApiAuth extends AuthProviderInterface {
     }
 
     init() {
-        console.log('GAPI init');
         gapi.client.init({
             'clientId': this._config.getClientId(),
             'scope': this._config.getScope()
@@ -87,15 +86,15 @@ export default class GApiAuth extends AuthProviderInterface {
      * @return {UserProfile}
      */
     getUserProfile() {
-        const profile = this._gapi.auth2.getAuthInstance()
-            .currentUser
-            .get()
-            .getBasicProfile();
+        const currentUser = this._gapi.auth2.getAuthInstance().currentUser.get();
+        const profile = currentUser.getBasicProfile();
+        const authResponse = currentUser.getAuthResponse(true);
         return new UserProfile(
             profile.getId(),
             profile.getName(),
             profile.getEmail(),
-            profile.getImageUrl()
+            profile.getImageUrl(),
+            authResponse.id_token
         );
     }
 }

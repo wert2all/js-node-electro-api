@@ -46,4 +46,14 @@ export default class EntityInterface {
     setValue(key, value) {
         throw new ImplementationError(this, 'setValue');
     }
+
+    /**
+     * @abstract
+     * @param {string} key
+     * @return {EntityInterface}
+     */
+    // eslint-disable-next-line no-unused-vars
+    unset(key) {
+        throw new ImplementationError(this, 'unset');
+    }
 }

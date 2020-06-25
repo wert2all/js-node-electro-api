@@ -9,8 +9,12 @@ export default class UIHolder extends UIInterface {
     /**
      *
      * @param {UIAuthElementInterface} authElement
+     * @param {UIGridElementInterface} gridElement
+     * @param {UIElementInterface} loaderElement
+     * @param {UIContentElementInterface} contentElement
+     * @param {UINotifyInterface} notify
      */
-    constructor(authElement) {
+    constructor(authElement, gridElement, loaderElement, contentElement, notify) {
         super();
         /**
          *
@@ -18,13 +22,36 @@ export default class UIHolder extends UIInterface {
          * @private
          */
         this._elements = [];
-        this._elements.push(authElement);
         /**
          *
          * @type {number}
          * @private
          */
-        this._authIndex = this._elements.length - 1;
+        this._authIndex = this._elements.push(authElement) - 1;
+        /**
+         *
+         * @type {number}
+         * @private
+         */
+        this._gridIndex = this._elements.push(gridElement) - 1;
+        /**
+         *
+         * @type {number}
+         * @private
+         */
+        this._loaderIndex = this._elements.push(loaderElement) - 1;
+        /**
+         *
+         * @type {number}
+         * @private
+         */
+        this._contentIndex = this._elements.push(contentElement) - 1;
+        /**
+         *
+         * @type {UINotifyInterface}
+         * @private
+         */
+        this._notify = notify;
     }
 
     /**
@@ -42,9 +69,39 @@ export default class UIHolder extends UIInterface {
     }
 
     /**
-     * @return {UIElementInterface}
+     * @return {UIAuthElementInterface}
      */
     getAuthElement() {
         return this._elements[this._authIndex];
+    }
+
+    /**
+     * @return {UIGridElementInterface}
+     */
+    getGrid() {
+        return this._elements[this._gridIndex];
+    }
+
+    /**
+     *
+     * @return {UIElementInterface}
+     */
+    getLoader() {
+        return this._elements[this._loaderIndex];
+    }
+
+    /**
+     * @return {UIContentElementInterface}
+     */
+    getContent() {
+        return this._elements[this._contentIndex];
+    }
+
+    /**
+     *
+     * @return {UINotifyInterface}
+     */
+    getNotify() {
+        return this._notify;
     }
 }

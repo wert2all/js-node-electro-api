@@ -62,6 +62,14 @@ export default class UserEntity extends EntityInterface {
     }
 
     /**
+     *
+     * @return {string}
+     */
+    getIsAdmin() {
+        return this._data.getData(UserDefinition.COLUMN_IS_ADMIN);
+    }
+
+    /**
      * @param {Object<string,string>}value
      * @return EntityInterface
      */
@@ -71,5 +79,14 @@ export default class UserEntity extends EntityInterface {
             newObj.setValue(key, value[key]);
         });
         return newObj;
+    }
+
+    /**
+     * @param {string} key
+     * @return {EntityInterface}
+     */
+    unset(key) {
+        this._data.unset(key);
+        return this;
     }
 }

@@ -165,7 +165,7 @@ export default class ImagesGetRequest extends RequestInterface {
         const user = new UserEntity();
         user.setValue(UserDefinition.COLUMN_GOOGLE_ID, userId);
         const userData = await this._usersRepository.fetchData(user);
-        const extendUserData = {id: null, name: null, email: null};
+        const extendUserData = {id: null, name: null, email: null, image: null};
         if (userData.length === 1) {
             extendUserData.id = userData[0]
                 .getValue(UserDefinition.COLUMN_GOOGLE_ID);
@@ -173,6 +173,8 @@ export default class ImagesGetRequest extends RequestInterface {
                 .getValue(UserDefinition.COLUMN_GOOGLE_NAME);
             extendUserData.email = userData[0]
                 .getValue(UserDefinition.COLUMN_GOOGLE_EMAIL);
+            extendUserData.image = userData[0]
+                .getValue(UserDefinition.COLUMN_PHOTO_PATH);
         }
         userFileEntity.setValue('user', extendUserData);
     }

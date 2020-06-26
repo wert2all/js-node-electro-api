@@ -1,3 +1,5 @@
+import UserDefinition from '../db/definition/UserDefinition';
+
 /**
  * @class GoogleAccount
  */
@@ -80,5 +82,14 @@ export default class GoogleAccount {
      */
     getEmail() {
         return this._email;
+    }
+
+    toHash() {
+        const ret = {};
+        ret[UserDefinition.COLUMN_GOOGLE_ID] = this._googleUserId;
+        ret[UserDefinition.COLUMN_GOOGLE_NAME] = this._name;
+        ret[UserDefinition.COLUMN_GOOGLE_EMAIL] = this._email;
+        ret[UserDefinition.COLUMN_PHOTO_PATH] = this._photo;
+        return ret;
     }
 }

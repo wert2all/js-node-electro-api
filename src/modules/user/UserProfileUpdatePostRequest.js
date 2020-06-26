@@ -9,6 +9,7 @@ import UserEntity from '../../data/entity/UserEntity';
 import UserProfileEntity from '../../data/entity/UserProfileEntity';
 import EntityManager from '../../lib/db-entity-manager/EntityManager';
 import ResponseResult from '../../routers/response/ResponseResult';
+import UserRepository from '../../db/repository/UserRepository';
 
 /**
  * @class UserProfileUpdatePostRequest
@@ -23,7 +24,13 @@ export default class UserProfileUpdatePostRequest extends RequestInterface {
          * @type {UserProfileRepository}
          * @private
          */
-        this._repository = new UserProfileRepository();
+        this._profileRepository = new UserProfileRepository();
+        /**
+         *
+         * @type {UserRepository}
+         * @private
+         */
+        this._userRepository = new UserRepository();
     }
 
     /**
@@ -53,14 +60,22 @@ export default class UserProfileUpdatePostRequest extends RequestInterface {
         const response = new ResponseDataClass();
         try {
             const requestData = await this._prepareRequest(request);
-            this._repository.setConnection(this._storageProvider.getConnection());
+            this._profileRepository.setConnection(this._storageProvider.getConnection());
+            this._userRepository.setConnection(this._storageProvider.getConnection());
             const em = new EntityManager(this._storageProvider.getConnection());
 
             const hash = await this._createProfileHash(requestData.getGoogleAccount());
             const profileEntities = await this._createEntities(requestData, hash);
             profileEntities.map(async entity => {
-                await em.save(this._repository.getDefinition(), entity);
+                await em.save(this._profileRepository.getDefinition(), entity);
             });
+            await em.save(
+                this._userRepository.getDefinition(),
+                new UserEntity()
+                    .create(
+                        requestData.getGoogleAccount().toHash()
+                    )
+            );
             response.setStatus(true);
         } catch (e) {
             console.log(e);
@@ -131,7 +146,7 @@ export default class UserProfileUpdatePostRequest extends RequestInterface {
     }
 
     async _createProfileHash(googleAccount) {
-        const userProfile = await this._repository.fetchData(
+        const userProfile = await this._profileRepository.fetchData(
             this._createCleanProfileEntity(googleAccount)
         );
         return userProfile.reduce((prev, entity) => {

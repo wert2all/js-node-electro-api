@@ -30,6 +30,9 @@ export default class SQLiteUpdateSQLBuilder extends DefinitionSQLBuilderInterfac
                         === column.getColumnName()) {
                         return false;
                     }
+                    if (!data.hasOwnProperty(column.getColumnName())) {
+                        return false;
+                    }
                     return column.getColumnName() + ' = :' + column.getColumnName();
                 })
                 .filter(index => !!index)

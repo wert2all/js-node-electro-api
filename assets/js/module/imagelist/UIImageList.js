@@ -120,7 +120,8 @@ export default class UIImageList extends UIElementInterface {
                                     new UserProfile(
                                         image.user.id,
                                         image.user.name,
-                                        image.user.email
+                                        image.user.email,
+                                        image.user.image
                                     )
                                 );
                             }

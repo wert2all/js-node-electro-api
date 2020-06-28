@@ -20,6 +20,7 @@ import Api from './module/api/Api';
 import ApiFetcher from './api/ApiFetcher';
 import ApiUrlFactory from './utils/ApiUrlFactory';
 import UIImageItem from './module/imagelist/UIImageItem';
+import UIImageItemConfig from './module/imagelist/item/UIImageItemConfig';
 
 /**
  * @class UIInit
@@ -58,7 +59,7 @@ export default class UIInit {
 
     init(window) {
         this._initUI(window.document);
-        this._initUIComponents();
+        this._initUIComponents(window.document);
         this._appendGApi(window, this._uiImageItem);
         this._initIcons();
     }
@@ -170,7 +171,12 @@ export default class UIInit {
             }));
     }
 
-    _initUIComponents() {
+    /**
+     *
+     * @param {Document} document
+     * @private
+     */
+    _initUIComponents(document) {
         this._uiProfile = new UIUserProfile(
             document.querySelector('#modal_profile'),
             document.querySelector('#modal_profile img.profile-img'),
@@ -194,7 +200,10 @@ export default class UIInit {
         );
         this._uiProfile.init();
 
-        this._uiImageItem = new UIImageItem(document.querySelector('.one_image_card'));
+        this._uiImageItem = new UIImageItem(
+            document.querySelector('.one_image_card'),
+            new UIImageItemConfig(document)
+        );
         this._uiImageItem.init();
     }
 }

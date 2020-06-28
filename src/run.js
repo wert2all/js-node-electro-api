@@ -69,7 +69,7 @@ connectDB(serverConfig.getApplicationDirectory() + 'secret.sqlite')
                                 'get',
                                 new UploadGetFilesRequest()
                             ),
-                            new RouteDefinition('/images/get/',
+                            new RouteDefinition('/imagelist/get/',
                                 'get',
                                 new ImagesGetRequest()
                             ),

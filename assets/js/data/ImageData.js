@@ -42,6 +42,14 @@ export default class ImageData {
 
     /**
      *
+     * @return {string}
+     */
+    getUrl() {
+        return this._url;
+    }
+
+    /**
+     *
      * @param {UserProfile|null} user
      * @return {ImageData}
      */

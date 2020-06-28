@@ -54,10 +54,11 @@ export default class UIImageItem extends UIElementInterface {
     clean() {
     }
 
+    /**
+     * @return {UIElementInterface|null}
+     */
     clone() {
-        const imageItem = new UIImageItem(this._node.cloneNode(true), this._config);
-        imageItem.init();
-        return imageItem;
+        return new UIImageItem(this._node.cloneNode(true), this._config);
     }
 
     getNode() {
@@ -86,6 +87,7 @@ export default class UIImageItem extends UIElementInterface {
          * @type {UIImageItem}
          */
         const imageItem = this.clone();
+        imageItem.init();
         imageItem.setImage(imageData.getUrl())
             .setImageType(imageData.getType());
         return imageItem;

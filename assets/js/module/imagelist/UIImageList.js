@@ -130,7 +130,6 @@ export default class UIImageList extends UIElementInterface {
                                     )
                                 );
                             }
-                            console.log(imageObject);
                             return imageObject;
                         });
                     }
@@ -154,6 +153,7 @@ export default class UIImageList extends UIElementInterface {
         }
         this._hideLoader();
         data.forEach(imageData => {
+            console.log(imageData);
             this._grid.addElement(
                 this._imageItem.create(imageData)
             );

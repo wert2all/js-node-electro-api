@@ -9,8 +9,9 @@ export default class UIImageItem extends UIElementInterface {
     /**
      *
      * @param {Node} itemNode
+     * @param {UIImageItemConfig} config
      */
-    constructor(itemNode) {
+    constructor(itemNode, config) {
         super();
         /**
          *
@@ -18,13 +19,19 @@ export default class UIImageItem extends UIElementInterface {
          * @private
          */
         this._node = itemNode;
+        /**
+         *
+         * @type {UIImageItemConfig}
+         * @private
+         */
+        this._config = config;
     }
 
     clean() {
     }
 
     clone() {
-        return new UIImageItem(this._node.cloneNode(true));
+        return new UIImageItem(this._node.cloneNode(true), this._config);
     }
 
     getNode() {

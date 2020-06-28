@@ -16,8 +16,9 @@ export default class UIImageList extends UIElementInterface {
      * @param {UINotifyInterface} notify
      * @param {Api} api
      * @param {AuthProviderInterface} authProvider
+     * @param {UIImageItem} imageItem
      */
-    constructor(parentElement, grid, loader, notify, api, authProvider) {
+    constructor(parentElement, grid, loader, notify, api, authProvider, imageItem) {
         super();
         /**
          *
@@ -55,7 +56,12 @@ export default class UIImageList extends UIElementInterface {
          * @private
          */
         this._authProvider = authProvider;
-
+        /**
+         *
+         * @type {UIImageItem}
+         * @private
+         */
+        this._imageItem = imageItem;
     }
 
     /**
@@ -86,7 +92,6 @@ export default class UIImageList extends UIElementInterface {
         this._showLoader();
         this._fetchData()
             .then(data => this._addData(data))
-            .then(() => this._hideLoader())
             .catch(error => {
                 this._hideLoader();
                 return this._notify.error(error.message);
@@ -144,10 +149,15 @@ export default class UIImageList extends UIElementInterface {
      */
     // eslint-disable-next-line no-unused-vars
     _addData(data) {
-        //TODO
         if (data.length === 0) {
             this._notify.warning('No image data');
         }
+        this._hideLoader();
+        data.forEach(imageData => {
+            this._grid.addElement(
+                this._imageItem.create(imageData)
+            );
+        });
         return Promise.resolve();
     }
 }

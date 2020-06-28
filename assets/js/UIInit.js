@@ -19,6 +19,7 @@ import Notify from './ui/notify/Notify';
 import Api from './module/api/Api';
 import ApiFetcher from './api/ApiFetcher';
 import ApiUrlFactory from './utils/ApiUrlFactory';
+import UIImageItem from './module/imagelist/UIImageItem';
 
 /**
  * @class UIInit
@@ -47,16 +48,28 @@ export default class UIInit {
          * @private
          */
         this._uiProfile = null;
+        /**
+         *
+         * @type {null|UIImageItem}
+         * @private
+         */
+        this._uiImageItem = null;
     }
 
     init(window) {
         this._initUI(window.document);
         this._initUIComponents();
-        this._appendGApi(window);
+        this._appendGApi(window, this._uiImageItem);
         this._initIcons();
     }
 
-    _appendGApi(window) {
+    /**
+     *
+     * @param window
+     * @param {UIImageItem} imageItem
+     * @private
+     */
+    _appendGApi(window, imageItem) {
         const gaAuthConfig = this._config.getGoogleConfig().getAuthConfig();
         const self = this;
         window.onGApiLoad = () => {
@@ -76,7 +89,8 @@ export default class UIInit {
                                         new ApiFetcher(),
                                         ApiUrlFactory.create(window)
                                     ),
-                                    authProvider
+                                    authProvider,
+                                    imageItem
                                 )
                                     .init();
                             })
@@ -147,7 +161,9 @@ export default class UIInit {
         ]);
         const grid = new UIGrid(document.querySelector('#system .image_card_list'));
         const loader = new UILoader(document.querySelector('#system .loader'));
-        const content = new UIContentElement(document.querySelector('#content'));
+        const content = new UIContentElement(
+            document.querySelector('#content .uk-container.uk-container-expand')
+        );
         this._ui = new UIHolder(authElement, grid, loader, content,
             new Notify(UIkit, {
                 pos: 'top-right'
@@ -177,5 +193,8 @@ export default class UIInit {
             UIkit
         );
         this._uiProfile.init();
+
+        this._uiImageItem = new UIImageItem(document.querySelector('.one_image_card'));
+        this._uiImageItem.init();
     }
 }

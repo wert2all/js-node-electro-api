@@ -202,7 +202,7 @@ export default class UIInit {
 
         this._uiImageItem = new UIImageItem(
             document.querySelector('.one_image_card'),
-            new UIImageItemConfig(document,
+            new UIImageItemConfig(
                 '.uk-card-body .uk-card-media-bottom img',
                 '.uk-card-footer .uk-icon-link.uk-icon.image-icon-download',
                 '.uk-card .uk-card-badge',

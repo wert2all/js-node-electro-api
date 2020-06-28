@@ -31,6 +31,12 @@ export default class UIImageItem extends UIElementInterface {
          * @private
          */
         this._image = null;
+        /**
+         *
+         * @type {null|Node}
+         * @private
+         */
+        this._downloadIcon = null;
     }
 
     clean() {
@@ -48,6 +54,8 @@ export default class UIImageItem extends UIElementInterface {
 
     init() {
         this._image = this._config.getDocument().querySelector(this._config.getImage());
+        this._downloadIcon = this._config.getDocument()
+            .querySelector(this._config.getIconDownload());
     }
 
     /**
@@ -74,6 +82,9 @@ export default class UIImageItem extends UIElementInterface {
     setImage(url) {
         if (this._image !== null) {
             this._image.src = url;
+        }
+        if (this._downloadIcon !== null) {
+            this._downloadIcon.href = url;
         }
         return this;
     }

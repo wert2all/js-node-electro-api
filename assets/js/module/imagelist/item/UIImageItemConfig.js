@@ -6,8 +6,9 @@ export default class UIImageItemConfig {
      *
      * @param {Document} document
      * @param {string} imageSelector
+     * @param {string} downloadSelector
      */
-    constructor(document, imageSelector) {
+    constructor(document, imageSelector, downloadSelector) {
         /**
          *
          * @type {Document}
@@ -20,6 +21,20 @@ export default class UIImageItemConfig {
          * @private
          */
         this._image = imageSelector;
+        /**
+         *
+         * @type {string}
+         * @private
+         */
+        this._iconDownload = downloadSelector;
+    }
+
+    /**
+     *
+     * @return {string}
+     */
+    getIconDownload() {
+        return this._iconDownload;
     }
 
     /**

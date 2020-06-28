@@ -44,6 +44,14 @@ export default class ImageData {
      *
      * @return {string}
      */
+    getType() {
+        return this._type;
+    }
+
+    /**
+     *
+     * @return {string}
+     */
     getUrl() {
         return this._url;
     }

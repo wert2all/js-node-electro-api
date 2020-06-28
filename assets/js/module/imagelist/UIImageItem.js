@@ -37,6 +37,18 @@ export default class UIImageItem extends UIElementInterface {
          * @private
          */
         this._downloadIcon = null;
+        /**
+         *
+         * @type {null| Node}
+         * @private
+         */
+        this._imageTypeTitle = null;
+        /**
+         *
+         * @type {null|Node}
+         * @private
+         */
+        this._imageTypeContainer = null;
     }
 
     clean() {
@@ -56,6 +68,10 @@ export default class UIImageItem extends UIElementInterface {
         this._image = this._config.getDocument().querySelector(this._config.getImage());
         this._downloadIcon = this._config.getDocument()
             .querySelector(this._config.getIconDownload());
+        this._imageTypeTitle = this._config.getDocument()
+            .querySelector(this._config.getImageTypeTitleSelector());
+        this._imageTypeContainer = this._config.getDocument()
+            .querySelector(this._config.getImageTypeTitleContainerSelector());
     }
 
     /**
@@ -70,7 +86,8 @@ export default class UIImageItem extends UIElementInterface {
          * @type {UIImageItem}
          */
         const imageItem = this.clone();
-        imageItem.setImage(imageData.getUrl());
+        imageItem.setImage(imageData.getUrl())
+            .setImageType(imageData.getType());
         return imageItem;
     }
 
@@ -85,6 +102,21 @@ export default class UIImageItem extends UIElementInterface {
         }
         if (this._downloadIcon !== null) {
             this._downloadIcon.href = url;
+        }
+        return this;
+    }
+
+    /**
+     *
+     * @param {string} type
+     * @return {UIImageItem}
+     */
+    setImageType(type) {
+        if (this._imageTypeTitle !== null) {
+            this._imageTypeTitle.innerHTML = type;
+        }
+        if (this._imageTypeContainer !== null) {
+            this._imageTypeContainer.classList.add('uk-custom-image-type-' + type);
         }
         return this;
     }

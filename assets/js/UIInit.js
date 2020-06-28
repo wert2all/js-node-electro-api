@@ -204,7 +204,9 @@ export default class UIInit {
             document.querySelector('.one_image_card'),
             new UIImageItemConfig(document,
                 '.uk-card-body .uk-card-media-bottom img',
-                '.uk-card-footer .uk-icon-link.uk-icon.image-icon-download'
+                '.uk-card-footer .uk-icon-link.uk-icon.image-icon-download',
+                '.uk-card .uk-card-badge',
+                '.uk-card.uk-card-default.uk-card-small.uk-card-hover'
             )
         );
         this._uiImageItem.init();

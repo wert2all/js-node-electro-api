@@ -4,25 +4,17 @@
 export default class UIImageItemConfig {
     /**
      *
-     * @param {Document} document
      * @param {string} imageSelector
      * @param {string} downloadSelector
      * @param {string} imageTypeTitleSelector
      * @param {string} imageTitleContainerSelector
      */
     constructor(
-        document,
         imageSelector,
         downloadSelector,
         imageTypeTitleSelector,
         imageTitleContainerSelector
     ) {
-        /**
-         *
-         * @type {Document}
-         * @private
-         */
-        this._document = document;
         /**
          *
          * @type {string}

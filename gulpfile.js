@@ -5,7 +5,34 @@ const eslint = require('gulp-eslint');
 const PluginError = require('plugin-error');
 const webpack = require('webpack-stream');
 const browserSync = require('browser-sync').create();
-const jest = require('gulp-jest').default;
+const runCLI = require('@jest/core').runCLI;
+const through2 = require('through2');
+
+const jest = (options = {}) => {
+    return through2.obj((file, enc, cb) => {
+        options = Object.assign({
+            rootDir: file ? process.cwd() : undefined
+        }, options);
+        runCLI(options, [options.rootDir])
+            .then(({results}) => {
+                if (results.numFailedTests || results.numFailedTestSuites) {
+                    cb(new PluginError(
+                        'gulp-jest',
+                        {message: 'Tests Failed'})
+                    );
+                } else if (typeof results.success !== 'undefined' && !results.success) {
+                    cb(
+                        new PluginError(
+                            'gulp-jest',
+                            {message: 'Tests Failed due to coverage threshold breaches'}
+                        )
+                    );
+                } else {
+                    cb();
+                }
+            });
+    });
+};
 
 gulp.task('test:static', () => {
     return gulp.src(['src/**/*.js', 'assets/js/**/*.js'])
@@ -32,15 +59,8 @@ gulp.task('test:static', () => {
         }));
 });
 gulp.task('test:unit', () =>
-    gulp.src('test/**/*.js')
-        // .pipe(jest(
-        //     {
-        //         'preprocessorIgnorePatterns': [
-        //             '<rootDir>/dist/', '<rootDir>/node_modules/'
-        //         ],
-        //         'automock': false
-        //     }
-        // ))
+    gulp.src('test/')
+        .pipe(jest())
 );
 
 gulp.task('test', gulp.parallel('test:static', 'test:unit'));

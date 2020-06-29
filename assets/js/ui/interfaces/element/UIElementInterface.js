@@ -28,7 +28,7 @@ export default class UIElementInterface {
 
     /**
      * @abstract
-     * @return {Node}
+     * @return {ParentNode}
      */
     getNode() {
     }

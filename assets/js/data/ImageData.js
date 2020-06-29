@@ -1,6 +1,8 @@
 /**
  * @class ImageData
  */
+import YearMonClient from './YearMonClient';
+
 export default class ImageData {
     /**
      *
@@ -28,7 +30,7 @@ export default class ImageData {
         this._type = 'bill';
         /**
          *
-         * @type {null|string}
+         * @type {null|YearMonClient}
          * @private
          */
         this._yearmon = null;
@@ -38,6 +40,14 @@ export default class ImageData {
          * @private
          */
         this._user = null;
+    }
+
+    /**
+     *
+     * @return {null|YearMonClient}
+     */
+    getYearmon() {
+        return this._yearmon;
     }
 
     /**
@@ -72,7 +82,7 @@ export default class ImageData {
      * @return {ImageData}
      */
     setYearmon(value) {
-        this._yearmon = value;
+        this._yearmon = YearMonClient.create(value);
         return this;
     }
 

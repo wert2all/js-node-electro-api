@@ -206,7 +206,8 @@ export default class UIInit {
                 '.uk-card-body .uk-card-media-bottom img',
                 '.uk-card-footer .uk-icon-link.uk-icon.image-icon-download',
                 '.uk-card .uk-card-badge',
-                '.uk-card.uk-card-default.uk-card-small.uk-card-hover'
+                '.uk-card.uk-card-default.uk-card-small.uk-card-hover',
+                '.uk-card-header p.uk-text-meta time'
             )
         );
         this._uiImageItem.init();

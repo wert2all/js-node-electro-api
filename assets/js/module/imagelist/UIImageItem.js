@@ -8,14 +8,14 @@ import UIElementInterface from '../../ui/interfaces/element/UIElementInterface';
 export default class UIImageItem extends UIElementInterface {
     /**
      *
-     * @param {Node} itemNode
+     * @param {ParentNode} itemNode
      * @param {UIImageItemConfig} config
      */
     constructor(itemNode, config) {
         super();
         /**
          *
-         * @type {Node}
+         * @type {ParentNode}
          * @private
          */
         this._node = itemNode;
@@ -49,6 +49,12 @@ export default class UIImageItem extends UIElementInterface {
          * @private
          */
         this._imageTypeContainer = null;
+        /**
+         *
+         * @type {null|Node}
+         * @private
+         */
+        this._yearmon = null;
     }
 
     clean() {
@@ -72,6 +78,7 @@ export default class UIImageItem extends UIElementInterface {
             .querySelector(this._config.getImageTypeTitleSelector());
         this._imageTypeContainer = this._node
             .querySelector(this._config.getImageTypeTitleContainerSelector());
+        this._yearmon = this._node.querySelector(this._config.getYearmonSelector());
     }
 
     /**
@@ -88,7 +95,8 @@ export default class UIImageItem extends UIElementInterface {
         const imageItem = this.clone();
         imageItem.init();
         imageItem.setImage(imageData.getUrl())
-            .setImageType(imageData.getType());
+            .setImageType(imageData.getType())
+            .setYearMon(imageData.getYearmon());
         return imageItem;
     }
 
@@ -118,6 +126,19 @@ export default class UIImageItem extends UIElementInterface {
         }
         if (this._imageTypeContainer !== null) {
             this._imageTypeContainer.classList.add('uk-custom-image-type-' + type);
+        }
+        return this;
+    }
+
+    /**
+     *
+     * @param {YearMonClient|null} yearmon
+     * @return {UIImageItem}
+     */
+    setYearMon(yearmon) {
+        if (this._yearmon !== null && yearmon !== null) {
+            this._yearmon.innerHTML = yearmon.getYear()
+                + ', ' + yearmon.getDate().toLocaleString('default', {month: 'long'});
         }
         return this;
     }

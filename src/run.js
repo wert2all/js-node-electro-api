@@ -1,6 +1,5 @@
 import os from 'os';
 import sqlite3 from 'sqlite3';
-import path from 'path';
 
 import ServerCluster from './server/ServerCluster';
 import ServerWorker from './server/ServerWorker';
@@ -20,13 +19,9 @@ import diInit from './_init/DIInit';
 import expressInit from './_init/ExpressInit';
 import DispatchInterface from './lib/dispatcher/DispatchInterface';
 import UIRequest from './modules/ui/UIRequest';
-import ServerConfig from './server/ServerConfig';
 import ImagesGetRequest from './modules/images/ImagesGetRequest';
+import serverConfig from './_init/ServerConfigInit';
 
-const serverConfig = new ServerConfig(
-    path.normalize(__dirname + path.sep + '..' + path.sep),
-    path.normalize(__dirname + path.sep + '..' + path.sep + '..' + path.sep)
-);
 const connectDB = path => new Promise((resolve, reject) => {
     const db = new sqlite3.Database(path, err => {
         if (err) {

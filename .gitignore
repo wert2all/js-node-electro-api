@@ -7,3 +7,4 @@ dist/
 /secret.sqlite
 /data/files/
 /config.json
+/test/reports/

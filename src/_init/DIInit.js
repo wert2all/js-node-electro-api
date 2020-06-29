@@ -70,6 +70,12 @@ export default function diInit(serverConfig) {
         + di.get(KeyValueStorageInterface).fetch('render.pug.template.name')
     ));
 
-    di.register(ImageUrl, new ImageUrl(di.get(StorageProvider)));
+    di.register(
+        ImageUrl,
+        new ImageUrl(
+            di.get(StorageProvider).getConfiguration().getConfig(),
+            di.get(StorageProvider).getFileStorage().getConfig()
+        )
+    );
     return di;
 }

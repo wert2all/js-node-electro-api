@@ -9,15 +9,22 @@ import ImageProcessDirectoryProcessor
 export default class ImageUrl {
     /**
      *
-     * @param {StorageProvider}storageProvider
+     * @param {KeyValueStorageInterface} keyValueStorageConfig
+     * @param {FileStorageConfig} fileStorage
      */
-    constructor(storageProvider) {
+    constructor(keyValueStorageConfig, fileStorage) {
         /**
          *
-         * @type {StorageProvider}
+         * @type {KeyValueStorageInterface}
          * @private
          */
-        this._storageProvider = storageProvider;
+        this._keyValueStorage = keyValueStorageConfig;
+        /**
+         *
+         * @type {FileStorageConfig}
+         * @private
+         */
+        this._fileStorageConfig = fileStorage;
     }
 
     /**
@@ -49,10 +56,7 @@ export default class ImageUrl {
      * @private
      */
     _makeAbsolutePath(relativePath) {
-        return this._storageProvider
-            .getConfiguration()
-            .getConfig()
-            .fetch('api:url:static:image') + relativePath;
+        return this._keyValueStorage.fetch('api:url:static:image') + relativePath;
     }
 
     /**
@@ -63,7 +67,7 @@ export default class ImageUrl {
      */
     _makeRelativePath(imagePath) {
         const rootPath = new ImageProcessDirectoryProcessor()
-            .getDirectoryRoot(this._storageProvider.getFileStorage().getConfig());
+            .getDirectoryRoot(this._fileStorageConfig);
         return imagePath.substr(rootPath.length, imagePath.length);
     }
 }

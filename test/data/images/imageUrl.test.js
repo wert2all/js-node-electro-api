@@ -1,22 +1,18 @@
 import ImageUrl from '../../../src/data/images/ImageUrl';
 import UserFilesEntity from '../../../src/data/entity/UserFilesEntity';
-import di from '../../testInit';
 
 test('ImageUrl:getUrl', () => {
-    /**
-     *
-     * @type {ImageUrl}
-     */
-    const imageUrl = di.get(ImageUrl);
     _dataProvider()
         .map(data => {
-            expect(imageUrl.getUrl(new UserFilesEntity().setFilePath(data.expect)))
+            expect(data
+                .model
+                .getUrl(new UserFilesEntity().setFilePath(data.expect)))
                 .toBe(data.toBe);
         });
 
     /**
      *
-     * @return {{expect: string, toBe: string}[]}
+     * @return {{expect: string, toBe: string, model:ImageUrl}[]}
      * @private
      */
     function _dataProvider() {
@@ -25,7 +21,15 @@ test('ImageUrl:getUrl', () => {
                 // eslint-disable-next-line max-len
                 'expect': '/home/wert2all/work/js-node-electro-api/data/files//images/2020/06/image.jpg',
                 // eslint-disable-next-line max-len
-                'toBe': 'http://localhost:3000/images/2020/06/image.jpg'
+                'toBe': 'http://localhost:3000/images/2020/06/image.jpg',
+                'model': new ImageUrl(
+                    {
+                        fetch: () => 'http://localhost:3000/images/'
+                    },
+                    {
+                        getStoragePath: () =>
+                            '/home/wert2all/work/js-node-electro-api/data/files/'
+                    })
             }
         ];
     }

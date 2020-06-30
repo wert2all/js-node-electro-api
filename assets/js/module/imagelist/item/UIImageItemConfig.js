@@ -9,13 +9,15 @@ export default class UIImageItemConfig {
      * @param {string} imageTypeTitleSelector
      * @param {string} imageTitleContainerSelector
      * @param {string} yearMonSelector
+     * @param {UIImageItemConfigRadio} radioSelector
      */
     constructor(
         imageSelector,
         downloadSelector,
         imageTypeTitleSelector,
         imageTitleContainerSelector,
-        yearMonSelector
+        yearMonSelector,
+        radioSelector
     ) {
         /**
          *
@@ -46,6 +48,20 @@ export default class UIImageItemConfig {
          * @private
          */
         this._yearmonSelector = yearMonSelector;
+        /**
+         *
+         * @type {UIImageItemConfigRadio}
+         * @private
+         */
+        this._radioSelector = radioSelector;
+    }
+
+    /**
+     *
+     * @return {UIImageItemConfigRadio}
+     */
+    getRadioSelector() {
+        return this._radioSelector;
     }
 
     /**

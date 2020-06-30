@@ -44,6 +44,14 @@ export default class ImageData {
 
     /**
      *
+     * @return {number}
+     */
+    getId() {
+        return this._id;
+    }
+
+    /**
+     *
      * @return {null|YearMonClient}
      */
     getYearmon() {

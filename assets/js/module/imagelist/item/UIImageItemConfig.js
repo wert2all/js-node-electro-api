@@ -5,7 +5,6 @@ export default class UIImageItemConfig {
     /**
      *
      * @param {string} imageSelector
-     * @param {string} downloadSelector
      * @param {string} imageTypeTitleSelector
      * @param {string} imageTitleContainerSelector
      * @param {string} yearMonSelector
@@ -15,7 +14,6 @@ export default class UIImageItemConfig {
      */
     constructor(
         imageSelector,
-        downloadSelector,
         imageTypeTitleSelector,
         imageTitleContainerSelector,
         yearMonSelector,
@@ -29,12 +27,6 @@ export default class UIImageItemConfig {
          * @private
          */
         this._image = imageSelector;
-        /**
-         *
-         * @type {string}
-         * @private
-         */
-        this._iconDownload = downloadSelector;
         /**
          *
          * @type {string}
@@ -124,23 +116,7 @@ export default class UIImageItemConfig {
      *
      * @return {string}
      */
-    getIconDownload() {
-        return this._iconDownload;
-    }
-
-    /**
-     *
-     * @return {string}
-     */
     getImage() {
         return this._image;
-    }
-
-    /**
-     *
-     * @return {Document}
-     */
-    getDocument() {
-        return this._document;
     }
 }

@@ -85,7 +85,9 @@ export default class UIImageItem extends UIElementInterface {
 
     init() {
         this._image = this._node.querySelector(this._config.getImage());
-        this._downloadIcon = this._node.querySelector(this._config.getIconDownload());
+        this._downloadIcon = this._node.querySelector(
+            this._config.getActionSelector().getDownloadSelector()
+        );
         this._imageTypeTitle = this._node
             .querySelector(this._config.getImageTypeTitleSelector());
         this._imageTypeContainer = this._node

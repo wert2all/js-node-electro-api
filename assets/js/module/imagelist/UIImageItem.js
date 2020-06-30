@@ -39,22 +39,34 @@ export default class UIImageItem extends UIElementInterface {
         this._downloadIcon = null;
         /**
          *
-         * @type {null| Node}
+         * @type {null|Element}
          * @private
          */
         this._imageTypeTitle = null;
         /**
          *
-         * @type {null|Node}
+         * @type {null|Element}
          * @private
          */
         this._imageTypeContainer = null;
         /**
          *
-         * @type {null|Node}
+         * @type {null|Element}
          * @private
          */
         this._yearmon = null;
+        /**
+         *
+         * @type {null|Element}
+         * @private
+         */
+        this._radioLabel = null;
+        /**
+         *
+         * @type {null|Element}
+         * @private
+         */
+        this._radioInput = null;
     }
 
     clean() {
@@ -79,6 +91,12 @@ export default class UIImageItem extends UIElementInterface {
         this._imageTypeContainer = this._node
             .querySelector(this._config.getImageTypeTitleContainerSelector());
         this._yearmon = this._node.querySelector(this._config.getYearmonSelector());
+        this._radioLabel = this._node.querySelector(
+            this._config.getRadioSelector().getLabelSelector()
+        );
+        this._radioInput = this._node.querySelector(
+            this._config.getRadioSelector().getInputSelector()
+        );
     }
 
     /**
@@ -96,7 +114,8 @@ export default class UIImageItem extends UIElementInterface {
         imageItem.init();
         imageItem.setImage(imageData.getUrl())
             .setImageType(imageData.getType())
-            .setYearMon(imageData.getYearmon());
+            .setYearMon(imageData.getYearmon())
+            .setId(imageData.getId());
         return imageItem;
     }
 
@@ -141,5 +160,28 @@ export default class UIImageItem extends UIElementInterface {
                 + ', ' + yearmon.getDate().toLocaleString('default', {month: 'long'});
         }
         return this;
+    }
+
+    /**
+     *
+     * @param {number} id
+     * @return {UIImageItem}
+     */
+    setId(id) {
+        if (this._radioInput !== null && this._radioLabel !== null) {
+            this._radioLabel.setAttribute('for', this._createRadioId(id));
+            this._radioInput.setAttribute('id', this._createRadioId(id));
+        }
+        return this;
+    }
+
+    /**
+     *
+     * @param {number} id
+     * @return {string}
+     * @private
+     */
+    _createRadioId(id) {
+        return 'image_active_' + id;
     }
 }

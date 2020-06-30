@@ -21,6 +21,7 @@ import ApiFetcher from './api/ApiFetcher';
 import ApiUrlFactory from './utils/ApiUrlFactory';
 import UIImageItem from './module/imagelist/UIImageItem';
 import UIImageItemConfig from './module/imagelist/item/UIImageItemConfig';
+import UIImageItemConfigRadio from './module/imagelist/item/UIImageItemConfigRadio';
 
 /**
  * @class UIInit
@@ -207,7 +208,11 @@ export default class UIInit {
                 '.uk-card-footer .uk-icon-link.uk-icon.image-icon-download',
                 '.uk-card .uk-card-badge',
                 '.uk-card.uk-card-default.uk-card-small.uk-card-hover',
-                '.uk-card-header p.uk-text-meta time'
+                '.uk-card-header p.uk-text-meta time',
+                new UIImageItemConfigRadio(
+                    '.uk-card-body label.uk-switch',
+                    '.uk-card-body label.uk-switch input'
+                )
             )
         );
         this._uiImageItem.init();

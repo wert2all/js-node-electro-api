@@ -207,7 +207,6 @@ export default class UIInit {
             document.querySelector('.one_image_card'),
             new UIImageItemConfig(
                 '.uk-card-body .uk-card-media-bottom img',
-                '.uk-card-footer .uk-icon-link.uk-icon.image-icon-download',
                 '.uk-card .uk-card-badge',
                 '.uk-card.uk-card-default.uk-card-small.uk-card-hover',
                 '.uk-card-header p.uk-text-meta time',
@@ -221,6 +220,7 @@ export default class UIInit {
                     '.uk-card-header .uk-grid-small  a.uk-icon-link',
                 ),
                 new UIImageItemConfigActions(
+                    '.uk-card-footer .uk-icon-link.uk-icon.image-icon-download',
                     '.uk-card-footer .uk-icon-link.uk-icon.image-icon-edit',
                     '.uk-card-footer .uk-icon-link.uk-icon.image-icon-delete'
                 )

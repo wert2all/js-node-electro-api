@@ -3,11 +3,17 @@
  */
 export default class UIImageItemConfigActions {
     /**
-     *
+     * @param {string} downloadSelector
      * @param {string} editSelector
      * @param {string} deleteSelector
      */
-    constructor(editSelector, deleteSelector) {
+    constructor(downloadSelector, editSelector, deleteSelector) {
+        /**
+         *
+         * @type {string}
+         * @private
+         */
+        this._downloadSelector = downloadSelector;
         /**
          *
          * @type {string}
@@ -20,6 +26,14 @@ export default class UIImageItemConfigActions {
          * @private
          */
         this._deleteSelector = deleteSelector;
+    }
+
+    /**
+     *
+     * @return {string}
+     */
+    getDownloadSelector() {
+        return this._downloadSelector;
     }
 
     /**

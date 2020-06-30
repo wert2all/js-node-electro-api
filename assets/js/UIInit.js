@@ -23,6 +23,7 @@ import UIImageItem from './module/imagelist/UIImageItem';
 import UIImageItemConfig from './module/imagelist/item/UIImageItemConfig';
 import UIImageItemConfigRadio from './module/imagelist/item/UIImageItemConfigRadio';
 import UIImageItemConfigProfile from './module/imagelist/item/UIImageItemConfigProfile';
+import UIImageItemConfigActions from './module/imagelist/item/UIImageItemConfigActions';
 
 /**
  * @class UIInit
@@ -218,6 +219,10 @@ export default class UIInit {
                     '.uk-card-header .uk-grid-small img.uk-border-circle',
                     '.uk-card-header .uk-grid-small h3.uk-card-title',
                     '.uk-card-header .uk-grid-small  a.uk-icon-link',
+                ),
+                new UIImageItemConfigActions(
+                    '.uk-card-footer .uk-icon-link.uk-icon.image-icon-edit',
+                    '.uk-card-footer .uk-icon-link.uk-icon.image-icon-delete'
                 )
             )
         );

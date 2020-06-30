@@ -11,6 +11,7 @@ export default class UIImageItemConfig {
      * @param {string} yearMonSelector
      * @param {UIImageItemConfigRadio} radioSelector
      * @param {UIImageItemConfigProfile} profileSelector
+     * @param {UIImageItemConfigActions} actionsSelector
      */
     constructor(
         imageSelector,
@@ -19,7 +20,8 @@ export default class UIImageItemConfig {
         imageTitleContainerSelector,
         yearMonSelector,
         radioSelector,
-        profileSelector
+        profileSelector,
+        actionsSelector
     ) {
         /**
          *
@@ -62,6 +64,20 @@ export default class UIImageItemConfig {
          * @private
          */
         this._profileSelector = profileSelector;
+        /**
+         *
+         * @type {UIImageItemConfigActions}
+         * @private
+         */
+        this._actionSelector = actionsSelector;
+    }
+
+    /**
+     *
+     * @return {UIImageItemConfigActions}
+     */
+    getActionSelector() {
+        return this._actionSelector;
     }
 
     /**

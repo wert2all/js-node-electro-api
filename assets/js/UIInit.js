@@ -22,6 +22,7 @@ import ApiUrlFactory from './utils/ApiUrlFactory';
 import UIImageItem from './module/imagelist/UIImageItem';
 import UIImageItemConfig from './module/imagelist/item/UIImageItemConfig';
 import UIImageItemConfigRadio from './module/imagelist/item/UIImageItemConfigRadio';
+import UIImageItemConfigProfile from './module/imagelist/item/UIImageItemConfigProfile';
 
 /**
  * @class UIInit
@@ -212,6 +213,11 @@ export default class UIInit {
                 new UIImageItemConfigRadio(
                     '.uk-card-body label.uk-switch',
                     '.uk-card-body label.uk-switch input'
+                ),
+                new UIImageItemConfigProfile(
+                    '.uk-card-header .uk-grid-small img.uk-border-circle',
+                    '.uk-card-header .uk-grid-small h3.uk-card-title',
+                    '.uk-card-header .uk-grid-small  a.uk-icon-link',
                 )
             )
         );

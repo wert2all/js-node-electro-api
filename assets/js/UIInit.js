@@ -20,10 +20,18 @@ import Api from './module/api/Api';
 import ApiFetcher from './api/ApiFetcher';
 import ApiUrlFactory from './utils/ApiUrlFactory';
 import UIImageItem from './module/imagelist/UIImageItem';
-import UIImageItemConfig from './module/imagelist/item/UIImageItemConfig';
-import UIImageItemConfigRadio from './module/imagelist/item/UIImageItemConfigRadio';
-import UIImageItemConfigProfile from './module/imagelist/item/UIImageItemConfigProfile';
-import UIImageItemConfigActions from './module/imagelist/item/UIImageItemConfigActions';
+import UIImageItemConfig from './module/imagelist/item/config/UIImageItemConfig';
+import UIImageItemConfigRadio
+    from './module/imagelist/item/config/UIImageItemConfigRadio';
+import UIImageItemConfigProfile
+    from './module/imagelist/item/config/UIImageItemConfigProfile';
+import UIImageItemConfigActions
+    from './module/imagelist/item/config/UIImageItemConfigActions';
+import DomListeners from './dom/DomListeners';
+import UIImageAction
+    from './module/imagelist/item/actions/elements/UIImageAction';
+import UIImageActionsComposite
+    from './module/imagelist/item/actions/UIImageActionsComposite';
 
 /**
  * @class UIInit
@@ -62,7 +70,7 @@ export default class UIInit {
 
     init(window) {
         this._initUI(window.document);
-        this._initUIComponents(window.document);
+        this._initUIComponents(window);
         this._appendGApi(window, this._uiImageItem);
         this._initIcons();
     }
@@ -133,6 +141,7 @@ export default class UIInit {
         const authElement = new UIAuthElementComposite([
             new UIAuthElement(
                 new UiAuthNodesHolder(
+                    new DomListeners(),
                     document.querySelector('#userprofile_container h4.uk-text-center'),
                     document.querySelector('#userprofile_container img.profile-img'),
                     document.querySelector(
@@ -146,6 +155,7 @@ export default class UIInit {
             ),
             new UIAuthElement(
                 new UiAuthNodesHolder(
+                    new DomListeners(),
                     null,
                     null,
                     document.querySelector('header ul.uk-navbar-nav a.profile_link'),
@@ -155,6 +165,7 @@ export default class UIInit {
             ),
             new UIAuthElement(
                 new UiAuthNodesHolder(
+                    new DomListeners(),
                     null,
                     null,
                     document.querySelector('.bar-bottom a.profile_link'),
@@ -176,10 +187,11 @@ export default class UIInit {
 
     /**
      *
-     * @param {Document} document
+     * @param {Window} window
      * @private
      */
-    _initUIComponents(document) {
+    _initUIComponents(window) {
+        const document = window.document;
         this._uiProfile = new UIUserProfile(
             document.querySelector('#modal_profile'),
             document.querySelector('#modal_profile img.profile-img'),
@@ -202,7 +214,11 @@ export default class UIInit {
             UIkit
         );
         this._uiProfile.init();
-
+        const actionsConfig = new UIImageItemConfigActions(
+            '.uk-card-footer .uk-icon-link.uk-icon.image-icon-download',
+            '.uk-card-footer .uk-icon-link.uk-icon.image-icon-edit',
+            '.uk-card-footer .uk-icon-link.uk-icon.image-icon-delete'
+        );
         this._uiImageItem = new UIImageItem(
             document.querySelector('.one_image_card'),
             new UIImageItemConfig(
@@ -218,13 +234,34 @@ export default class UIInit {
                     '.uk-card-header .uk-grid-small img.uk-border-circle',
                     '.uk-card-header .uk-grid-small h3.uk-card-title',
                     '.uk-card-header .uk-grid-small  a.uk-icon-link',
-                ),
-                new UIImageItemConfigActions(
-                    '.uk-card-footer .uk-icon-link.uk-icon.image-icon-download',
-                    '.uk-card-footer .uk-icon-link.uk-icon.image-icon-edit',
-                    '.uk-card-footer .uk-icon-link.uk-icon.image-icon-delete'
                 )
-            )
+            ),
+            new UIImageActionsComposite([
+                new UIImageAction(
+                    new DomListeners(),
+                    document,
+                    actionsConfig.getDownloadSelector(),
+                    (imageData) => window.location.href = imageData.getUrl()
+                ),
+                new UIImageAction(
+                    new DomListeners(),
+                    document,
+                    actionsConfig.getEditSelector(),
+                    (imageData) => {
+                        console.log('edit');
+                        console.log(imageData);
+                    }
+                ),
+                new UIImageAction(
+                    new DomListeners(),
+                    document,
+                    actionsConfig.getDeleteSelector(),
+                    (imageData) => {
+                        console.log('delete');
+                        console.log(imageData);
+                    }
+                )
+            ])
         );
         this._uiImageItem.init();
     }

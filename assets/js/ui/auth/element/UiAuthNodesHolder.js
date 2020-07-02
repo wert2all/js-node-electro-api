@@ -4,15 +4,18 @@
 export default class UiAuthNodesHolder {
     /**
      *
+     * @param {DomListeners} domListeners
      * @param {Element|null} userName
      * @param {Node|null} avatarImg
      * @param {Node|null} profileLink
      * @param {Node|null} signOffLink
      */
-    constructor(userName = null,
-                avatarImg = null,
-                profileLink = null,
-                signOffLink = null
+    constructor(
+        domListeners,
+        userName = null,
+        avatarImg = null,
+        profileLink = null,
+        signOffLink = null
     ) {
         /**
          *
@@ -38,6 +41,12 @@ export default class UiAuthNodesHolder {
          * @private
          */
         this._signOutLink = signOffLink;
+        /**
+         *
+         * @type {DomListeners}
+         * @private
+         */
+        this._domListeners = domListeners;
     }
 
     /**
@@ -62,7 +71,8 @@ export default class UiAuthNodesHolder {
      */
     getSigOutWithoutListeners() {
         if (this._signOutLink !== null) {
-            this._signOutLink = this._removeEventListeners(this._signOutLink);
+            this._signOutLink = this._domListeners
+                .removeEventListeners(this._signOutLink);
         }
         return this._signOutLink;
     }
@@ -73,20 +83,9 @@ export default class UiAuthNodesHolder {
      */
     getProfileLinkWithoutListeners() {
         if (this._profileLink !== null) {
-            this._profileLink = this._removeEventListeners(this._profileLink);
+            this._profileLink = this._domListeners
+                .removeEventListeners(this._profileLink);
         }
         return this._profileLink;
-    }
-
-    /**
-     *
-     * @param {Node} element
-     * @return {Node}
-     * @private
-     */
-    _removeEventListeners(element) {
-        const newElement = element.cloneNode(true);
-        element.parentNode.replaceChild(newElement, element);
-        return newElement;
     }
 }

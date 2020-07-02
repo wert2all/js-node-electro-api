@@ -10,8 +10,9 @@ export default class UIImageItem extends UIElementInterface {
      *
      * @param {ParentNode} itemNode
      * @param {UIImageItemConfig} config
+     * @param {UIImageActionsInterface} actions
      */
-    constructor(itemNode, config) {
+    constructor(itemNode, config, actions = null) {
         super();
         /**
          *
@@ -31,12 +32,6 @@ export default class UIImageItem extends UIElementInterface {
          * @private
          */
         this._image = null;
-        /**
-         *
-         * @type {null|Node}
-         * @private
-         */
-        this._downloadIcon = null;
         /**
          *
          * @type {null|Element}
@@ -67,6 +62,21 @@ export default class UIImageItem extends UIElementInterface {
          * @private
          */
         this._radioInput = null;
+
+        /**
+         *
+         * @type {null|UIImageActionsInterface}
+         * @private
+         */
+        this._actions = actions;
+    }
+
+    /**
+     *
+     * @return {null|UIImageActionsInterface}
+     */
+    getActions() {
+        return this._actions;
     }
 
     clean() {
@@ -76,7 +86,11 @@ export default class UIImageItem extends UIElementInterface {
      * @return {UIElementInterface|null}
      */
     clone() {
-        return new UIImageItem(this._node.cloneNode(true), this._config);
+        return new UIImageItem(
+            this._node.cloneNode(true),
+            this._config,
+            this._actions
+        );
     }
 
     getNode() {
@@ -85,9 +99,6 @@ export default class UIImageItem extends UIElementInterface {
 
     init() {
         this._image = this._node.querySelector(this._config.getImage());
-        this._downloadIcon = this._node.querySelector(
-            this._config.getActionSelector().getDownloadSelector()
-        );
         this._imageTypeTitle = this._node
             .querySelector(this._config.getImageTypeTitleSelector());
         this._imageTypeContainer = this._node
@@ -114,6 +125,10 @@ export default class UIImageItem extends UIElementInterface {
          */
         const imageItem = this.clone();
         imageItem.init();
+        const actions = imageItem.getActions();
+        if (actions !== null) {
+            actions.applyData(imageData);
+        }
         imageItem.setImage(imageData.getUrl())
             .setImageType(imageData.getType())
             .setYearMon(imageData.getYearmon())
@@ -129,9 +144,6 @@ export default class UIImageItem extends UIElementInterface {
     setImage(url) {
         if (this._image !== null) {
             this._image.src = url;
-        }
-        if (this._downloadIcon !== null) {
-            this._downloadIcon.href = url;
         }
         return this;
     }

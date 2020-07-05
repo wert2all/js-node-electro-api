@@ -18,6 +18,7 @@ build:
 testing_testing:
     stage: test
     script:
+        - cp secret.sample.json secret.json
         - npm test
 
 deploy_release:

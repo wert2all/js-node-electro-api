@@ -74,9 +74,9 @@ html(lang='en')
 
             .image_card_list.uk-grid.uk-grid-medium(data-uk-grid='')
 
-            #one_image_card.uk-grid-margin(class='uk-width-1-2@s uk-width-1-3@l uk-width-1-4@xl')
-                .uk-card.uk-card-default.uk-card-small.uk-card-hover.uk-custom-image-type-meter
-                    .uk-card-badge.uk-label Meter
+            .one_image_card.uk-grid-margin(class='uk-width-1-2@s uk-width-1-3@l uk-width-1-4@xl')
+                .uk-card.uk-card-default.uk-card-small.uk-card-hover
+                    .uk-card-badge.uk-label meter
                     .uk-card-header
                         .uk-grid-small.uk-flex-middle(uk-grid='')
                             .uk-width-auto
@@ -87,18 +87,17 @@ html(lang='en')
                                 p.uk-text-meta.uk-margin-remove-top
                                     time(datetime='2016-04-01T19:00') April 01, 2016
                     .uk-card-body
-                        .chart-container
-                            .uk-width-auto.uk-text-right
-                                label.uk-switch.uk-switch-small(for='images_type')
-                                    input#images_type(type='checkbox')
-                                    .uk-switch-slider
-                            .uk-card-media-bottom
-                                img(src='../assets/img/avatar.svg', alt='')
+                        .uk-width-auto.uk-text-right
+                            label.uk-switch.uk-switch-small
+                                input(type='checkbox')
+                                .uk-switch-slider
+                        .uk-card-media-bottom
+                            img(src='../assets/img/avatar.svg', alt='')
                     .uk-card-footer
                         .uk-width-auto.uk-text-right
-                            a.uk-icon-link.uk-icon(href='#', title='', data-uk-tooltip='', data-uk-icon='icon: download', aria-expanded='false')
-                            a.uk-icon-link.uk-icon(href='#', title='', data-uk-tooltip='', data-uk-icon='icon: file-edit', aria-expanded='false')
-                            a.uk-icon-link.uk-icon(href='#', title='', data-uk-tooltip='', data-uk-icon='icon: trash', aria-expanded='false')
+                            a.uk-icon-link.uk-icon.image-icon-download(href='#', title='', data-uk-tooltip='', data-uk-icon='icon: download', aria-expanded='false' target='_blank')
+                            a.uk-icon-link.uk-icon.image-icon-edit(href='#', title='', data-uk-tooltip='', data-uk-icon='icon: file-edit', aria-expanded='false')
+                            a.uk-icon-link.uk-icon.image-icon-delete(href='#', title='', data-uk-tooltip='', data-uk-icon='icon: trash', aria-expanded='false')
 
             #modal_profile(uk-modal='')
                 .uk-modal-dialog.uk-margin-auto-vertical

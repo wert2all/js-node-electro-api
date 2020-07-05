@@ -9,6 +9,7 @@ import UserProfileRepository from '../../db/repository/UserProfileRepository';
 import UserProfileEntity from '../../data/entity/UserProfileEntity';
 import UserEntity from '../../data/entity/UserEntity';
 import UserProfileDefinition from '../../db/definition/UserProfileDefinition';
+import ResponseResult from '../../routers/response/ResponseResult';
 
 /**
  * @class UserProfileGetRequest
@@ -48,7 +49,9 @@ export default class UserProfileGetRequest extends RequestInterface {
             response.setMessage(e.message);
         }
 
-        return Promise.resolve(response.toHash());
+        return Promise.resolve(
+            new ResponseResult(ResponseResult.TYPE_JSON, response.getData())
+        );
     }
 
     /**

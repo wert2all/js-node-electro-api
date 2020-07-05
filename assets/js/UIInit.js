@@ -32,6 +32,7 @@ import UIImageAction
     from './module/imagelist/item/actions/elements/UIImageAction';
 import UIImageActionsComposite
     from './module/imagelist/item/actions/UIImageActionsComposite';
+import UIProfileViewFactory from './module/imagelist/item/profile/UIProfileViewFactory';
 
 /**
  * @class UIInit
@@ -219,23 +220,24 @@ export default class UIInit {
             '.uk-card-footer .uk-icon-link.uk-icon.image-icon-edit',
             '.uk-card-footer .uk-icon-link.uk-icon.image-icon-delete'
         );
+        const uiItemConfig = new UIImageItemConfig(
+            '.uk-card-body .uk-card-media-bottom img',
+            '.uk-card .uk-card-badge',
+            '.uk-card.uk-card-default.uk-card-small.uk-card-hover',
+            '.uk-card-header p.uk-text-meta time',
+            new UIImageItemConfigRadio(
+                '.uk-card-body label.uk-switch',
+                '.uk-card-body label.uk-switch input'
+            ),
+            new UIImageItemConfigProfile(
+                '.uk-card-header .uk-grid-small img.uk-border-circle',
+                '.uk-card-header .uk-grid-small h3.uk-card-title',
+                '.uk-card-header .uk-grid-small  a.uk-icon-link',
+            )
+        );
         this._uiImageItem = new UIImageItem(
             document.querySelector('.one_image_card'),
-            new UIImageItemConfig(
-                '.uk-card-body .uk-card-media-bottom img',
-                '.uk-card .uk-card-badge',
-                '.uk-card.uk-card-default.uk-card-small.uk-card-hover',
-                '.uk-card-header p.uk-text-meta time',
-                new UIImageItemConfigRadio(
-                    '.uk-card-body label.uk-switch',
-                    '.uk-card-body label.uk-switch input'
-                ),
-                new UIImageItemConfigProfile(
-                    '.uk-card-header .uk-grid-small img.uk-border-circle',
-                    '.uk-card-header .uk-grid-small h3.uk-card-title',
-                    '.uk-card-header .uk-grid-small  a.uk-icon-link',
-                )
-            ),
+            uiItemConfig,
             new UIImageActionsComposite([
                 new UIImageAction(
                     new DomListeners(),
@@ -261,7 +263,8 @@ export default class UIInit {
                         console.log(imageData);
                     }
                 )
-            ])
+            ]),
+            new UIProfileViewFactory()
         );
         this._uiImageItem.init();
     }

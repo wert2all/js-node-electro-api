@@ -11,8 +11,9 @@ export default class UIImageItem extends UIElementInterface {
      * @param {ParentNode} itemNode
      * @param {UIImageItemConfig} config
      * @param {UIImageActionsInterface} actions
+     * @param {UIProfileViewFactory|null} profileViewFactory
      */
-    constructor(itemNode, config, actions = null) {
+    constructor(itemNode, config, actions = null, profileViewFactory = null) {
         super();
         /**
          *
@@ -69,6 +70,16 @@ export default class UIImageItem extends UIElementInterface {
          * @private
          */
         this._actions = actions;
+        this._profileViewFactory = profileViewFactory;
+        /**
+         *
+         * @type {UIProfileView|null}
+         * @private
+         */
+        this._profileView = this._profileViewFactory != null
+            ? this._profileViewFactory
+                .create(this._node, this._config.getProfileSelector())
+            : null;
     }
 
     /**
@@ -86,10 +97,12 @@ export default class UIImageItem extends UIElementInterface {
      * @return {UIElementInterface|null}
      */
     clone() {
+        const parentNode = this._node.cloneNode(true);
         return new UIImageItem(
-            this._node.cloneNode(true),
+            parentNode,
             this._config,
-            this._actions
+            this._actions,
+            this._profileViewFactory
         );
     }
 
@@ -110,6 +123,9 @@ export default class UIImageItem extends UIElementInterface {
         this._radioInput = this._node.querySelector(
             this._config.getRadioSelector().getInputSelector()
         );
+        if (this._profileView != null) {
+            this._profileView.init();
+        }
     }
 
     /**
@@ -132,7 +148,8 @@ export default class UIImageItem extends UIElementInterface {
         imageItem.setImage(imageData.getUrl())
             .setImageType(imageData.getType())
             .setYearMon(imageData.getYearmon())
-            .setId(imageData.getId());
+            .setId(imageData.getId())
+            .setUserData(imageData.getUser());
         return imageItem;
     }
 
@@ -197,5 +214,17 @@ export default class UIImageItem extends UIElementInterface {
      */
     _createRadioId(id) {
         return 'image_active_' + id;
+    }
+
+    /**
+     *
+     * @param {UserProfile|null} userData
+     * @return {UIImageItem}
+     */
+    setUserData(userData) {
+        if (userData != null && this._profileView !== null) {
+            this._profileView.setUserData(userData);
+        }
+        return this;
     }
 }

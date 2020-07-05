@@ -44,6 +44,14 @@ export default class ImageData {
 
     /**
      *
+     * @return {null|UserProfile}
+     */
+    getUser() {
+        return this._user;
+    }
+
+    /**
+     *
      * @return {number}
      */
     getId() {

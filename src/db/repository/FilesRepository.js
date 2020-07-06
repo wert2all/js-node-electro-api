@@ -30,10 +30,12 @@ export default class FilesRepository extends RepositoryAbstract {
     /**
      *
      * @param {EntityInterface} userFilesEntity
+     * @param {DefinitionOrder | null} order
+     * @param {DefinitionLimit | null} limit
      * @return {Promise<EntityInterface[]>}
      */
-    async fetchData(userFilesEntity) {
-        return super.fetchData(userFilesEntity);
+    async fetchData(userFilesEntity, order = null, limit = null) {
+        return super.fetchData(userFilesEntity, order, limit);
     }
 
     /**

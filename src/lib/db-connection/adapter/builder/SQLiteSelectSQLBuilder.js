@@ -1,12 +1,28 @@
 // eslint-disable-next-line max-len
-import DefinitionSQLBuilderInterface from '../../../db-definition/DefinitionSQLBuilderInterface';
+import DefinitionSQLSelectBuilderInterface from '../../../db-definition/builder/DefinitionSQLSelectBuilderInterface';
 
 /**
  * @class SQLiteSelectSQLBuilder
  * @type DefinitionSQLBuilderInterface
- * @extends DefinitionSQLBuilderInterface
+ * @extends DefinitionSQLSelectBuilderInterface
  */
-export default class SQLiteSelectSQLBuilder extends DefinitionSQLBuilderInterface {
+export default class SQLiteSelectSQLBuilder extends DefinitionSQLSelectBuilderInterface {
+    constructor() {
+        super();
+        /**
+         *
+         * @type {null|DefinitionOrder}
+         * @private
+         */
+        this._order = null;
+        /**
+         *
+         * @type {null|DefinitionLimit}
+         * @private
+         */
+        this._limit = null;
+    }
+
     /**
      * @param {DefinitionTableInterface} definition
      * @param {Object<string, string>} data
@@ -39,8 +55,13 @@ export default class SQLiteSelectSQLBuilder extends DefinitionSQLBuilderInterfac
      * @private
      */
     _buildOrder() {
-        //TODO
-        return '';
+        let returnValue = '';
+        if (this._order !== null) {
+            returnValue = ' order by '
+                + this._order.getOrderField() + ' '
+                + this._order.getOrderType();
+        }
+        return returnValue;
     }
 
     /**
@@ -49,7 +70,32 @@ export default class SQLiteSelectSQLBuilder extends DefinitionSQLBuilderInterfac
      * @private
      */
     _buildLimit() {
-        //TODO
-        return ' ';
+        let returnValue = '';
+        if (this._limit !== null) {
+            returnValue = ' limit '
+                + this._limit.getFrom() + ' , '
+                + this._limit.getOffset();
+        }
+        return returnValue;
+    }
+
+    /**
+     *
+     * @param {DefinitionLimit} limit
+     * @return {SQLiteSelectSQLBuilder}
+     */
+    applyLimit(limit) {
+        this._limit = limit;
+        return this;
+    }
+
+    /**
+     *
+     * @param {DefinitionOrder} order
+     * @return {SQLiteSelectSQLBuilder}
+     */
+    applyOrder(order) {
+        this._order = order;
+        return this;
     }
 }

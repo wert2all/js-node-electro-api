@@ -4,6 +4,7 @@
 import EntityManagerError from './error/EntityManagerError';
 import Filter from '../db-filter/Filter';
 import EntityInterface from '../db-entity/EntityInterface';
+import DefinitionLimit from '../db-definition/DefinitionLimit';
 
 export default class EntityManager {
     /**
@@ -54,7 +55,8 @@ export default class EntityManager {
         if (primaryValue !== null) {
             const filter = new Filter();
             filter.addColumn(definition.getPrimaryColumn(), primaryValue);
-            const entityDbValue = await this._connection.select(definition, filter);
+            const entityDbValue = await this._connection
+                .select(definition, filter, null, new DefinitionLimit(0, 1));
             return Promise.resolve(entityDbValue.length > 0);
         } else {
             return Promise.resolve(false);

@@ -27,10 +27,12 @@ export default class UserRepository extends RepositoryAbstract {
     /**
      *
      * @param {EntityInterface} user
+     * @param {DefinitionOrder|null} order
+     * @param {DefinitionLimit|null} limit
      * @return {Promise<EntityInterface[]>}
      */
-    async fetchData(user) {
-        return super.fetchData(user);
+    async fetchData(user, order = null, limit = null) {
+        return super.fetchData(user, order, limit);
     }
 
     /**

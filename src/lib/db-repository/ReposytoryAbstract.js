@@ -38,14 +38,17 @@ export default class RepositoryAbstract {
     /**
      *
      * @param {EntityInterface} entity
+     * @param {DefinitionOrder | null} order
+     * @param {DefinitionLimit | null} limit
      * @return {Promise<EntityInterface[]>}
      */
-    async fetchData(entity) {
+    async fetchData(entity, order = null, limit = null) {
         if (this._connection == null) {
             return Promise.reject(new RepositoryErrorNoConnection());
         }
         const filter = this._filterFactory().create(entity);
-        const list = await this._connection.select(this.getDefinition(), filter);
+        const list = await this._connection
+            .select(this.getDefinition(), filter, order, limit);
         return Promise.resolve(list.map(value => entity.create(value)));
     }
 

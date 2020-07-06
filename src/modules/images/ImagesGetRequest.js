@@ -14,6 +14,7 @@ import UserFilesEntity from '../../data/entity/UserFilesEntity';
 import UserFilesDefinition from '../../db/definition/UserFilesDefinition';
 import DI from '../../lib/di/DI';
 import ImageUrl from '../../data/images/ImageUrl';
+import DefinitionOrder from '../../lib/db-definition/DefinitionOrder';
 
 /**
  * @class ImagesGetRequest
@@ -21,6 +22,8 @@ import ImageUrl from '../../data/images/ImageUrl';
  * @type RequestInterface
  */
 export default class ImagesGetRequest extends RequestInterface {
+    static LIMIT_OFFSET = 10;
+
     constructor() {
         super();
         /**
@@ -73,7 +76,7 @@ export default class ImagesGetRequest extends RequestInterface {
             this._repository.setConnection(this._storageProvider.getConnection());
             this._usersRepository.setConnection(this._storageProvider.getConnection());
             await this._checkAdmin(requestData);
-            const files = await this._fetchData();
+            const files = await this._fetchData(requestData);
             response.setData('files', files);
             response.setStatus(true);
         } catch (e) {
@@ -140,8 +143,18 @@ export default class ImagesGetRequest extends RequestInterface {
         }
     }
 
-    async _fetchData() {
-        const images = await this._repository.fetchData(new UserFilesEntity());
+    /**
+     *
+     * @param {ImagesGetDataClass} requestData
+     * @return {Promise<Object<string, string>[]>}
+     * @private
+     */
+    // eslint-disable-next-line no-unused-vars
+    async _fetchData(requestData) {
+        const images = await this._repository.fetchData(
+            new UserFilesEntity(),
+            new DefinitionOrder(UserFilesDefinition.COLUMN_ID, DefinitionOrder.TYPE_DESC)
+        );
         for (const userFileEntity of images) {
             await this._extendUserData(userFileEntity);
             userFileEntity.unset(UserDefinition.COLUMN_GOOGLE_ID);

@@ -19,6 +19,12 @@ export default class ImagesGetDataClass {
          * @private
          */
         this._account = null;
+        /**
+         *
+         * @type {number}
+         * @private
+         */
+        this._fromLimit = 0;
     }
 
     /**
@@ -27,15 +33,44 @@ export default class ImagesGetDataClass {
      * @return {ImagesGetDataClass}
      */
     static factory(request) {
-        const authToken = Buffer.from(
-            new StringExt(request.query.token)
-                .replaceAll('"', ''),
-            'base64'
-        ).toString();
-        if (!authToken) {
+        let authToken = null;
+        let returnRequest = null;
+        if (request.query.token) {
+            authToken = Buffer.from(
+                new StringExt(request.query.token)
+                    .replaceAll('"', ''),
+                'base64'
+            ).toString();
+        }
+        if (authToken !== null) {
+            returnRequest = new ImagesGetDataClass(authToken);
+            if (request.query.from) {
+                const fromLimit = parseInt(request.query.from, 10);
+                returnRequest.setFromLimit(fromLimit);
+            }
+        } else {
             throw new ImagesGetNoToken();
         }
-        return new ImagesGetDataClass(authToken);
+
+        return returnRequest;
+    }
+
+    /**
+     *
+     * @return {number}
+     */
+    getFromLimit() {
+        return this._fromLimit;
+    }
+
+    /**
+     *
+     * @param {number} value
+     * @return {ImagesGetDataClass}
+     */
+    setFromLimit(value) {
+        this._fromLimit = value;
+        return this;
     }
 
     /**

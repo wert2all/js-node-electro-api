@@ -15,6 +15,7 @@ import UserFilesDefinition from '../../db/definition/UserFilesDefinition';
 import DI from '../../lib/di/DI';
 import ImageUrl from '../../data/images/ImageUrl';
 import DefinitionOrder from '../../lib/db-definition/DefinitionOrder';
+import DefinitionLimit from '../../lib/db-definition/DefinitionLimit';
 
 /**
  * @class ImagesGetRequest
@@ -149,11 +150,11 @@ export default class ImagesGetRequest extends RequestInterface {
      * @return {Promise<Object<string, string>[]>}
      * @private
      */
-    // eslint-disable-next-line no-unused-vars
     async _fetchData(requestData) {
         const images = await this._repository.fetchData(
             new UserFilesEntity(),
-            new DefinitionOrder(UserFilesDefinition.COLUMN_ID, DefinitionOrder.TYPE_DESC)
+            new DefinitionOrder(UserFilesDefinition.COLUMN_ID, DefinitionOrder.TYPE_DESC),
+            new DefinitionLimit(requestData.getFromLimit(), ImagesGetRequest.LIMIT_OFFSET)
         );
         for (const userFileEntity of images) {
             await this._extendUserData(userFileEntity);

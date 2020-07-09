@@ -19,6 +19,15 @@ export default class DefinitionSQLSelectBuilderInterface
         throw new ImplementationError(this, 'applyOrder');
     }
 
+    /**
+     * @abstract
+     * @param {Object<string, string>| null} fields
+     * @return DefinitionSQLSelectBuilderInterface
+     */
+    // eslint-disable-next-line no-unused-vars
+    applyFields(fields) {
+        throw new ImplementationError(this, 'applyFields');
+    }
 
     /**
      * @abstract

@@ -77,8 +77,9 @@ export default class ImagesGetRequest extends RequestInterface {
             this._repository.setConnection(this._storageProvider.getConnection());
             this._usersRepository.setConnection(this._storageProvider.getConnection());
             await this._checkAdmin(requestData);
-            const files = await this._fetchData(requestData);
-            response.setData('files', files);
+            const imageData = await this._fetchData(requestData);
+            response.setData('files', imageData.images);
+            response.setData('count', imageData.count);
             response.setStatus(true);
         } catch (e) {
             console.log(e);
@@ -147,24 +148,14 @@ export default class ImagesGetRequest extends RequestInterface {
     /**
      *
      * @param {ImagesGetDataClass} requestData
-     * @return {Promise<Object<string, string>[]>}
+     * @return {Promise<{images: Object<string, string>[], count: number}>}
      * @private
      */
     async _fetchData(requestData) {
-        const images = await this._repository.fetchData(
-            new UserFilesEntity(),
-            new DefinitionOrder(UserFilesDefinition.COLUMN_ID, DefinitionOrder.TYPE_DESC),
-            new DefinitionLimit(requestData.getFromLimit(), ImagesGetRequest.LIMIT_OFFSET)
-        );
-        for (const userFileEntity of images) {
-            await this._extendUserData(userFileEntity);
-            userFileEntity.unset(UserDefinition.COLUMN_GOOGLE_ID);
-            userFileEntity.setValue(
-                UserFilesDefinition.COLUMN_PATH,
-                this._replacePath(userFileEntity)
-            );
-        }
-        return images.map(imageEntity => imageEntity.getData());
+        return {
+            images: await this._fetchImages(requestData),
+            count: await this._repository.fetchCount(new UserFilesEntity())
+        };
     }
 
     /**
@@ -201,5 +192,28 @@ export default class ImagesGetRequest extends RequestInterface {
      */
     _replacePath(userFileEntity) {
         return this._imageUrlProvider.getUrl(userFileEntity);
+    }
+
+    /**
+     *
+     * @param {ImagesGetDataClass} requestData
+     * @return {Promise<Object<string, string>[]>}
+     * @private
+     */
+    async _fetchImages(requestData) {
+        const images = await this._repository.fetchData(
+            new UserFilesEntity(),
+            new DefinitionOrder(UserFilesDefinition.COLUMN_ID, DefinitionOrder.TYPE_DESC),
+            new DefinitionLimit(requestData.getFromLimit(), ImagesGetRequest.LIMIT_OFFSET)
+        );
+        for (const userFileEntity of images) {
+            await this._extendUserData(userFileEntity);
+            userFileEntity.unset(UserDefinition.COLUMN_GOOGLE_ID);
+            userFileEntity.setValue(
+                UserFilesDefinition.COLUMN_PATH,
+                this._replacePath(userFileEntity)
+            );
+        }
+        return images.map(imageEntity => imageEntity.getData());
     }
 }

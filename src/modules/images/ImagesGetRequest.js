@@ -79,7 +79,7 @@ export default class ImagesGetRequest extends RequestInterface {
             await this._checkAdmin(requestData);
             const imageData = await this._fetchData(requestData);
             response.setData('files', imageData.images);
-            response.setData('count', imageData.count);
+            response.setData('limits', imageData.limits);
             response.setStatus(true);
         } catch (e) {
             console.log(e);
@@ -147,14 +147,18 @@ export default class ImagesGetRequest extends RequestInterface {
 
     /**
      *
-     * @param {ImagesGetDataClass} requestData
-     * @return {Promise<{images: Object<string, string>[], count: number}>}
+     * @param {ImagesGetDataClass}requestData
+     * @return {Promise<Object>}
      * @private
      */
     async _fetchData(requestData) {
         return {
             images: await this._fetchImages(requestData),
-            count: await this._repository.fetchCount(new UserFilesEntity())
+            limits: {
+                from: requestData.getFromLimit(),
+                offset: this._getLimitOffset(),
+                count: await this._repository.fetchCount(new UserFilesEntity()),
+            }
         };
     }
 
@@ -204,7 +208,7 @@ export default class ImagesGetRequest extends RequestInterface {
         const images = await this._repository.fetchData(
             new UserFilesEntity(),
             new DefinitionOrder(UserFilesDefinition.COLUMN_ID, DefinitionOrder.TYPE_DESC),
-            new DefinitionLimit(requestData.getFromLimit(), ImagesGetRequest.LIMIT_OFFSET)
+            new DefinitionLimit(requestData.getFromLimit(), this._getLimitOffset())
         );
         for (const userFileEntity of images) {
             await this._extendUserData(userFileEntity);
@@ -215,5 +219,14 @@ export default class ImagesGetRequest extends RequestInterface {
             );
         }
         return images.map(imageEntity => imageEntity.getData());
+    }
+
+    /**
+     *
+     * @return {number}
+     * @private
+     */
+    _getLimitOffset() {
+        return ImagesGetRequest.LIMIT_OFFSET;
     }
 }

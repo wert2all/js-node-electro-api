@@ -43,13 +43,26 @@ export default class RepositoryAbstract {
      * @return {Promise<EntityInterface[]>}
      */
     async fetchData(entity, order = null, limit = null) {
+        const list = await this._fetch(this.getDefinition(), entity, order, limit);
+        return Promise.resolve(list.map(value => entity.create(value)));
+    }
+
+    /**
+     *
+     * @param {DefinitionTableInterface} definition
+     * @param {EntityInterface} entity
+     * @param {DefinitionOrder | null} order
+     * @param {DefinitionLimit | null} limit
+     * @return {Promise<Array>}
+     * @private
+     */
+    async _fetch(definition, entity, order = null, limit = null) {
         if (this._connection == null) {
             return Promise.reject(new RepositoryErrorNoConnection());
         }
         const filter = this._filterFactory().create(entity);
-        const list = await this._connection
-            .select(this.getDefinition(), filter, order, limit);
-        return Promise.resolve(list.map(value => entity.create(value)));
+        return await this._connection
+            .select(definition, filter, order, limit);
     }
 
     /**

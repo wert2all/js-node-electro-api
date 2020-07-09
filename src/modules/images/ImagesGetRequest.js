@@ -154,7 +154,7 @@ export default class ImagesGetRequest extends RequestInterface {
     async _fetchData(requestData) {
         return {
             images: await this._fetchImages(requestData),
-            count: 0
+            count: await this._repository.fetchCount(new UserFilesEntity())
         };
     }
 

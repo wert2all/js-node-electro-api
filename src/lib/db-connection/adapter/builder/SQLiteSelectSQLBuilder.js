@@ -21,6 +21,12 @@ export default class SQLiteSelectSQLBuilder extends DefinitionSQLSelectBuilderIn
          * @private
          */
         this._limit = null;
+        /**
+         *
+         * @type {null| Object<string, string>}
+         * @private
+         */
+        this._fields = null;
     }
 
     /**
@@ -32,7 +38,9 @@ export default class SQLiteSelectSQLBuilder extends DefinitionSQLSelectBuilderIn
         const whereCond = Object.keys(data).map(key => {
             return ' ' + key + ' ' + data[key];
         });
-        return 'Select * from '
+        return 'Select '
+            + this._buildFields()
+            + ' from '
             + definition.getTableName()
             + this._buildWhere(whereCond)
             + this._buildOrder()
@@ -96,6 +104,31 @@ export default class SQLiteSelectSQLBuilder extends DefinitionSQLSelectBuilderIn
      */
     applyOrder(order) {
         this._order = order;
+        return this;
+    }
+
+    /**
+     *
+     * @return {string}
+     * @private
+     */
+    _buildFields() {
+        if (this._fields != null) {
+            return Object.keys(this._fields)
+                .map(alias => `${this._fields[alias]} as ${alias}`)
+                .join(', ');
+        } else {
+            return ' * ';
+        }
+
+    }
+
+    /**
+     * @param {Object<string, string>| null} fields
+     * @return DefinitionSQLSelectBuilderInterface
+     */
+    applyFields(fields) {
+        this._fields = fields;
         return this;
     }
 }

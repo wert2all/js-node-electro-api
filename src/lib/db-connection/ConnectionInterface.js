@@ -21,10 +21,11 @@ export default class ConnectionInterface {
      * @param {FilterInterface} filter
      * @param {DefinitionOrder | null} order
      * @param {DefinitionLimit | null} limit
+     * @param {null| Object<string, string>} fields
      * @return {Promise<Array>}
      */
     // eslint-disable-next-line no-unused-vars
-    async select(definition, filter, order = null, limit = null) {
+    async select(definition, filter, order = null, limit = null, fields = null) {
         throw new ImplementationError(this, 'select');
     }
 

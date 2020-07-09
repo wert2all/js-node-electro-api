@@ -61,15 +61,17 @@ export default class SQLiteConnection extends ConnectionInterface {
      * @param {FilterInterface} filter
      * @param {DefinitionOrder | null} order
      * @param {DefinitionLimit | null} limit
+     * @param {null| Object<string, string>} fields
      * @return {Promise<Array>}
      */
-    async select(definition, filter, order = null, limit = null) {
+    async select(definition, filter, order = null, limit = null, fields = null) {
         await this._createTable(definition, this._server);
         let data = {};
         filter.getFilterData().forEach(filter => {
             data[filter.field] = ' ' + filter.sign + ' :' + filter.field;
         });
         const sql = this._buiderSelect
+            .applyFields(fields)
             .applyLimit(limit)
             .applyOrder(order)
             .buildSQL(definition, data);

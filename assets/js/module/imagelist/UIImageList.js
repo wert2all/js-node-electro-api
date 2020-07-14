@@ -11,40 +11,18 @@ import ApiLimits from '../api/ApiLimits';
 export default class UIImageList extends UIElementInterface {
     /**
      *
-     * @param {UIMutableElementInterface} parentElement
-     * @param {UIGridElementInterface} grid
-     * @param {UIElementInterface} loader
-     * @param {UINotifyInterface} notify
      * @param {Api} api
      * @param {AuthProviderInterface} authProvider
-     * @param {UIImageItem} imageItem
+     * @param {UIImagesViewHolder} viewHolder
      */
-    constructor(parentElement, grid, loader, notify, api, authProvider, imageItem) {
+    constructor(viewHolder, api, authProvider) {
         super();
         /**
          *
-         * @type {UIGridElementInterface}
+         * @type {UIImagesViewHolder}
          * @private
          */
-        this._grid = grid;
-        /**
-         *
-         * @type {UIElementInterface}
-         * @private
-         */
-        this._loader = loader;
-        /**
-         *
-         * @type {UINotifyInterface}
-         * @private
-         */
-        this._notify = notify;
-        /**
-         *
-         * @type {UIMutableElementInterface}
-         * @private
-         */
-        this._parentElement = parentElement;
+        this._viewHolder = viewHolder;
         /**
          *
          * @type {Api}
@@ -57,12 +35,6 @@ export default class UIImageList extends UIElementInterface {
          * @private
          */
         this._authProvider = authProvider;
-        /**
-         *
-         * @type {UIImageItem}
-         * @private
-         */
-        this._imageItem = imageItem;
         /**
          *
          * @type {ApiLimits}
@@ -95,22 +67,34 @@ export default class UIImageList extends UIElementInterface {
     }
 
     init() {
-        this._parentElement.addElement(this._grid);
+        this._viewHolder.getParentElement().addElement(this._viewHolder.getGrid());
         this._showLoader();
         this._fetchData()
             .then(data => this._addData(data))
             .catch(error => {
                 this._hideLoader();
-                return this._notify.error(error.message);
+                return this._viewHolder.getNotify().error(error.message);
             });
     }
 
+    /**
+     *
+     * @private
+     */
     _showLoader() {
-        this._grid.addElement(this._loader.clone());
+        this._viewHolder
+            .getGrid()
+            .addElement(
+                this._viewHolder.getLoader().clone()
+            );
     }
 
+    /**
+     *
+     * @private
+     */
     _hideLoader() {
-        this._grid.clean();
+        this._viewHolder.getGrid().clean();
     }
 
     /**
@@ -156,14 +140,18 @@ export default class UIImageList extends UIElementInterface {
     // eslint-disable-next-line no-unused-vars
     _addData(data) {
         if (data.length === 0) {
-            this._notify.warning('No image data');
+            this._viewHolder.getNotify().warning('No image data');
         }
         this._hideLoader();
         data.forEach(imageData => {
             console.log(imageData);
-            this._grid.addElement(
-                this._imageItem.create(imageData)
-            );
+            this._viewHolder
+                .getGrid()
+                .addElement(
+                    this._viewHolder
+                        .getImageItem()
+                        .create(imageData)
+                );
         });
         return Promise.resolve();
     }

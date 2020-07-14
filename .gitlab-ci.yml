@@ -15,11 +15,17 @@ build:
         - npm install
         - npm run build
 
-testing_testing:
+test:static:
     stage: test
     script:
         - cp secret.sample.json secret.json
-        - npm test
+        - npm run test:static
+
+test:unit:
+    stage: test
+    script:
+        - cp secret.sample.json secret.json
+        - npm run test:unit
 
 deploy_release:
     stage: deploy

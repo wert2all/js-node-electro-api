@@ -6,11 +6,12 @@
     "start": "nodemon dist/src/run.js",
     "build": "export NODE_ENV=production && gulp clean && gulp default",
     "dev": "gulp dev",
-    "test": "gulp test"
+    "test:static": "gulp test:static",
+    "test:unit": "gulp test:unit"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm test"
+      "pre-commit": "npm run test:static"
     }
   },
   "nodemonConfig": {
@@ -40,6 +41,7 @@
     "@babel/plugin-transform-runtime": "^7.10.4",
     "@babel/preset-env": "^7.10.4",
     "@jest/core": "^26.1.0",
+    "@jest/globals": "^26.1.0",
     "babel-eslint": "^10.1.0",
     "babel-loader": "^8.1.0",
     "browser-sync": "^2.26.7",

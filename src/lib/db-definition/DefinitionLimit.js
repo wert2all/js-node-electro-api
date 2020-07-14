@@ -1,6 +1,7 @@
 /**
  * @class DefinitionLimit
  */
+
 export default class DefinitionLimit {
     /**
      *

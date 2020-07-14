@@ -25,6 +25,7 @@ export default class ImagesGetDataClass {
          * @private
          */
         this._fromLimit = 0;
+        this._offsetLimit = null;
     }
 
     /**
@@ -48,11 +49,33 @@ export default class ImagesGetDataClass {
                 const fromLimit = parseInt(request.query.from, 10);
                 returnRequest.setFromLimit(fromLimit);
             }
+            if (request.query.offset) {
+                const offsetLimit = parseInt(request.query.offset, 10);
+                returnRequest.setOffsetLimit(offsetLimit);
+            }
         } else {
             throw new ImagesGetNoToken();
         }
 
         return returnRequest;
+    }
+
+    /**
+     *
+     * @return {number|null}
+     */
+    getOffsetLimit() {
+        return this._offsetLimit;
+    }
+
+    /**
+     *
+     * @param {number} value
+     * @return {ImagesGetDataClass}
+     */
+    setOffsetLimit(value) {
+        this._offsetLimit = value;
+        return this;
     }
 
     /**

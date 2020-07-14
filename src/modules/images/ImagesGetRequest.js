@@ -152,11 +152,15 @@ export default class ImagesGetRequest extends RequestInterface {
      * @private
      */
     async _fetchData(requestData) {
+        const limits = new DefinitionLimit(
+            requestData.getFromLimit(),
+            this._getLimitOffset(requestData.getOffsetLimit())
+        );
         return {
-            images: await this._fetchImages(requestData),
+            images: await this._fetchImages(requestData, limits),
             limits: {
-                from: requestData.getFromLimit(),
-                offset: this._getLimitOffset(requestData.getOffsetLimit()),
+                from: limits.getFrom(),
+                offset: limits.getOffset(),
                 count: await this._repository.fetchCount(new UserFilesEntity()),
             }
         };
@@ -201,17 +205,15 @@ export default class ImagesGetRequest extends RequestInterface {
     /**
      *
      * @param {ImagesGetDataClass} requestData
+     * @param {DefinitionLimit} limits
      * @return {Promise<Object<string, string>[]>}
      * @private
      */
-    async _fetchImages(requestData) {
+    async _fetchImages(requestData, limits) {
         const images = await this._repository.fetchData(
             new UserFilesEntity(),
             new DefinitionOrder(UserFilesDefinition.COLUMN_ID, DefinitionOrder.TYPE_DESC),
-            new DefinitionLimit(
-                requestData.getFromLimit(),
-                this._getLimitOffset(requestData.getOffsetLimit())
-            )
+            limits
         );
         for (const userFileEntity of images) {
             await this._extendUserData(userFileEntity);

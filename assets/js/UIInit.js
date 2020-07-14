@@ -28,6 +28,8 @@ import DomListeners from './dom/DomListeners';
 import UIImageAction from './module/imagelist/item/actions/elements/UIImageAction';
 import UIImageActionsComposite from './module/imagelist/item/actions/UIImageActionsComposite';
 import UIProfileViewFactory from './module/imagelist/item/profile/UIProfileViewFactory';
+import UIImagesViewHolder from './module/imagelist/UIImagesViewHolder';
+import UIPager from './ui/pager/UIPager';
 
 /**
  * @class UIInit
@@ -88,17 +90,21 @@ export default class UIInit {
                         window.gapi,
                         new AuthListener(this._ui)
                             .addAfterAuth(authProvider => {
-                                new UIImageList(
+                                const imageViewHolder = new UIImagesViewHolder(
                                     this._ui.getContent(),
                                     this._ui.getGrid().clone(),
                                     this._ui.getLoader().clone(),
                                     this._ui.getNotify(),
+                                    imageItem,
+                                    new UIPager()
+                                );
+                                new UIImageList(
+                                    imageViewHolder,
                                     new Api(
                                         new ApiFetcher(),
                                         ApiUrlFactory.create(window)
                                     ),
-                                    authProvider,
-                                    imageItem
+                                    authProvider
                                 )
                                     .init();
                             })

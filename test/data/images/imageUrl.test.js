@@ -1,5 +1,6 @@
 import ImageUrl from '../../../src/data/images/ImageUrl';
 import UserFilesEntity from '../../../src/data/entity/UserFilesEntity';
+import {test} from '@jest/globals';
 
 test('ImageUrl:getUrl', () => {
     _dataProvider()

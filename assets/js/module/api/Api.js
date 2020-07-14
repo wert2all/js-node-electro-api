@@ -25,14 +25,18 @@ export default class Api {
     /**
      *
      * @param {UserProfile} userProfile
+     * @param {ApiLimits} limits
      * @return {Promise<ApiFetchResult>}
      */
-    async getImages(userProfile) {
+    async getImages(userProfile, limits = null) {
         const options = {
             method: 'GET'
         };
         return await this._fetcher.fetch(
-            this._createUrl('imagelist/get/?token=' + this._createToken(userProfile)),
+            this._createUrl(
+                'imagelist/get/?token=' + this._createToken(userProfile),
+                limits
+            ),
             options
         );
     }
@@ -50,11 +54,12 @@ export default class Api {
     /**
      *
      * @param {string} url
+     * @param {ApiLimits} limits
      * @return {string}
      * @private
      */
-    _createUrl(url) {
-        return this._rootURL + url;
+    _createUrl(url, limits) {
+        return this._rootURL + url + this._createLimits(limits);
     }
 
     /**
@@ -71,5 +76,19 @@ export default class Api {
             function toSolidBytes(match, p1) {
                 return String.fromCharCode('0x' + p1);
             }));
+    }
+
+    /**
+     *
+     * @param {ApiLimits} limits
+     * @return {string}
+     * @private
+     */
+    _createLimits(limits) {
+        if (limits !== null) {
+            return '&&from=' + limits.getFrom() + '&&offset=' + limits.getOffset();
+        } else {
+            return '';
+        }
     }
 }

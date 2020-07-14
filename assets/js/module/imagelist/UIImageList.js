@@ -1,6 +1,7 @@
 import UIElementInterface from '../../ui/interfaces/element/UIElementInterface';
 import ImageData from '../../data/ImageData';
 import UserProfile from '../../data/UserProfile';
+import ApiLimits from '../api/ApiLimits';
 
 /**
  * @class UIImageList
@@ -62,6 +63,12 @@ export default class UIImageList extends UIElementInterface {
          * @private
          */
         this._imageItem = imageItem;
+        /**
+         *
+         * @type {ApiLimits}
+         * @private
+         */
+        this._apiLimits = new ApiLimits(0, 12);
     }
 
     /**
@@ -112,7 +119,7 @@ export default class UIImageList extends UIElementInterface {
      */
     _fetchData() {
         return this._api
-            .getImages(this._authProvider.getUserProfile())
+            .getImages(this._authProvider.getUserProfile(), this._apiLimits)
             .then(apiResult => {
                 if (apiResult.getStatus()) {
                     if (apiResult.getData().hasOwnProperty('files')) {

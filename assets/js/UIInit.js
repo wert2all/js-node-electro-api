@@ -21,17 +21,12 @@ import ApiFetcher from './api/ApiFetcher';
 import ApiUrlFactory from './utils/ApiUrlFactory';
 import UIImageItem from './module/imagelist/UIImageItem';
 import UIImageItemConfig from './module/imagelist/item/config/UIImageItemConfig';
-import UIImageItemConfigRadio
-    from './module/imagelist/item/config/UIImageItemConfigRadio';
-import UIImageItemConfigProfile
-    from './module/imagelist/item/config/UIImageItemConfigProfile';
-import UIImageItemConfigActions
-    from './module/imagelist/item/config/UIImageItemConfigActions';
+import UIImageItemConfigRadio from './module/imagelist/item/config/UIImageItemConfigRadio';
+import UIImageItemConfigProfile from './module/imagelist/item/config/UIImageItemConfigProfile';
+import UIImageItemConfigActions from './module/imagelist/item/config/UIImageItemConfigActions';
 import DomListeners from './dom/DomListeners';
-import UIImageAction
-    from './module/imagelist/item/actions/elements/UIImageAction';
-import UIImageActionsComposite
-    from './module/imagelist/item/actions/UIImageActionsComposite';
+import UIImageAction from './module/imagelist/item/actions/elements/UIImageAction';
+import UIImageActionsComposite from './module/imagelist/item/actions/UIImageActionsComposite';
 import UIProfileViewFactory from './module/imagelist/item/profile/UIProfileViewFactory';
 
 /**
@@ -231,8 +226,8 @@ export default class UIInit {
             ),
             new UIImageItemConfigProfile(
                 '.uk-card-header .uk-grid-small img.uk-border-circle',
-                '.uk-card-header .uk-grid-small h3.uk-card-title',
-                '.uk-card-header .uk-grid-small  a.uk-icon-link',
+                '.uk-card-header .uk-grid-small h2.uk-card-title',
+                '.uk-card-header .uk-grid-small  a.image_profile_icon',
             )
         );
         this._uiImageItem = new UIImageItem(

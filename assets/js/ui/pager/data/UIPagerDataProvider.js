@@ -32,6 +32,57 @@ export default class UIPagerDataProvider {
 
     /**
      *
+     * @param {number} from
+     * @return {UIPagerDataProvider}
+     */
+    setFrom(from) {
+        return new UIPagerDataProvider(this.getCountValue(), from, this.getOffsetValue());
+    }
+
+    /**
+     *
+     * @param {number} offset
+     * @return {UIPagerDataProvider}
+     */
+    setOffset(offset) {
+        return new UIPagerDataProvider(this.getCountValue(), this.getFromValue(), offset);
+    }
+
+    /**
+     *
+     * @return {number}
+     */
+    getFromValue() {
+        return this._from;
+    }
+
+    /**
+     *
+     * @return {number}
+     */
+    getOffsetValue() {
+        return this._offset;
+    }
+
+    /**
+     *
+     * @return {number}
+     */
+    getCountValue() {
+        return this._count;
+    }
+
+    /**
+     *
+     * @param {number} count
+     * @return {UIPagerDataProvider}
+     */
+    setCount(count) {
+        return new UIPagerDataProvider(count, this.getFromValue(), this.getOffsetValue());
+    }
+
+    /**
+     *
      * @return {number}
      */
     getActivePage() {
@@ -64,6 +115,6 @@ export default class UIPagerDataProvider {
      * @return {number}
      */
     getFromByPage(page) {
-        return page * this._offset;
+        return (page - 1) * this._offset;
     }
 }

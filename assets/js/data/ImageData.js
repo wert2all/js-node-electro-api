@@ -1,8 +1,8 @@
+import YearMonClient from './YearMonClient';
+
 /**
  * @class ImageData
  */
-import YearMonClient from './YearMonClient';
-
 export default class ImageData {
     /**
      *

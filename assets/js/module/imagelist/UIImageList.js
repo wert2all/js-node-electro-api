@@ -2,6 +2,8 @@ import UIElementInterface from '../../ui/interfaces/element/UIElementInterface';
 import ImageData from '../../data/ImageData';
 import UserProfile from '../../data/UserProfile';
 import ApiLimits from '../api/ApiLimits';
+import ApiImagesLimitData from './data/ApiImagesLimitData';
+import ApiImagesHolder from './data/ApiImagesHolder';
 
 /**
  * @class UIImageList
@@ -70,7 +72,8 @@ export default class UIImageList extends UIElementInterface {
         this._viewHolder.getParentElement().addElement(this._viewHolder.getGrid());
         this._showLoader();
         this._fetchData()
-            .then(data => this._addData(data))
+            .then(data => this._applyImages(data))
+            .then(data => this._applyPager(data))
             .catch(error => {
                 this._hideLoader();
                 return this._viewHolder.getNotify().error(error.message);
@@ -98,7 +101,7 @@ export default class UIImageList extends UIElementInterface {
     }
 
     /**
-     * @return {Promise<ImageData[]>}
+     * @return {Promise<ApiImagesHolder>}
      * @private
      */
     _fetchData() {
@@ -106,25 +109,15 @@ export default class UIImageList extends UIElementInterface {
             .getImages(this._authProvider.getUserProfile(), this._apiLimits)
             .then(apiResult => {
                 if (apiResult.getStatus()) {
+                    let images = [];
+                    let limit = null;
                     if (apiResult.getData().hasOwnProperty('files')) {
-                        return apiResult.getData().files.map(image => {
-                            const imageObject = new ImageData(image.id, image.path)
-                                .setType(image.type)
-                                .setYearmon(image.yearmon);
-                            if (image.hasOwnProperty('user')) {
-                                imageObject.setUser(
-                                    new UserProfile(
-                                        image.user.id,
-                                        image.user.name,
-                                        image.user.email,
-                                        image.user.image
-                                    )
-                                );
-                            }
-                            return imageObject;
-                        });
+                        images = this._aggregateImages(apiResult.getData().files);
                     }
-                    return [];
+                    if (apiResult.getData().hasOwnProperty('limits')) {
+                        limit = this._aggregateLimit(apiResult.getData().limits);
+                    }
+                    return new ApiImagesHolder(images, limit);
                 } else {
                     throw new Error(apiResult.getErrorMessage());
                 }
@@ -133,26 +126,77 @@ export default class UIImageList extends UIElementInterface {
 
     /**
      *
-     * @param {ImageData[]} data
-     * @return {Promise<void>}
+     * @param {ApiImagesHolder} data
+     * @return {Promise<ApiImagesHolder>}
      * @private
      */
-    // eslint-disable-next-line no-unused-vars
-    _addData(data) {
-        if (data.length === 0) {
+    _applyImages(data) {
+        if (data.getImages().length === 0) {
             this._viewHolder.getNotify().warning('No image data');
         }
         this._hideLoader();
-        data.forEach(imageData => {
-            console.log(imageData);
-            this._viewHolder
-                .getGrid()
-                .addElement(
-                    this._viewHolder
-                        .getImageItem()
-                        .create(imageData)
+        data.getImages()
+            .forEach(imageData => {
+                console.log(imageData);
+                this._viewHolder
+                    .getGrid()
+                    .addElement(
+                        this._viewHolder
+                            .getImageItem()
+                            .create(imageData)
+                    );
+            });
+        return Promise.resolve(data);
+    }
+
+    /**
+     *
+     * @param {Object[]} files
+     * @return {ImageData[]}
+     * @private
+     */
+    _aggregateImages(files) {
+        return files.map(image => {
+            const imageObject = new ImageData(image.id, image.path)
+                .setType(image.type)
+                .setYearmon(image.yearmon);
+            if (image.hasOwnProperty('user')) {
+                imageObject.setUser(
+                    new UserProfile(
+                        image.user.id,
+                        image.user.name,
+                        image.user.email,
+                        image.user.image
+                    )
                 );
+            }
+            return imageObject;
         });
-        return Promise.resolve();
+    }
+
+    /**
+     *
+     * @param {ApiImagesHolder} data
+     * @return {Promise<ApiImagesHolder>}
+     * @private
+     */
+    _applyPager(data) {
+        return Promise.resolve(data);
+    }
+
+    /**
+     *
+     * @param {Object} limits
+     * @return {ApiImagesLimitData|null}
+     * @private
+     */
+    _aggregateLimit(limits) {
+        return (
+            limits.hasOwnProperty('count')
+            && limits.hasOwnProperty('from')
+            && limits.hasOwnProperty('offset')
+        )
+            ? new ApiImagesLimitData(limits.count, limits.from, limits.offset)
+            : null;
     }
 }

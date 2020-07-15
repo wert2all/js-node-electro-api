@@ -8,13 +8,13 @@ import UIGridElementInterface from './UIGridElementInterface';
 export default class UIGrid extends UIGridElementInterface {
     /**
      *
-     * @param {Node} gridNode
+     * @param {ParentNode} gridNode
      */
     constructor(gridNode) {
         super();
         /**
          *
-         * @type {Node}
+         * @type {ParentNode}
          * @private
          */
         this._grid = gridNode;
@@ -40,7 +40,7 @@ export default class UIGrid extends UIGridElementInterface {
     }
 
     /**
-     * @return {Node}
+     * @return {ParentNode}
      */
     getNode() {
         return this._grid;

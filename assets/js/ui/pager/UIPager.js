@@ -21,4 +21,34 @@ export default class UIPager {
     getDataProvider() {
         return this._dataProvider;
     }
+
+    /**
+     *
+     * @param count
+     * @return {UIPager}
+     */
+    setPagerItemsCount(count) {
+        this._dataProvider = this._dataProvider.setCount(count);
+        return this;
+    }
+
+    /**
+     *
+     * @param {number} from
+     * @return {UIPager}
+     */
+    setPagerFrom(from) {
+        this._dataProvider = this._dataProvider.setFrom(from);
+        return this;
+    }
+
+    /**
+     *
+     * @param {number} offset
+     * @return {UIPager}
+     */
+    setPagerOffset(offset) {
+        this._dataProvider = this._dataProvider.setOffset(offset);
+        return this;
+    }
 }

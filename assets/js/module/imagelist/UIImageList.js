@@ -181,6 +181,9 @@ export default class UIImageList extends UIElementInterface {
      * @private
      */
     _applyPager(data) {
+        if (data.getLimit() != null) {
+            this._applyPagerData(data.getLimit());
+        }
         return Promise.resolve(data);
     }
 
@@ -198,5 +201,19 @@ export default class UIImageList extends UIElementInterface {
         )
             ? new ApiImagesLimitData(limits.count, limits.from, limits.offset)
             : null;
+    }
+
+    /**
+     *
+     * @param {ApiImagesLimitData} limit
+     * @return {UIImageList}
+     * @private
+     */
+    _applyPagerData(limit) {
+        this._viewHolder.getPager()
+            .setPagerItemsCount(limit.getCount())
+            .setPagerFrom(limit.getFrom())
+            .setPagerOffset(limit.getOffset());
+        return this;
     }
 }

@@ -51,13 +51,25 @@ export default class UIPageItem extends UIElementInterface {
 
     /**
      *
-     * @return {ParentNode}
+     * @return {Node}
      */
     getNode() {
-        return this._node;
+        return this._pageItem;
     }
 
     init() {
         this._pageItem = this._node.querySelector(this._pageSelector);
+    }
+
+    setActive() {
+        this._pageItem = this._node.querySelector(this._activePageSelector);
+    }
+
+    /**
+     *
+     * @param {number} number
+     */
+    setNumber(number) {
+        this._pageItem.innerHTML = number;
     }
 }

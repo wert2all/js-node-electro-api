@@ -1,5 +1,6 @@
 import UIPagerDataProvider from './data/UIPagerDataProvider';
 import UICloneableInterface from '../interfaces/UICloneableInterface';
+import UISimpleElement from '../elements/UISimpleElement';
 
 /**
  * @class UIPager
@@ -9,9 +10,11 @@ import UICloneableInterface from '../interfaces/UICloneableInterface';
 export default class UIPager extends UICloneableInterface {
     /**
      *
+     * @param {ParentNode} parentNode
+     * @param {UIPageItem} pageItem
      * @param {UIPagerDataProvider|null} dataProvider
      */
-    constructor(dataProvider = null) {
+    constructor(parentNode, pageItem, dataProvider = null) {
         super();
         /**
          *
@@ -21,6 +24,18 @@ export default class UIPager extends UICloneableInterface {
         this._dataProvider = dataProvider == null
             ? new UIPagerDataProvider()
             : dataProvider;
+        /**
+         *
+         * @type {ParentNode}
+         * @private
+         */
+        this._parentNode = parentNode;
+        /**
+         *
+         * @type {UIPageItem}
+         * @private
+         */
+        this._pageItem = pageItem;
     }
 
     /**
@@ -66,14 +81,26 @@ export default class UIPager extends UICloneableInterface {
      * @return {UIPager}
      */
     clone() {
-        return new UIPager(this._dataProvider);
+        return new UIPager(this._parentNode, this._pageItem, this._dataProvider);
     }
 
     /**
      * @return {UIElementInterface}
      */
     build() {
-        const node = null;
+        const node = this._parentNode.cloneNode(true);
+        node.innerHTML = '';
+        const pagesCount = this._dataProvider.getPagesCount();
+        for (let i = 1; i < pagesCount + 1; i++) {
+            const page = this._pageItem.clone();
+            if (this._dataProvider.getActivePage() === i) {
+                page.setActive();
+            } else {
+                page.init();
+            }
+            page.setNumber(i);
+            node.append(page.getNode());
+        }
         return new UISimpleElement(node);
     }
 }

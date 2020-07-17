@@ -85,9 +85,10 @@ export default class UIPager extends UICloneableInterface {
     }
 
     /**
+     * @param {function|null} clickListener
      * @return {UIElementInterface}
      */
-    build() {
+    build(clickListener = null) {
         const node = this._parentNode.cloneNode(true);
         node.innerHTML = '';
         const pagesCount = this._dataProvider.getPagesCount();
@@ -98,8 +99,11 @@ export default class UIPager extends UICloneableInterface {
             } else {
                 page.init();
             }
-            page.setNumber(i);
-            node.append(page.getNode());
+            node.append(
+                page.setNumber(i)
+                    .setClickListener(clickListener)
+                    .getNode()
+            );
         }
         return new UISimpleElement(node);
     }

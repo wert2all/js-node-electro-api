@@ -38,6 +38,12 @@ export default class UIPageItem extends UIElementInterface {
          * @private
          */
         this._pageItem = null;
+        /**
+         *
+         * @type {number}
+         * @private
+         */
+        this._pageNumber = 1;
     }
 
     clean() {
@@ -61,15 +67,36 @@ export default class UIPageItem extends UIElementInterface {
         this._pageItem = this._node.querySelector(this._pageSelector);
     }
 
+    /**
+     *
+     * @return {UIPageItem}
+     */
     setActive() {
         this._pageItem = this._node.querySelector(this._activePageSelector);
+        return this;
     }
 
     /**
      *
      * @param {number} number
+     * @return UIPageItem
      */
     setNumber(number) {
         this._pageItem.innerHTML = number;
+        this._pageNumber = number;
+        return this;
+    }
+
+    /**
+     *
+     * @param {function} func
+     * @return {UIPageItem}
+     */
+    setClickListener(func = Function.prototype) {
+        this._pageItem = this._pageItem.cloneNode(true);
+        this._pageItem.addEventListener(
+            'click',
+            (event) => func(event, this._pageNumber));
+        return this;
     }
 }

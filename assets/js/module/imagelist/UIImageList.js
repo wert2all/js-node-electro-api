@@ -184,6 +184,11 @@ export default class UIImageList extends UIElementInterface {
         if (data.getLimit() != null) {
             this._applyPagerData(data.getLimit());
         }
+        this._viewHolder.getParentElement().addElement(
+            this._viewHolder
+                .getPager()
+                .build()
+        );
         return Promise.resolve(data);
     }
 

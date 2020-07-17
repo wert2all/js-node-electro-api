@@ -1,11 +1,9 @@
-import UIElementInterface from './element/UIElementInterface';
-
 /**
  * @class UIInterface
  * @interface
  * @abstract
  */
-export default class UIInterface extends UIElementInterface {
+export default class UIInterface {
     /**
      * @abstract
      * @return {UIAuthElementInterface}
@@ -46,5 +44,20 @@ export default class UIInterface extends UIElementInterface {
      * @return {UIPager}
      */
     getPager() {
+    }
+
+    /**
+     * @abstract
+     * @return {void}
+     */
+    init() {
+
+    }
+
+    /**
+     * @abstract
+     * @return {void}
+     */
+    clean() {
     }
 }

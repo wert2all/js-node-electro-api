@@ -68,4 +68,12 @@ export default class UIPager extends UICloneableInterface {
     clone() {
         return new UIPager(this._dataProvider);
     }
+
+    /**
+     * @return {UIElementInterface}
+     */
+    build() {
+        const node = null;
+        return new UISimpleElement(node);
+    }
 }

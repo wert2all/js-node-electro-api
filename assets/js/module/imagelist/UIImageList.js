@@ -98,8 +98,8 @@ export default class UIImageList extends UIElementInterface {
      * @return {Promise<ApiImagesHolder>}
      * @private
      */
-    // eslint-disable-next-line no-unused-vars
     _fetchData(fromValue = 0) {
+        this._apiLimits = this._apiLimits.setFrom(fromValue);
         return this._api
             .getImages(this._authProvider.getUserProfile(), this._apiLimits)
             .then(apiResult => {
@@ -183,7 +183,7 @@ export default class UIImageList extends UIElementInterface {
         this._viewHolder.getParentElement().addElement(
             pager.build((event, number) => {
                 event.preventDefault();
-                console.log('From: ' + pager.getDataProvider().getFromByPage(number));
+                this._showData(pager.getDataProvider().getFromByPage(number));
             })
         );
         return Promise.resolve(data);

@@ -1,9 +1,12 @@
+import UICloneableInterface from '../UICloneableInterface';
+
 /**
- * @class UIElementInterface
  * @interface
  * @abstract
+ * @class UIElementInterface
+ * @extends UICloneableInterface
  */
-export default class UIElementInterface {
+export default class UIElementInterface extends UICloneableInterface {
     /**
      * @abstract
      * @return {void}
@@ -17,13 +20,6 @@ export default class UIElementInterface {
      * @return {void}
      */
     clean() {
-    }
-
-    /**
-     * @abstract
-     * @return {UIElementInterface|null}
-     */
-    clone() {
     }
 
     /**

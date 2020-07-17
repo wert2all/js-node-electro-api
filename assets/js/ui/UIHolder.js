@@ -13,8 +13,9 @@ export default class UIHolder extends UIInterface {
      * @param {UIElementInterface} loaderElement
      * @param {UIContentElementInterface} contentElement
      * @param {UINotifyInterface} notify
+     * @param {UIPager} pager
      */
-    constructor(authElement, gridElement, loaderElement, contentElement, notify) {
+    constructor(authElement, gridElement, loaderElement, contentElement, notify, pager) {
         super();
         /**
          *
@@ -46,6 +47,12 @@ export default class UIHolder extends UIInterface {
          * @private
          */
         this._contentIndex = this._elements.push(contentElement) - 1;
+        /**
+         *
+         * @type {number}
+         * @private
+         */
+        this._pagerIndex = this._elements.push(pager) - 1;
         /**
          *
          * @type {UINotifyInterface}
@@ -103,5 +110,13 @@ export default class UIHolder extends UIInterface {
      */
     getNotify() {
         return this._notify;
+    }
+
+    /**
+     *
+     * @return {UIPager}
+     */
+    getPager() {
+        return this._elements[this._pagerIndex].clone();
     }
 }

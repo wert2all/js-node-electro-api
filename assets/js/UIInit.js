@@ -30,6 +30,7 @@ import UIImageActionsComposite from './module/imagelist/item/actions/UIImageActi
 import UIProfileViewFactory from './module/imagelist/item/profile/UIProfileViewFactory';
 import UIImagesViewHolder from './module/imagelist/UIImagesViewHolder';
 import UIPager from './ui/pager/UIPager';
+import UIPageItem from './ui/pager/elements/UIPageItem';
 
 /**
  * @class UIInit
@@ -96,7 +97,7 @@ export default class UIInit {
                                     this._ui.getLoader(),
                                     this._ui.getNotify(),
                                     imageItem,
-                                    new UIPager()
+                                    this._ui.getPager()
                                 );
                                 new UIImageList(
                                     imageViewHolder,
@@ -184,7 +185,16 @@ export default class UIInit {
         this._ui = new UIHolder(authElement, grid, loader, content,
             new Notify(UIkit, {
                 pos: 'top-right'
-            }));
+            }),
+            new UIPager(
+                document.querySelector('#system ul.uk-pagination'),
+                new UIPageItem(
+                    document.querySelector('#system ul.uk-pagination'),
+                    'li a',
+                    'li.uk-active span'
+                )
+            )
+        );
     }
 
     /**

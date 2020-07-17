@@ -92,8 +92,8 @@ export default class UIInit {
                             .addAfterAuth(authProvider => {
                                 const imageViewHolder = new UIImagesViewHolder(
                                     this._ui.getContent(),
-                                    this._ui.getGrid().clone(),
-                                    this._ui.getLoader().clone(),
+                                    this._ui.getGrid(),
+                                    this._ui.getLoader(),
                                     this._ui.getNotify(),
                                     imageItem,
                                     this._ui.getPager()

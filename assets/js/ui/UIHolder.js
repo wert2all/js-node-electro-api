@@ -79,7 +79,7 @@ export default class UIHolder extends UIInterface {
      * @return {UIGridElementInterface}
      */
     getGrid() {
-        return this._elements[this._gridIndex];
+        return this._elements[this._gridIndex].clone();
     }
 
     /**
@@ -87,7 +87,7 @@ export default class UIHolder extends UIInterface {
      * @return {UIElementInterface}
      */
     getLoader() {
-        return this._elements[this._loaderIndex];
+        return this._elements[this._loaderIndex].clone();
     }
 
     /**

@@ -27,4 +27,22 @@ export default class ApiLimits {
     getFrom() {
         return this._from;
     }
+
+    /**
+     *
+     * @param {number} from
+     * @return {ApiLimits}
+     */
+    setFrom(from) {
+        return new ApiLimits(from, this._offset);
+    }
+
+    /**
+     *
+     * @param {number} offset
+     * @return {ApiLimits}
+     */
+    setOffset(offset) {
+        return new ApiLimits(this._from, offset);
+    }
 }

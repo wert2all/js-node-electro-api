@@ -117,6 +117,6 @@ export default class UIHolder extends UIInterface {
      * @return {UIPager}
      */
     getPager() {
-        return this._elements[this._pagerIndex];
+        return this._elements[this._pagerIndex].clone();
     }
 }

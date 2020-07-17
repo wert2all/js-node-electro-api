@@ -1,17 +1,26 @@
 import UIPagerDataProvider from './data/UIPagerDataProvider';
+import UICloneableInterface from '../interfaces/UICloneableInterface';
 
 /**
  * @class UIPager
+ * @extends UICloneableInterface
  */
 
-export default class UIPager {
-    constructor() {
+export default class UIPager extends UICloneableInterface {
+    /**
+     *
+     * @param {UIPagerDataProvider|null} dataProvider
+     */
+    constructor(dataProvider = null) {
+        super();
         /**
          *
          * @type {UIPagerDataProvider}
          * @private
          */
-        this._dataProvider = new UIPagerDataProvider();
+        this._dataProvider = dataProvider == null
+            ? new UIPagerDataProvider()
+            : dataProvider;
     }
 
     /**
@@ -50,5 +59,13 @@ export default class UIPager {
     setPagerOffset(offset) {
         this._dataProvider = this._dataProvider.setOffset(offset);
         return this;
+    }
+
+    /**
+     *
+     * @return {UIPager}
+     */
+    clone() {
+        return new UIPager(this._dataProvider);
     }
 }

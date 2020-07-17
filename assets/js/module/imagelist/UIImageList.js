@@ -70,14 +70,7 @@ export default class UIImageList extends UIElementInterface {
 
     init() {
         this._viewHolder.getParentElement().addElement(this._viewHolder.getGrid());
-        this._showLoader();
-        this._fetchData()
-            .then(data => this._applyImages(data))
-            .then(data => this._applyPager(data))
-            .catch(error => {
-                this._hideLoader();
-                return this._viewHolder.getNotify().error(error.message);
-            });
+        this._showData();
     }
 
     /**
@@ -101,10 +94,12 @@ export default class UIImageList extends UIElementInterface {
     }
 
     /**
+     * @param {number} fromValue
      * @return {Promise<ApiImagesHolder>}
      * @private
      */
-    _fetchData() {
+    // eslint-disable-next-line no-unused-vars
+    _fetchData(fromValue = 0) {
         return this._api
             .getImages(this._authProvider.getUserProfile(), this._apiLimits)
             .then(apiResult => {
@@ -184,10 +179,12 @@ export default class UIImageList extends UIElementInterface {
         if (data.getLimit() != null) {
             this._applyPagerData(data.getLimit());
         }
+        const pager = this._viewHolder.getPager();
         this._viewHolder.getParentElement().addElement(
-            this._viewHolder
-                .getPager()
-                .build()
+            pager.build((event, number) => {
+                event.preventDefault();
+                console.log('From: ' + pager.getDataProvider().getFromByPage(number));
+            })
         );
         return Promise.resolve(data);
     }
@@ -220,5 +217,21 @@ export default class UIImageList extends UIElementInterface {
             .setPagerFrom(limit.getFrom())
             .setPagerOffset(limit.getOffset());
         return this;
+    }
+
+    /**
+     *
+     * @param {number} fromValue
+     * @private
+     */
+    _showData(fromValue = 0) {
+        this._showLoader();
+        this._fetchData(fromValue)
+            .then(data => this._applyImages(data))
+            .then(data => this._applyPager(data))
+            .catch(error => {
+                this._hideLoader();
+                return this._viewHolder.getNotify().error(error.message);
+            });
     }
 }

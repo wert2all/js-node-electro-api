@@ -40,4 +40,11 @@ export default class UIInterface extends UIElementInterface {
      */
     getNotify() {
     }
+
+    /**
+     * @abstract
+     * @return {UIPager}
+     */
+    getPager() {
+    }
 }

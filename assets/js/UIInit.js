@@ -96,7 +96,7 @@ export default class UIInit {
                                     this._ui.getLoader().clone(),
                                     this._ui.getNotify(),
                                     imageItem,
-                                    new UIPager()
+                                    this._ui.getPager()
                                 );
                                 new UIImageList(
                                     imageViewHolder,
@@ -184,7 +184,9 @@ export default class UIInit {
         this._ui = new UIHolder(authElement, grid, loader, content,
             new Notify(UIkit, {
                 pos: 'top-right'
-            }));
+            }),
+            new UIPager()
+            );
     }
 
     /**

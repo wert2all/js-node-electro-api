@@ -25,7 +25,9 @@ export default class UISimpleElement extends UIElementInterface {
      * @return void
      */
     clean() {
-        this._node.parentNode.removeChild(this._node);
+        if (this._node.parentNode != null) {
+            this._node.parentNode.removeChild(this._node);
+        }
     }
 
     /**

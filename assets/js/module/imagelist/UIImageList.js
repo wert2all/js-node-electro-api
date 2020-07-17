@@ -69,7 +69,7 @@ export default class UIImageList extends UIElementInterface {
     }
 
     init() {
-        this._viewHolder.getParentElement().addElement(this._viewHolder.getGrid());
+        this._setElements();
         this._showData();
     }
 
@@ -225,6 +225,7 @@ export default class UIImageList extends UIElementInterface {
      * @private
      */
     _showData(fromValue = 0) {
+        this._setElements();
         this._showLoader();
         this._fetchData(fromValue)
             .then(data => this._applyImages(data))
@@ -233,5 +234,14 @@ export default class UIImageList extends UIElementInterface {
                 this._hideLoader();
                 return this._viewHolder.getNotify().error(error.message);
             });
+    }
+
+    /**
+     *
+     * @private
+     */
+    _setElements() {
+        this._viewHolder.getParentElement().clean();
+        this._viewHolder.getParentElement().addElement(this._viewHolder.getGrid());
     }
 }

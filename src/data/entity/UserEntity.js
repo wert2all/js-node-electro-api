@@ -30,6 +30,7 @@ export default class UserEntity extends EntityInterface {
         );
         this._data.setData(UserDefinition.COLUMN_GOOGLE_NAME, googleAccount.getName());
         this._data.setData(UserDefinition.COLUMN_GOOGLE_EMAIL, googleAccount.getEmail());
+        this._data.setData(UserDefinition.COLUMN_PHOTO_PATH, googleAccount.getPhoto());
         return this;
     }
 

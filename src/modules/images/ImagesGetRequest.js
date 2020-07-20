@@ -16,6 +16,7 @@ import DI from '../../lib/di/DI';
 import ImageUrl from '../../data/images/ImageUrl';
 import DefinitionOrder from '../../lib/db-definition/DefinitionOrder';
 import DefinitionLimit from '../../lib/db-definition/DefinitionLimit';
+import ConnectionInterface from '../../lib/db-connection/ConnectionInterface';
 
 /**
  * @class ImagesGetRequest
@@ -61,6 +62,8 @@ export default class ImagesGetRequest extends RequestInterface {
          * @private
          */
         this._storageProvider = storageProvider;
+        this._repository.setConnection(DI.getInstance().get(ConnectionInterface));
+        this._usersRepository.setConnection(DI.getInstance().get(ConnectionInterface));
         return this;
     }
 
@@ -74,8 +77,6 @@ export default class ImagesGetRequest extends RequestInterface {
         const response = new ResponseDataClass();
         try {
             const requestData = await this._prepareRequest(request);
-            this._repository.setConnection(this._storageProvider.getConnection());
-            this._usersRepository.setConnection(this._storageProvider.getConnection());
             await this._checkAdmin(requestData);
             const imageData = await this._fetchData(requestData);
             response.setData('files', imageData.images);

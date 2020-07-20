@@ -24,11 +24,7 @@ export default class ServerCluster {
         this._instanceCount = instanceCount;
     }
 
-    /**
-     *
-     * @param connection
-     */
-    run(connection) {
+    run() {
         const pid = process.pid;
         if (cluster.isMaster) {
             console.log(`CPUs: ${this._instanceCount}`);
@@ -46,7 +42,7 @@ export default class ServerCluster {
         }
 
         if (cluster.isWorker) {
-            this._worker.run(connection);
+            this._worker.run();
         }
     }
 

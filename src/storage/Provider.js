@@ -5,15 +5,9 @@ export default class StorageProvider {
     /**
      *
      * @param {FileStorage} fileStorage
-     * @param {ConnectionInterface} connection
-     * @param {Configuration} configuration
+     * @param {StorageConfiguration} configuration
      */
-    constructor(configuration, fileStorage, connection) {
-        /**
-         * @type {ConnectionInterface}
-         * @private
-         */
-        this._connection = connection;
+    constructor(configuration, fileStorage) {
         /**
          *
          * @type {FileStorage}
@@ -23,7 +17,7 @@ export default class StorageProvider {
 
         /**
          *
-         * @type {Configuration}
+         * @type {StorageConfiguration}
          * @private
          */
         this._configuration = configuration;
@@ -39,14 +33,6 @@ export default class StorageProvider {
 
     /**
      *
-     * @return {ConnectionInterface}
-     */
-    getConnection() {
-        return this._connection;
-    }
-
-    /**
-     *
      * @return {FileStorage}
      */
     getFileStorage() {
@@ -55,7 +41,7 @@ export default class StorageProvider {
 
     /**
      *
-     * @returns {Configuration}
+     * @returns {StorageConfiguration}
      */
     getConfiguration() {
         return this._configuration;

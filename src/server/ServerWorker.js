@@ -22,13 +22,11 @@ export default class ServerWorker extends ServerWorkerInterface {
         this._application = application;
     }
 
-    /**
-     *
-     * @param connection
-     */
-    run(connection) {
+    run() {
         const pid = process.pid;
-        this._application.init(connection).run();
+        this._application
+            .init()
+            .run();
 
         const server = http.createServer(this._application.getRequestListener())
             .listen(3000, () => console.log(`Worker started. Pid: ${pid}`));

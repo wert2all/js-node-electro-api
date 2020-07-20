@@ -9,11 +9,10 @@ import path from 'path';
 import DispatchInterface from '../lib/dispatcher/DispatchInterface';
 import Dispatcher from '../lib/dispatcher/Dispatcher';
 import EventFileUpload from '../modules/upload/dispatch/event/EventFileUpload';
-import FileUploadedObserver
-    from '../modules/upload/dispatch/observers/FileUploadedObserver';
+import FileUploadedObserver from '../modules/upload/dispatch/observers/FileUploadedObserver';
 import TelegramApi from '../lib/telegram/TelegramApi';
 import StorageProvider from '../storage/Provider';
-import Configuration from '../storage/configuration/Configuration';
+import StorageConfiguration from '../storage/configuration/StorageConfiguration';
 import SecretStorage from '../storage/keyvalue/SecretStorage';
 import RendererInterface from '../lib/renderer/RendererInterface';
 import PugAdapter from '../lib/renderer/adapter/PugAdapter';
@@ -37,14 +36,17 @@ export default function diInit(serverConfig) {
             path.normalize(serverConfig.getApplicationDirectory() + 'data/files/')
         )
     ));
-    di.register(StorageProvider, new StorageProvider(
-        new Configuration(
+    di.register(StorageConfiguration,
+        new StorageConfiguration(
             new SecretStorage(serverConfig.getApplicationDirectory() + 'secret.json'),
             di.get(KeyValueStorageInterface)
-        ),
-        di.get(FileStorage),
-        di.get(ConnectionInterface)
-    ));
+        ));
+    di.register(
+        StorageProvider,
+        new StorageProvider(
+            di.get(StorageConfiguration),
+            di.get(FileStorage)
+        ));
     di.register(DispatchInterface, (() => {
         const observers = {};
         observers[EventFileUpload.EVENT_NAME] = [

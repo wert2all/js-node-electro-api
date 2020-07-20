@@ -7,6 +7,8 @@ import UploadGetCountRequestDataClass from './data/UploadGetCountRequestDataClas
 import FilesRepository from '../../db/repository/FilesRepository';
 import UserEntity from '../../data/entity/UserEntity';
 import UserFilesEntity from '../../data/entity/UserFilesEntity';
+import DI from '../../lib/di/DI';
+import ConnectionInterface from '../../lib/db-connection/ConnectionInterface';
 
 /**
  * @class UploadGetCountRequest
@@ -38,6 +40,7 @@ export default class UploadGetCountRequest extends RequestInterface {
          * @private
          */
         this._storageProvider = storageProvider;
+        this._repository.setConnection(DI.getInstance().get(ConnectionInterface));
         return this;
     }
 
@@ -51,7 +54,6 @@ export default class UploadGetCountRequest extends RequestInterface {
         const response = new ResponseDataClass();
         try {
             const requestData = await this._prepareRequest(request);
-            this._repository.setConnection(this._storageProvider.getConnection());
             const userData = await this._fetchUserData(requestData);
             response.setData('counts', this._groupData(userData));
             response.setStatus(true);

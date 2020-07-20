@@ -11,6 +11,7 @@ import UserFilesDefinition from '../../db/definition/UserFilesDefinition';
 import ResponseResult from '../../routers/response/ResponseResult';
 import DI from '../../lib/di/DI';
 import ImageUrl from '../../data/images/ImageUrl';
+import ConnectionInterface from '../../lib/db-connection/ConnectionInterface';
 
 /**
  * @class UploadGetFilesRequest
@@ -48,6 +49,7 @@ export default class UploadGetFilesRequest extends RequestInterface {
          * @private
          */
         this._storageProvider = storageProvider;
+        this._repository.setConnection(DI.getInstance().get(ConnectionInterface));
         return this;
     }
 
@@ -61,7 +63,6 @@ export default class UploadGetFilesRequest extends RequestInterface {
         const response = new ResponseDataClass();
         try {
             const requestData = await this._prepareRequest(request);
-            this._repository.setConnection(this._storageProvider.getConnection());
             const userData = await this._fetchUserData(requestData);
             response.setData('files', this._formatFiles(userData));
             response.setStatus(true);

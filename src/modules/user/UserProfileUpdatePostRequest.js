@@ -10,6 +10,8 @@ import UserProfileEntity from '../../data/entity/UserProfileEntity';
 import EntityManager from '../../lib/db-entity-manager/EntityManager';
 import ResponseResult from '../../routers/response/ResponseResult';
 import UserRepository from '../../db/repository/UserRepository';
+import DI from '../../lib/di/DI';
+import ConnectionInterface from '../../lib/db-connection/ConnectionInterface';
 
 /**
  * @class UserProfileUpdatePostRequest
@@ -47,6 +49,8 @@ export default class UserProfileUpdatePostRequest extends RequestInterface {
          * @private
          */
         this._storageProvider = storageProvider;
+        this._profileRepository.setConnection(DI.getInstance().get(ConnectionInterface));
+        this._userRepository.setConnection(DI.getInstance().get(ConnectionInterface));
         return this;
     }
 
@@ -60,8 +64,7 @@ export default class UserProfileUpdatePostRequest extends RequestInterface {
         const response = new ResponseDataClass();
         try {
             const requestData = await this._prepareRequest(request);
-            this._profileRepository.setConnection(this._storageProvider.getConnection());
-            this._userRepository.setConnection(this._storageProvider.getConnection());
+
             const em = new EntityManager(this._storageProvider.getConnection());
 
             const hash = await this._createProfileHash(requestData.getGoogleAccount());

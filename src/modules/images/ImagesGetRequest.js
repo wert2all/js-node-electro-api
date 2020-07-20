@@ -17,6 +17,7 @@ import ImageUrl from '../../data/images/ImageUrl';
 import DefinitionOrder from '../../lib/db-definition/DefinitionOrder';
 import DefinitionLimit from '../../lib/db-definition/DefinitionLimit';
 import ConnectionInterface from '../../lib/db-connection/ConnectionInterface';
+import StorageConfiguration from '../../storage/configuration/StorageConfiguration';
 
 /**
  * @class ImagesGetRequest
@@ -115,7 +116,9 @@ export default class ImagesGetRequest extends RequestInterface {
      */
     async _getGoogleAccount(requestData) {
         const apiKey = new ApiKeyProvider(
-            this._storageProvider,
+            DI.getInstance()
+                .get(StorageConfiguration)
+                .getSecretStorage(),
             'google:api:signin:client:key'
         )
             .get();

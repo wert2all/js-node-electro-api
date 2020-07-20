@@ -92,8 +92,7 @@ export default class UploadPostRequest extends RequestInterface {
      * @private
      */
     async _getGoogleAccount(requestData) {
-        const apiKey = new ApiKeyProvider(this._storageProvider).get();
-        return await new AuthCheck(apiKey)
+        return await new AuthCheck(ApiKeyProvider.getDefault())
             .check(
                 new AuthParams(requestData.token)
             );

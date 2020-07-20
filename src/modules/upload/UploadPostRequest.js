@@ -20,6 +20,8 @@ import UploadRequestCantSave from './error/UploadRequestCantSave';
 import EventFileUpload from './dispatch/event/EventFileUpload';
 import ResponseResult from '../../routers/response/ResponseResult';
 import ResponseDataClass from '../../routers/response/ResponseDataClass';
+import DI from '../../lib/di/DI';
+import ConnectionInterface from '../../lib/db-connection/ConnectionInterface';
 
 /**
  * @class UploadPostRequest
@@ -50,8 +52,6 @@ export default class UploadPostRequest extends RequestInterface {
             const requestData = await this._prepareRequest(request);
             const userFilesEntity = this.makeUserFilesEntity(requestData);
             const fileData = await this._getFileData(requestData);
-
-            this._repository.setConnection(this._storageProvider.getConnection());
             /**
              * @type {EntityInterface[]}
              */
@@ -187,6 +187,7 @@ export default class UploadPostRequest extends RequestInterface {
          * @private
          */
         this._dispatcher = dispatcher;
+        this._repository.setConnection(DI.getInstance().get(ConnectionInterface));
         return this;
     }
 

@@ -65,13 +65,9 @@ export default class Application extends ServerApplicationInterface {
     }
 
     /**
-     * @param connection
      * @return ServerApplicationInterface
      */
-    init(connection) {
-        this._storageProvider
-            .getConnection()
-            .setServer(connection);
+    init() {
         return this;
     }
 

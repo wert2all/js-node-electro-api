@@ -8,11 +8,10 @@ import ImplementationError from '../lib/implementation-error/ImplementationError
 export default class ServerApplicationInterface {
     /**
      * @abstract
-     * @param connection
      * @return ServerApplicationInterface
      */
     // eslint-disable-next-line no-unused-vars
-    init(connection) {
+    init() {
         throw new ImplementationError(this, 'init');
     }
 

@@ -9,10 +9,8 @@ export default class ServerWorkerInterface {
 
     /**
      * @abstract
-     * @param connection
      */
-    // eslint-disable-next-line no-unused-vars
-    run(connection) {
+    run() {
         throw new ImplementationError(this, 'run');
     }
 }

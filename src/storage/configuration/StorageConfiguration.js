@@ -1,7 +1,7 @@
 /**
- * @class Configuration
+ * @class StorageConfiguration
  */
-export default class Configuration {
+export default class StorageConfiguration {
     /**
      *
      * @param {KeyValueStorageInterface} secretStorage

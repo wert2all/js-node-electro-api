@@ -1,3 +1,6 @@
+import StorageConfiguration from '../../../storage/configuration/StorageConfiguration';
+import DI from '../../../lib/di/DI';
+
 /**
  * @class ApiKeyProvider
  */
@@ -14,6 +17,9 @@ export default class ApiKeyProvider {
          * @private
          */
         this._secretStorage = storageProvider.getConfiguration().getSecretStorage();
+        this._secretStorage = DI.getInstance()
+            .get(StorageConfiguration)
+            .getSecretStorage();
         /**
          *
          * @type {string}

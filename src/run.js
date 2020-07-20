@@ -21,6 +21,7 @@ import DispatchInterface from './lib/dispatcher/DispatchInterface';
 import UIRequest from './modules/ui/UIRequest';
 import ImagesGetRequest from './modules/images/ImagesGetRequest';
 import serverConfig from './_init/ServerConfigInit';
+import ConnectionInterface from './lib/db-connection/ConnectionInterface';
 
 const connectDB = path => new Promise((resolve, reject) => {
     const db = new sqlite3.Database(path, err => {
@@ -34,6 +35,8 @@ connectDB(serverConfig.getApplicationDirectory() + 'secret.sqlite')
     .then(connection => {
         const di = diInit(serverConfig);
         const expressInstance = expressInit(serverConfig);
+        di.get(ConnectionInterface)
+            .setServer(connection);
 
         new ServerCluster(
             new ServerWorker(
@@ -80,6 +83,6 @@ connectDB(serverConfig.getApplicationDirectory() + 'secret.sqlite')
             ),
             os.cpus().length
         )
-            .run(connection);
+            .run();
     })
     .catch(err => console.log(err));

@@ -10,6 +10,8 @@ import UserProfileEntity from '../../data/entity/UserProfileEntity';
 import UserEntity from '../../data/entity/UserEntity';
 import UserProfileDefinition from '../../db/definition/UserProfileDefinition';
 import ResponseResult from '../../routers/response/ResponseResult';
+import DI from '../../lib/di/DI';
+import ConnectionInterface from '../../lib/db-connection/ConnectionInterface';
 
 /**
  * @class UserProfileGetRequest
@@ -36,7 +38,6 @@ export default class UserProfileGetRequest extends RequestInterface {
         const response = new ResponseDataClass();
         try {
             const requestData = await this._prepareRequest(request);
-            this._repository.setConnection(this._storageProvider.getConnection());
             const userProfileList = await this._fetchUserProfile(requestData);
             const ret = this._convertToResponseData(userProfileList);
             if (ret !== null) {
@@ -96,6 +97,7 @@ export default class UserProfileGetRequest extends RequestInterface {
          * @private
          */
         this._storageProvider = storageProvider;
+        this._repository.setConnection(DI.getInstance().get(ConnectionInterface));
         return this;
     }
 

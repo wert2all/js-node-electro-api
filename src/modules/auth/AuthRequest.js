@@ -27,8 +27,7 @@ export default class AuthRequest extends RequestInterface {
             try {
                 this._checkRequestMethod(request);
                 const params = new AuthParamsFactory().create(request);
-                const apiKey = new ApiKeyProvider(this.storageProvider).get();
-                new AuthCheck(apiKey)
+                new AuthCheck(ApiKeyProvider.getDefault())
                     .check(params)
                     .then(res => {
                         ret.token = res.getGoogleUserId();

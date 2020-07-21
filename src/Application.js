@@ -11,7 +11,7 @@ const fileUpload = require('express-fileupload');
 export default class Application extends ServerApplicationInterface {
     /**
      *
-     * @param expressApp
+     * @param {Express} expressApp
      * @param {RoutersProviderFactory} routersFactory
      * @param {StorageProvider} storageProvider
      * @param {DispatchInterface} dispatcher

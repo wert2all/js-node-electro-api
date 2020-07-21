@@ -3,7 +3,7 @@
   "version": "0.2.2",
   "private": true,
   "scripts": {
-    "start": "nodemon dist/src/run.js",
+    "start": "nodemon dist/src/runCluster.js",
     "build": "export NODE_ENV=production && gulp clean && gulp default",
     "dev": "gulp dev",
     "test:static": "gulp test:static",

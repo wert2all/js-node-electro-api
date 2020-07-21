@@ -1,33 +1,37 @@
-import DI from '../lib/di/DI';
-import ServerConfig from '../server/ServerConfig';
-import ConnectionInterface from '../lib/db-connection/ConnectionInterface';
-import SQLiteConnection from '../lib/db-connection/adapter/SQLiteConnection';
-import KeyValueStorageInterface from '../storage/keyvalue/KeyValueStorageInterface';
-import ConfigStorage from '../storage/keyvalue/ConfigStorage';
-import FileStorage from '../storage/FileStorage';
-import FileStorageConfig from '../storage/file/FileStorageConfig';
+import DI from '../../lib/di/DI';
+import ServerConfig from '../../server/ServerConfig';
+import ConnectionInterface from '../../lib/db-connection/ConnectionInterface';
+import SQLiteConnection from '../../lib/db-connection/adapter/SQLiteConnection';
+import KeyValueStorageInterface from '../../storage/keyvalue/KeyValueStorageInterface';
+import ConfigStorage from '../../storage/keyvalue/ConfigStorage';
+import FileStorage from '../../storage/FileStorage';
+import FileStorageConfig from '../../storage/file/FileStorageConfig';
 import path from 'path';
-import StorageConfiguration from '../storage/configuration/StorageConfiguration';
-import SecretStorage from '../storage/keyvalue/SecretStorage';
-import StorageProvider from '../storage/Provider';
-import DispatchInterface from '../lib/dispatcher/DispatchInterface';
-import EventFileUpload from '../modules/upload/dispatch/event/EventFileUpload';
-import FileUploadedObserver from '../modules/upload/dispatch/observers/FileUploadedObserver';
-import TelegramApi from '../lib/telegram/TelegramApi';
-import Dispatcher from '../lib/dispatcher/Dispatcher';
-import RendererInterface from '../lib/renderer/RendererInterface';
-import PugAdapter from '../lib/renderer/adapter/PugAdapter';
-import ImageUrl from '../data/images/ImageUrl';
+import StorageConfiguration from '../../storage/configuration/StorageConfiguration';
+import SecretStorage from '../../storage/keyvalue/SecretStorage';
+import StorageProvider from '../../storage/Provider';
+import DispatchInterface from '../../lib/dispatcher/DispatchInterface';
+import EventFileUpload from '../../modules/upload/dispatch/event/EventFileUpload';
+import FileUploadedObserver from '../../modules/upload/dispatch/observers/FileUploadedObserver';
+import TelegramApi from '../../lib/telegram/TelegramApi';
+import Dispatcher from '../../lib/dispatcher/Dispatcher';
+import RendererInterface from '../../lib/renderer/RendererInterface';
+import PugAdapter from '../../lib/renderer/adapter/PugAdapter';
+import ImageUrl from '../../data/images/ImageUrl';
+import ServerConfigFactory from './ServerConfigFactory';
+import ExpressFactory from './ExpressFactory';
 
 export default class DIFactory {
     /**
      *
-     * @param {ServerConfig} serverConfig
      * @return DI
      */
-    static create(serverConfig) {
+    static create() {
         const di = DI.getInstance();
+        const serverConfig = ServerConfigFactory.create();
+
         di.register(ServerConfig, serverConfig);
+        di.register('Express', ExpressFactory.create(serverConfig));
         di.register(ConnectionInterface, new SQLiteConnection());
         di.register(KeyValueStorageInterface, new ConfigStorage(
             serverConfig.getApplicationDirectory())

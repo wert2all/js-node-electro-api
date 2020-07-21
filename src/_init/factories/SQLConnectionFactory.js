@@ -1,6 +1,6 @@
 import sqlite3 from 'sqlite3';
-import ServerConfig from '../server/ServerConfig';
-import StorageConfiguration from '../storage/configuration/StorageConfiguration';
+import ServerConfig from '../../server/ServerConfig';
+import StorageConfiguration from '../../storage/configuration/StorageConfiguration';
 
 export default class SQLConnectionFactory {
     /**

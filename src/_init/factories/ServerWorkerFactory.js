@@ -1,4 +1,4 @@
-import ServerWorker from '../server/ServerWorker';
+import ServerWorker from '../../server/ServerWorker';
 
 export default class ServerWorkerFactory {
     /**

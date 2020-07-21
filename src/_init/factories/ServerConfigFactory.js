@@ -1,4 +1,4 @@
-import ServerConfig from '../server/ServerConfig';
+import ServerConfig from '../../server/ServerConfig';
 import path from 'path';
 
 /**
@@ -12,9 +12,12 @@ export default class ServerConfigFactory {
      */
     static create() {
         return new ServerConfig(
-            path.normalize(__dirname + path.sep + '..' + path.sep + '..' + path.sep),
             path.normalize(
                 __dirname + path.sep + '..' + path.sep + '..' + path.sep + '..' + path.sep
+            ),
+            path.normalize(
+                // eslint-disable-next-line max-len
+                __dirname + path.sep + '..' + path.sep + '..' + path.sep + '..' + path.sep + '..' + path.sep
             )
         );
     }

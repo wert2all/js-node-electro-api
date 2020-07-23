@@ -84,18 +84,11 @@ export default class UserProfileGetRequest extends RequestInterface {
 
     /**
      *
-     * @param {StorageProvider} storageProvider
      * @param {DispatchInterface} dispatcher
      * @return {UserProfileGetRequest}
      */
     // eslint-disable-next-line no-unused-vars
-    init(storageProvider, dispatcher) {
-        /**
-         *
-         * @type {StorageProvider}
-         * @private
-         */
-        this._storageProvider = storageProvider;
+    init(dispatcher) {
         this._repository.setConnection(DI.getInstance().get(ConnectionInterface));
         return this;
     }

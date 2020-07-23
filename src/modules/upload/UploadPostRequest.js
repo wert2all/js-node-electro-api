@@ -22,6 +22,7 @@ import ResponseResult from '../../routers/response/ResponseResult';
 import ResponseDataClass from '../../routers/response/ResponseDataClass';
 import DI from '../../lib/di/DI';
 import ConnectionInterface from '../../lib/db-connection/ConnectionInterface';
+import FileStorage from '../../storage/FileStorage';
 
 /**
  * @class UploadPostRequest
@@ -38,6 +39,12 @@ export default class UploadPostRequest extends RequestInterface {
          * @private
          */
         this._repository = new FilesRepository();
+        /**
+         *
+         * @type {FileStorage}
+         * @private
+         */
+        this._fileStorage = DI.getInstance().get(FileStorage);
     }
 
     /**
@@ -112,8 +119,7 @@ export default class UploadPostRequest extends RequestInterface {
                 fileData.getFsLink(),
                 fileData.getName()
             );
-            fileData = await this._storageProvider
-                .getFileStorage()
+            fileData = await this._fileStorage
                 .moveFile(
                     fileData.setPath(tmpFilePath),
                     new ImageFileNameProvider(userFiles)
@@ -169,17 +175,10 @@ export default class UploadPostRequest extends RequestInterface {
 
     /**
      *
-     * @param {StorageProvider} storageProvider
      * @param {DispatchInterface} dispatcher
      * @return {UploadPostRequest}
      */
-    init(storageProvider, dispatcher) {
-        /**
-         *
-         * @type {StorageProvider}
-         * @private
-         */
-        this._storageProvider = storageProvider;
+    init(dispatcher) {
         /**
          *
          * @type {DispatchInterface}
@@ -197,8 +196,7 @@ export default class UploadPostRequest extends RequestInterface {
      * @private
      */
     _getTmpFilePath(fileName) {
-        const tmpDirectory = this._storageProvider
-            .getFileStorage()
+        const tmpDirectory = this._fileStorage
             .getConfig()
             .getTmpDirectory();
         return tmpDirectory + new Date().valueOf().toString() + '_' + fileName;

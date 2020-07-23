@@ -37,18 +37,11 @@ export default class UserProfileUpdatePostRequest extends RequestInterface {
 
     /**
      *
-     * @param {StorageProvider} storageProvider
      * @param {DispatchInterface} dispatcher
      * @return {UserProfileUpdatePostRequest}
      */
     // eslint-disable-next-line no-unused-vars
-    init(storageProvider, dispatcher) {
-        /**
-         *
-         * @type {StorageProvider}
-         * @private
-         */
-        this._storageProvider = storageProvider;
+    init(dispatcher) {
         this._profileRepository.setConnection(DI.getInstance().get(ConnectionInterface));
         this._userRepository.setConnection(DI.getInstance().get(ConnectionInterface));
         return this;
@@ -65,7 +58,7 @@ export default class UserProfileUpdatePostRequest extends RequestInterface {
         try {
             const requestData = await this._prepareRequest(request);
 
-            const em = new EntityManager(this._storageProvider.getConnection());
+            const em = new EntityManager(DI.getInstance().get(ConnectionInterface));
 
             const hash = await this._createProfileHash(requestData.getGoogleAccount());
             const profileEntities = await this._createEntities(requestData, hash);

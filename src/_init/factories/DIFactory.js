@@ -9,7 +9,6 @@ import FileStorageConfig from '../../storage/file/FileStorageConfig';
 import path from 'path';
 import StorageConfiguration from '../../storage/configuration/StorageConfiguration';
 import SecretStorage from '../../storage/keyvalue/SecretStorage';
-import StorageProvider from '../../storage/Provider';
 import DispatchInterface from '../../lib/dispatcher/DispatchInterface';
 import EventFileUpload from '../../modules/upload/dispatch/event/EventFileUpload';
 import FileUploadedObserver from '../../modules/upload/dispatch/observers/FileUploadedObserver';
@@ -63,23 +62,15 @@ export default class DIFactory {
                 di.get(KeyValueStorageInterface)
             ));
 
-        di.register(
-            StorageProvider,
-            new StorageProvider(
-                di.get(StorageConfiguration),
-                di.get(FileStorage)
-            ));
         di.register(DispatchInterface, (() => {
             const observers = {};
             observers[EventFileUpload.EVENT_NAME] = [
                 new FileUploadedObserver(
                     new TelegramApi(
-                        di.get(StorageProvider)
-                            .getConfiguration()
+                        di.get(StorageConfiguration)
                             .getSecretStorage()
                             .fetch('telegram.bot.token'),
-                        di.get(StorageProvider)
-                            .getConfiguration()
+                        di.get(StorageConfiguration)
                             .getSecretStorage()
                             .fetch('telegram.bot.chat'),
                     )
@@ -97,8 +88,8 @@ export default class DIFactory {
         di.register(
             ImageUrl,
             new ImageUrl(
-                di.get(StorageProvider).getConfiguration().getConfig(),
-                di.get(StorageProvider).getFileStorage().getConfig()
+                di.get(StorageConfiguration).getConfig(),
+                di.get(FileStorage).getConfig()
             )
         );
         return di;

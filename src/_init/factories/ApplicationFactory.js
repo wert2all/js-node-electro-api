@@ -10,7 +10,6 @@ import UserProfileUpdatePostRequest from '../../modules/user/UserProfileUpdatePo
 import UploadGetFilesRequest from '../../modules/upload/UploadGetFilesRequest';
 import ImagesGetRequest from '../../modules/images/ImagesGetRequest';
 import UIRequest from '../../modules/ui/UIRequest';
-import StorageProvider from '../../storage/Provider';
 import DispatchInterface from '../../lib/dispatcher/DispatchInterface';
 import ResponseFactory from '../../routers/response/ResponseFactory';
 import DI from '../../lib/di/DI';
@@ -68,7 +67,6 @@ export default class ApplicationFactory {
                         new UIRequest()
                     ),
                 ]),
-            di.get(StorageProvider),
             di.get(DispatchInterface),
             new ResponseFactory()
         );

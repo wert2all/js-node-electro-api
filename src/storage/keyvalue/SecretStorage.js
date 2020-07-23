@@ -6,10 +6,18 @@ import FileKeyValueStorage from './FileKeyValueStorage';
  * @type KeyValueStorageInterface
  */
 export default class SecretStorage extends FileKeyValueStorage {
-    constructor(storageJsonFilePath) {
-        super(storageJsonFilePath);
+    /**
+     *
+     * @param {ReaderInterface} reader
+     */
+    constructor(reader) {
+        super(reader);
     }
 
+    /**
+     * @return {*}
+     * @protected
+     */
     _defaultFetch() {
         throw Error('Error fetching secret key');
     }

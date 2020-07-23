@@ -6,14 +6,13 @@ import ImplementationError from '../../lib/implementation-error/ImplementationEr
  * @extends KeyValueStorageInterface
  * @type KeyValueStorageInterface
  * @abstract
- * @todo SOLID fix
  */
 export default class FileKeyValueStorage extends KeyValueStorageInterface {
     /**
      *
-     * @param {string} storageJsonFilePath
+     * @param {ReaderInterface} reader
      */
-    constructor(storageJsonFilePath) {
+    constructor(reader) {
         super();
         /**
          *
@@ -23,16 +22,10 @@ export default class FileKeyValueStorage extends KeyValueStorageInterface {
         this._registry = {};
         /**
          *
-         * @type {boolean}
+         * @type {ReaderInterface}
          * @private
          */
-        this._isRead = false;
-        /**
-         *
-         * @type {string}
-         * @protected
-         */
-        this._storageFilePath = storageJsonFilePath;
+        this._reader = reader;
     }
 
     /**
@@ -49,22 +42,12 @@ export default class FileKeyValueStorage extends KeyValueStorageInterface {
     }
 
     /**
-     *
+     * @return {FileKeyValueStorage}
      * @private
      */
     _read() {
-        if (!this._isRead) {
-            this._initRegistry();
-            this._isRead = true;
-        }
-    }
-
-    /**
-     *
-     * @protected
-     */
-    _initRegistry() {
-        this._registry = this._readJson(this._storageFilePath);
+        this._registry = this._reader.read();
+        return this;
     }
 
     /**
@@ -74,15 +57,5 @@ export default class FileKeyValueStorage extends KeyValueStorageInterface {
      */
     _defaultFetch() {
         throw new ImplementationError(this, '_doError');
-    }
-
-    /**
-     *
-     * @param {string} filePath
-     * @return {any}
-     * @protected
-     */
-    _readJson(filePath) {
-        return require(filePath);
     }
 }

@@ -20,6 +20,8 @@ import PugAdapter from '../../lib/renderer/adapter/PugAdapter';
 import ImageUrl from '../../data/images/ImageUrl';
 import ServerConfigFactory from './ServerConfigFactory';
 import ExpressFactory from './ExpressFactory';
+import MergeReader from '../../lib/json/MergeReader';
+import ReaderDefault from '../../lib/json/ReaderDefault';
 
 export default class DIFactory {
     /**
@@ -29,23 +31,38 @@ export default class DIFactory {
     static create() {
         const di = DI.getInstance();
         const serverConfig = ServerConfigFactory.create();
+        const applicationDirectory = serverConfig.getApplicationDirectory();
 
         di.register(ServerConfig, serverConfig);
         di.register('Express', ExpressFactory.create(serverConfig));
         di.register(ConnectionInterface, new SQLiteConnection());
-        di.register(KeyValueStorageInterface, new ConfigStorage(
-            serverConfig.getApplicationDirectory())
+
+        di.register(
+            KeyValueStorageInterface,
+            new ConfigStorage(
+                new MergeReader(
+                    new ReaderDefault(applicationDirectory + 'config.default.json'),
+                    new ReaderDefault(applicationDirectory + 'config.json')
+                )
+            )
         );
+
         di.register(FileStorage, new FileStorage(
             new FileStorageConfig(
-                path.normalize(serverConfig.getApplicationDirectory() + 'data/files/')
+                path.normalize(applicationDirectory + 'data/files/')
             )
         ));
         di.register(StorageConfiguration,
             new StorageConfiguration(
-                new SecretStorage(serverConfig.getApplicationDirectory() + 'secret.json'),
+                new SecretStorage(
+                    new MergeReader(
+                        new ReaderDefault(applicationDirectory + 'secret.sample.json'),
+                        new ReaderDefault(applicationDirectory + 'secret.json')
+                    )
+                ),
                 di.get(KeyValueStorageInterface)
             ));
+
         di.register(
             StorageProvider,
             new StorageProvider(

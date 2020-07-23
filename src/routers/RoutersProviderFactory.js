@@ -15,18 +15,17 @@ export default class RoutersProviderFactory {
 
     /**
      *
-     * @param {StorageProvider} storageProvider
      * @param {DispatchInterface} dispatcher
      * @return RoutersProvider
      */
-    create(storageProvider, dispatcher) {
+    create(dispatcher) {
         return new RoutersProvider(
             this._routeDefinitions.map(routeDefinition =>
                 new Route(
                     routeDefinition.route,
                     routeDefinition.method,
                     routeDefinition.requestClass
-                        .init(storageProvider, dispatcher)
+                        .init(dispatcher)
                 )
             )
         );

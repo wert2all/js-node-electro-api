@@ -9,12 +9,11 @@ import ImplementationError from '../../lib/implementation-error/ImplementationEr
 export default class RequestInterface {
     /**
      * @abstract
-     * @param {StorageProvider} storageProvider
      * @param {DispatchInterface} dispatcher
      * @return RequestInterface
      */
     // eslint-disable-next-line no-unused-vars
-    init(storageProvider, dispatcher) {
+    init(dispatcher) {
         throw new ImplementationError(this, 'init');
     }
 

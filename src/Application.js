@@ -1,5 +1,7 @@
 import ServerApplicationInterface from './server/ServerApplicationInterface';
 import * as Sentry from '@sentry/node';
+import StorageConfiguration from './storage/configuration/StorageConfiguration';
+import DI from './lib/di/DI';
 
 const bodyParser = require('body-parser');
 const fileUpload = require('express-fileupload');
@@ -13,13 +15,11 @@ export default class Application extends ServerApplicationInterface {
      *
      * @param {Express} expressApp
      * @param {RoutersProviderFactory} routersFactory
-     * @param {StorageProvider} storageProvider
      * @param {DispatchInterface} dispatcher
      * @param {ResponseFactory} responseFactory
      */
     constructor(expressApp,
                 routersFactory,
-                storageProvider,
                 dispatcher,
                 responseFactory
     ) {
@@ -31,8 +31,7 @@ export default class Application extends ServerApplicationInterface {
             createParentPath: true
         }));
         Sentry.init({
-            dsn: storageProvider
-                .getConfiguration()
+            dsn: DI.getInstance().get(StorageConfiguration)
                 .getSecretStorage()
                 .fetch('sentry:api:dsn')
         });
@@ -43,12 +42,6 @@ export default class Application extends ServerApplicationInterface {
          * @private
          */
         this._routersFactory = routersFactory;
-        /**
-         *
-         * @type {StorageProvider}
-         * @private
-         */
-        this._storageProvider = storageProvider;
 
         /**
          *
@@ -85,7 +78,7 @@ export default class Application extends ServerApplicationInterface {
      */
     _applyRouters() {
         const routers = this._routersFactory
-            .create(this._storageProvider, this._dispatcher)
+            .create(this._dispatcher)
             .fetch();
 
         for (const key in routers) {

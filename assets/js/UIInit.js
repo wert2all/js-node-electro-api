@@ -256,19 +256,16 @@ export default class UIInit {
             new UIImageActionsModifierComposite([
                 new UIImageActionModifier(
                     new DomListenersModifier(),
-                    document,
                     actionsConfig.getDownloadSelector(),
                     new UIImageDownloadAction()
                 ),
                 new UIImageActionModifier(
                     new DomListenersModifier(),
-                    document,
                     actionsConfig.getEditSelector(),
                     new UIImageEditAction()
                 ),
                 new UIImageActionModifier(
                     new DomListenersModifier(),
-                    document,
                     actionsConfig.getDeleteSelector(),
                     new UIImageDeleteAction(new UIConfirm(UIkit))
                 )

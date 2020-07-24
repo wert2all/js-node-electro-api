@@ -9,11 +9,11 @@ export default class UIImageActionModifier extends UIImageActionsModifierInterfa
     /**
      *
      * @param {DomListenersModifier} domListeners
-     * @param {Document} document
+     * @param {DomListenersModifier} domListeners
      * @param {string} selector
      * @param {UIImageActionInterface} onClickAction
      */
-    constructor(domListeners, document, selector, onClickAction) {
+    constructor(domListeners, selector, onClickAction) {
         super();
         /**
          *
@@ -21,18 +21,6 @@ export default class UIImageActionModifier extends UIImageActionsModifierInterfa
          * @private
          */
         this._domListener = domListeners;
-        /**
-         *
-         * @type {null|ImageData}
-         * @private
-         */
-        this._imageData = null;
-        /**
-         *
-         * @type {Document}
-         * @private
-         */
-        this._document = document;
         /**
          *
          * @type {string}
@@ -49,16 +37,16 @@ export default class UIImageActionModifier extends UIImageActionsModifierInterfa
 
     /**
      *
+     * @param {ParentNode} node
      * @param {ImageData} imageData
      */
-    applyData(imageData) {
-        this._imageData = imageData;
+    applyData(node, imageData) {
         const actionIcon = this._domListener.removeEventListeners(
-            this._document.querySelector(this._selector)
+            node.querySelector(this._selector)
         );
         actionIcon.addEventListener('click', (event) => {
             event.preventDefault();
-            this._onClickAction.click(this._imageData);
+            this._onClickAction.click(imageData);
         });
     }
 }

@@ -34,6 +34,7 @@ import UIPageItem from './ui/pager/elements/UIPageItem';
 import UIImageDownloadAction from './module/imagelist/item/actions/actions/UIImageDownloadAction';
 import UIImageEditAction from './module/imagelist/item/actions/actions/UIImageEditAction';
 import UIImageDeleteAction from './module/imagelist/item/actions/actions/UIImageDeleteAction';
+import UIConfirm from './ui/dialog/UIConfirm';
 
 /**
  * @class UIInit
@@ -269,7 +270,7 @@ export default class UIInit {
                     new DomListenersModifier(),
                     document,
                     actionsConfig.getDeleteSelector(),
-                    new UIImageDeleteAction()
+                    new UIImageDeleteAction(new UIConfirm(UIkit))
                 )
             ]),
             new UIProfileViewFactory()

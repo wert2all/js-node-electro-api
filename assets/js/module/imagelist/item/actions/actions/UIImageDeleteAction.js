@@ -8,10 +8,28 @@ import UIImageActionInterface from '../UIImageActionInterface';
 export default class UIImageDeleteAction extends UIImageActionInterface {
     /**
      *
+     * @param {UIConfirm} confirm
+     */
+    constructor(confirm) {
+        super();
+        /**
+         *
+         * @type {UIConfirm}
+         * @private
+         */
+        this._confirm = confirm;
+    }
+
+    /**
+     *
      * @param {ImageData} imageData
      */
     click(imageData) {
-        console.log('delete');
-        console.log(imageData);
+        this._confirm.confirm('Delete image?')
+            .then(() => {
+                console.log('deleted');
+                console.log(imageData);
+            })
+            .catch(() => true);
     }
 }

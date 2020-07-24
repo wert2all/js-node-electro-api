@@ -132,7 +132,6 @@ export default class UIImageList extends UIElementInterface {
         this._hideLoader();
         data.getImages()
             .forEach(imageData => {
-                console.log(imageData);
                 this._viewHolder
                     .getGrid()
                     .addElement(

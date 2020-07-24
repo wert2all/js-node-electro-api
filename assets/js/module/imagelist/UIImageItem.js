@@ -143,7 +143,7 @@ export default class UIImageItem extends UIElementInterface {
         imageItem.init();
         const actions = imageItem.getActions();
         if (actions !== null) {
-            actions.applyData(imageData);
+            actions.applyData(imageItem.getNode(), imageData);
         }
         imageItem.setImage(imageData.getUrl())
             .setImageType(imageData.getType())

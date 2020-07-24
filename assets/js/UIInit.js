@@ -63,28 +63,21 @@ export default class UIInit {
          * @private
          */
         this._uiProfile = null;
-        /**
-         *
-         * @type {null|UIImageItem}
-         * @private
-         */
-        this._uiImageItem = null;
     }
 
     init(window) {
         this._initUI(window.document);
         this._initUIComponents(window);
-        this._appendGApi(window, this._uiImageItem);
+        this._appendGApi(window);
         this._initIcons();
     }
 
     /**
      *
      * @param window
-     * @param {UIImageItem} imageItem
      * @private
      */
-    _appendGApi(window, imageItem) {
+    _appendGApi(window) {
         const gaAuthConfig = this._config.getGoogleConfig().getAuthConfig();
         const self = this;
         window.onGApiLoad = () => {
@@ -95,6 +88,15 @@ export default class UIInit {
                         window.gapi,
                         new AuthListener(this._ui)
                             .addAfterAuth(authProvider => {
+                                const api = new Api(
+                                    new ApiFetcher(),
+                                    ApiUrlFactory.create(window)
+                                );
+                                const imageItem = this._makeImageItem(
+                                    document,
+                                    api,
+                                    authProvider
+                                );
                                 const imageViewHolder = new UIImagesViewHolder(
                                     this._ui.getContent(),
                                     this._ui.getGrid(),
@@ -103,14 +105,7 @@ export default class UIInit {
                                     imageItem,
                                     this._ui.getPager()
                                 );
-                                new UIImageList(
-                                    imageViewHolder,
-                                    new Api(
-                                        new ApiFetcher(),
-                                        ApiUrlFactory.create(window)
-                                    ),
-                                    authProvider
-                                )
+                                new UIImageList(imageViewHolder, api, authProvider)
                                     .init();
                             })
                     );
@@ -230,6 +225,17 @@ export default class UIInit {
             UIkit
         );
         this._uiProfile.init();
+    }
+
+    /**
+     *
+     * @param {Document} document
+     * @param {Api} api
+     * @param {AuthProviderInterface} authProvider
+     * @return {UIImageItem}
+     * @private
+     */
+    _makeImageItem(document, api, authProvider) {
         const actionsConfig = new UIImageItemConfigActions(
             '.uk-card-footer .uk-icon-link.uk-icon.image-icon-download',
             '.uk-card-footer .uk-icon-link.uk-icon.image-icon-edit',
@@ -250,7 +256,7 @@ export default class UIInit {
                 '.uk-card-header .uk-grid-small  a.image_profile_icon',
             )
         );
-        this._uiImageItem = new UIImageItem(
+        const imageItem = new UIImageItem(
             document.querySelector('.one_image_card'),
             uiItemConfig,
             new UIImageActionsModifierComposite([
@@ -267,11 +273,16 @@ export default class UIInit {
                 new UIImageActionModifier(
                     new DomListenersModifier(),
                     actionsConfig.getDeleteSelector(),
-                    new UIImageDeleteAction(new UIConfirm(UIkit))
+                    new UIImageDeleteAction(
+                        new UIConfirm(UIkit),
+                        api,
+                        authProvider
+                    )
                 )
             ]),
             new UIProfileViewFactory()
         );
-        this._uiImageItem.init();
+        imageItem.init();
+        return imageItem;
     }
 }

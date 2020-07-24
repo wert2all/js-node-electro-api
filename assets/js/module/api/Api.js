@@ -44,6 +44,26 @@ export default class Api {
     /**
      *
      * @param {UserProfile} userProfile
+     * @param {ImageData} imageData
+     * @return {Promise<ApiFetchResult>}
+     */
+    async deleteImage(userProfile, imageData) {
+        const options = {
+            method: 'POST',
+            body: JSON.stringify({
+                token: this._createToken(userProfile),
+                image: imageData.getId()
+            })
+        };
+        return await this._fetcher.fetch(
+            this._createUrl('imagelist/delete/'),
+            options
+        );
+    }
+
+    /**
+     *
+     * @param {UserProfile} userProfile
      * @return {string}
      * @private
      */
@@ -58,8 +78,8 @@ export default class Api {
      * @return {string}
      * @private
      */
-    _createUrl(url, limits) {
-        return this._rootURL + url + this._createLimits(limits);
+    _createUrl(url, limits = null) {
+        return this._rootURL + url + ((limits) ? this._createLimits(limits) : '');
     }
 
     /**

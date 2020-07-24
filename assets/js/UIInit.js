@@ -252,13 +252,11 @@ export default class UIInit {
             new UIImageActionsComposite([
                 new UIImageAction(
                     new DomListeners(),
-                    document,
                     actionsConfig.getDownloadSelector(),
                     (imageData) => window.location.href = imageData.getUrl()
                 ),
                 new UIImageAction(
                     new DomListeners(),
-                    document,
                     actionsConfig.getEditSelector(),
                     (imageData) => {
                         console.log('edit');
@@ -267,7 +265,6 @@ export default class UIInit {
                 ),
                 new UIImageAction(
                     new DomListeners(),
-                    document,
                     actionsConfig.getDeleteSelector(),
                     (imageData) => {
                         console.log('delete');

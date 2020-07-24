@@ -22,9 +22,10 @@ export default class UIImageActionsComposite extends UIImageActionsInterface {
 
     /**
      *
+     * @param {ParentNode} node
      * @param {ImageData} imageData
      */
-    applyData(imageData) {
-        this._actions.forEach(action => action.applyData(imageData));
+    applyData(node, imageData) {
+        this._actions.forEach(action => action.applyData(node, imageData));
     }
 }

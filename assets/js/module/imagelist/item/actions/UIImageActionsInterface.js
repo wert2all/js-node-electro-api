@@ -5,12 +5,11 @@
  */
 export default class UIImageActionsInterface {
     /**
-     *
-     * @param {ImageData} imageData
      * @abstract
+     * @param {ParentNode} node
+     * @param {ImageData} imageData
      */
     // eslint-disable-next-line no-unused-vars
-    applyData(imageData) {
-
+    applyData(node, imageData) {
     }
 }

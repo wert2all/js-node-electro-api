@@ -17,7 +17,7 @@ export default class UIConfirm {
     /**
      *
      * @param {string} message
-     * @return {Promise<boolean>}
+     * @return {Promise<void>}
      */
     confirm(message) {
         return this._uikit.modal.confirm(message);

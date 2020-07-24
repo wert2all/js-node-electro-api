@@ -10,7 +10,7 @@ export default class UIImageItem extends UIElementInterface {
      *
      * @param {ParentNode} itemNode
      * @param {UIImageItemConfig} config
-     * @param {UIImageActionsInterface} actions
+     * @param {UIImageActionsModifierInterface} actions
      * @param {UIProfileViewFactory|null} profileViewFactory
      */
     constructor(itemNode, config, actions = null, profileViewFactory = null) {
@@ -66,7 +66,7 @@ export default class UIImageItem extends UIElementInterface {
 
         /**
          *
-         * @type {null|UIImageActionsInterface}
+         * @type {null|UIImageActionsModifierInterface}
          * @private
          */
         this._actions = actions;
@@ -84,7 +84,7 @@ export default class UIImageItem extends UIElementInterface {
 
     /**
      *
-     * @return {null|UIImageActionsInterface}
+     * @return {null|UIImageActionsModifierInterface}
      */
     getActions() {
         return this._actions;

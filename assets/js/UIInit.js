@@ -24,13 +24,17 @@ import UIImageItemConfig from './module/imagelist/item/config/UIImageItemConfig'
 import UIImageItemConfigRadio from './module/imagelist/item/config/UIImageItemConfigRadio';
 import UIImageItemConfigProfile from './module/imagelist/item/config/UIImageItemConfigProfile';
 import UIImageItemConfigActions from './module/imagelist/item/config/UIImageItemConfigActions';
-import DomListeners from './dom/DomListeners';
-import UIImageAction from './module/imagelist/item/actions/elements/UIImageAction';
-import UIImageActionsComposite from './module/imagelist/item/actions/UIImageActionsComposite';
+import DomListenersModifier from './dom/utils/DomListenersModifier';
+import UIImageActionModifier from './module/imagelist/item/actions/elements/UIImageActionModifier';
+import UIImageActionsModifierComposite from './module/imagelist/item/actions/UIImageActionsModifierComposite';
 import UIProfileViewFactory from './module/imagelist/item/profile/UIProfileViewFactory';
 import UIImagesViewHolder from './module/imagelist/UIImagesViewHolder';
 import UIPager from './ui/pager/UIPager';
 import UIPageItem from './ui/pager/elements/UIPageItem';
+import UIImageDownloadAction from './module/imagelist/item/actions/actions/UIImageDownloadAction';
+import UIImageEditAction from './module/imagelist/item/actions/actions/UIImageEditAction';
+import UIImageDeleteAction from './module/imagelist/item/actions/actions/UIImageDeleteAction';
+import UIConfirm from './ui/dialog/UIConfirm';
 
 /**
  * @class UIInit
@@ -144,7 +148,7 @@ export default class UIInit {
         const authElement = new UIAuthElementComposite([
             new UIAuthElement(
                 new UiAuthNodesHolder(
-                    new DomListeners(),
+                    new DomListenersModifier(),
                     document.querySelector('#userprofile_container h4.uk-text-center'),
                     document.querySelector('#userprofile_container img.profile-img'),
                     document.querySelector(
@@ -158,7 +162,7 @@ export default class UIInit {
             ),
             new UIAuthElement(
                 new UiAuthNodesHolder(
-                    new DomListeners(),
+                    new DomListenersModifier(),
                     null,
                     null,
                     document.querySelector('header ul.uk-navbar-nav a.profile_link'),
@@ -168,7 +172,7 @@ export default class UIInit {
             ),
             new UIAuthElement(
                 new UiAuthNodesHolder(
-                    new DomListeners(),
+                    new DomListenersModifier(),
                     null,
                     null,
                     document.querySelector('.bar-bottom a.profile_link'),
@@ -249,27 +253,21 @@ export default class UIInit {
         this._uiImageItem = new UIImageItem(
             document.querySelector('.one_image_card'),
             uiItemConfig,
-            new UIImageActionsComposite([
-                new UIImageAction(
-                    new DomListeners(),
+            new UIImageActionsModifierComposite([
+                new UIImageActionModifier(
+                    new DomListenersModifier(),
                     actionsConfig.getDownloadSelector(),
-                    (imageData) => window.location.href = imageData.getUrl()
+                    new UIImageDownloadAction()
                 ),
-                new UIImageAction(
-                    new DomListeners(),
+                new UIImageActionModifier(
+                    new DomListenersModifier(),
                     actionsConfig.getEditSelector(),
-                    (imageData) => {
-                        console.log('edit');
-                        console.log(imageData);
-                    }
+                    new UIImageEditAction()
                 ),
-                new UIImageAction(
-                    new DomListeners(),
+                new UIImageActionModifier(
+                    new DomListenersModifier(),
                     actionsConfig.getDeleteSelector(),
-                    (imageData) => {
-                        console.log('delete');
-                        console.log(imageData);
-                    }
+                    new UIImageDeleteAction(new UIConfirm(UIkit))
                 )
             ]),
             new UIProfileViewFactory()

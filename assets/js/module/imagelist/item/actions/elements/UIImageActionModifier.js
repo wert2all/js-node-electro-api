@@ -1,22 +1,23 @@
-import UIImageActionsInterface from '../UIImageActionsInterface';
+import UIImageActionsModifierInterface from '../UIImageActionsModifierInterface';
 
 /**
- * @class UIImageAction
- * @type UIImageActionsInterface
- * @extends UIImageActionsInterface
+ * @class UIImageActionModifier
+ * @type UIImageActionsModifierInterface
+ * @extends UIImageActionsModifierInterface
  */
-export default class UIImageAction extends UIImageActionsInterface {
+export default class UIImageActionModifier extends UIImageActionsModifierInterface {
     /**
      *
-     * @param {DomListeners} domListeners
+     * @param {DomListenersModifier} domListeners
+     * @param {DomListenersModifier} domListeners
      * @param {string} selector
-     * @param {function} action
+     * @param {UIImageActionInterface} onClickAction
      */
-    constructor(domListeners, selector, action = Function.prototype) {
+    constructor(domListeners, selector, onClickAction) {
         super();
         /**
          *
-         * @type {DomListeners}
+         * @type {DomListenersModifier}
          * @private
          */
         this._domListener = domListeners;
@@ -28,10 +29,10 @@ export default class UIImageAction extends UIImageActionsInterface {
         this._selector = selector;
         /**
          *
-         * @type {Function}
+         * @type {UIImageActionInterface}
          * @private
          */
-        this._action = action;
+        this._onClickAction = onClickAction;
     }
 
     /**
@@ -45,7 +46,7 @@ export default class UIImageAction extends UIImageActionsInterface {
         );
         actionIcon.addEventListener('click', (event) => {
             event.preventDefault();
-            this._action(imageData);
+            this._onClickAction.click(imageData);
         });
     }
 }

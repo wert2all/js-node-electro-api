@@ -1,7 +1,7 @@
 /**
- * @class DomListeners
+ * @class DomListenersModifier
  */
-export default class DomListeners {
+export default class DomListenersModifier {
     /**
      *
      * @param {Node} element

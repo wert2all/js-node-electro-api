@@ -1,9 +1,9 @@
 /**
- * @class UIImageActionsInterface
+ * @class UIImageActionsModifierInterface
  * @interface
  * @abstract
  */
-export default class UIImageActionsInterface {
+export default class UIImageActionsModifierInterface {
     /**
      *
      * @param {ImageData} imageData

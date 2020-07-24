@@ -4,7 +4,7 @@
 export default class UiAuthNodesHolder {
     /**
      *
-     * @param {DomListeners} domListeners
+     * @param {DomListenersModifier} domListeners
      * @param {Element|null} userName
      * @param {Node|null} avatarImg
      * @param {Node|null} profileLink
@@ -43,7 +43,7 @@ export default class UiAuthNodesHolder {
         this._signOutLink = signOffLink;
         /**
          *
-         * @type {DomListeners}
+         * @type {DomListenersModifier}
          * @private
          */
         this._domListeners = domListeners;

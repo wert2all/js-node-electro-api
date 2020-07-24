@@ -2,7 +2,6 @@ import RequestInterface from '../../routers/request/RequestInterface';
 import FilesRepository from '../../db/repository/FilesRepository';
 import ResponseDataClass from '../../routers/response/ResponseDataClass';
 import ResponseResult from '../../routers/response/ResponseResult';
-import ImagesGetDataClass from './data/ImagesGetDataClass';
 import ApiKeyProvider from '../auth/key/KeyProvider';
 import AuthCheck from '../auth/AuthCheck';
 import AuthParams from '../auth/params/Params';
@@ -14,6 +13,7 @@ import DI from '../../lib/di/DI';
 import ImageUrl from '../../data/images/ImageUrl';
 import ConnectionInterface from '../../lib/db-connection/ConnectionInterface';
 import StorageConfiguration from '../../storage/configuration/StorageConfiguration';
+import ImagesDeleteDataClass from './data/ImagesDeleteDataClass';
 
 /**
  * @class ImagesDeleteRequest
@@ -82,11 +82,11 @@ export default class ImagesDeleteRequest extends RequestInterface {
     /**
      *
      * @param request
-     * @return {Promise<ImagesGetDataClass>}
+     * @return {Promise<ImagesDeleteDataClass>}
      * @private
      */
     async _prepareRequest(request) {
-        const requestData = ImagesGetDataClass.factory(request);
+        const requestData = ImagesDeleteDataClass.factory(request);
         requestData.setGoogleAccount(
             await this._getGoogleAccount(requestData)
         );
@@ -95,7 +95,7 @@ export default class ImagesDeleteRequest extends RequestInterface {
 
     /**
      *
-     * @param {ImagesGetDataClass} requestData
+     * @param {ImagesDeleteDataClass} requestData
      * @return {GoogleAccount}
      * @private
      */
@@ -115,7 +115,7 @@ export default class ImagesDeleteRequest extends RequestInterface {
 
     /**
      *
-     * @param {ImagesGetDataClass} requestData
+     * @param {ImagesDeleteDataClass} requestData
      * @private
      */
     async _checkAdmin(requestData) {

@@ -50,6 +50,9 @@ export default class Api {
     async deleteImage(userProfile, imageData) {
         const options = {
             method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
             body: JSON.stringify({
                 token: this._createToken(userProfile),
                 image: imageData.getId()

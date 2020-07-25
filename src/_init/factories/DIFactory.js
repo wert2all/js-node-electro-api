@@ -27,6 +27,7 @@ import SQLLogEvent from '../../extended/logger/events/SQLLogEvent';
 import ConsoleLogger from '../../lib/logger/adapters/ConsoleLogger';
 import LogFormatter from '../../extended/logger/formater/LogFormatter';
 import FileLogger from '../../lib/logger/adapters/FileLogger';
+import AppLogEvent from '../../extended/logger/events/AppLogEvent';
 
 export default class DIFactory {
     /**
@@ -113,6 +114,10 @@ export default class DIFactory {
         const loggers = {};
         loggers[SQLLogEvent.TAG] = new FileLogger(
             applicationDirectory + 'logs/sql.log',
+            formatter
+        );
+        loggers[AppLogEvent.TAG] = new FileLogger(
+            applicationDirectory + 'logs/app.log',
             formatter
         );
         return new LoggerFactory(loggers, new ConsoleLogger(formatter));

@@ -74,5 +74,70 @@ export default class FileLogger extends LoggerInterface {
             this._writer = fs.createWriteStream(file, opts);
         }
     }
+
+    /**
+     *
+     * @param {LogEventInterface} logEvent
+     * @return {LoggerInterface}
+     */
+    error(logEvent) {
+        this._log(
+            this._formatter
+                .format(logEvent, LoggerInterface.ERROR)
+        );
+        return this;
+    }
+
+    /**
+     *
+     * @param {LogEventInterface} logEvent
+     * @return {LoggerInterface}
+     */
+    fatal(logEvent) {
+        this._log(
+            this._formatter
+                .format(logEvent, LoggerInterface.FATAl)
+        );
+        return this;
+    }
+
+    /**
+     *
+     * @param {LogEventInterface} logEvent
+     * @return {LoggerInterface}
+     */
+    info(logEvent) {
+        this._log(
+            this._formatter
+                .format(logEvent, LoggerInterface.INFO)
+        );
+        return this;
+    }
+
+    /**
+     *
+     * @param {LogEventInterface} logEvent
+     * @return {LoggerInterface}
+     */
+    trace(logEvent) {
+        this._log(
+            this._formatter
+                .format(logEvent, LoggerInterface.TRACE)
+        );
+        return this;
+    }
+
+    /**
+     *
+     * @param {LogEventInterface} logEvent
+     * @return {LoggerInterface}
+     */
+    warn(logEvent) {
+        this._log(
+            this._formatter
+                .format(logEvent, LoggerInterface.WARN)
+        );
+        return this;
+    }
 }
 

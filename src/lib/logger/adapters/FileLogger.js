@@ -53,11 +53,7 @@ export default class FileLogger extends LoggerInterface {
      * @private
      */
     _log(message) {
-        fs.appendFile(this._filePath, message + this._newLine, err => {
-            if (err) {
-                throw err;
-            }
-        });
+        fs.appendFileSync(this._filePath, message + this._newLine);
     }
 
     /**

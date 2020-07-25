@@ -21,6 +21,13 @@ import ServerConfigFactory from './ServerConfigFactory';
 import ExpressFactory from './ExpressFactory';
 import MergeReader from '../../lib/json/MergeReader';
 import ReaderDefault from '../../lib/json/ReaderDefault';
+import LoggerInterface from '../../lib/logger/LoggerInterface';
+import LoggerFactory from '../../extended/logger/LoggerFactory';
+import SQLLogEvent from '../../extended/logger/events/SQLLogEvent';
+import ConsoleLogger from '../../lib/logger/adapters/ConsoleLogger';
+import LogFormatter from '../../extended/logger/formater/LogFormatter';
+import FileLogger from '../../lib/logger/adapters/FileLogger';
+import AppLogEvent from '../../extended/logger/events/AppLogEvent';
 
 export default class DIFactory {
     /**
@@ -34,7 +41,9 @@ export default class DIFactory {
 
         di.register(ServerConfig, serverConfig);
         di.register('Express', ExpressFactory.create(serverConfig));
-        di.register(ConnectionInterface, new SQLiteConnection());
+
+        di.register(LoggerInterface, this._getLogger(applicationDirectory));
+        di.register(ConnectionInterface, new SQLiteConnection(di.get(LoggerInterface)));
 
         di.register(
             KeyValueStorageInterface,
@@ -93,5 +102,24 @@ export default class DIFactory {
             )
         );
         return di;
+    }
+
+    /**
+     * @param {string} applicationDirectory
+     * @return {LoggerInterface}
+     * @private
+     */
+    static _getLogger(applicationDirectory) {
+        const formatter = new LogFormatter(' | ');
+        const loggers = {};
+        loggers[SQLLogEvent.TAG] = new FileLogger(
+            applicationDirectory + 'logs/sql.log',
+            formatter
+        );
+        loggers[AppLogEvent.TAG] = new FileLogger(
+            applicationDirectory + 'logs/app.log',
+            formatter
+        );
+        return new LoggerFactory(loggers, new ConsoleLogger(formatter));
     }
 }

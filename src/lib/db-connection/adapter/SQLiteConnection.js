@@ -3,6 +3,7 @@ import SQLiteTableSQLBuilder from './builder/SQLiteTableSQLBuilder';
 import SQLiteSelectSQLBuilder from './builder/SQLiteSelectSQLBuilder';
 import SQLiteInsertSQLBuilder from './builder/SQLiteInsertSQLBuilder';
 import SQLiteUpdateSQLBuilder from './builder/SQLiteUpdateSQLBuilder';
+import SQLLogEvent from '../../../extended/logger/events/SQLLogEvent';
 
 /**
  * @class SQLiteConnection
@@ -12,9 +13,10 @@ import SQLiteUpdateSQLBuilder from './builder/SQLiteUpdateSQLBuilder';
 export default class SQLiteConnection extends ConnectionInterface {
     /**
      *
+     * @param {LoggerInterface} logger
      * @param serverConnect
      */
-    constructor(serverConnect = null) {
+    constructor(logger, serverConnect = null) {
         super();
         /**
          * @param {*}
@@ -45,6 +47,12 @@ export default class SQLiteConnection extends ConnectionInterface {
          * @private
          */
         this._builderUpdate = new SQLiteUpdateSQLBuilder();
+        /**
+         *
+         * @type {LoggerInterface}
+         * @private
+         */
+        this._logger = logger;
     }
 
     /**
@@ -121,7 +129,7 @@ export default class SQLiteConnection extends ConnectionInterface {
      */
     async _fetch(connection, sql, whereData) {
         return new Promise((resolve, reject) => {
-                console.info(sql);
+                this._logger.info(new SQLLogEvent(sql));
                 const stmt = connection.prepare(sql, whereData);
                 stmt.all(whereData, (err, rows) => {
                     if (err) {
@@ -144,8 +152,7 @@ export default class SQLiteConnection extends ConnectionInterface {
      */
     async _exec(connection, sql, whereData) {
         return new Promise((resolve, reject) => {
-            console.info(sql);
-            console.info(whereData);
+            this._logger.info(new SQLLogEvent(sql));
             const stmt = connection.prepare(sql, whereData);
             stmt.run(whereData, err => {
                 if (err) {
@@ -180,6 +187,6 @@ export default class SQLiteConnection extends ConnectionInterface {
      */
     async _createTable(definition, connection) {
         const tableSQl = this._builderCreateTable.buildSQL(definition, null);
-        return this._exec(connection, tableSQl, []);
+        return this._exec(connection, tableSQl, {});
     }
 }

@@ -21,12 +21,18 @@ import ServerConfigFactory from './ServerConfigFactory';
 import ExpressFactory from './ExpressFactory';
 import MergeReader from '../../lib/json/MergeReader';
 import ReaderDefault from '../../lib/json/ReaderDefault';
+import LoggerInterface from '../../lib/logger/LoggerInterface';
+import LoggerFactory from '../../extended/logger/LoggerFactory';
+import SQLLogEvent from '../../extended/logger/events/SQLLogEvent';
+import ConsoleLogger from '../../extended/logger/adapters/ConsoleLogger';
+import LogFormatter from '../../extended/logger/formater/LogFormatter';
 
 export default class DIFactory {
     /**
      *
      * @return DI
      */
+    // eslint-disable-next-line max-statements
     static create() {
         const di = DI.getInstance();
         const serverConfig = ServerConfigFactory.create();
@@ -91,6 +97,14 @@ export default class DIFactory {
                 di.get(StorageConfiguration).getConfig(),
                 di.get(FileStorage).getConfig()
             )
+        );
+        const formatter = new LogFormatter('|');
+        const loggers = {};
+        loggers[SQLLogEvent.TAG] = new ConsoleLogger(formatter);
+
+        di.register(
+            LoggerInterface,
+            new LoggerFactory(loggers, new ConsoleLogger(formatter))
         );
         return di;
     }

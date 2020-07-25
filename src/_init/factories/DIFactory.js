@@ -26,6 +26,7 @@ import LoggerFactory from '../../extended/logger/LoggerFactory';
 import SQLLogEvent from '../../extended/logger/events/SQLLogEvent';
 import ConsoleLogger from '../../lib/logger/adapters/ConsoleLogger';
 import LogFormatter from '../../extended/logger/formater/LogFormatter';
+import FileLogger from '../../lib/logger/adapters/FileLogger';
 
 export default class DIFactory {
     /**
@@ -40,7 +41,7 @@ export default class DIFactory {
         di.register(ServerConfig, serverConfig);
         di.register('Express', ExpressFactory.create(serverConfig));
 
-        di.register(LoggerInterface, this._getLogger());
+        di.register(LoggerInterface, this._getLogger(applicationDirectory));
         di.register(ConnectionInterface, new SQLiteConnection(di.get(LoggerInterface)));
 
         di.register(
@@ -103,14 +104,17 @@ export default class DIFactory {
     }
 
     /**
-     *
+     * @param {string} applicationDirectory
      * @return {LoggerInterface}
      * @private
      */
-    static _getLogger() {
+    static _getLogger(applicationDirectory) {
         const formatter = new LogFormatter(' | ');
         const loggers = {};
-        loggers[SQLLogEvent.TAG] = new ConsoleLogger(formatter);
+        loggers[SQLLogEvent.TAG] = new FileLogger(
+            applicationDirectory + 'logs/sql.log',
+            formatter
+        );
         return new LoggerFactory(loggers, new ConsoleLogger(formatter));
     }
 }

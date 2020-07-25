@@ -131,10 +131,11 @@ export default class UIImageItem extends UIElementInterface {
     /**
      *
      * @param {ImageData} imageData
+     * @param {UIElementListInterface} elementList
      * @return {UIImageItem}
      */
     // eslint-disable-next-line no-unused-vars
-    create(imageData) {
+    create(imageData, elementList) {
         /**
          *
          * @type {UIImageItem}
@@ -143,7 +144,7 @@ export default class UIImageItem extends UIElementInterface {
         imageItem.init();
         const actions = imageItem.getActions();
         if (actions !== null) {
-            actions.applyData(imageItem.getNode(), imageData);
+            actions.applyData(imageItem.getNode(), imageData, elementList);
         }
         imageItem.setImage(imageData.getUrl())
             .setImageType(imageData.getType())

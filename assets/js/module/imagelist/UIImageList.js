@@ -1,16 +1,16 @@
-import UIElementInterface from '../../ui/interfaces/element/UIElementInterface';
 import ImageData from '../../data/ImageData';
 import UserProfile from '../../data/UserProfile';
 import ApiLimits from '../api/ApiLimits';
 import ApiImagesLimitData from './data/ApiImagesLimitData';
 import ApiImagesHolder from './data/ApiImagesHolder';
+import UIElementListInterface from '../../ui/interfaces/element/UIElementListInterface';
 
 /**
  * @class UIImageList
  * @extends UIElementInterface
  * @type UIElementInterface
  */
-export default class UIImageList extends UIElementInterface {
+export default class UIImageList extends UIElementListInterface {
     /**
      *
      * @param {Api} api
@@ -137,7 +137,7 @@ export default class UIImageList extends UIElementInterface {
                     .addElement(
                         this._viewHolder
                             .getImageItem()
-                            .create(imageData)
+                            .create(imageData, this)
                     );
             });
         return Promise.resolve(data);
@@ -242,5 +242,12 @@ export default class UIImageList extends UIElementInterface {
     _setElements() {
         this._viewHolder.getParentElement().clean();
         this._viewHolder.getParentElement().addElement(this._viewHolder.getGrid());
+    }
+
+    /**
+     * @return {void}
+     */
+    refresh() {
+        this._showData(this._apiLimits.getFrom());
     }
 }

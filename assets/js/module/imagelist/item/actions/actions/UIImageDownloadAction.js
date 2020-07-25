@@ -9,8 +9,10 @@ export default class UIImageDownloadAction extends UIImageActionInterface {
     /**
      *
      * @param {ImageData} imageData
+     * @param {UIElementListInterface} elementList
      */
-    click(imageData) {
+    // eslint-disable-next-line no-unused-vars
+    click(imageData, elementList = null) {
         window.location.href = imageData.getUrl();
     }
 }

@@ -25,6 +25,10 @@ export default class UserFilesEntity extends EntityInterface {
         this._user = null;
     }
 
+    static factory(imageId) {
+        return new UserFilesEntity().setValue(UserFilesDefinition.COLUMN_ID, imageId);
+    }
+
     /**
      *
      * @param {UserEntity} userEntity

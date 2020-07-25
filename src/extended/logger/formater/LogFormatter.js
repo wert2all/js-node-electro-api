@@ -28,11 +28,22 @@ export default class LogFormatter extends LogFormatterInterface {
      */
     format(logEvent, level) {
         return [
-            logEvent.getTime().toISOString().substring(0, 10),
+            this._createDateTime(logEvent),
             logEvent.getTag(),
             level,
             logEvent.getMessage()
         ].join(this._delimiter);
+    }
+
+    /**
+     *
+     * @param {LogEventInterface} logEvent
+     * @return {string}
+     * @private
+     */
+    _createDateTime(logEvent) {
+        return logEvent.getTime().toISOString().substring(0, 10) + ' '
+            + logEvent.getTime().toISOString().substring(11, 19);
     }
 }
 

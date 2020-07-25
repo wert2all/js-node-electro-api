@@ -15,6 +15,10 @@ import ConnectionInterface from '../../lib/db-connection/ConnectionInterface';
 import StorageConfiguration from '../../storage/configuration/StorageConfiguration';
 import ImagesDeleteDataClass from './data/ImagesDeleteDataClass';
 import UserFilesEntity from '../../data/entity/UserFilesEntity';
+import UserFilesDefinition from '../../db/definition/UserFilesDefinition';
+import fs from 'fs';
+import LoggerInterface from '../../lib/logger/LoggerInterface';
+import ImageLogEvent from './log/ImageLogEvent';
 
 /**
  * @class ImagesDeleteRequest
@@ -73,7 +77,7 @@ export default class ImagesDeleteRequest extends RequestInterface {
              */
             const imageData = await this._getImage(requestData.getImageId());
             if (imageData != null) {
-                console.log(imageData.getData());
+                this._deleteImageFile(imageData);
             }
             response.setStatus(true);
         } catch (e) {
@@ -151,5 +155,20 @@ export default class ImagesDeleteRequest extends RequestInterface {
     async _getImage(imageId) {
         const images = await this._repository.fetchData(UserFilesEntity.factory(imageId));
         return Promise.resolve(images[0]);
+    }
+
+    /**
+     *
+     * @param {UserFilesEntity} imageData
+     * @private
+     */
+    _deleteImageFile(imageData) {
+        const path = imageData.getValue(UserFilesDefinition.COLUMN_PATH);
+        fs.unlink(path, err => {
+            if (err != null) {
+                DI.getInstance().get(LoggerInterface)
+                    .info(new ImageLogEvent(err.message));
+            }
+        });
     }
 }

@@ -11,8 +11,9 @@ export default class UIImageDeleteAction extends UIImageActionInterface {
      * @param {UIConfirm} confirm
      * @param {Api} api
      * @param {AuthProviderInterface} authProvider
+     * @param {UINotifyInterface} notify
      */
-    constructor(confirm, api, authProvider) {
+    constructor(confirm, api, authProvider, notify) {
         super();
         /**
          *
@@ -32,6 +33,12 @@ export default class UIImageDeleteAction extends UIImageActionInterface {
          * @private
          */
         this._authProvider = authProvider;
+        /**
+         *
+         * @type {UINotifyInterface}
+         * @private
+         */
+        this._notify = notify;
     }
 
     /**
@@ -44,6 +51,7 @@ export default class UIImageDeleteAction extends UIImageActionInterface {
                 const response = this._api
                     .deleteImage(this._authProvider.getUserProfile(), imageData);
                 console.log(response);
+                this._notify.success('Deleted.');
             })
             .catch(() => true);
     }

@@ -276,7 +276,8 @@ export default class UIInit {
                     new UIImageDeleteAction(
                         new UIConfirm(UIkit),
                         api,
-                        authProvider
+                        authProvider,
+                        this._ui.getNotify()
                     )
                 )
             ]),

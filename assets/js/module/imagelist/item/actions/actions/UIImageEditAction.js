@@ -10,8 +10,10 @@ export default class UIImageEditAction extends UIImageActionInterface {
     /**
      *
      * @param {ImageData} imageData
+     * @param {UIElementListInterface} elementList
      */
-    click(imageData) {
+    // eslint-disable-next-line no-unused-vars
+    click(imageData, elementList = null) {
         console.log('edit');
         console.log(imageData);
     }

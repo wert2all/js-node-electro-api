@@ -25,8 +25,9 @@ export default class UIImageActionsModifierComposite
      *
      * @param {ParentNode} node
      * @param {ImageData} imageData
+     * @param {UIElementListInterface} elementList
      */
-    applyData(node, imageData) {
-        this._actions.forEach(action => action.applyData(node, imageData));
+    applyData(node, imageData, elementList = null) {
+        this._actions.forEach(action => action.applyData(node, imageData, elementList));
     }
 }

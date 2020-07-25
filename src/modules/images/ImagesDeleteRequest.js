@@ -14,6 +14,7 @@ import ImageUrl from '../../data/images/ImageUrl';
 import ConnectionInterface from '../../lib/db-connection/ConnectionInterface';
 import StorageConfiguration from '../../storage/configuration/StorageConfiguration';
 import ImagesDeleteDataClass from './data/ImagesDeleteDataClass';
+import UserFilesEntity from '../../data/entity/UserFilesEntity';
 
 /**
  * @class ImagesDeleteRequest
@@ -66,7 +67,14 @@ export default class ImagesDeleteRequest extends RequestInterface {
         try {
             const requestData = await this._prepareRequest(request);
             await this._checkAdmin(requestData);
-
+            /**
+             *
+             * @type {UserFilesEntity|null}
+             */
+            const imageData = await this._getImage(requestData.getImageId());
+            if (imageData != null) {
+                console.log(imageData.getData());
+            }
             response.setStatus(true);
         } catch (e) {
             console.log(e);
@@ -132,5 +140,16 @@ export default class ImagesDeleteRequest extends RequestInterface {
         if (isAdmin === false) {
             throw new ImagesGetNoAdmin();
         }
+    }
+
+    /**
+     *
+     * @param {number} imageId
+     * @return {Promise<UserFilesEntity|null>}
+     * @private
+     */
+    async _getImage(imageId) {
+        const images = await this._repository.fetchData(UserFilesEntity.factory(imageId));
+        return Promise.resolve(images[0]);
     }
 }

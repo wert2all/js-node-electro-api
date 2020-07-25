@@ -1,6 +1,11 @@
 import LoggerInterface from '../LoggerInterface';
-import path from 'path';
+import fs from 'fs';
 
+/**
+ * @class FileLogger
+ * @extends LoggerInterface
+ * @type LoggerInterface
+ */
 export default class FileLogger extends LoggerInterface {
     /**
      *
@@ -27,12 +32,6 @@ export default class FileLogger extends LoggerInterface {
          * @private
          */
         this._newLine = /^win/.test(process.platform) ? '\r\n' : '\n';
-        /**
-         *
-         * @type {null|WriteStream}
-         * @private
-         */
-        this._writer = null;
     }
 
     /**
@@ -54,25 +53,11 @@ export default class FileLogger extends LoggerInterface {
      * @private
      */
     _log(message) {
-        this._createWriter();
-        this._writer.write(message);
-        this._writer.end(this._newLine);
-    }
-
-    /**
-     *
-     * @private
-     */
-    _createWriter() {
-        if (!this._writer) {
-            const file = path.normalize(this._filePath);
-            const opts = {
-                flags: 'a',
-                encoding: 'utf8'
-            };
-
-            this._writer = fs.createWriteStream(file, opts);
-        }
+        fs.appendFile(this._filePath, message + this._newLine, err => {
+            if (err) {
+                throw err;
+            }
+        });
     }
 
     /**

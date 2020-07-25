@@ -22,18 +22,21 @@ import ExpressFactory from './ExpressFactory';
 import MergeReader from '../../lib/json/MergeReader';
 import ReaderDefault from '../../lib/json/ReaderDefault';
 import LoggerInterface from '../../lib/logger/LoggerInterface';
-import LoggerFactory from '../../extended/logger/LoggerFactory';
+import Logger from '../../extended/logger/Logger';
 import SQLLogEvent from '../../extended/logger/events/SQLLogEvent';
 import ConsoleLogger from '../../lib/logger/adapters/ConsoleLogger';
 import LogFormatter from '../../extended/logger/formater/LogFormatter';
 import FileLogger from '../../lib/logger/adapters/FileLogger';
 import AppLogEvent from '../../extended/logger/events/AppLogEvent';
+import LoggerStrategy from '../../extended/LoggerStrategy';
+import LogFormatterInterface from '../../lib/logger/LogFormatterInterface';
 
 export default class DIFactory {
     /**
      *
      * @return DI
      */
+    // eslint-disable-next-line max-statements
     static create() {
         const di = DI.getInstance();
         const serverConfig = ServerConfigFactory.create();
@@ -42,8 +45,13 @@ export default class DIFactory {
         di.register(ServerConfig, serverConfig);
         di.register('Express', ExpressFactory.create(serverConfig));
 
-        di.register(LoggerInterface, this._getLogger(applicationDirectory));
-        di.register(ConnectionInterface, new SQLiteConnection(di.get(LoggerInterface)));
+        di.register(LogFormatterInterface, new LogFormatter(' | '));
+        di.register(LoggerStrategy, this._getLoggers(di, serverConfig));
+        di.register(LoggerInterface, new Logger(di.get(LoggerStrategy)));
+
+        di.register(ConnectionInterface,
+            new SQLiteConnection(di.get(LoggerInterface))
+        );
 
         di.register(
             KeyValueStorageInterface,
@@ -105,21 +113,23 @@ export default class DIFactory {
     }
 
     /**
-     * @param {string} applicationDirectory
-     * @return {LoggerInterface}
+     *
+     * @param {DI} di
+     * @param {ServerConfig} serverConfig
+     * @return {LoggerStrategy}
      * @private
      */
-    static _getLogger(applicationDirectory) {
-        const formatter = new LogFormatter(' | ');
+    static _getLoggers(di, serverConfig) {
         const loggers = {};
+        const formatter = di.get(LogFormatterInterface);
         loggers[SQLLogEvent.TAG] = new FileLogger(
-            applicationDirectory + 'logs/sql.log',
+            serverConfig.getLogDirectory() + 'sql.log',
             formatter
         );
         loggers[AppLogEvent.TAG] = new FileLogger(
-            applicationDirectory + 'logs/app.log',
+            serverConfig.getLogDirectory() + 'app.log',
             formatter
         );
-        return new LoggerFactory(loggers, new ConsoleLogger(formatter));
+        return new LoggerStrategy(loggers, new ConsoleLogger(formatter));
     }
 }

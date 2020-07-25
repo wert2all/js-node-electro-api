@@ -32,7 +32,6 @@ export default class DIFactory {
      *
      * @return DI
      */
-    // eslint-disable-next-line max-statements
     static create() {
         const di = DI.getInstance();
         const serverConfig = ServerConfigFactory.create();

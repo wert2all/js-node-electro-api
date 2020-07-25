@@ -32,7 +32,6 @@ export default class DIFactory {
      *
      * @return DI
      */
-    // eslint-disable-next-line max-statements
     static create() {
         const di = DI.getInstance();
         const serverConfig = ServerConfigFactory.create();
@@ -40,7 +39,9 @@ export default class DIFactory {
 
         di.register(ServerConfig, serverConfig);
         di.register('Express', ExpressFactory.create(serverConfig));
-        di.register(ConnectionInterface, new SQLiteConnection());
+
+        di.register(LoggerInterface, this._getLogger());
+        di.register(ConnectionInterface, new SQLiteConnection(di.get(LoggerInterface)));
 
         di.register(
             KeyValueStorageInterface,
@@ -98,14 +99,18 @@ export default class DIFactory {
                 di.get(FileStorage).getConfig()
             )
         );
-        const formatter = new LogFormatter('|');
+        return di;
+    }
+
+    /**
+     *
+     * @return {LoggerInterface}
+     * @private
+     */
+    static _getLogger() {
+        const formatter = new LogFormatter(' | ');
         const loggers = {};
         loggers[SQLLogEvent.TAG] = new ConsoleLogger(formatter);
-
-        di.register(
-            LoggerInterface,
-            new LoggerFactory(loggers, new ConsoleLogger(formatter))
-        );
-        return di;
+        return new LoggerFactory(loggers, new ConsoleLogger(formatter));
     }
 }

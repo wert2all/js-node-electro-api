@@ -24,7 +24,7 @@ import ReaderDefault from '../../lib/json/ReaderDefault';
 import LoggerInterface from '../../lib/logger/LoggerInterface';
 import LoggerFactory from '../../extended/logger/LoggerFactory';
 import SQLLogEvent from '../../extended/logger/events/SQLLogEvent';
-import ConsoleLogger from '../../extended/logger/adapters/ConsoleLogger';
+import ConsoleLogger from '../../lib/logger/adapters/ConsoleLogger';
 import LogFormatter from '../../extended/logger/formater/LogFormatter';
 
 export default class DIFactory {

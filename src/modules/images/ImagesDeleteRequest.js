@@ -19,6 +19,11 @@ import UserFilesDefinition from '../../db/definition/UserFilesDefinition';
 import fs from 'fs';
 import LoggerInterface from '../../lib/logger/LoggerInterface';
 import ImageLogEvent from './log/ImageLogEvent';
+import LoggerStrategy from '../../extended/LoggerStrategy';
+import FileLogger from '../../lib/logger/adapters/FileLogger';
+import ServerConfig from '../../server/ServerConfig';
+import LogFormatterInterface from '../../lib/logger/LogFormatterInterface';
+import Logger from '../../extended/logger/Logger';
 
 /**
  * @class ImagesDeleteRequest
@@ -55,8 +60,10 @@ export default class ImagesDeleteRequest extends RequestInterface {
      */
     // eslint-disable-next-line no-unused-vars
     init(dispatcher) {
-        this._repository.setConnection(DI.getInstance().get(ConnectionInterface));
-        this._usersRepository.setConnection(DI.getInstance().get(ConnectionInterface));
+        const di = DI.getInstance();
+        this._repository.setConnection(di.get(ConnectionInterface));
+        this._usersRepository.setConnection(di.get(ConnectionInterface));
+        this._applyLogger(di);
         return this;
     }
 
@@ -170,5 +177,19 @@ export default class ImagesDeleteRequest extends RequestInterface {
                     .info(new ImageLogEvent(err.message));
             }
         });
+    }
+
+    /**
+     *
+     * @param {DI} di
+     * @private
+     */
+    _applyLogger(di) {
+        const path = di.get(ServerConfig).getLogDirectory() + 'imagelist.log';
+        const fileLogger = new FileLogger(path, di.get(LogFormatterInterface));
+        const loggerStrategy = di.get(LoggerStrategy)
+            .addLogger(ImageLogEvent.TAG, fileLogger);
+        di.register(LoggerStrategy, loggerStrategy);
+        di.register(LoggerInterface, new Logger(di.get(LoggerStrategy)));
     }
 }

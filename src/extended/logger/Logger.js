@@ -1,30 +1,23 @@
 import LoggerInterface from '../../lib/logger/LoggerInterface';
 
 /**
- * @class LoggerFactory
+ * @class Logger
  * @extends LoggerInterface
  * @type LoggerInterface
  */
-export default class LoggerFactory extends LoggerInterface {
+export default class Logger extends LoggerInterface {
     /**
      *
-     * @param {Object<string,LoggerInterface>}loggers
-     * @param {LoggerInterface} defaultLogger
+     * @param {LoggerStrategy} strategy
      */
-    constructor(loggers, defaultLogger) {
+    constructor(strategy) {
         super();
         /**
          *
-         * @type {Object<string, LoggerInterface>}
+         * @type {LoggerStrategy}
          * @private
          */
-        this._loggers = loggers;
-        /**
-         *
-         * @type {LoggerInterface}
-         * @private
-         */
-        this._defaultLogger = defaultLogger;
+        this._strategy = strategy;
     }
 
     /**
@@ -33,22 +26,10 @@ export default class LoggerFactory extends LoggerInterface {
      * @return {LoggerInterface}
      */
     debug(logEvent) {
-        this._factory(logEvent).debug(logEvent);
+        this._strategy
+            .get(logEvent)
+            .debug(logEvent);
         return this;
-    }
-
-    /**
-     *
-     * @param {LogEventInterface} logEvent
-     * @return {LoggerInterface}
-     * @private
-     */
-    _factory(logEvent) {
-        if (this._loggers.hasOwnProperty(logEvent.getTag())) {
-            return this._loggers[logEvent.getTag()];
-        } else {
-            return this._defaultLogger;
-        }
     }
 
     /**
@@ -57,7 +38,7 @@ export default class LoggerFactory extends LoggerInterface {
      * @return {LoggerInterface}
      */
     error(logEvent) {
-        this._factory(logEvent).error(logEvent);
+        this._strategy.get(logEvent).error(logEvent);
         return this;
     }
 
@@ -67,7 +48,7 @@ export default class LoggerFactory extends LoggerInterface {
      * @return {LoggerInterface}
      */
     fatal(logEvent) {
-        this._factory(logEvent).fatal(logEvent);
+        this._strategy.get(logEvent).fatal(logEvent);
         return this;
     }
 
@@ -77,7 +58,7 @@ export default class LoggerFactory extends LoggerInterface {
      * @return {LoggerInterface}
      */
     info(logEvent) {
-        this._factory(logEvent).info(logEvent);
+        this._strategy.get(logEvent).info(logEvent);
         return this;
     }
 
@@ -87,7 +68,7 @@ export default class LoggerFactory extends LoggerInterface {
      * @return {LoggerInterface}
      */
     trace(logEvent) {
-        this._factory(logEvent).trace(logEvent);
+        this._strategy.get(logEvent).trace(logEvent);
         return this;
     }
 
@@ -97,7 +78,7 @@ export default class LoggerFactory extends LoggerInterface {
      * @return {LoggerInterface}
      */
     warn(logEvent) {
-        this._factory(logEvent).warn(logEvent);
+        this._strategy.get(logEvent).warn(logEvent);
         return this;
     }
 }

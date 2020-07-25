@@ -18,7 +18,8 @@ export default class ServerConfigFactory {
             path.normalize(
                 // eslint-disable-next-line max-len
                 __dirname + path.sep + '..' + path.sep + '..' + path.sep + '..' + path.sep + '..' + path.sep
-            )
+            ),
+            'logs' + path.sep
         );
     }
 }

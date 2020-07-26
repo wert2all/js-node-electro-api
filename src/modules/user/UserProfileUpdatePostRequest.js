@@ -12,6 +12,7 @@ import ResponseResult from '../../routers/response/ResponseResult';
 import UserRepository from '../../db/repository/UserRepository';
 import DI from '../../lib/di/DI';
 import ConnectionInterface from '../../lib/db-connection/ConnectionInterface';
+import UserProfileDefinition from '../../db/definition/UserProfileDefinition';
 
 /**
  * @class UserProfileUpdatePostRequest
@@ -33,6 +34,12 @@ export default class UserProfileUpdatePostRequest extends RequestInterface {
          * @private
          */
         this._userRepository = new UserRepository();
+        /**
+         *
+         * @type {DI}
+         * @private
+         */
+        this._di = DI.getInstance();
     }
 
     /**
@@ -42,8 +49,8 @@ export default class UserProfileUpdatePostRequest extends RequestInterface {
      */
     // eslint-disable-next-line no-unused-vars
     init(dispatcher) {
-        this._profileRepository.setConnection(DI.getInstance().get(ConnectionInterface));
-        this._userRepository.setConnection(DI.getInstance().get(ConnectionInterface));
+        this._profileRepository.setConnection(this._di.get(ConnectionInterface));
+        this._userRepository.setConnection(this._di.get(ConnectionInterface));
         return this;
     }
 
@@ -57,14 +64,17 @@ export default class UserProfileUpdatePostRequest extends RequestInterface {
         const response = new ResponseDataClass();
         try {
             const requestData = await this._prepareRequest(request);
-
-            const em = new EntityManager(DI.getInstance().get(ConnectionInterface));
+            /**
+             *
+             * @type {EntityManager}
+             */
+            const em = this._di.get(EntityManager);
 
             const hash = await this._createProfileHash(requestData.getGoogleAccount());
             const profileEntities = await this._createEntities(requestData, hash);
-            profileEntities.map(async entity => {
-                await em.save(this._profileRepository.getDefinition(), entity);
-            });
+            profileEntities.map(async entity =>
+                await em.save(this._profileRepository.getDefinition(), entity)
+            );
             await em.save(
                 this._userRepository.getDefinition(),
                 new UserEntity()
@@ -133,7 +143,7 @@ export default class UserProfileUpdatePostRequest extends RequestInterface {
                     entity.getValue('value_name')
                 );
                 if (hash.hasOwnProperty(key)) {
-                    entity.setValue('id', hash[key]);
+                    entity.setValue(UserProfileDefinition.COLUMN_ID, hash[key]);
                 }
                 ret.push(entity);
             });
@@ -149,7 +159,7 @@ export default class UserProfileUpdatePostRequest extends RequestInterface {
                 entity.getValue('value_type'),
                 entity.getValue('value_name')
             );
-            prev[key] = entity.getValue('id');
+            prev[key] = entity.getValue(UserProfileDefinition.COLUMN_ID);
             return prev;
         }, {});
     }

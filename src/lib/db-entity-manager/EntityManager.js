@@ -52,7 +52,7 @@ export default class EntityManager {
         const primaryValue = entity.getValue(
             definition.getPrimaryColumn().getColumnName()
         );
-        if (primaryValue !== null) {
+        if (primaryValue != null) {
             const filter = new Filter();
             filter.addColumn(definition.getPrimaryColumn(), primaryValue);
             const entityDbValue = await this._connection
@@ -61,5 +61,16 @@ export default class EntityManager {
         } else {
             return Promise.resolve(false);
         }
+    }
+
+    /**
+     *
+     * @param {DefinitionTableInterface} definition
+     * @param {string} primaryValue
+     * @return Promise<void>}
+     * @private
+     */
+    async delete(definition, primaryValue) {
+        return this._connection.delete(definition, primaryValue);
     }
 }

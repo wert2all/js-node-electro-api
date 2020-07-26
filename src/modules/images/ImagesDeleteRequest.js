@@ -51,6 +51,12 @@ export default class ImagesDeleteRequest extends RequestInterface {
          * @private
          */
         this._imageUrlProvider = DI.getInstance().get(ImageUrl);
+        /**
+         *
+         * @type {DI}
+         * @private
+         */
+        this._di = DI.getInstance();
     }
 
     /**
@@ -60,10 +66,9 @@ export default class ImagesDeleteRequest extends RequestInterface {
      */
     // eslint-disable-next-line no-unused-vars
     init(dispatcher) {
-        const di = DI.getInstance();
-        this._repository.setConnection(di.get(ConnectionInterface));
-        this._usersRepository.setConnection(di.get(ConnectionInterface));
-        this._applyLogger(di);
+        this._repository.setConnection(this._di.get(ConnectionInterface));
+        this._usersRepository.setConnection(this._di.get(ConnectionInterface));
+        this._applyLogger();
         return this;
     }
 
@@ -85,6 +90,7 @@ export default class ImagesDeleteRequest extends RequestInterface {
             const imageData = await this._getImage(requestData.getImageId());
             if (imageData != null) {
                 this._deleteImageFile(imageData);
+                await this._deleteImageFromDB(imageData);
             }
             response.setStatus(true);
         } catch (e) {
@@ -120,8 +126,7 @@ export default class ImagesDeleteRequest extends RequestInterface {
      */
     async _getGoogleAccount(requestData) {
         const apiKey = new ApiKeyProvider(
-            DI.getInstance()
-                .get(StorageConfiguration)
+            this._di.get(StorageConfiguration)
                 .getSecretStorage(),
             'google:api:signin:client:key'
         )
@@ -173,7 +178,8 @@ export default class ImagesDeleteRequest extends RequestInterface {
         const path = imageData.getValue(UserFilesDefinition.COLUMN_PATH);
         fs.unlink(path, err => {
             if (err != null) {
-                DI.getInstance().get(LoggerInterface)
+                this._di
+                    .get(LoggerInterface)
                     .info(new ImageLogEvent(err.message));
             }
         });
@@ -181,15 +187,25 @@ export default class ImagesDeleteRequest extends RequestInterface {
 
     /**
      *
-     * @param {DI} di
      * @private
      */
-    _applyLogger(di) {
-        const path = di.get(ServerConfig).getLogDirectory() + 'imagelist.log';
-        const fileLogger = new FileLogger(path, di.get(LogFormatterInterface));
-        const loggerStrategy = di.get(LoggerStrategy)
+    _applyLogger() {
+        const path = this._di.get(ServerConfig).getLogDirectory() + 'imagelist.log';
+        const fileLogger = new FileLogger(path, this._di.get(LogFormatterInterface));
+        const loggerStrategy = this._di.get(LoggerStrategy)
             .addLogger(ImageLogEvent.TAG, fileLogger);
-        di.register(LoggerStrategy, loggerStrategy);
-        di.register(LoggerInterface, new Logger(di.get(LoggerStrategy)));
+        this._di.register(LoggerStrategy, loggerStrategy);
+        this._di.register(LoggerInterface, new Logger(this._di.get(LoggerStrategy)));
+    }
+
+    /**
+     *
+     * @param {UserFilesEntity} imageData
+     * @return {Promise<void>}
+     * @private
+     */
+    // eslint-disable-next-line no-unused-vars
+    async _deleteImageFromDB(imageData) {
+
     }
 }

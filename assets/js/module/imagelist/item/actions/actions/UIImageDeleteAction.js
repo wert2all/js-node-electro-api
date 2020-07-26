@@ -48,12 +48,16 @@ export default class UIImageDeleteAction extends UIImageActionInterface {
      */
     click(imageData, elementList = null) {
         this._confirm.confirm('Delete image?')
-            .then(() => {
-                const response = this._api
-                    .deleteImage(this._authProvider.getUserProfile(), imageData);
-                console.log(response);
-                this._notify.success('Deleted.');
-                elementList.refresh();
+            .then(() => this._api
+                .deleteImage(this._authProvider.getUserProfile(), imageData)
+            )
+            .then(response => {
+                if (response.getStatus() === true) {
+                    this._notify.success('Deleted.');
+                    elementList.refresh();
+                } else {
+                    this._notify.error(response.getErrorMessage());
+                }
             })
             .catch(() => true);
     }

@@ -30,6 +30,7 @@ import FileLogger from '../../lib/logger/adapters/FileLogger';
 import AppLogEvent from '../../extended/logger/events/AppLogEvent';
 import LoggerStrategy from '../../extended/LoggerStrategy';
 import LogFormatterInterface from '../../lib/logger/LogFormatterInterface';
+import EntityManager from '../../lib/db-entity-manager/EntityManager';
 
 export default class DIFactory {
     /**
@@ -49,9 +50,8 @@ export default class DIFactory {
         di.register(LoggerStrategy, this._getLoggers(di, serverConfig));
         di.register(LoggerInterface, new Logger(di.get(LoggerStrategy)));
 
-        di.register(ConnectionInterface,
-            new SQLiteConnection(di.get(LoggerInterface))
-        );
+        di.register(ConnectionInterface, new SQLiteConnection(di.get(LoggerInterface)));
+        di.register(EntityManager, new EntityManager(di.get(ConnectionInterface)));
 
         di.register(
             KeyValueStorageInterface,

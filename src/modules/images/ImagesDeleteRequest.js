@@ -24,6 +24,7 @@ import FileLogger from '../../lib/logger/adapters/FileLogger';
 import ServerConfig from '../../server/ServerConfig';
 import LogFormatterInterface from '../../lib/logger/LogFormatterInterface';
 import Logger from '../../extended/logger/Logger';
+import EntityManager from '../../lib/db-entity-manager/EntityManager';
 
 /**
  * @class ImagesDeleteRequest
@@ -204,8 +205,11 @@ export default class ImagesDeleteRequest extends RequestInterface {
      * @return {Promise<void>}
      * @private
      */
-    // eslint-disable-next-line no-unused-vars
     async _deleteImageFromDB(imageData) {
-
+        return this._di.get(EntityManager)
+            .delete(
+                this._repository.getDefinition(),
+                imageData.getValue(UserFilesDefinition.COLUMN_ID)
+            );
     }
 }

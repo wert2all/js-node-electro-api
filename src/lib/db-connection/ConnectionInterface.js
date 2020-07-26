@@ -50,4 +50,15 @@ export default class ConnectionInterface {
     async insert(definition, data) {
         throw new ImplementationError(this, 'insert');
     }
+
+    /**
+     * @abstract
+     * @param {DefinitionTableInterface} definition
+     * @param {string} primaryValue
+     * @return {Promise<void>}
+     */
+    // eslint-disable-next-line no-unused-vars
+    async delete(definition, primaryValue) {
+        throw new ImplementationError(this, 'delete');
+    }
 }

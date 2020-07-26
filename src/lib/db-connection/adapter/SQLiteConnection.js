@@ -4,6 +4,7 @@ import SQLiteSelectSQLBuilder from './builder/SQLiteSelectSQLBuilder';
 import SQLiteInsertSQLBuilder from './builder/SQLiteInsertSQLBuilder';
 import SQLiteUpdateSQLBuilder from './builder/SQLiteUpdateSQLBuilder';
 import SQLLogEvent from '../../../extended/logger/events/SQLLogEvent';
+import SQLiteDeleteSQLBuilder from './builder/SQLiteDeleteSQLBuilder';
 
 /**
  * @class SQLiteConnection
@@ -47,6 +48,12 @@ export default class SQLiteConnection extends ConnectionInterface {
          * @private
          */
         this._builderUpdate = new SQLiteUpdateSQLBuilder();
+        /**
+         *
+         * @type {DefinitionSQLBuilderInterface}
+         * @private
+         */
+        this._builderDelete = new SQLiteDeleteSQLBuilder();
         /**
          *
          * @type {LoggerInterface}
@@ -188,5 +195,20 @@ export default class SQLiteConnection extends ConnectionInterface {
     async _createTable(definition, connection) {
         const tableSQl = this._builderCreateTable.buildSQL(definition, null);
         return this._exec(connection, tableSQl, {});
+    }
+
+    /**
+     *
+     * @param {DefinitionTableInterface} definition
+     * @param {string} primaryValue
+     * @return {Promise<void>}
+     */
+    async delete(definition, primaryValue) {
+        await this._createTable(definition, this._server);
+        const whereData = {};
+        whereData[definition.getPrimaryColumn().getColumnName()] = primaryValue;
+        const sql = this._builderDelete.buildSQL(definition, whereData);
+        const prepareValues = this._buildQueryData(whereData);
+        return this._exec(this._server, sql, prepareValues);
     }
 }

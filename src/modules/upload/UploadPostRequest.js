@@ -23,6 +23,13 @@ import ResponseDataClass from '../../routers/response/ResponseDataClass';
 import DI from '../../lib/di/DI';
 import ConnectionInterface from '../../lib/db-connection/ConnectionInterface';
 import FileStorage from '../../storage/FileStorage';
+import ServerConfig from '../../server/ServerConfig';
+import FileLogger from '../../lib/logger/adapters/FileLogger';
+import LogFormatterInterface from '../../lib/logger/LogFormatterInterface';
+import LoggerStrategy from '../../extended/LoggerStrategy';
+import LoggerInterface from '../../lib/logger/LoggerInterface';
+import Logger from '../../extended/logger/Logger';
+import UploadEvent from './logger/UploadEvent';
 
 /**
  * @class UploadPostRequest
@@ -186,6 +193,7 @@ export default class UploadPostRequest extends RequestInterface {
          */
         this._dispatcher = dispatcher;
         this._repository.setConnection(DI.getInstance().get(ConnectionInterface));
+        this._applyLogger();
         return this;
     }
 
@@ -233,5 +241,19 @@ export default class UploadPostRequest extends RequestInterface {
             await this._getGoogleAccount(requestData)
         );
         return Promise.resolve(requestData);
+    }
+
+    /**
+     *
+     * @private
+     */
+    _applyLogger() {
+        const di = DI.getInstance();
+        const path = di.get(ServerConfig).getLogDirectory() + 'upload.log';
+        const fileLogger = new FileLogger(path, di.get(LogFormatterInterface));
+        const loggerStrategy = di.get(LoggerStrategy)
+            .addLogger(UploadEvent.TAG, fileLogger);
+        di.register(LoggerStrategy, loggerStrategy);
+        di.register(LoggerInterface, new Logger(di.get(LoggerStrategy)));
     }
 }

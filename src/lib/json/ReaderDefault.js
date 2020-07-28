@@ -12,6 +12,11 @@ export default class ReaderDefault extends ReaderInterface {
      */
     constructor(path) {
         super();
+        /**
+         *
+         * @type {string}
+         * @private
+         */
         this._path = path;
     }
 

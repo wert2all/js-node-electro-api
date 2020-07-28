@@ -14,7 +14,7 @@
   "husky": {
     "hooks": {
       "pre-commit": "npm run test:static",
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS -g './config/git/commitlint.js'"
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS -g './_config/git/commitlint.js'"
     }
   },
   "nodemonConfig": {
@@ -28,7 +28,7 @@
       "path": "node_modules/cz-customizable"
     },
     "cz-customizable": {
-      "config": "config/git/commitizen.js"
+      "config": "_config/git/commitizen.js"
     }
   },
   "publishConfig": {

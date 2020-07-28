@@ -34,7 +34,8 @@ module.exports = {
     scopes: [
         {name: 'ui'},
         {name: 'api'},
-        {name: 'infra'}
+        {name: 'infra'},
+        {name: 'lib'}
     ],
 
     // Возможность задать спец ОБЛАСТЬ для определенного типа коммита (пример для 'fix')

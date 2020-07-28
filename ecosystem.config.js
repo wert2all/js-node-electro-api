@@ -3,7 +3,7 @@ module.exports = {
     apps: [{
         name: 'electro',
         script: './dist/src/runOne.js',
-        watch: true,
+        watch: ['./dist'],
         env: {
             'NODE_ENV': 'development',
         },

@@ -14,7 +14,6 @@ import DomFormElement from './dom/form/DomFormElement';
 import UIGrid from './module/grid/UIGrid';
 import UILoader from './module/loader/UILoader';
 import UIContentElement from './module/content/UIContentElement';
-import UIImageList from './module/imagelist/UIImageList';
 import Notify from './ui/notify/Notify';
 import Api from './module/api/Api';
 import ApiFetcher from './api/ApiFetcher';
@@ -28,13 +27,14 @@ import DomListenersModifier from './dom/utils/DomListenersModifier';
 import UIImageActionModifier from './module/imagelist/item/actions/elements/UIImageActionModifier';
 import UIImageActionsModifierComposite from './module/imagelist/item/actions/UIImageActionsModifierComposite';
 import UIProfileViewFactory from './module/imagelist/item/profile/UIProfileViewFactory';
-import UIImagesViewHolder from './module/imagelist/UIImagesViewHolder';
 import UIPager from './ui/pager/UIPager';
 import UIPageItem from './ui/pager/elements/UIPageItem';
 import UIImageDownloadAction from './module/imagelist/item/actions/actions/UIImageDownloadAction';
 import UIImageEditAction from './module/imagelist/item/actions/actions/UIImageEditAction';
 import UIImageDeleteAction from './module/imagelist/item/actions/actions/UIImageDeleteAction';
 import UIConfirm from './ui/dialog/UIConfirm';
+import UIImagesViewHolder from './module/imagelist/UIImagesViewHolder';
+import UIImageList from './module/imagelist/UIImageList';
 
 /**
  * @class UIInit
@@ -92,21 +92,8 @@ export default class UIInit {
                                     new ApiFetcher(),
                                     ApiUrlFactory.create(window)
                                 );
-                                const imageItem = this._makeImageItem(
-                                    document,
-                                    api,
-                                    authProvider
-                                );
-                                const imageViewHolder = new UIImagesViewHolder(
-                                    this._ui.getContent(),
-                                    this._ui.getGrid(),
-                                    this._ui.getLoader(),
-                                    this._ui.getNotify(),
-                                    imageItem,
-                                    this._ui.getPager()
-                                );
-                                new UIImageList(imageViewHolder, api, authProvider)
-                                    .init();
+                                this._makeImageList(api, authProvider);
+                                this._makeProfile(api, authProvider);
                             })
                     );
                     authProvider.init();
@@ -285,5 +272,56 @@ export default class UIInit {
         );
         imageItem.init();
         return imageItem;
+    }
+
+    /**
+     *
+     * @param {Api} api
+     * @param {AuthProviderInterface} authProvider
+     * @private
+     */
+    _makeImageList(api, authProvider) {
+        const imageItem = this._makeImageItem(
+            document,
+            api,
+            authProvider
+        );
+        const imageViewHolder = new UIImagesViewHolder(
+            this._ui.getContent(),
+            this._ui.getGrid(),
+            this._ui.getLoader(),
+            this._ui.getNotify(),
+            imageItem,
+            this._ui.getPager()
+        );
+        new UIImageList(imageViewHolder, api, authProvider)
+            .init();
+    }
+
+    /**
+     *
+     * @param {Api} api
+     * @param {AuthProviderInterface} authProvider
+     * @private
+     */
+    _makeProfile(api, authProvider) {
+        api.getUserProfile(
+            authProvider.getUserProfile(),
+            authProvider.getUserProfile().getUserId()
+        )
+            .then(result => {
+                if (result.getStatus()) {
+                    console.log(result.getData());
+                    // this._ui
+                    //     .getAuthElement()
+                    //     .setUser(authProvider.getUserProfile());
+                } else {
+                    this._ui.getNotify().error(result.getErrorMessage());
+                }
+            })
+            .catch(error => this._ui
+                .getNotify()
+                .error(error.message)
+            );
     }
 }

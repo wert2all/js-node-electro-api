@@ -1,5 +1,5 @@
 import AuthProviderInterface from '../../auth/AuthPrividerInterface';
-import UserProfile from '../../data/UserProfile';
+import DataGoogleAuthUser from '../../data/DataGoogleAuthUser';
 
 /**
  * @class GApiAuth
@@ -83,13 +83,13 @@ export default class GApiAuth extends AuthProviderInterface {
     }
 
     /**
-     * @return {UserProfile}
+     * @return {DataGoogleAuthUser}
      */
     getUserProfile() {
         const currentUser = this._gapi.auth2.getAuthInstance().currentUser.get();
         const profile = currentUser.getBasicProfile();
         const authResponse = currentUser.getAuthResponse(true);
-        return new UserProfile(
+        return new DataGoogleAuthUser(
             profile.getId(),
             profile.getName(),
             profile.getEmail(),

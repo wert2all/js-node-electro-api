@@ -18,7 +18,7 @@ export default class AuthProviderInterface {
     }
 
     /**
-     * @return {UserProfile}
+     * @return {DataGoogleAuthUser}
      * @abstract
      */
     getUserProfile() {

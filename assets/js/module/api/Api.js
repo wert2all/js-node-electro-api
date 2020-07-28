@@ -24,7 +24,7 @@ export default class Api {
 
     /**
      *
-     * @param {UserProfile} userProfile
+     * @param {DataGoogleAuthUser} userProfile
      * @param {ApiLimits} limits
      * @return {Promise<ApiFetchResult>}
      */
@@ -43,7 +43,7 @@ export default class Api {
 
     /**
      *
-     * @param {UserProfile} userProfile
+     * @param {DataGoogleAuthUser} userProfile
      * @param {ImageData} imageData
      * @return {Promise<ApiFetchResult>}
      */
@@ -66,7 +66,26 @@ export default class Api {
 
     /**
      *
-     * @param {UserProfile} userProfile
+     * @param {DataGoogleAuthUser} userProfile
+     * @param {string} userId
+     * @return {Promise<ApiFetchResult>}
+     */
+    async getUserProfile(userProfile, userId) {
+        const options = {
+            method: 'GET'
+        };
+        return await this._fetcher.fetch(
+            this._createUrl(
+                'user/profile/get/?token='
+                + this._createToken(userProfile) + '&userid=' + userId
+            ),
+            options
+        );
+    }
+
+    /**
+     *
+     * @param {DataGoogleAuthUser} userProfile
      * @return {string}
      * @private
      */

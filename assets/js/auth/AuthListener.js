@@ -46,6 +46,11 @@ export default class AuthListener extends OnSignInChangedInterface {
         authProvider.signIn();
     }
 
+    /**
+     *
+     * @param afterAuthFunction
+     * @return {AuthListener}
+     */
     addAfterAuth(afterAuthFunction) {
         this._afterAuth = afterAuthFunction;
         return this;

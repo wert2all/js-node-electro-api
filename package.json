@@ -13,7 +13,8 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run test:static"
+      "pre-commit": "npm run test:static",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS -g './config/git/commitlint.js'"
     }
   },
   "nodemonConfig": {
@@ -21,6 +22,14 @@
       "assets/*",
       "templates/*"
     ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-customizable"
+    },
+    "cz-customizable": {
+      "config": "config/git/commitizen.js"
+    }
   },
   "publishConfig": {
     "registry": "http://rpm.kiev.ua:4873"
@@ -43,12 +52,14 @@
     "@babel/plugin-proposal-class-properties": "^7.10.4",
     "@babel/plugin-transform-runtime": "^7.10.5",
     "@babel/preset-env": "^7.10.4",
+    "@commitlint/cli": "^9.1.1",
     "@jest/core": "^26.1.0",
     "@jest/globals": "^26.1.0",
     "babel-eslint": "^10.1.0",
     "babel-loader": "^8.1.0",
     "browser-sync": "^2.26.10",
     "css-loader": "^4.0.0",
+    "cz-customizable": "^6.2.1",
     "eslint": "^7.5.0",
     "gulp": "^4.0.2",
     "gulp-babel": "^8.0.0",

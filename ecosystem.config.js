@@ -1,3 +1,4 @@
+/* eslint-disable */
 module.exports = {
     apps: [{
         name: 'electro',
@@ -6,6 +7,7 @@ module.exports = {
         env: {
             'NODE_ENV': 'development',
         },
+        ignore_watch: ['logs'],
         env_production: {
             'NODE_ENV': 'production'
         },

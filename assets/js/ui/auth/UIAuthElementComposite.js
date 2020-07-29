@@ -36,21 +36,19 @@ export default class UIAuthElementComposite extends UIAuthElementInterface {
 
     /**
      *
-     * @param {UserProfile} user
-     * @return UIAuthElementInterface
-     */
-    setUser(user) {
-        this._elements.forEach(element => element.setUser(user));
-        return this;
-    }
-
-    /**
-     *
      * @param {AuthProviderInterface} authProvider
      * @return UIAuthElementInterface
      */
     setAuthProvider(authProvider) {
         this._elements.forEach(element => element.setAuthProvider(authProvider));
         return this;
+    }
+
+    /**
+     *
+     * @param {function} listener
+     */
+    applyProfileClick(listener) {
+        this._elements.forEach(element => element.applyProfileClick(listener));
     }
 }

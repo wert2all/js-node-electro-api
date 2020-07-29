@@ -58,17 +58,10 @@ export default class UIInit {
          * @private
          */
         this._ui = null;
-        /**
-         *
-         * @type {UIUserProfile|null}
-         * @private
-         */
-        this._uiProfile = null;
     }
 
     init(window) {
         this._initUI(window.document);
-        this._initUIComponents(window);
         this._appendGApi(window);
         this._initIcons();
     }
@@ -80,7 +73,6 @@ export default class UIInit {
      */
     _appendGApi(window) {
         const gaAuthConfig = this._config.getGoogleConfig().getAuthConfig();
-        const self = this;
         window.onGApiLoad = () => {
             window.gapi.load('client:auth2', {
                 'callback': () => {
@@ -94,12 +86,13 @@ export default class UIInit {
                                     ApiUrlFactory.create(window)
                                 );
                                 this._makeImageList(api, authProvider);
+                                this._makeAuthElements(
+                                    authProvider,
+                                    this._makeProfile(api, window.document)
+                                );
                             })
                     );
                     authProvider.init();
-                    self._ui.getAuthElement().setAuthProvider(authProvider);
-                    self._ui.getAuthElement().init();
-
                 }
             });
         };
@@ -120,8 +113,7 @@ export default class UIInit {
     _initUI(document) {
         const defaultAuthValues = new UiAuthElementDefaultValues(
             '../assets/img/avatar.svg',
-            'John Doe',
-            (user) => this._uiProfile.show(user)
+            'John Doe'
         );
 
         const authElement = new UIAuthElementComposite([
@@ -178,43 +170,6 @@ export default class UIInit {
                 )
             )
         );
-    }
-
-    /**
-     *
-     * @param {Window} window
-     * @private
-     */
-    _initUIComponents(window) {
-        const document = window.document;
-        this._uiProfile = new UIUserProfile(
-            document.querySelector('#modal_profile'),
-            document.querySelector('#modal_profile img.profile-img'),
-            document.querySelector('#modal_profile h4.uk-text-center.text-light'),
-            document.querySelector('#modal_profile p.uk-text-small.uk-text-center'),
-            new UIFormView(
-                new DomForm({
-                    'profile_personal_number':
-                        new DomFormElement(
-                            document.querySelector('#profile_personal_number')
-                        ),
-                    'profile_KC':
-                        new DomFormElement(document.querySelector('#profile_KC')),
-                    'profile_company_name':
-                        new DomFormElement(
-                            document.querySelector('#profile_company_name')
-                        ),
-                    'profile_iban':
-                        new DomFormElement(document.querySelector('#profile_iban')),
-                    'profile_BIG':
-                        new DomFormElement(document.querySelector('#profile_BIG')),
-                }),
-                document.querySelector('#modal_profile form.profile_form'),
-                this._ui.getLoader()
-            ),
-            UIkit
-        );
-        this._uiProfile.init();
     }
 
     /**
@@ -299,5 +254,59 @@ export default class UIInit {
         );
         new UIImageList(imageViewHolder, api, authProvider)
             .init();
+    }
+
+    /**
+     *
+     * @param {Api} api
+     * @param {Document} document
+     * @return {UIUserProfile}
+     * @private
+     */
+    _makeProfile(api, document) {
+        const profile = new UIUserProfile(
+            document.querySelector('#modal_profile'),
+            document.querySelector('#modal_profile img.profile-img'),
+            document.querySelector('#modal_profile h4.uk-text-center.text-light'),
+            document.querySelector('#modal_profile p.uk-text-small.uk-text-center'),
+            new UIFormView(
+                new DomForm({
+                    'profile_personal_number':
+                        new DomFormElement(
+                            document.querySelector('#profile_personal_number')
+                        ),
+                    'profile_KC':
+                        new DomFormElement(document.querySelector('#profile_KC')),
+                    'profile_company_name':
+                        new DomFormElement(
+                            document.querySelector('#profile_company_name')
+                        ),
+                    'profile_iban':
+                        new DomFormElement(document.querySelector('#profile_iban')),
+                    'profile_BIG':
+                        new DomFormElement(document.querySelector('#profile_BIG')),
+                }),
+                document.querySelector('#modal_profile form.profile_form'),
+                this._ui.getLoader()
+            ),
+            UIkit,
+            api,
+            this._ui.getNotify()
+        );
+        profile.init();
+        return profile;
+    }
+
+    /**
+     *
+     * @param {AuthProviderInterface} authProvider
+     * @param {UIUserProfile} profile
+     * @private
+     */
+    _makeAuthElements(authProvider, profile) {
+        this._ui.getAuthElement().setAuthProvider(authProvider);
+        this._ui.getAuthElement().init();
+        this._ui.getAuthElement()
+            .applyProfileClick(user => profile.show(user));
     }
 }

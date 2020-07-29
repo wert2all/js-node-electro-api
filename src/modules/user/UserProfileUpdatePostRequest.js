@@ -135,7 +135,7 @@ export default class UserProfileUpdatePostRequest extends RequestInterface {
     async _createEntities(requestData, hash) {
         const ret = [];
         const payment = requestData.getPayment();
-        ['company_name', 'payment_account', 'bic', 'edrpou', 'personal_number', 'cs']
+        ['company_name', 'iban', 'bic', 'edrpou', 'personal_number', 'cs']
             .map(valueName => {
                 const entity = this._makeEntity(
                     requestData.getGoogleAccount(),

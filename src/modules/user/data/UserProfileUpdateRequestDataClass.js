@@ -43,8 +43,8 @@ export default class UserProfileUpdateRequestDataClass {
                 if (payment.hasOwnProperty('company_name')) {
                     paymentData.setData('company_name', payment.company_name);
                 }
-                if (payment.hasOwnProperty('payment_account')) {
-                    paymentData.setData('payment_account', payment.payment_account);
+                if (payment.hasOwnProperty('iban')) {
+                    paymentData.setData('iban', payment.iban);
                 }
                 if (payment.hasOwnProperty('edrpou')) {
                     paymentData.setData('edrpou', payment.edrpou);

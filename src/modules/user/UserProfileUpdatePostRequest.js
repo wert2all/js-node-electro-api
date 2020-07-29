@@ -14,7 +14,7 @@ import DI from '../../lib/di/DI';
 import ConnectionInterface from '../../lib/db-connection/ConnectionInterface';
 import UserProfileDefinition from '../../db/definition/UserProfileDefinition';
 import LoggerInterface from '../../lib/logger/LoggerInterface';
-import UserProfileLogEvent from './error/event/UserProfileLogEvent';
+import UserProfileLogEvent from './logs/event/UserProfileLogEvent';
 
 /**
  * @class UserProfileUpdatePostRequest

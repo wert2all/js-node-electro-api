@@ -15,7 +15,7 @@ import ConnectionInterface from '../../lib/db-connection/ConnectionInterface';
 import UserDefinition from '../../db/definition/UserDefinition';
 import AuthNoAdmin from '../auth/error/AuthNoAdmin';
 import LoggerInterface from '../../lib/logger/LoggerInterface';
-import UserProfileLogEvent from './error/event/UserProfileLogEvent';
+import UserProfileLogEvent from './logs/event/UserProfileLogEvent';
 import StorageConfiguration from '../../storage/configuration/StorageConfiguration';
 import UserRepository from '../../db/repository/UserRepository';
 import UserProfileNoUserId from './error/UserProfileNoUserId';

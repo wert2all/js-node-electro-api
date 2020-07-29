@@ -12,20 +12,15 @@ import UserProfileDefinition from '../../db/definition/UserProfileDefinition';
 import ResponseResult from '../../routers/response/ResponseResult';
 import DI from '../../lib/di/DI';
 import ConnectionInterface from '../../lib/db-connection/ConnectionInterface';
-import UserDefinition from '../../db/definition/UserDefinition';
-import AuthNoAdmin from '../auth/error/AuthNoAdmin';
 import LoggerInterface from '../../lib/logger/LoggerInterface';
 import UserProfileLogEvent from './error/event/UserProfileLogEvent';
-import StorageConfiguration from '../../storage/configuration/StorageConfiguration';
-import UserRepository from '../../db/repository/UserRepository';
-import UserProfileNoUserId from './error/UserProfileNoUserId';
 
 /**
- * @class UserProfileGetRequest
+ * @class CurrentUserProfileGetRequest
  * @type RequestInterface
  * @extends RequestInterface
  */
-export default class UserProfileGetRequest extends RequestInterface {
+export default class CurrentUserProfileGetRequest extends RequestInterface {
     constructor() {
         super();
         /**
@@ -34,12 +29,6 @@ export default class UserProfileGetRequest extends RequestInterface {
          * @private
          */
         this._repository = new UserProfileRepository();
-        /**
-         *
-         * @type {UserRepository}
-         * @private
-         */
-        this._usersRepository = new UserRepository();
     }
 
     /**
@@ -55,12 +44,9 @@ export default class UserProfileGetRequest extends RequestInterface {
              * @type {UserProfileRequestDataClass}
              */
             const requestData = await this._prepareRequest(request);
-            await this._checkAdmin(requestData);
-            const userProfileList = await this._fetchUserProfile(
-                requestData.getGoogleUserId()
-            );
+            const userProfileList = await this._fetchUserProfile(requestData);
             const ret = this._convertToResponseData(userProfileList);
-            if (ret !== null) {
+            if (ret != null) {
                 response.setData('payment', ret.payment.toHash());
             }
             response.setStatus(true);
@@ -98,43 +84,32 @@ export default class UserProfileGetRequest extends RequestInterface {
      * @private
      */
     async _getGoogleAccount(requestData) {
-        const apiKey = new ApiKeyProvider(
-            DI.getInstance()
-                .get(StorageConfiguration)
-                .getSecretStorage(),
-            'google:api:signin:client:key'
-        )
-            .get();
-        return await new AuthCheck(apiKey)
+        return await new AuthCheck(ApiKeyProvider.getDefault())
             .check(
-                new AuthParams(requestData.getToken())
+                new AuthParams(requestData.token)
             );
     }
 
     /**
      *
      * @param {DispatchInterface} dispatcher
-     * @return {UserProfileGetRequest}
+     * @return {CurrentUserProfileGetRequest}
      */
     // eslint-disable-next-line no-unused-vars
     init(dispatcher) {
         this._repository.setConnection(DI.getInstance().get(ConnectionInterface));
-        this._usersRepository.setConnection(DI.getInstance().get(ConnectionInterface));
         return this;
     }
 
     /**
      *
+     * @param {UserProfileRequestDataClass} requestData
      * @returns {Promise<EntityInterface[]>}
      * @private
-     * @param {string|null} googleUserId
      */
-    async _fetchUserProfile(googleUserId) {
-        if (googleUserId == null) {
-            return Promise.reject(new UserProfileNoUserId());
-        }
+    async _fetchUserProfile(requestData) {
         const userEntity = new UserEntity()
-            .setValue(UserDefinition.COLUMN_GOOGLE_ID, googleUserId);
+            .setGoogleAccount(requestData.getGoogleAccount());
         const userProfileEntity = new UserProfileEntity();
         userProfileEntity.setUser(userEntity);
         return Promise.resolve(this._repository.fetchData(userProfileEntity));
@@ -167,26 +142,5 @@ export default class UserProfileGetRequest extends RequestInterface {
         }
 
         return ret;
-    }
-
-    /**
-     *
-     * @param {UserProfileRequestDataClass} requestData
-     * @private
-     */
-    async _checkAdmin(requestData) {
-        let isAdmin = false;
-        const userEntity = new UserEntity();
-        userEntity.setValue(
-            UserDefinition.COLUMN_GOOGLE_ID,
-            requestData.getGoogleAccount().getGoogleUserId()
-        );
-        const users = await this._usersRepository.fetchData(userEntity);
-        if (users.length === 1) {
-            isAdmin = users[0].getIsAdmin() === 'y';
-        }
-        if (isAdmin === false) {
-            throw new AuthNoAdmin();
-        }
     }
 }

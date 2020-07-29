@@ -1,19 +1,16 @@
 import RequestInterface from '../../routers/request/RequestInterface';
 import ResponseDataClass from '../../routers/response/ResponseDataClass';
-import UserPaymentDataClass from './data/UserPaymentDataClass';
 import ApiKeyProvider from '../auth/key/KeyProvider';
 import AuthCheck from '../auth/AuthCheck';
 import AuthParams from '../auth/params/Params';
 import UserProfileRequestDataClass from './data/UserProfileRequestDataClass';
 import UserProfileRepository from '../../db/repository/UserProfileRepository';
-import UserProfileEntity from '../../data/entity/UserProfileEntity';
-import UserEntity from '../../data/entity/UserEntity';
-import UserProfileDefinition from '../../db/definition/UserProfileDefinition';
 import ResponseResult from '../../routers/response/ResponseResult';
 import DI from '../../lib/di/DI';
 import ConnectionInterface from '../../lib/db-connection/ConnectionInterface';
 import LoggerInterface from '../../lib/logger/LoggerInterface';
 import UserProfileLogEvent from './logs/event/UserProfileLogEvent';
+import UserProfileFetchModel from './model/UserProfileFetchModel';
 
 /**
  * @class CurrentUserProfileGetRequest
@@ -29,6 +26,13 @@ export default class CurrentUserProfileGetRequest extends RequestInterface {
          * @private
          */
         this._repository = new UserProfileRepository();
+
+        /**
+         *
+         * @type {UserProfileFetchModel}
+         * @private
+         */
+        this._fetchModel = new UserProfileFetchModel(this._repository);
     }
 
     /**
@@ -44,11 +48,8 @@ export default class CurrentUserProfileGetRequest extends RequestInterface {
              * @type {UserProfileRequestDataClass}
              */
             const requestData = await this._prepareRequest(request);
-            const userProfileList = await this._fetchUserProfile(requestData);
-            const ret = this._convertToResponseData(userProfileList);
-            if (ret != null) {
-                response.setData('payment', ret.payment.toHash());
-            }
+            requestData.setGoogleUserId(requestData.getGoogleAccount().getGoogleUserId());
+            await this._fetchModel.extendResponseUserProfile(response, requestData);
             response.setStatus(true);
         } catch (e) {
             DI.getInstance()
@@ -86,7 +87,7 @@ export default class CurrentUserProfileGetRequest extends RequestInterface {
     async _getGoogleAccount(requestData) {
         return await new AuthCheck(ApiKeyProvider.getDefault())
             .check(
-                new AuthParams(requestData.token)
+                new AuthParams(requestData.getToken())
             );
     }
 
@@ -99,48 +100,5 @@ export default class CurrentUserProfileGetRequest extends RequestInterface {
     init(dispatcher) {
         this._repository.setConnection(DI.getInstance().get(ConnectionInterface));
         return this;
-    }
-
-    /**
-     *
-     * @param {UserProfileRequestDataClass} requestData
-     * @returns {Promise<EntityInterface[]>}
-     * @private
-     */
-    async _fetchUserProfile(requestData) {
-        const userEntity = new UserEntity()
-            .setGoogleAccount(requestData.getGoogleAccount());
-        const userProfileEntity = new UserProfileEntity();
-        userProfileEntity.setUser(userEntity);
-        return Promise.resolve(this._repository.fetchData(userProfileEntity));
-    }
-
-    /**
-     *
-     * @param {EntityInterface[]} userProfileList
-     * @returns {{"payment":  UserPaymentDataClass}|null}
-     * @private
-     */
-    _convertToResponseData(userProfileList) {
-        let ret = null;
-        if (userProfileList.length > 0) {
-            ret = {
-                'payment': new UserPaymentDataClass()
-            };
-            userProfileList.map(profileValue => {
-                const profileDataHash = profileValue.getData();
-                if (
-                    profileDataHash[UserProfileDefinition.COLUMN_VALUE_TYPE] === 'payment'
-                ) {
-                    ret.payment
-                        .setData(
-                            profileDataHash[UserProfileDefinition.COLUMN_VALUE_NAME],
-                            profileDataHash[UserProfileDefinition.COLUMN_VALUE_VALUE]
-                        );
-                }
-            });
-        }
-
-        return ret;
     }
 }

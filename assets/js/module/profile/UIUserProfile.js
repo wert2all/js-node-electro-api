@@ -18,6 +18,7 @@ export default class UIUserProfile extends UIElementInterface {
      * @param {UIFormViewInterface} formView
      * @param {Api} api
      * @param {UINotifyInterface} notify
+     * @param {AuthProviderInterface} authProvider
      */
     constructor(
         modalElement,
@@ -27,7 +28,8 @@ export default class UIUserProfile extends UIElementInterface {
         formView,
         UIKit,
         api,
-        notify
+        notify,
+        authProvider
     ) {
         super();
         /**
@@ -77,6 +79,12 @@ export default class UIUserProfile extends UIElementInterface {
          * @private
          */
         this._notify = notify;
+        /**
+         *
+         * @type {AuthProviderInterface}
+         * @private
+         */
+        this._authProvider = authProvider;
     }
 
     clean() {
@@ -107,7 +115,10 @@ export default class UIUserProfile extends UIElementInterface {
      * @private
      */
     _setProfileData(googleUser) {
-        this._api.getUserProfile(googleUser, googleUser.getUserId())
+        this._api.getUserProfile(
+            this._authProvider.getUserProfile(),
+            googleUser.getUserId()
+        )
             .then(response => {
                 if (response.getStatus()) {
                     this._formView.hideLoader();

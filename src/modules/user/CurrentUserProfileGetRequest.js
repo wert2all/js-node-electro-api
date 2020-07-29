@@ -12,15 +12,13 @@ import UserProfileDefinition from '../../db/definition/UserProfileDefinition';
 import ResponseResult from '../../routers/response/ResponseResult';
 import DI from '../../lib/di/DI';
 import ConnectionInterface from '../../lib/db-connection/ConnectionInterface';
-import UserDefinition from '../../db/definition/UserDefinition';
-import ImagesGetNoAdmin from '../images/error/ImagesGetNoAdmin';
 
 /**
- * @class UserProfileGetRequest
+ * @class CurrentUserProfileGetRequest
  * @type RequestInterface
  * @extends RequestInterface
  */
-export default class UserProfileGetRequest extends RequestInterface {
+export default class CurrentUserProfileGetRequest extends RequestInterface {
     constructor() {
         super();
         /**
@@ -44,7 +42,6 @@ export default class UserProfileGetRequest extends RequestInterface {
              * @type {UserProfileRequestDataClass}
              */
             const requestData = await this._prepareRequest(request);
-            await this._checkAdmin(requestData);
             const userProfileList = await this._fetchUserProfile(requestData);
             const ret = this._convertToResponseData(userProfileList);
             if (ret !== null) {
@@ -92,7 +89,7 @@ export default class UserProfileGetRequest extends RequestInterface {
     /**
      *
      * @param {DispatchInterface} dispatcher
-     * @return {UserProfileGetRequest}
+     * @return {CurrentUserProfileGetRequest}
      */
     // eslint-disable-next-line no-unused-vars
     init(dispatcher) {
@@ -141,26 +138,5 @@ export default class UserProfileGetRequest extends RequestInterface {
         }
 
         return ret;
-    }
-
-    /**
-     *
-     * @param {UserProfileRequestDataClass} requestData
-     * @private
-     */
-    async _checkAdmin(requestData) {
-        let isAdmin = false;
-        const userEntity = new UserEntity();
-        userEntity.setValue(
-            UserDefinition.COLUMN_GOOGLE_ID,
-            requestData.getGoogleAccount().getGoogleUserId()
-        );
-        const users = await this._repository.fetchData(userEntity);
-        if (users.length === 1) {
-            isAdmin = users[0].getIsAdmin() === 'y';
-        }
-        if (isAdmin === false) {
-            throw new ImagesGetNoAdmin();
-        }
     }
 }

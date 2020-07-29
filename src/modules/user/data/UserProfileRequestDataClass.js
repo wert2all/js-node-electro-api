@@ -19,7 +19,7 @@ export default class UserProfileRequestDataClass {
     /**
      *
      * @param {GoogleAccount} account
-     * @return {UploadGetCountRequestDataClass}
+     * @return {UserProfileRequestDataClass}
      */
     setGoogleAccount(account) {
         /**

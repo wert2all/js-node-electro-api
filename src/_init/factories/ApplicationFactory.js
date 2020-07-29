@@ -5,7 +5,7 @@ import TariffRequest from '../../modules/tariff/TariffRequest';
 import AuthRequest from '../../modules/auth/AuthRequest';
 import UploadGetCountRequest from '../../modules/upload/UploadGetCountRequest';
 import UploadPostRequest from '../../modules/upload/UploadPostRequest';
-import UserProfileGetRequest from '../../modules/user/UserProfileGetRequest';
+import CurrentUserProfileGetRequest from '../../modules/user/CurrentUserProfileGetRequest';
 import UserProfileUpdatePostRequest from '../../modules/user/UserProfileUpdatePostRequest';
 import UploadGetFilesRequest from '../../modules/upload/UploadGetFilesRequest';
 import ImagesGetRequest from '../../modules/images/ImagesGetRequest';
@@ -14,6 +14,7 @@ import DispatchInterface from '../../lib/dispatcher/DispatchInterface';
 import ResponseFactory from '../../routers/response/ResponseFactory';
 import DI from '../../lib/di/DI';
 import ImagesDeleteRequest from '../../modules/images/ImagesDeleteRequest';
+import UserProfileGetRequest from '../../modules/user/UserProfileGetRequest';
 
 export default class ApplicationFactory {
     constructor() {
@@ -48,6 +49,10 @@ export default class ApplicationFactory {
                         new UploadPostRequest()
                     ),
                     new RouteDefinition('/user/profile/',
+                        'get',
+                        new CurrentUserProfileGetRequest()
+                    ),
+                    new RouteDefinition('/user/profile/get/',
                         'get',
                         new UserProfileGetRequest()
                     ),

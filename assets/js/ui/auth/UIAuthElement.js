@@ -69,29 +69,44 @@ export default class UIAuthElement extends UIAuthElementInterface {
         if (userName != null) {
             userName.innerHTML = this._defaultValues.getUserName();
         }
+        if (this._authProvider != null) {
+            this._setUser(this._authProvider.getUserProfile());
+        }
     }
 
     /**
      *
-     * @param {UserProfile} user
+     * @param {DataGoogleAuthUser} user
      * @return {UIAuthElementInterface}
+     * @private
      */
-    setUser(user) {
+    _setUser(user) {
         const avatar = this._nodeHolder.getAvatarImg();
         const userName = this._nodeHolder.getUserName();
-        const profileLink = this._nodeHolder.getProfileLinkWithoutListeners();
         if (avatar != null) {
             avatar.src = user.getUserImage();
         }
         if (userName != null) {
             userName.innerHTML = user.getUserName();
         }
+        return this;
+    }
+
+    /**
+     *
+     * @param {function} listener
+     */
+    applyProfileClick(listener) {
+        const profileLink = this._nodeHolder.getProfileLinkWithoutListeners();
         if (profileLink != null) {
             profileLink.addEventListener(
                 'click',
-                () => this._defaultValues.showProfile(user)
+                () => {
+                    if (this._authProvider != null) {
+                        listener(this._authProvider.getUserProfile());
+                    }
+                }
             );
         }
-        return this;
     }
 }

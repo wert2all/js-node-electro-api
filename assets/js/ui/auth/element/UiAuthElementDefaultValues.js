@@ -6,9 +6,8 @@ export default class UiAuthElementDefaultValues {
      *
      * @param {string} defaultAvatar
      * @param {string} defaultUserName
-     * @param {function} showProfileFunc
      */
-    constructor(defaultAvatar, defaultUserName, showProfileFunc = Function.prototype) {
+    constructor(defaultAvatar, defaultUserName) {
         /**
          *
          * @type {string}
@@ -21,12 +20,6 @@ export default class UiAuthElementDefaultValues {
          * @private
          */
         this._defaultUserName = defaultUserName;
-        /**
-         *
-         * @type {Function}
-         * @private
-         */
-        this._showProfile = showProfileFunc;
     }
 
     /**
@@ -43,13 +36,5 @@ export default class UiAuthElementDefaultValues {
      */
     getAvatar() {
         return this._defaultAvatar;
-    }
-
-    /**
-     * @param {UserProfile} user
-     * @return {void}
-     */
-    showProfile(user) {
-        this._showProfile(user);
     }
 }

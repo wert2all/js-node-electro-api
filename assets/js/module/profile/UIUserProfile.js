@@ -15,6 +15,8 @@ export default class UIUserProfile extends UIElementInterface {
      * @param {Node} userEmailElement
      * @param UIKit
      * @param {UIFormViewInterface} formView
+     * @param {Api} api
+     * @param {UINotifyInterface} notify
      */
     constructor(
         modalElement,
@@ -22,7 +24,9 @@ export default class UIUserProfile extends UIElementInterface {
         userNameElement,
         userEmailElement,
         formView,
-        UIKit
+        UIKit,
+        api,
+        notify
     ) {
         super();
         /**
@@ -60,6 +64,18 @@ export default class UIUserProfile extends UIElementInterface {
          * @private
          */
         this._formView = formView;
+        /**
+         *
+         * @type {Api}
+         * @private
+         */
+        this._api = api;
+        /**
+         *
+         * @type {UINotifyInterface}
+         * @private
+         */
+        this._notify = notify;
     }
 
     clean() {
@@ -80,6 +96,13 @@ export default class UIUserProfile extends UIElementInterface {
         this._userNameElement.innerHTML = userProfile.getUserName();
         this._userEmailElement.innerHTML = userProfile.getUserEmail();
         this._formView.showLoader();
+
+        this._api.getUserProfile(userProfile, userProfile.getUserId())
+            .then(response => {
+                console.log(response);
+                this._formView.hideLoader();
+            })
+            .catch(error => this._notify.error(error.message));
         // this._form
         //     .setElement('profile_personal_number', userProfile.getPersonalNumber())
         //     .setElement('profile_KC', userProfile.getKC())

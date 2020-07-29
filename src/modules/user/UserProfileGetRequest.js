@@ -14,6 +14,11 @@ import DI from '../../lib/di/DI';
 import ConnectionInterface from '../../lib/db-connection/ConnectionInterface';
 import UserDefinition from '../../db/definition/UserDefinition';
 import AuthNoAdmin from '../auth/error/AuthNoAdmin';
+import LoggerInterface from '../../lib/logger/LoggerInterface';
+import UserProfileLogEvent from './error/event/UserProfileLogEvent';
+import StorageConfiguration from '../../storage/configuration/StorageConfiguration';
+import UserRepository from '../../db/repository/UserRepository';
+import UserProfileNoUserId from './error/UserProfileNoUserId';
 
 /**
  * @class UserProfileGetRequest
@@ -29,6 +34,12 @@ export default class UserProfileGetRequest extends RequestInterface {
          * @private
          */
         this._repository = new UserProfileRepository();
+        /**
+         *
+         * @type {UserRepository}
+         * @private
+         */
+        this._usersRepository = new UserRepository();
     }
 
     /**
@@ -45,14 +56,18 @@ export default class UserProfileGetRequest extends RequestInterface {
              */
             const requestData = await this._prepareRequest(request);
             await this._checkAdmin(requestData);
-            const userProfileList = await this._fetchUserProfile(requestData);
+            const userProfileList = await this._fetchUserProfile(
+                requestData.getGoogleUserId()
+            );
             const ret = this._convertToResponseData(userProfileList);
             if (ret !== null) {
                 response.setData('payment', ret.payment.toHash());
             }
             response.setStatus(true);
         } catch (e) {
-            console.log(e);
+            DI.getInstance()
+                .get(LoggerInterface)
+                .error(new UserProfileLogEvent(e.message));
             response.setStatus(false);
             response.setMessage(e.message);
         }
@@ -83,9 +98,16 @@ export default class UserProfileGetRequest extends RequestInterface {
      * @private
      */
     async _getGoogleAccount(requestData) {
-        return await new AuthCheck(ApiKeyProvider.getDefault())
+        const apiKey = new ApiKeyProvider(
+            DI.getInstance()
+                .get(StorageConfiguration)
+                .getSecretStorage(),
+            'google:api:signin:client:key'
+        )
+            .get();
+        return await new AuthCheck(apiKey)
             .check(
-                new AuthParams(requestData.token)
+                new AuthParams(requestData.getToken())
             );
     }
 
@@ -97,18 +119,22 @@ export default class UserProfileGetRequest extends RequestInterface {
     // eslint-disable-next-line no-unused-vars
     init(dispatcher) {
         this._repository.setConnection(DI.getInstance().get(ConnectionInterface));
+        this._usersRepository.setConnection(DI.getInstance().get(ConnectionInterface));
         return this;
     }
 
     /**
      *
-     * @param {UserProfileRequestDataClass} requestData
      * @returns {Promise<EntityInterface[]>}
      * @private
+     * @param {string|null} googleUserId
      */
-    async _fetchUserProfile(requestData) {
+    async _fetchUserProfile(googleUserId) {
+        if (googleUserId == null) {
+            return Promise.reject(new UserProfileNoUserId());
+        }
         const userEntity = new UserEntity()
-            .setGoogleAccount(requestData.getGoogleAccount());
+            .setValue(UserDefinition.COLUMN_GOOGLE_ID, googleUserId);
         const userProfileEntity = new UserProfileEntity();
         userProfileEntity.setUser(userEntity);
         return Promise.resolve(this._repository.fetchData(userProfileEntity));
@@ -155,7 +181,7 @@ export default class UserProfileGetRequest extends RequestInterface {
             UserDefinition.COLUMN_GOOGLE_ID,
             requestData.getGoogleAccount().getGoogleUserId()
         );
-        const users = await this._repository.fetchData(userEntity);
+        const users = await this._usersRepository.fetchData(userEntity);
         if (users.length === 1) {
             isAdmin = users[0].getIsAdmin() === 'y';
         }

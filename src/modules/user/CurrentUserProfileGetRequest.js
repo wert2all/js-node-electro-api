@@ -12,6 +12,8 @@ import UserProfileDefinition from '../../db/definition/UserProfileDefinition';
 import ResponseResult from '../../routers/response/ResponseResult';
 import DI from '../../lib/di/DI';
 import ConnectionInterface from '../../lib/db-connection/ConnectionInterface';
+import LoggerInterface from '../../lib/logger/LoggerInterface';
+import UserProfileLogEvent from './error/event/UserProfileLogEvent';
 
 /**
  * @class CurrentUserProfileGetRequest
@@ -49,7 +51,9 @@ export default class CurrentUserProfileGetRequest extends RequestInterface {
             }
             response.setStatus(true);
         } catch (e) {
-            console.log(e);
+            DI.getInstance()
+                .get(LoggerInterface)
+                .error(new UserProfileLogEvent(e.message));
             response.setStatus(false);
             response.setMessage(e.message);
         }

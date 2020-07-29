@@ -1,5 +1,5 @@
 import StringExt from '../../../lib/utils/StringExt';
-import ImagesGetNoToken from '../error/ImagesGetNoToken';
+import AuthNoToken from '../../auth/error/AuthNoToken';
 
 export default class ImagesGetDataClass {
     /**
@@ -54,7 +54,7 @@ export default class ImagesGetDataClass {
                 returnRequest.setOffsetLimit(offsetLimit);
             }
         } else {
-            throw new ImagesGetNoToken();
+            throw new AuthNoToken();
         }
 
         return returnRequest;

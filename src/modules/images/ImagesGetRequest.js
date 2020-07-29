@@ -9,7 +9,6 @@ import AuthParams from '../auth/params/Params';
 import UserRepository from '../../db/repository/UserRepository';
 import UserEntity from '../../data/entity/UserEntity';
 import UserDefinition from '../../db/definition/UserDefinition';
-import ImagesGetNoAdmin from './error/ImagesGetNoAdmin';
 import UserFilesEntity from '../../data/entity/UserFilesEntity';
 import UserFilesDefinition from '../../db/definition/UserFilesDefinition';
 import DI from '../../lib/di/DI';
@@ -18,6 +17,7 @@ import DefinitionOrder from '../../lib/db-definition/DefinitionOrder';
 import DefinitionLimit from '../../lib/db-definition/DefinitionLimit';
 import ConnectionInterface from '../../lib/db-connection/ConnectionInterface';
 import StorageConfiguration from '../../storage/configuration/StorageConfiguration';
+import AuthNoAdmin from '../auth/error/AuthNoAdmin';
 
 /**
  * @class ImagesGetRequest
@@ -138,7 +138,7 @@ export default class ImagesGetRequest extends RequestInterface {
             isAdmin = users[0].getIsAdmin() === 'y';
         }
         if (isAdmin === false) {
-            throw new ImagesGetNoAdmin();
+            throw new AuthNoAdmin();
         }
     }
 

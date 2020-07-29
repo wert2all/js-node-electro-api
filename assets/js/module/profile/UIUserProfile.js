@@ -1,4 +1,5 @@
 import UIElementInterface from '../../ui/interfaces/element/UIElementInterface';
+import UserProfile from '../../data/UserProfile';
 
 /**
  * @class UIUserProfile
@@ -83,33 +84,60 @@ export default class UIUserProfile extends UIElementInterface {
     }
 
     init() {
-        this._uikit.modal(this._modalElement);
+        this._getModal();
     }
 
     /**
      *
-     * @param {DataGoogleAuthUser} userProfile
+     * @param {DataGoogleAuthUser} googleUser
      */
     // eslint-disable-next-line no-unused-vars
-    show(userProfile) {
-        this._avatarElement.src = userProfile.getUserImage();
-        this._userNameElement.innerHTML = userProfile.getUserName();
-        this._userEmailElement.innerHTML = userProfile.getUserEmail();
+    show(googleUser) {
+        this._avatarElement.src = googleUser.getUserImage();
+        this._userNameElement.innerHTML = googleUser.getUserName();
+        this._userEmailElement.innerHTML = googleUser.getUserEmail();
         this._formView.showLoader();
+        this._getModal().show();
+        this._setProfileData(googleUser);
+    }
 
-        this._api.getUserProfile(userProfile, userProfile.getUserId())
+    /**
+     *
+     * @param {DataGoogleAuthUser} googleUser
+     * @private
+     */
+    _setProfileData(googleUser) {
+        this._api.getUserProfile(googleUser, googleUser.getUserId())
             .then(response => {
-                console.log(response);
-                this._formView.hideLoader();
-            })
-            .catch(error => this._notify.error(error.message));
-        // this._form
-        //     .setElement('profile_personal_number', userProfile.getPersonalNumber())
-        //     .setElement('profile_KC', userProfile.getKC())
-        //     .setElement('profile_company_name', userProfile.getCompanyName())
-        //     .setElement('profile_iban', userProfile.getIBAN())
-        //     .setElement('profile_BIG', userProfile.getBIG());
+                if (response.getStatus()) {
+                    this._formView.hideLoader();
+                    const userProfile = UserProfile.factory(response);
+                    this._formView
+                        .setElement(
+                            'profile_personal_number',
+                            userProfile.getPersonalNumber()
+                        )
+                        .setElement('profile_KC', userProfile.getCs())
+                        .setElement('profile_company_name', userProfile.getCompanyName())
+                        .setElement('profile_iban', userProfile.getIban())
+                        .setElement('profile_BIG', userProfile.getBic());
 
-        this._uikit.modal(this._modalElement).show();
+                } else {
+                    throw new Error(response.getErrorMessage());
+                }
+            })
+            .catch(error => {
+                this._getModal().hide();
+                return this._notify.error(error.message);
+            });
+    }
+
+    /**
+     *
+     * @return {*}
+     * @private
+     */
+    _getModal() {
+        return this._uikit.modal(this._modalElement);
     }
 }

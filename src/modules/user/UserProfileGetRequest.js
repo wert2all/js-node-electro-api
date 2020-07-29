@@ -13,7 +13,7 @@ import ResponseResult from '../../routers/response/ResponseResult';
 import DI from '../../lib/di/DI';
 import ConnectionInterface from '../../lib/db-connection/ConnectionInterface';
 import UserDefinition from '../../db/definition/UserDefinition';
-import ImagesGetNoAdmin from '../images/error/ImagesGetNoAdmin';
+import AuthNoAdmin from '../auth/error/AuthNoAdmin';
 
 /**
  * @class UserProfileGetRequest
@@ -160,7 +160,7 @@ export default class UserProfileGetRequest extends RequestInterface {
             isAdmin = users[0].getIsAdmin() === 'y';
         }
         if (isAdmin === false) {
-            throw new ImagesGetNoAdmin();
+            throw new AuthNoAdmin();
         }
     }
 }

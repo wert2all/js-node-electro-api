@@ -3,7 +3,7 @@
  *
  */
 import StringExt from '../../../lib/utils/StringExt';
-import UserProfileRequestNoToken from '../error/UserProfileRequestNoToken';
+import AuthNoToken from '../../auth/error/AuthNoToken';
 
 export default class UserProfileRequestDataClass {
     constructor(authToken) {
@@ -14,6 +14,24 @@ export default class UserProfileRequestDataClass {
          * @private
          */
         this._account = null;
+    }
+
+    /**
+     *
+     * @param request
+     * @return UserProfileRequestDataClass
+     */
+    static factory(request) {
+        const authToken = Buffer.from(
+            new StringExt(request.query.token)
+                .replaceAll('"', ''),
+            'base64'
+        ).toString();
+        if (!authToken) {
+            throw new AuthNoToken();
+        }
+
+        return new UserProfileRequestDataClass(authToken);
     }
 
     /**
@@ -37,23 +55,5 @@ export default class UserProfileRequestDataClass {
      */
     getGoogleAccount() {
         return this._account;
-    }
-
-    /**
-     *
-     * @param request
-     * @return UserProfileRequestDataClass
-     */
-    static factory(request) {
-        const authToken = Buffer.from(
-            new StringExt(request.query.token)
-                .replaceAll('"', ''),
-            'base64'
-        ).toString();
-        if (!authToken) {
-            throw new UserProfileRequestNoToken();
-        }
-
-        return new UserProfileRequestDataClass(authToken);
     }
 }

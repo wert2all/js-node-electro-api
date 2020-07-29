@@ -44,7 +44,7 @@ export default class CurrentUserProfileGetRequest extends RequestInterface {
             const requestData = await this._prepareRequest(request);
             const userProfileList = await this._fetchUserProfile(requestData);
             const ret = this._convertToResponseData(userProfileList);
-            if (ret !== null) {
+            if (ret != null) {
                 response.setData('payment', ret.payment.toHash());
             }
             response.setStatus(true);

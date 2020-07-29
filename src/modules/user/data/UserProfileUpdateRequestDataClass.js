@@ -1,12 +1,12 @@
+import StringExt from '../../../lib/utils/StringExt';
+import UserProfileUpdateRequestBadData from '../error/UserProfileUpdateRequestBadData';
+import UserPaymentDataClass from './UserPaymentDataClass';
+import AuthNoToken from '../../auth/error/AuthNoToken';
+
 /**
  * @class UserProfileUpdateRequestDataClass
  *
  */
-import StringExt from '../../../lib/utils/StringExt';
-import UserProfileRequestNoToken from '../error/UserProfileRequestNoToken';
-import UserProfileUpdateRequestBadData from '../error/UserProfileUpdateRequestBadData';
-import UserPaymentDataClass from './UserPaymentDataClass';
-
 export default class UserProfileUpdateRequestDataClass {
     /**
      *
@@ -27,37 +27,6 @@ export default class UserProfileUpdateRequestDataClass {
          * @private
          */
         this._paymentData = paymentData;
-    }
-
-    /**
-     *
-     * @returns {UserPaymentDataClass}
-     */
-    getPayment() {
-        return this._paymentData;
-    }
-
-    /**
-     *
-     * @param {GoogleAccount} account
-     * @return {UserProfileUpdateRequestDataClass}
-     */
-    setGoogleAccount(account) {
-        /**
-         *
-         * @type {string}
-         * @private
-         */
-        this._account = account;
-        return this;
-    }
-
-    /**
-     *
-     * @return {GoogleAccount|null}
-     */
-    getGoogleAccount() {
-        return this._account;
     }
 
     /**
@@ -99,7 +68,7 @@ export default class UserProfileUpdateRequestDataClass {
             'base64'
         ).toString();
         if (!authToken) {
-            throw new UserProfileRequestNoToken();
+            throw new AuthNoToken();
         }
         let profileData = null;
         try {
@@ -112,5 +81,36 @@ export default class UserProfileUpdateRequestDataClass {
             authToken,
             _createPayment(profileData)
         );
+    }
+
+    /**
+     *
+     * @returns {UserPaymentDataClass}
+     */
+    getPayment() {
+        return this._paymentData;
+    }
+
+    /**
+     *
+     * @param {GoogleAccount} account
+     * @return {UserProfileUpdateRequestDataClass}
+     */
+    setGoogleAccount(account) {
+        /**
+         *
+         * @type {string}
+         * @private
+         */
+        this._account = account;
+        return this;
+    }
+
+    /**
+     *
+     * @return {GoogleAccount|null}
+     */
+    getGoogleAccount() {
+        return this._account;
     }
 }

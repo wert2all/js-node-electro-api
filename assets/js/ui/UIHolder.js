@@ -49,10 +49,10 @@ export default class UIHolder extends UIInterface {
         this._contentIndex = this._elements.push(contentElement) - 1;
         /**
          *
-         * @type {number}
+         * @type {UIPager}
          * @private
          */
-        this._pagerIndex = this._elements.push(pager) - 1;
+        this._pager = pager;
         /**
          *
          * @type {UINotifyInterface}
@@ -117,6 +117,6 @@ export default class UIHolder extends UIInterface {
      * @return {UIPager}
      */
     getPager() {
-        return this._elements[this._pagerIndex].clone();
+        return this._pager.clone();
     }
 }

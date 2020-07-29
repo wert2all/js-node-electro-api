@@ -35,6 +35,7 @@ import UIImageDeleteAction from './module/imagelist/item/actions/actions/UIImage
 import UIConfirm from './ui/dialog/UIConfirm';
 import UIImagesViewHolder from './module/imagelist/UIImagesViewHolder';
 import UIImageList from './module/imagelist/UIImageList';
+import UIFormView from './ui/form/UIFormView';
 
 /**
  * @class UIInit
@@ -191,20 +192,26 @@ export default class UIInit {
             document.querySelector('#modal_profile img.profile-img'),
             document.querySelector('#modal_profile h4.uk-text-center.text-light'),
             document.querySelector('#modal_profile p.uk-text-small.uk-text-center'),
-            new DomForm({
-                'profile_personal_number':
-                    new DomFormElement(
-                        document.querySelector('#profile_personal_number')
-                    ),
-                'profile_KC':
-                    new DomFormElement(document.querySelector('#profile_KC')),
-                'profile_company_name':
-                    new DomFormElement(document.querySelector('#profile_company_name')),
-                'profile_iban':
-                    new DomFormElement(document.querySelector('#profile_iban')),
-                'profile_BIG':
-                    new DomFormElement(document.querySelector('#profile_BIG')),
-            }),
+            new UIFormView(
+                new DomForm({
+                    'profile_personal_number':
+                        new DomFormElement(
+                            document.querySelector('#profile_personal_number')
+                        ),
+                    'profile_KC':
+                        new DomFormElement(document.querySelector('#profile_KC')),
+                    'profile_company_name':
+                        new DomFormElement(
+                            document.querySelector('#profile_company_name')
+                        ),
+                    'profile_iban':
+                        new DomFormElement(document.querySelector('#profile_iban')),
+                    'profile_BIG':
+                        new DomFormElement(document.querySelector('#profile_BIG')),
+                }),
+                document.querySelector('#modal_profile form.profile_form'),
+                this._ui.getLoader()
+            ),
             UIkit
         );
         this._uiProfile.init();

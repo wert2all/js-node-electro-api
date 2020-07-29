@@ -13,15 +13,15 @@ export default class UIUserProfile extends UIElementInterface {
      * @param {Node} avatarElement
      * @param {Node} userNameElement
      * @param {Node} userEmailElement
-     * @param {DomFormInterface} form
      * @param UIKit
+     * @param {UIFormViewInterface} formView
      */
     constructor(
         modalElement,
         avatarElement,
         userNameElement,
         userEmailElement,
-        form,
+        formView,
         UIKit
     ) {
         super();
@@ -50,12 +50,16 @@ export default class UIUserProfile extends UIElementInterface {
          */
         this._userEmailElement = userEmailElement;
         /**
-         *
-         * @type {DomFormInterface}
+         * @type {UIkit}
          * @private
          */
-        this._form = form;
         this._uikit = UIKit;
+        /**
+         *
+         * @type {UIFormViewInterface}
+         * @private
+         */
+        this._formView = formView;
     }
 
     clean() {
@@ -75,7 +79,7 @@ export default class UIUserProfile extends UIElementInterface {
         this._avatarElement.src = userProfile.getUserImage();
         this._userNameElement.innerHTML = userProfile.getUserName();
         this._userEmailElement.innerHTML = userProfile.getUserEmail();
-
+        this._formView.showLoader();
         // this._form
         //     .setElement('profile_personal_number', userProfile.getPersonalNumber())
         //     .setElement('profile_KC', userProfile.getKC())

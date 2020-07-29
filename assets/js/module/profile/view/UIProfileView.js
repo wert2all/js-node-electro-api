@@ -44,7 +44,7 @@ export default class UIProfileView {
 
     /**
      *
-     * @param {UserProfile} userData
+     * @param {DataGoogleAuthUser} userData
      * @return {UIImageItem}
      */
     setUserData(userData) {

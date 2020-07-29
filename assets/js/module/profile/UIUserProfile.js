@@ -68,7 +68,7 @@ export default class UIUserProfile extends UIElementInterface {
 
     /**
      *
-     * @param {UserProfile} userProfile
+     * @param {DataGoogleAuthUser} userProfile
      */
     // eslint-disable-next-line no-unused-vars
     show(userProfile) {
@@ -76,12 +76,12 @@ export default class UIUserProfile extends UIElementInterface {
         this._userNameElement.innerHTML = userProfile.getUserName();
         this._userEmailElement.innerHTML = userProfile.getUserEmail();
 
-        this._form
-            .setElement('profile_personal_number', userProfile.getPersonalNumber())
-            .setElement('profile_KC', userProfile.getKC())
-            .setElement('profile_company_name', userProfile.getCompanyName())
-            .setElement('profile_iban', userProfile.getIBAN())
-            .setElement('profile_BIG', userProfile.getBIG());
+        // this._form
+        //     .setElement('profile_personal_number', userProfile.getPersonalNumber())
+        //     .setElement('profile_KC', userProfile.getKC())
+        //     .setElement('profile_company_name', userProfile.getCompanyName())
+        //     .setElement('profile_iban', userProfile.getIBAN())
+        //     .setElement('profile_BIG', userProfile.getBIG());
 
         this._uikit.modal(this._modalElement).show();
     }

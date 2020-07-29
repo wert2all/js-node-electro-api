@@ -36,7 +36,7 @@ export default class ImageData {
         this._yearmon = null;
         /**
          *
-         * @type {null| UserProfile}
+         * @type {null| DataGoogleAuthUser}
          * @private
          */
         this._user = null;
@@ -44,7 +44,7 @@ export default class ImageData {
 
     /**
      *
-     * @return {null|UserProfile}
+     * @return {null|DataGoogleAuthUser}
      */
     getUser() {
         return this._user;
@@ -84,7 +84,7 @@ export default class ImageData {
 
     /**
      *
-     * @param {UserProfile|null} user
+     * @param {DataGoogleAuthUser|null} user
      * @return {ImageData}
      */
     setUser(user) {

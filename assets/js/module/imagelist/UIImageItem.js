@@ -219,7 +219,7 @@ export default class UIImageItem extends UIElementInterface {
 
     /**
      *
-     * @param {UserProfile|null} userData
+     * @param {DataGoogleAuthUser|null} userData
      * @return {UIImageItem}
      */
     setUserData(userData) {

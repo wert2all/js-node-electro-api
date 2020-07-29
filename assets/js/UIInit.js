@@ -93,7 +93,6 @@ export default class UIInit {
                                     ApiUrlFactory.create(window)
                                 );
                                 this._makeImageList(api, authProvider);
-                                this._makeProfile(api, authProvider);
                             })
                     );
                     authProvider.init();
@@ -121,10 +120,7 @@ export default class UIInit {
         const defaultAuthValues = new UiAuthElementDefaultValues(
             '../assets/img/avatar.svg',
             'John Doe',
-            (user) => {
-                console.log(user);
-                this._uiProfile.show(user);
-            }
+            (user) => this._uiProfile.show(user)
         );
 
         const authElement = new UIAuthElementComposite([
@@ -296,32 +292,5 @@ export default class UIInit {
         );
         new UIImageList(imageViewHolder, api, authProvider)
             .init();
-    }
-
-    /**
-     *
-     * @param {Api} api
-     * @param {AuthProviderInterface} authProvider
-     * @private
-     */
-    _makeProfile(api, authProvider) {
-        api.getUserProfile(
-            authProvider.getUserProfile(),
-            authProvider.getUserProfile().getUserId()
-        )
-            .then(result => {
-                if (result.getStatus()) {
-                    console.log(result.getData());
-                    // this._ui
-                    //     .getAuthElement()
-                    //     .setUser(authProvider.getUserProfile());
-                } else {
-                    this._ui.getNotify().error(result.getErrorMessage());
-                }
-            })
-            .catch(error => this._ui
-                .getNotify()
-                .error(error.message)
-            );
     }
 }

@@ -1,9 +1,9 @@
 import ImageData from '../../data/ImageData';
-import UserProfile from '../../data/UserProfile';
 import ApiLimits from '../api/ApiLimits';
 import ApiImagesLimitData from './data/ApiImagesLimitData';
 import ApiImagesHolder from './data/ApiImagesHolder';
 import UIElementListInterface from '../../ui/interfaces/element/UIElementListInterface';
+import DataGoogleAuthUser from '../../data/DataGoogleAuthUser';
 
 /**
  * @class UIImageList
@@ -156,7 +156,7 @@ export default class UIImageList extends UIElementListInterface {
                 .setYearmon(image.yearmon);
             if (image.hasOwnProperty('user')) {
                 imageObject.setUser(
-                    new UserProfile(
+                    new DataGoogleAuthUser(
                         image.user.id,
                         image.user.name,
                         image.user.email,

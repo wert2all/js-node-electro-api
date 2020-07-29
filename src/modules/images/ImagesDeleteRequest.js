@@ -8,7 +8,6 @@ import AuthParams from '../auth/params/Params';
 import UserRepository from '../../db/repository/UserRepository';
 import UserEntity from '../../data/entity/UserEntity';
 import UserDefinition from '../../db/definition/UserDefinition';
-import ImagesGetNoAdmin from './error/ImagesGetNoAdmin';
 import DI from '../../lib/di/DI';
 import ImageUrl from '../../data/images/ImageUrl';
 import ConnectionInterface from '../../lib/db-connection/ConnectionInterface';
@@ -25,6 +24,7 @@ import ServerConfig from '../../server/ServerConfig';
 import LogFormatterInterface from '../../lib/logger/LogFormatterInterface';
 import Logger from '../../extended/logger/Logger';
 import EntityManager from '../../lib/db-entity-manager/EntityManager';
+import AuthNoAdmin from '../auth/error/AuthNoAdmin';
 
 /**
  * @class ImagesDeleteRequest
@@ -155,7 +155,7 @@ export default class ImagesDeleteRequest extends RequestInterface {
             isAdmin = users[0].getIsAdmin() === 'y';
         }
         if (isAdmin === false) {
-            throw new ImagesGetNoAdmin();
+            throw new AuthNoAdmin();
         }
     }
 

@@ -36,6 +36,7 @@ import UIConfirm from './ui/dialog/UIConfirm';
 import UIImagesViewHolder from './module/imagelist/UIImagesViewHolder';
 import UIImageList from './module/imagelist/UIImageList';
 import UIFormView from './ui/form/UIFormView';
+import UIImageProfileAction from './module/imagelist/item/actions/actions/UIImageProfileAction';
 
 /**
  * @class UIInit
@@ -85,11 +86,13 @@ export default class UIInit {
                                     new ApiFetcher(),
                                     ApiUrlFactory.create(window)
                                 );
-                                this._makeImageList(api, authProvider);
-                                this._makeAuthElements(
-                                    authProvider,
-                                    this._makeProfile(api, window.document)
+                                const uiProfile = this._makeProfile(
+                                    api,
+                                    window.document,
+                                    authProvider
                                 );
+                                this._makeImageList(api, authProvider, uiProfile);
+                                this._makeAuthElements(authProvider, uiProfile);
                             })
                     );
                     authProvider.init();
@@ -177,10 +180,11 @@ export default class UIInit {
      * @param {Document} document
      * @param {Api} api
      * @param {AuthProviderInterface} authProvider
+     * @param {UIUserProfile} profile
      * @return {UIImageItem}
      * @private
      */
-    _makeImageItem(document, api, authProvider) {
+    _makeImageItem(document, api, authProvider, profile) {
         const actionsConfig = new UIImageItemConfigActions(
             '.uk-card-footer .uk-icon-link.uk-icon.image-icon-download',
             '.uk-card-footer .uk-icon-link.uk-icon.image-icon-edit',
@@ -224,6 +228,11 @@ export default class UIInit {
                         authProvider,
                         this._ui.getNotify()
                     )
+                ),
+                new UIImageActionModifier(
+                    new DomListenersModifier(),
+                    uiItemConfig.getProfileSelector().getAvatarSelector(),
+                    new UIImageProfileAction(profile)
                 )
             ]),
             new UIProfileViewFactory()
@@ -236,13 +245,15 @@ export default class UIInit {
      *
      * @param {Api} api
      * @param {AuthProviderInterface} authProvider
+     * @param {UIUserProfile} profile
      * @private
      */
-    _makeImageList(api, authProvider) {
+    _makeImageList(api, authProvider, profile) {
         const imageItem = this._makeImageItem(
             document,
             api,
-            authProvider
+            authProvider,
+            profile
         );
         const imageViewHolder = new UIImagesViewHolder(
             this._ui.getContent(),
@@ -260,10 +271,11 @@ export default class UIInit {
      *
      * @param {Api} api
      * @param {Document} document
+     * @param {AuthProviderInterface} authProvider
      * @return {UIUserProfile}
      * @private
      */
-    _makeProfile(api, document) {
+    _makeProfile(api, document, authProvider) {
         const profile = new UIUserProfile(
             document.querySelector('#modal_profile'),
             document.querySelector('#modal_profile img.profile-img'),
@@ -291,7 +303,8 @@ export default class UIInit {
             ),
             UIkit,
             api,
-            this._ui.getNotify()
+            this._ui.getNotify(),
+            authProvider
         );
         profile.init();
         return profile;

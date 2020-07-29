@@ -9,7 +9,7 @@ export default class UserPaymentDataClass extends DataValue {
     constructor() {
         super();
         this.setData('company_name', '');
-        this.setData('payment_account', '');
+        this.setData('iban', '');
         this.setData('bic', '');
         this.setData('edrpou', '');
         this.setData('personal_number', '');

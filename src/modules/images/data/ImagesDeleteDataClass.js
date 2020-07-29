@@ -1,5 +1,5 @@
 import StringExt from '../../../lib/utils/StringExt';
-import ImagesGetNoToken from '../error/ImagesGetNoToken';
+import AuthNoToken from '../../auth/error/AuthNoToken';
 
 export default class ImagesDeleteDataClass {
     /**
@@ -47,7 +47,7 @@ export default class ImagesDeleteDataClass {
         if (authToken !== null) {
             returnRequest = new ImagesDeleteDataClass(authToken, id);
         } else {
-            throw new ImagesGetNoToken();
+            throw new AuthNoToken();
         }
 
         return returnRequest;

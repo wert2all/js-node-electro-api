@@ -86,6 +86,27 @@ export default class Api {
     /**
      *
      * @param {DataGoogleAuthUser} userProfile
+     * @param {FormData} formData
+     * @return {Promise<ApiFetchResult>}
+     */
+    async updateProfile(userProfile, formData) {
+        formData.set('token', this._createToken(userProfile));
+        const options = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(Object.fromEntries(formData))
+        };
+        return await this._fetcher.fetch(
+            this._createUrl('user/profile/update/user/'),
+            options
+        );
+    }
+
+    /**
+     *
+     * @param {DataGoogleAuthUser} userProfile
      * @return {string}
      * @private
      */

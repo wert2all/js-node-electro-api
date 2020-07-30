@@ -304,7 +304,8 @@ export default class UIInit {
             UIkit,
             api,
             this._ui.getNotify(),
-            authProvider
+            authProvider,
+            document.querySelector('#modal_profile button.uk-button-primary')
         );
         profile.init();
         return profile;

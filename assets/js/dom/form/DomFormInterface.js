@@ -32,4 +32,19 @@ export default class DomFormInterface {
      */
     submit() {
     }
+
+    /**
+     * @abstract
+     * @return boolean
+     */
+    validate() {
+
+    }
+
+    /**
+     * @return FormData
+     */
+    getFormData() {
+
+    }
 }

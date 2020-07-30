@@ -105,7 +105,6 @@ export default class UIUserProfile extends UIElementInterface {
         this._submitButton.addEventListener('click', () => {
             if (this._formView.validate()) {
                 this._formView.showLoader();
-                console.log(this._formView.getFormData());
                 this._api.updateProfile(
                     this._authProvider.getUserProfile(),
                     this._formView.getFormData()

@@ -71,10 +71,24 @@ export default class DomForm extends DomFormInterface {
      * @return {boolean}
      */
     validate() {
-        const validateArray = Object.keys(this._elements).map(key => this._elements[key])
-            .map(element => element.validate())
-            .filter(value => value);
-        console.log(validateArray);
-        return (validateArray.length === 0);
+        return (
+            Object.keys(this._elements).map(key => this._elements[key])
+                .map(element => element.validate())
+                .filter(value => !value)
+                .length === 0
+        );
+    }
+
+    /**
+     *
+     * @return {FormData}
+     */
+    getFormData() {
+        const formData = new FormData();
+        Object.keys(this._elements)
+            .map(key => {
+                formData.set(key, this._elements[key].getValue());
+            });
+        return formData;
     }
 }

@@ -37,6 +37,7 @@ import UIImagesViewHolder from './module/imagelist/UIImagesViewHolder';
 import UIImageList from './module/imagelist/UIImageList';
 import UIFormView from './ui/form/UIFormView';
 import UIImageProfileAction from './module/imagelist/item/actions/actions/UIImageProfileAction';
+import DomFormElementViewHolder from './dom/form/element/DomFormElementViewHolder';
 
 /**
  * @class UIInit
@@ -282,22 +283,7 @@ export default class UIInit {
             document.querySelector('#modal_profile h4.uk-text-center.text-light'),
             document.querySelector('#modal_profile p.uk-text-small.uk-text-center'),
             new UIFormView(
-                new DomForm({
-                    'profile_personal_number':
-                        new DomFormElement(
-                            document.querySelector('#profile_personal_number')
-                        ),
-                    'profile_KC':
-                        new DomFormElement(document.querySelector('#profile_KC')),
-                    'profile_company_name':
-                        new DomFormElement(
-                            document.querySelector('#profile_company_name')
-                        ),
-                    'profile_iban':
-                        new DomFormElement(document.querySelector('#profile_iban')),
-                    'profile_BIG':
-                        new DomFormElement(document.querySelector('#profile_BIG')),
-                }),
+                this._createProfileDomForm(document),
                 document.querySelector('#modal_profile form.profile_form'),
                 this._ui.getLoader()
             ),
@@ -313,6 +299,42 @@ export default class UIInit {
 
     /**
      *
+     * @param {Document} document
+     * @return {DomForm}
+     * @private
+     */
+    _createProfileDomForm(document) {
+        return new DomForm({
+            'profile_personal_number':
+                new DomFormElement(
+                    document.querySelector('#profile_personal_number'),
+                    this._createProfileElementViewHolder('profile_personal_number')
+                ),
+            'profile_KC':
+                new DomFormElement(
+                    document.querySelector('#profile_KC'),
+                    this._createProfileElementViewHolder('profile_KC')
+                ),
+            'profile_company_name':
+                new DomFormElement(
+                    document.querySelector('#profile_company_name'),
+                    this._createProfileElementViewHolder('profile_company_name')
+                ),
+            'profile_iban':
+                new DomFormElement(
+                    document.querySelector('#profile_iban'),
+                    this._createProfileElementViewHolder('profile_iban')
+                ),
+            'profile_BIG':
+                new DomFormElement(
+                    document.querySelector('#profile_BIG'),
+                    this._createProfileElementViewHolder('profile_BIG')
+                ),
+        });
+    }
+
+    /**
+     *
      * @param {AuthProviderInterface} authProvider
      * @param {UIUserProfile} profile
      * @private
@@ -322,5 +344,20 @@ export default class UIInit {
         this._ui.getAuthElement().init();
         this._ui.getAuthElement()
             .applyProfileClick(user => profile.show(user));
+    }
+
+    /**
+     *
+     * @param {string} selector
+     * @return {DomFormElementViewHolder}
+     * @private
+     */
+    _createProfileElementViewHolder(selector) {
+        return new DomFormElementViewHolder(
+            document.querySelector('#modal_profile .uk-form-controls.' + selector),
+            document.querySelector(
+                '#modal_profile .uk-form-controls.' + selector + ' .uk-label'
+            ),
+        );
     }
 }

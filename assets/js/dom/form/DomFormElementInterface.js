@@ -30,4 +30,22 @@ export default class DomFormElementInterface {
     validate() {
 
     }
+
+    /**
+     * @abstract
+     * @return DomFormElementInterface
+     */
+    setFocus() {
+
+    }
+
+    /**
+     * @abstract
+     * @param {string} message
+     * @return DomFormElementInterface
+     */
+    // eslint-disable-next-line no-unused-vars
+    setError(message) {
+
+    }
 }

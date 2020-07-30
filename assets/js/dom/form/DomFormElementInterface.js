@@ -22,4 +22,12 @@ export default class DomFormElementInterface {
     getValue() {
 
     }
+
+    /**
+     * @abstract
+     * @return boolean
+     */
+    validate() {
+
+    }
 }

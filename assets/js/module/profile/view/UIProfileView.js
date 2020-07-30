@@ -51,7 +51,7 @@ export default class UIProfileView {
         if (this._nameNode !== null) {
             this._nameNode.innerHTML = userData.getUserName();
         }
-        if (this._avatarNode != null) {
+        if (this._avatarNode != null && userData.getUserImage() !== '') {
             this._avatarNode.src = userData.getUserImage();
         }
     }

@@ -12,4 +12,12 @@ export default class DomFormElementValidatorInterface {
     validate(value) {
 
     }
+
+    /**
+     * @abstract
+     * @return string
+     */
+    getValidationError() {
+
+    }
 }

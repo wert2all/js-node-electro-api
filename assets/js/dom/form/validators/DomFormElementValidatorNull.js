@@ -11,7 +11,8 @@ export default class DomFormElementValidatorNull extends DomFormElementValidator
      *
      * @return {boolean}
      */
-    validate() {
+    // eslint-disable-next-line no-unused-vars
+    validate(value) {
         return true;
     }
 }

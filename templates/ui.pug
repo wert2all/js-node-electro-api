@@ -120,22 +120,27 @@ html(lang='en')
                                 label.uk-form-label(for='profile_personal_number') Особистий номер
                                 .uk-form-controls
                                     input#profile_personal_number.uk-input(type='text', placeholder='Особистий номер')
+                                    span.uk-label.uk-label-danger error label personal number
                             .uk-margin
                                 label.uk-form-label(for='profile_KC') КС
                                 .uk-form-controls
                                     input#profile_KC.uk-input(type='text', placeholder='КС')
+                                    span.uk-label.uk-label-danger error label KC
                             .uk-margin
                                 label.uk-form-label(for='profile_company_name') Назва постачальника
                                 .uk-form-controls
                                     input#profile_company_name.uk-input(type='text', placeholder='Назва постачальника')
+                                    span.uk-label.uk-label-danger error label company name
                             .uk-margin
                                 label.uk-form-label(for='profile_iban') IBAN
                                 .uk-form-controls
                                     input#profile_iban.uk-input(type='text', placeholder='IBAN')
+                                    span.uk-label.uk-label-danger error label IBAN
                             .uk-margin
                                 label.uk-form-label(for='profile_BIG') ЄДРПОУ
                                 .uk-form-controls
                                     input#profile_BIG.uk-input(type='text', placeholder='ЄДРПОУ')
+                                    span.uk-label.uk-label-danger error label BIC
                     .uk-modal-footer.uk-text-right
                         button.uk-button.uk-button-primary(type='button') Save
         footer.uk-section.uk-section-small.uk-text-center

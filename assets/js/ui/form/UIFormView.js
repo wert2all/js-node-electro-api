@@ -8,7 +8,7 @@ import UIFormViewInterface from './UIFormViewInterface';
 export default class UIFormView extends UIFormViewInterface {
     /**
      *
-     * @param {DomForm} formDom
+     * @param {DomFormInterface} formDom
      * @param {HTMLFormElement} formNode
      * @param {UIElementInterface} loader
      */
@@ -16,7 +16,7 @@ export default class UIFormView extends UIFormViewInterface {
         super();
         /**
          *
-         * @type {DomForm}
+         * @type {DomFormInterface}
          * @private
          */
         this._form = formDom;

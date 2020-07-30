@@ -19,6 +19,7 @@ export default class UIUserProfile extends UIElementInterface {
      * @param {Api} api
      * @param {UINotifyInterface} notify
      * @param {AuthProviderInterface} authProvider
+     * @param {HTMLButtonElement} submitButton
      */
     constructor(
         modalElement,
@@ -29,7 +30,8 @@ export default class UIUserProfile extends UIElementInterface {
         UIKit,
         api,
         notify,
-        authProvider
+        authProvider,
+        submitButton
     ) {
         super();
         /**
@@ -85,6 +87,13 @@ export default class UIUserProfile extends UIElementInterface {
          * @private
          */
         this._authProvider = authProvider;
+        /**
+         *
+         * @type {HTMLButtonElement}
+         * @private
+         */
+        this._submitButton = submitButton;
+
     }
 
     clean() {
@@ -93,6 +102,24 @@ export default class UIUserProfile extends UIElementInterface {
 
     init() {
         this._getModal();
+        this._submitButton.addEventListener('click', () => {
+            if (this._formView.validate()) {
+                this._formView.showLoader();
+                console.log(this._formView.getFormData());
+                this._api.updateProfile(
+                    this._authProvider.getUserProfile(),
+                    this._formView.getFormData()
+                )
+                    .then(response => {
+                        this._formView.hideLoader();
+                        console.log(response);
+                    })
+                    .catch(error => {
+                        this._formView.hideLoader();
+                        this._notify.error(error.message);
+                    });
+            }
+        });
     }
 
     /**

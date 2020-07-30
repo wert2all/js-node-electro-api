@@ -1,4 +1,5 @@
 import DomFormElementInterface from './DomFormElementInterface';
+import DomFormElementValidatorNull from './validators/DomFormElementValidatorNull';
 
 /**
  * @class DomFormElement
@@ -9,8 +10,9 @@ export default class DomFormElement extends DomFormElementInterface {
     /**
      *
      * @param {Node} element
+     * @param {DomFormElementValidatorInterface} validator
      */
-    constructor(element) {
+    constructor(element, validator = null) {
         super();
         /**
          *
@@ -18,6 +20,14 @@ export default class DomFormElement extends DomFormElementInterface {
          * @private
          */
         this._element = element;
+        /**
+         *
+         * @type {DomFormElementValidatorInterface}
+         * @private
+         */
+        this._validator = (validator == null)
+            ? new DomFormElementValidatorNull()
+            : validator;
     }
 
     /**
@@ -36,5 +46,13 @@ export default class DomFormElement extends DomFormElementInterface {
     setValue(value) {
         this._element.value = value;
         return this;
+    }
+
+    /**
+     *
+     * @return {boolean}
+     */
+    validate() {
+        return this._validator.validate(this._element.value);
     }
 }

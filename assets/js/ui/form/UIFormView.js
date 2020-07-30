@@ -90,4 +90,20 @@ export default class UIFormView extends UIFormViewInterface {
         this._formNode.parentNode.append(this._showedLoader);
         return this;
     }
+
+    /**
+     *
+     * @return {boolean}
+     */
+    validate() {
+        return this._form.validate();
+    }
+
+    /**
+     *
+     * @return {FormData}
+     */
+    getFormData() {
+        return this._form.getFormData();
+    }
 }

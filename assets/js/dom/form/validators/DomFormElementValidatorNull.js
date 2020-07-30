@@ -15,4 +15,12 @@ export default class DomFormElementValidatorNull extends DomFormElementValidator
     validate(value) {
         return true;
     }
+
+    /**
+     *
+     * @return {string}
+     */
+    getValidationError() {
+        return '';
+    }
 }

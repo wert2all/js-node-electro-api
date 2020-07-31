@@ -343,8 +343,7 @@ export default class UIInit {
                     'edrpou': 'profile_BIG',
                     'personal_number': 'profile_personal_number',
                     'cs': 'profile_KC'
-                },
-                userId: 'profile_user_id'
+                }
             })
         );
     }

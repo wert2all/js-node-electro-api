@@ -8,13 +8,16 @@ import AuthNoToken from '../../auth/error/AuthNoToken';
  *
  */
 export default class UserProfileUpdateRequestDataClass {
+    getToken() {
+        return this._token;
+    }
     /**
      *
      * @param {string} authToken
      * @param {UserPaymentDataClass} paymentData
      */
     constructor(authToken, paymentData) {
-        this.token = authToken;
+        this._token = authToken;
         /**
          *
          * @type {GoogleAccount|null}
@@ -27,6 +30,12 @@ export default class UserProfileUpdateRequestDataClass {
          * @private
          */
         this._paymentData = paymentData;
+        /**
+         *
+         * @type {string|null}
+         * @private
+         */
+        this._userId = null;
     }
 
     /**
@@ -81,6 +90,22 @@ export default class UserProfileUpdateRequestDataClass {
             authToken,
             _createPayment(profileData)
         );
+    }
+
+    /**
+     *
+     * @return {string|null}
+     */
+    getUserId() {
+        return this._userId;
+    }
+
+    /**
+     *
+     * @param {string|null} value
+     */
+    setUserId(value) {
+        this._userId = value;
     }
 
     /**

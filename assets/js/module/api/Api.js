@@ -90,8 +90,8 @@ export default class Api {
      * @return {Promise<ApiFetchResult>}
      */
     async updateProfile(userProfile, formData) {
-        formData['token', this._createToken(userProfile)];
-        console.log(formData);
+        formData['token'] = this._createToken(userProfile);
+        formData['data'] = JSON.stringify(formData['data']);
         const options = {
             method: 'POST',
             headers: {
@@ -100,7 +100,7 @@ export default class Api {
             body: JSON.stringify(formData)
         };
         return await this._fetcher.fetch(
-            this._createUrl('user/profile/update/user/'),
+            this._createUrl('user/profile/update/'),
             options
         );
     }

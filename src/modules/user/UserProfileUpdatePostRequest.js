@@ -15,6 +15,9 @@ import ConnectionInterface from '../../lib/db-connection/ConnectionInterface';
 import UserProfileDefinition from '../../db/definition/UserProfileDefinition';
 import LoggerInterface from '../../lib/logger/LoggerInterface';
 import UserProfileLogEvent from './logs/event/UserProfileLogEvent';
+import StorageConfiguration from '../../storage/configuration/StorageConfiguration';
+import UserDefinition from '../../db/definition/UserDefinition';
+import AuthNoAdmin from '../auth/error/AuthNoAdmin';
 
 /**
  * @class UserProfileUpdatePostRequest
@@ -72,7 +75,7 @@ export default class UserProfileUpdatePostRequest extends RequestInterface {
              */
             const em = this._di.get(EntityManager);
 
-            const hash = await this._createProfileHash(requestData.getGoogleAccount());
+            const hash = await this._createProfileHash(requestData.getUserId());
             const profileEntities = await this._createEntities(requestData, hash);
             profileEntities.map(async entity =>
                 await em.save(this._profileRepository.getDefinition(), entity)
@@ -106,23 +109,37 @@ export default class UserProfileUpdatePostRequest extends RequestInterface {
      */
     async _prepareRequest(request) {
         const requestData = UserProfileUpdateRequestDataClass.factory(request);
-        requestData.setGoogleAccount(
-            await this._getGoogleAccount(requestData)
-        );
+        if (request.body.userId) {
+            requestData.setGoogleAccount(
+                await this._getGoogleAccount(requestData, new ApiKeyProvider(
+                    DI.getInstance()
+                        .get(StorageConfiguration)
+                        .getSecretStorage(),
+                    'google:api:signin:client:key'
+                )
+                    .get())
+            );
+            requestData.setUserId(request.body.userId);
+            await this._checkAdmin(requestData);
+        } else {
+            requestData.setGoogleAccount(
+                await this._getGoogleAccount(requestData, ApiKeyProvider.getDefault())
+            );
+            requestData.setUserId(requestData.getGoogleAccount().getGoogleUserId());
+        }
         return Promise.resolve(requestData);
     }
 
     /**
      *
      * @param {UserProfileUpdateRequestDataClass} requestData
+     * @param {string} key
      * @return {GoogleAccount}
      * @private
      */
-    async _getGoogleAccount(requestData) {
-        return await new AuthCheck(ApiKeyProvider.getDefault())
-            .check(
-                new AuthParams(requestData.token)
-            );
+    async _getGoogleAccount(requestData, key) {
+        return await new AuthCheck(key)
+            .check(new AuthParams(requestData.getToken()));
     }
 
     /**
@@ -138,7 +155,7 @@ export default class UserProfileUpdatePostRequest extends RequestInterface {
         ['company_name', 'iban', 'bic', 'edrpou', 'personal_number', 'cs']
             .map(valueName => {
                 const entity = this._makeEntity(
-                    requestData.getGoogleAccount(),
+                    requestData.getUserId(),
                     valueName,
                     payment.getData(valueName)
                 );
@@ -154,9 +171,15 @@ export default class UserProfileUpdatePostRequest extends RequestInterface {
         return ret;
     }
 
-    async _createProfileHash(googleAccount) {
+    /**
+     *
+     * @param {string} userId
+     * @return {Promise<{}>}
+     * @private
+     */
+    async _createProfileHash(userId) {
         const userProfile = await this._profileRepository.fetchData(
-            this._createCleanProfileEntity(googleAccount)
+            this._createCleanProfileEntity(userId)
         );
         return userProfile.reduce((prev, entity) => {
             const key = this._createKey(
@@ -170,14 +193,14 @@ export default class UserProfileUpdatePostRequest extends RequestInterface {
 
     /**
      *
-     * @param {GoogleAccount} googleAccount
+     * @param {string} userId
      * @param {string} valueName
      * @param {string} value
      * @returns {UserProfileEntity}
      * @private
      */
-    _makeEntity(googleAccount, valueName, value) {
-        const userProfileEntity = this._createCleanProfileEntity(googleAccount);
+    _makeEntity(userId, valueName, value) {
+        const userProfileEntity = this._createCleanProfileEntity(userId);
 
         userProfileEntity.setValue('value_type', 'payment');
         userProfileEntity.setValue('value_name', valueName);
@@ -188,13 +211,17 @@ export default class UserProfileUpdatePostRequest extends RequestInterface {
 
     /**
      *
-     * @param {GoogleAccount} googleAccount
      * @returns {UserProfileEntity}
      * @private
+     * @param {string} userId
      */
-    _createCleanProfileEntity(googleAccount) {
-        const userEntity = new UserEntity()
-            .setGoogleAccount(googleAccount);
+    _createCleanProfileEntity(userId) {
+        /**
+         *
+         * @type {UserEntity}
+         */
+        const userEntity = new UserEntity();
+        userEntity.setValue(UserDefinition.COLUMN_GOOGLE_ID, userId);
         const userProfileEntity = new UserProfileEntity();
         userProfileEntity.setUser(userEntity);
         return userProfileEntity;
@@ -209,5 +236,26 @@ export default class UserProfileUpdatePostRequest extends RequestInterface {
      */
     _createKey(type, name) {
         return type + ':' + name;
+    }
+
+    /**
+     *
+     * @param {UserProfileUpdateRequestDataClass} requestData
+     * @private
+     */
+    async _checkAdmin(requestData) {
+        let isAdmin = false;
+        const userEntity = new UserEntity();
+        userEntity.setValue(
+            UserDefinition.COLUMN_GOOGLE_ID,
+            requestData.getGoogleAccount().getGoogleUserId()
+        );
+        const users = await this._userRepository.fetchData(userEntity);
+        if (users.length === 1) {
+            isAdmin = users[0].getIsAdmin() === 'y';
+        }
+        if (isAdmin === false) {
+            throw new AuthNoAdmin();
+        }
     }
 }

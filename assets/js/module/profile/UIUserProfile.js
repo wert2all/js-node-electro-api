@@ -114,7 +114,11 @@ export default class UIUserProfile extends UIElementInterface {
                 )
                     .then(response => {
                         this._formView.hideLoader();
-                        console.log(response);
+                        if (response.getStatus() === true) {
+                            this._notify.success('Saved!');
+                        } else {
+                            this._notify.error(response.getErrorMessage());
+                        }
                     })
                     .catch(error => {
                         this._formView.hideLoader();

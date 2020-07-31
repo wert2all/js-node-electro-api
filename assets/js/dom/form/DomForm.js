@@ -9,8 +9,9 @@ export default class DomForm extends DomFormInterface {
     /**
      *
      * @param {Object<string, DomFormElementInterface>} elements
+     * @param {DomFormRequestModifierInterface} formModifier
      */
-    constructor(elements = {}) {
+    constructor(elements = {}, formModifier) {
         super();
         /**
          *
@@ -18,6 +19,12 @@ export default class DomForm extends DomFormInterface {
          * @private
          */
         this._elements = elements;
+        /**
+         *
+         * @type {DomFormRequestModifierInterface}
+         * @private
+         */
+        this._forRequestModifier = formModifier;
     }
 
     /**
@@ -90,5 +97,13 @@ export default class DomForm extends DomFormInterface {
                 formData.set(key, this._elements[key].getValue());
             });
         return formData;
+    }
+
+    /**
+     *
+     * @return {Object<string, string>}
+     */
+    getRequestFormData() {
+        return this._forRequestModifier.modify(this.getFormData());
     }
 }

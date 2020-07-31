@@ -38,6 +38,7 @@ import UIImageList from './module/imagelist/UIImageList';
 import UIFormView from './ui/form/UIFormView';
 import UIImageProfileAction from './module/imagelist/item/actions/actions/UIImageProfileAction';
 import DomFormElementViewHolder from './dom/form/element/DomFormElementViewHolder';
+import FormRequestModifier from './module/profile/form/FormRequestModifier';
 
 /**
  * @class UIInit
@@ -305,36 +306,47 @@ export default class UIInit {
      */
     _createProfileDomForm(document) {
         return new DomForm({
-            'profile_user_id':
-                new DomFormElement(
-                    document.querySelector('#profile_id')
-                ),
-            'profile_personal_number':
-                new DomFormElement(
-                    document.querySelector('#profile_personal_number'),
-                    this._createProfileElementViewHolder('profile_personal_number')
-                ),
-            'profile_KC':
-                new DomFormElement(
-                    document.querySelector('#profile_KC'),
-                    this._createProfileElementViewHolder('profile_KC')
-                ),
-            'profile_company_name':
-                new DomFormElement(
-                    document.querySelector('#profile_company_name'),
-                    this._createProfileElementViewHolder('profile_company_name')
-                ),
-            'profile_iban':
-                new DomFormElement(
-                    document.querySelector('#profile_iban'),
-                    this._createProfileElementViewHolder('profile_iban')
-                ),
-            'profile_BIG':
-                new DomFormElement(
-                    document.querySelector('#profile_BIG'),
-                    this._createProfileElementViewHolder('profile_BIG')
-                ),
-        });
+                'profile_user_id':
+                    new DomFormElement(
+                        document.querySelector('#profile_id')
+                    ),
+                'profile_personal_number':
+                    new DomFormElement(
+                        document.querySelector('#profile_personal_number'),
+                        this._createProfileElementViewHolder('profile_personal_number')
+                    ),
+                'profile_KC':
+                    new DomFormElement(
+                        document.querySelector('#profile_KC'),
+                        this._createProfileElementViewHolder('profile_KC')
+                    ),
+                'profile_company_name':
+                    new DomFormElement(
+                        document.querySelector('#profile_company_name'),
+                        this._createProfileElementViewHolder('profile_company_name')
+                    ),
+                'profile_iban':
+                    new DomFormElement(
+                        document.querySelector('#profile_iban'),
+                        this._createProfileElementViewHolder('profile_iban')
+                    ),
+                'profile_BIG':
+                    new DomFormElement(
+                        document.querySelector('#profile_BIG'),
+                        this._createProfileElementViewHolder('profile_BIG')
+                    ),
+            },
+            new FormRequestModifier({
+                payment: {
+                    'company_name': 'profile_company_name',
+                    'iban': 'profile_iban',
+                    'edrpou': 'profile_BIG',
+                    'personal_number': 'profile_personal_number',
+                    'cs': 'profile_KC'
+                },
+                userId: 'profile_user_id'
+            })
+        );
     }
 
     /**

@@ -154,6 +154,7 @@ export default class UIUserProfile extends UIElementInterface {
                             'profile_personal_number',
                             userProfile.getPersonalNumber()
                         )
+                        .setElement('profile_user_id', googleUser.getUserId())
                         .setElement('profile_KC', userProfile.getCs())
                         .setElement('profile_company_name', userProfile.getCompanyName())
                         .setElement('profile_iban', userProfile.getIban())

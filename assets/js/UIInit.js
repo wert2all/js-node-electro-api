@@ -305,6 +305,10 @@ export default class UIInit {
      */
     _createProfileDomForm(document) {
         return new DomForm({
+            'profile_user_id':
+                new DomFormElement(
+                    document.querySelector('#profile_id')
+                ),
             'profile_personal_number':
                 new DomFormElement(
                     document.querySelector('#profile_personal_number'),

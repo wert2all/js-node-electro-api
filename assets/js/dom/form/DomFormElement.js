@@ -11,10 +11,10 @@ export default class DomFormElement extends DomFormElementInterface {
     /**
      *
      * @param {HTMLElement} element
-     * @param {DomFormElementViewHolder} viewHolder
+     * @param {DomFormElementViewHolder|null} viewHolder
      * @param {DomFormElementValidatorInterface} validator
      */
-    constructor(element, viewHolder, validator = null) {
+    constructor(element, viewHolder = null, validator = null) {
         super();
         /**
          *
@@ -32,7 +32,7 @@ export default class DomFormElement extends DomFormElementInterface {
             : validator;
         /**
          *
-         * @type {DomFormElementViewHolder}
+         * @type {DomFormElementViewHolder|null}
          * @private
          */
         this._viewHolder = viewHolder;
@@ -91,7 +91,9 @@ export default class DomFormElement extends DomFormElementInterface {
      * @return {DomFormElementInterface}
      */
     setError(message) {
-        this._viewHolder.setError(message);
+        if (this._viewHolder != null) {
+            this._viewHolder.setError(message);
+        }
         return this;
     }
 
@@ -100,7 +102,9 @@ export default class DomFormElement extends DomFormElementInterface {
      * @private
      */
     _cleanErrors() {
-        this._viewHolder.cleanErrors();
+        if (this._viewHolder != null) {
+            this._viewHolder.cleanErrors();
+        }
         this._element = new DomStyles()
             .removeClass(this._element, this._errorStyle);
     }

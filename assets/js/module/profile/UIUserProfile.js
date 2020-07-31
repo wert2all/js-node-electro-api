@@ -107,7 +107,7 @@ export default class UIUserProfile extends UIElementInterface {
                 this._formView.showLoader();
                 this._api.updateProfile(
                     this._authProvider.getUserProfile(),
-                    this._formView.getFormData()
+                    this._formView.getRequestFormData()
                 )
                     .then(response => {
                         this._formView.hideLoader();

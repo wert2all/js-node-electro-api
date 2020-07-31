@@ -47,4 +47,12 @@ export default class DomFormInterface {
     getFormData() {
 
     }
+
+    /**
+     * @abstract
+     * @return {Object<string, string>}
+     */
+    getRequestFormData() {
+
+    }
 }

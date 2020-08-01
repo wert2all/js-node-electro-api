@@ -111,7 +111,27 @@ html(lang='en')
                     .uk-modal-header
                         h2.uk-modal-title Edit image
                     .uk-modal-body
+                        .uk-card-media-bottom
+                            img(src='../assets/img/avatar.svg', alt='')
+                            ul.uk-iconnav
+                                li
+                                    a(uk-icon='icon: refresh')
                         form.uk-form-horizontal.edit_image
+                            input#edit_image_id.uk-input(type='text')
+                            input#edit_image_path.uk-input(type='text')
+                            .uk-margin
+                                label.uk-form-label Image type
+                                .uk-form-controls.edit_image_type
+                                    label(for='image_type_meter') Meter
+                                        input#image_type_meter.uk-radio(type='radio', name='image_type', value='meter')
+                                    label(for='image_type_bill') Bill
+                                        input#image_type_bill.uk-radio(type='radio', name='image_type', value='bill')
+                            .uk-margin
+                                label.uk-form-label Is ready to ML
+                                .uk-form-controls.edit_is_ready
+                                    label.uk-switch.uk-switch-small(for='edit_is_ready')
+                                        input#edit_is_ready(type='checkbox')
+                                        .uk-switch-slider
                     .uk-modal-footer.uk-text-right
                         button.uk-button.uk-button-primary(type='button') Save
 

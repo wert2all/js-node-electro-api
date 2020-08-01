@@ -42,10 +42,7 @@ export default class UIImageActionModifier extends UIImageActionsModifierInterfa
      * @param {UIElementListInterface} elementList
      */
     applyData(node, imageData, elementList = null) {
-        const actionIcon = this._domListener.removeEventListeners(
-            node.querySelector(this._selector)
-        );
-        actionIcon.addEventListener('click', (event) => {
+        node.querySelector(this._selector).addEventListener('click', (event) => {
             event.preventDefault();
             this._onClickAction.click(imageData, elementList);
         });

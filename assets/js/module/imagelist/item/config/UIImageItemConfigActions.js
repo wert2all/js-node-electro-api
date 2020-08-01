@@ -6,8 +6,9 @@ export default class UIImageItemConfigActions {
      * @param {string} downloadSelector
      * @param {string} editSelector
      * @param {string} deleteSelector
+     * @param {string} mainCardSelector
      */
-    constructor(downloadSelector, editSelector, deleteSelector) {
+    constructor(downloadSelector, editSelector, deleteSelector, mainCardSelector) {
         /**
          *
          * @type {string}
@@ -26,6 +27,20 @@ export default class UIImageItemConfigActions {
          * @private
          */
         this._deleteSelector = deleteSelector;
+        /**
+         *
+         * @type {string}
+         * @private
+         */
+        this._mainCardSelector = mainCardSelector;
+    }
+
+    /**
+     *
+     * @return {string}
+     */
+    getMainCardSelector() {
+        return this._mainCardSelector;
     }
 
     /**

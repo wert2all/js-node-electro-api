@@ -1,13 +1,13 @@
-import UIElementInterface from '../../ui/interfaces/element/UIElementInterface';
 import UserProfile from '../../data/UserProfile';
+import UIControlInterface from '../../ui/control/UIControlInterface';
 
 /**
  * @class UIUserProfile
- * @extends UIElementInterface
- * @type UIElementInterface
+ * @extends UIControlInterface
+ * @type UIControlInterface
  */
 
-export default class UIUserProfile extends UIElementInterface {
+export default class UIUserProfile extends UIControlInterface {
     /**
      *
      * @param {Node} modalElement

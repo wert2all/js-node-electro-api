@@ -10,9 +10,9 @@ export default class UIFormView extends UIFormViewInterface {
      *
      * @param {DomFormInterface} formDom
      * @param {HTMLFormElement} formNode
-     * @param {UIElementInterface} loader
+     * @param {UIElementInterface|null} loader
      */
-    constructor(formDom, formNode, loader) {
+    constructor(formDom, formNode, loader = null) {
         super();
         /**
          *
@@ -28,7 +28,7 @@ export default class UIFormView extends UIFormViewInterface {
         this._formNode = formNode;
         /**
          *
-         * @type {UIElementInterface}
+         * @type {UIElementInterface|null}
          * @private
          */
         this._loader = loader;
@@ -72,11 +72,13 @@ export default class UIFormView extends UIFormViewInterface {
      * @return {UIFormViewInterface}
      */
     hideLoader() {
-        this._formNode.style.visibility = 'visible';
-        if (this._showedLoader != null) {
-            this._formNode.parentNode.removeChild(this._showedLoader);
+        if (this._loader != null) {
+            this._formNode.style.visibility = 'visible';
+            if (this._showedLoader != null) {
+                this._formNode.parentNode.removeChild(this._showedLoader);
+            }
+            this._showedLoader = null;
         }
-        this._showedLoader = null;
         return this;
     }
 
@@ -85,9 +87,11 @@ export default class UIFormView extends UIFormViewInterface {
      * @return {UIFormViewInterface}
      */
     showLoader() {
-        this._formNode.style.visibility = 'hidden';
-        this._showedLoader = this._loader.clone().getNode();
-        this._formNode.parentNode.append(this._showedLoader);
+        if (this._loader != null) {
+            this._formNode.style.visibility = 'hidden';
+            this._showedLoader = this._loader.clone().getNode();
+            this._formNode.parentNode.append(this._showedLoader);
+        }
         return this;
     }
 

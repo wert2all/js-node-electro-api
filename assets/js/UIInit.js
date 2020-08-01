@@ -190,7 +190,8 @@ export default class UIInit {
         const actionsConfig = new UIImageItemConfigActions(
             '.uk-card-footer .uk-icon-link.uk-icon.image-icon-download',
             '.uk-card-footer .uk-icon-link.uk-icon.image-icon-edit',
-            '.uk-card-footer .uk-icon-link.uk-icon.image-icon-delete'
+            '.uk-card-footer .uk-icon-link.uk-icon.image-icon-delete',
+            '.uk-card-media-bottom'
         );
         const uiItemConfig = new UIImageItemConfig(
             '.uk-card-body .uk-card-media-bottom img',
@@ -219,6 +220,11 @@ export default class UIInit {
                 new UIImageActionModifier(
                     new DomListenersModifier(),
                     actionsConfig.getEditSelector(),
+                    new UIImageEditAction()
+                ),
+                new UIImageActionModifier(
+                    new DomListenersModifier(),
+                    actionsConfig.getMainCardSelector(),
                     new UIImageEditAction()
                 ),
                 new UIImageActionModifier(

@@ -39,6 +39,7 @@ import UIImageProfileAction from './module/imagelist/item/actions/actions/UIImag
 import DomFormElementViewHolder from './dom/form/element/DomFormElementViewHolder';
 import FormRequestModifier from './module/profile/form/FormRequestModifier';
 import UIEditActionFabric from './module/imagelist/item/actions/actions/fabric/UIEditActionFabric';
+import UIEditControl from './module/imagelist/control/UIEditControl';
 
 /**
  * @class UIInit
@@ -209,8 +210,14 @@ export default class UIInit {
             )
         );
         const editActionFabric = new UIEditActionFabric(
-            document.querySelector('#modal_edit_image'),
-            UIkit
+            new UIEditControl(
+                document.querySelector('#modal_edit_image'),
+                UIkit,
+                new UIFormView(
+                    this._createEditImageForm(document),
+                    document.querySelector('#modal_edit_image form.edit_image')
+                )
+            )
         );
         const imageItem = new UIImageItem(
             document.querySelector('.one_image_card'),
@@ -376,5 +383,22 @@ export default class UIInit {
                 '#modal_profile .uk-form-controls.' + selector + ' .uk-label'
             ),
         );
+    }
+
+    /**
+     *
+     * @param {Document} document
+     * @return {DomForm}
+     * @private
+     */
+    _createEditImageForm(document) {
+        return new DomForm({
+            'edit_image_id': new DomFormElement(
+                document.querySelector('#edit_image_id')
+            ),
+            'edit_image_path': new DomFormElement(
+                document.querySelector('#edit_image_path')
+            )
+        },);
     }
 }

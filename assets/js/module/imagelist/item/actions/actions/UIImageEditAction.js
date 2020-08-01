@@ -8,24 +8,16 @@ import UIImageActionInterface from '../UIImageActionInterface';
 export default class UIImageEditAction extends UIImageActionInterface {
     /**
      *
-     * @param {Node} modalElement
-     * @param {UIkit} UIKit
+     * @param {UIEditControl} editControl
      */
-    constructor(modalElement, UIKit,) {
+    constructor(editControl) {
         super();
         /**
          *
-         * @type {Node}
+         * @type {UIEditControl}
          * @private
          */
-        this._modalElement = modalElement;
-        /**
-         *
-         * @type {UIkit}
-         * @private
-         */
-        this._uikit = UIKit;
-
+        this._editControl = editControl;
     }
 
     /**
@@ -35,17 +27,6 @@ export default class UIImageEditAction extends UIImageActionInterface {
      */
     // eslint-disable-next-line no-unused-vars
     click(imageData, elementList = null) {
-        console.log('edit');
-        console.log(imageData);
-        this._getModal().show();
-    }
-
-    /**
-     *
-     * @return {*}
-     * @private
-     */
-    _getModal() {
-        return this._uikit.modal(this._modalElement);
+        this._editControl.show(imageData);
     }
 }

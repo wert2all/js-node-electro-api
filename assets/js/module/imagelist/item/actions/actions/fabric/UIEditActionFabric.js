@@ -8,22 +8,15 @@ import UIImageEditAction from '../UIImageEditAction';
 export default class UIEditActionFabric {
     /**
      *
-     * @param {Node} modalNode
-     * @param {UIkit} uikit
+     * @param {UIEditControl} editControl
      */
-    constructor(modalNode, uikit) {
+    constructor(editControl) {
         /**
          *
-         * @type {UIkit}
+         * @type {UIEditControl}
          * @private
          */
-        this._uikit = uikit;
-        /**
-         *
-         * @type {Node}
-         * @private
-         */
-        this._modalNode = modalNode;
+        this._editControl = editControl;
     }
 
     /**
@@ -35,7 +28,7 @@ export default class UIEditActionFabric {
         return new UIImageActionModifier(
             new DomListenersModifier(),
             selector,
-            new UIImageEditAction(this._modalNode, this._uikit)
+            new UIImageEditAction(this._editControl)
         );
     }
 }

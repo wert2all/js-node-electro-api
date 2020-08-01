@@ -30,7 +30,6 @@ import UIProfileViewFactory from './module/imagelist/item/profile/UIProfileViewF
 import UIPager from './ui/pager/UIPager';
 import UIPageItem from './ui/pager/elements/UIPageItem';
 import UIImageDownloadAction from './module/imagelist/item/actions/actions/UIImageDownloadAction';
-import UIImageEditAction from './module/imagelist/item/actions/actions/UIImageEditAction';
 import UIImageDeleteAction from './module/imagelist/item/actions/actions/UIImageDeleteAction';
 import UIConfirm from './ui/dialog/UIConfirm';
 import UIImagesViewHolder from './module/imagelist/UIImagesViewHolder';
@@ -39,6 +38,7 @@ import UIFormView from './ui/form/UIFormView';
 import UIImageProfileAction from './module/imagelist/item/actions/actions/UIImageProfileAction';
 import DomFormElementViewHolder from './dom/form/element/DomFormElementViewHolder';
 import FormRequestModifier from './module/profile/form/FormRequestModifier';
+import UIEditActionFabric from './module/imagelist/item/actions/actions/fabric/UIEditActionFabric';
 
 /**
  * @class UIInit
@@ -208,6 +208,10 @@ export default class UIInit {
                 '.uk-card-header .uk-grid-small  a.image_profile_icon',
             )
         );
+        const editActionFabric = new UIEditActionFabric(
+            document.querySelector('#modal_edit_image'),
+            UIkit
+        );
         const imageItem = new UIImageItem(
             document.querySelector('.one_image_card'),
             uiItemConfig,
@@ -217,16 +221,8 @@ export default class UIInit {
                     actionsConfig.getDownloadSelector(),
                     new UIImageDownloadAction()
                 ),
-                new UIImageActionModifier(
-                    new DomListenersModifier(),
-                    actionsConfig.getEditSelector(),
-                    new UIImageEditAction()
-                ),
-                new UIImageActionModifier(
-                    new DomListenersModifier(),
-                    actionsConfig.getMainCardSelector(),
-                    new UIImageEditAction()
-                ),
+                editActionFabric.create(actionsConfig.getEditSelector()),
+                editActionFabric.create(actionsConfig.getMainCardSelector()),
                 new UIImageActionModifier(
                     new DomListenersModifier(),
                     actionsConfig.getDeleteSelector(),

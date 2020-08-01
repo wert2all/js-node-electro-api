@@ -105,6 +105,16 @@ html(lang='en')
                             a.uk-icon-link.uk-icon.image-icon-edit(href='#', title='', data-uk-tooltip='', data-uk-icon='icon: file-edit', aria-expanded='false')
                             a.uk-icon-link.uk-icon.image-icon-delete(href='#', title='', data-uk-tooltip='', data-uk-icon='icon: trash', aria-expanded='false')
 
+            #modal_edit_image(uk-modal='')
+                .uk-modal-dialog.uk-margin-auto-vertical
+                    button.uk-modal-close-default(type='button', uk-close='')
+                    .uk-modal-header
+                        h2.uk-modal-title Edit image
+                    .uk-modal-body
+                        form.uk-form-horizontal.edit_image
+                    .uk-modal-footer.uk-text-right
+                        button.uk-button.uk-button-primary(type='button') Save
+
             #modal_profile(uk-modal='')
                 .uk-modal-dialog.uk-margin-auto-vertical
                     button.uk-modal-close-default(type='button', uk-close='')

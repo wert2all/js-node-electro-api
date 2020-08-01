@@ -13,6 +13,6 @@ export default class UIImageDownloadAction extends UIImageActionInterface {
      */
     // eslint-disable-next-line no-unused-vars
     click(imageData, elementList = null) {
-        window.location.href = imageData.getUrl();
+        window.open(imageData.getUrl(), '_blank');
     }
 }

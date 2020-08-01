@@ -4,9 +4,10 @@
   "private": true,
   "scripts": {
     "start": "pm2 start ecosystem.config.js --watch -i max --env production",
-    "startDev": "nodemon dist/src/runCluster.js",
     "build": "export NODE_ENV=production && gulp clean && gulp default",
-    "dev": "gulp dev",
+    "dev": "npm run devCluster & npm run devBuild",
+    "devCluster": "nodemon dist/src/runCluster.js",
+    "devBuild": "gulp dev",
     "test:static": "gulp test:static",
     "test:unit": "gulp test:unit",
     "release": "standard-version"

@@ -8,11 +8,12 @@ import UIControlInterface from '../../../ui/control/UIControlInterface';
 export default class UIEditControl extends UIControlInterface {
     /**
      *
+     * @param {HTMLImageElement} imageElement
      * @param {Node} modalElement
      * @param {UIkit} UIKit
      * @param {UIFormViewInterface} formView
      */
-    constructor(modalElement, UIKit, formView) {
+    constructor(imageElement, modalElement, UIKit, formView) {
         super();
         /**
          *
@@ -32,6 +33,12 @@ export default class UIEditControl extends UIControlInterface {
          * @private
          */
         this._formView = formView;
+        /**
+         *
+         * @type {HTMLImageElement}
+         * @private
+         */
+        this._image = imageElement;
     }
 
     /**
@@ -54,6 +61,14 @@ export default class UIEditControl extends UIControlInterface {
         console.log('edit');
         console.log(imageData);
         this._getModal().show();
+
+        this._formView
+            .setElement('edit_image_id', imageData.getId())
+            .setElement('edit_image_path', imageData.getUrl())
+            .setElement('edit_image_type', imageData.getType())
+            .setElement('edit_image_ready', 'true');
+
+        this._image.src = imageData.getUrl();
     }
 
     /**

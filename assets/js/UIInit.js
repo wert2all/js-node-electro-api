@@ -213,6 +213,7 @@ export default class UIInit {
         );
         const editActionFabric = new UIEditActionFabric(
             new UIEditControl(
+                document.querySelector('#modal_edit_image img.image'),
                 document.querySelector('#modal_edit_image'),
                 UIkit,
                 new UIFormView(

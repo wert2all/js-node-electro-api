@@ -66,7 +66,7 @@ export default class UIEditControl extends UIControlInterface {
             .setElement('edit_image_id', imageData.getId())
             .setElement('edit_image_path', imageData.getPath())
             .setElement('edit_image_type', imageData.getType())
-            .setElement('edit_image_ready', 'true');
+            .setElement('edit_image_ready', 'false');
 
         this._image.src = imageData.getUrl();
     }

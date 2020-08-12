@@ -22,7 +22,11 @@ export default class DomFormElementCheckbox extends DomFormElement {
      * @return DomFormElementInterface
      */
     setValue(value) {
-        this._element.setAttribute('checked', (value === 'true') ? 'checked' : '');
+        if (value === 'true') {
+            this._element.setAttribute('checked', 'checked');
+        } else {
+            this._element.removeAttribute('checked');
+        }
     }
 
     /**

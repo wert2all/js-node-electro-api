@@ -215,10 +215,7 @@ export default class ImagesGetRequest extends RequestInterface {
         for (const userFileEntity of images) {
             await this._extendUserData(userFileEntity);
             userFileEntity.unset(UserDefinition.COLUMN_GOOGLE_ID);
-            userFileEntity.setValue(
-                UserFilesDefinition.COLUMN_PATH,
-                this._replacePath(userFileEntity)
-            );
+            userFileEntity.setValue('url', this._replacePath(userFileEntity));
         }
         return images.map(imageEntity => imageEntity.getData());
     }

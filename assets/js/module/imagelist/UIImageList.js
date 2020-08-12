@@ -151,9 +151,11 @@ export default class UIImageList extends UIElementListInterface {
      */
     _aggregateImages(files) {
         return files.map(image => {
-            const imageObject = new ImageData(image.id, image.path)
+            const imageObject = new ImageData(image.id, image.url)
                 .setType(image.type)
-                .setYearmon(image.yearmon);
+                .setYearmon(image.yearmon)
+                .setPath(image.path);
+
             if (image.hasOwnProperty('user')) {
                 imageObject.setUser(
                     new DataGoogleAuthUser(

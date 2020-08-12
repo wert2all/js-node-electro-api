@@ -64,7 +64,7 @@ export default class UIEditControl extends UIControlInterface {
 
         this._formView
             .setElement('edit_image_id', imageData.getId())
-            .setElement('edit_image_path', imageData.getUrl())
+            .setElement('edit_image_path', imageData.getPath())
             .setElement('edit_image_type', imageData.getType())
             .setElement('edit_image_ready', 'true');
 

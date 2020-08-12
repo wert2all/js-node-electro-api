@@ -40,6 +40,30 @@ export default class ImageData {
          * @private
          */
         this._user = null;
+        /**
+         *
+         * @type {null|string}
+         * @private
+         */
+        this._path = null;
+    }
+
+    /**
+     *
+     * @return {null|string}
+     */
+    getPath() {
+        return this._path;
+    }
+
+    /**
+     *
+     * @param {string} value
+     * @return {ImageData}
+     */
+    setPath(value) {
+        this._path = value;
+        return this;
     }
 
     /**

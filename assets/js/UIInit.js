@@ -40,6 +40,8 @@ import DomFormElementViewHolder from './dom/form/element/viewholder/DomFormEleme
 import FormRequestModifier from './module/profile/form/FormRequestModifier';
 import UIEditActionFabric from './module/imagelist/item/actions/actions/fabric/UIEditActionFabric';
 import UIEditControl from './module/imagelist/control/UIEditControl';
+import DomFormElementRadio from './dom/form/element/DomFormElementRadio';
+import DomFormElementCheckbox from './dom/form/element/DomFormElementCheckbox';
 
 /**
  * @class UIInit
@@ -398,6 +400,12 @@ export default class UIInit {
             ),
             'edit_image_path': new DomFormElement(
                 document.querySelector('#edit_image_path')
+            ),
+            'edit_image_type': new DomFormElementRadio(
+                document.getElementsByName('image_type')
+            ),
+            'edit_image_ready': new DomFormElementCheckbox(
+                document.querySelector('#edit_is_ready')
             )
         },);
     }

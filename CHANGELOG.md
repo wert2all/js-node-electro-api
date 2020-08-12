@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.58](https://gitlab.local///compare/v0.2.57...v0.2.58) (2020-08-12)
+
+
+### Features
+
+* **ui:** add edit action on image click ([36771cf](https://gitlab.local///commit/36771cff5e9725993e9a356d36f83601f1137c40)), closes [#332](https://gitlab.local///issues/332)
+* **ui:** add radio and checkbox DomFormElements to form ([c18a2f5](https://gitlab.local///commit/c18a2f5f45601c50aaf4d03bcbc22203487da831)), closes [#342](https://gitlab.local///issues/342)
+* **ui:** api returns image path ([2d90f21](https://gitlab.local///commit/2d90f21ce86b63132987682f9c860898b68047ad)), closes [#343](https://gitlab.local///issues/343)
+* **ui:** create class for editing image ([2948e36](https://gitlab.local///commit/2948e3641bd8b2317dd91284a3771a3f53526824)), closes [#338](https://gitlab.local///issues/338)
+* **ui:** create DomFormElementInterface class for checkbox ([1d36c41](https://gitlab.local///commit/1d36c41dfa88fd20f54a4c7e21b2407f01986aa5)), closes [#340](https://gitlab.local///issues/340)
+* **ui:** create DomFormElementInterface class for radio ([92d47f7](https://gitlab.local///commit/92d47f796fe560fffe48f714bbaf629e29c97fd7)), closes [#339](https://gitlab.local///issues/339)
+* **ui:** create form for edit action ([9f4c7fb](https://gitlab.local///commit/9f4c7fb37e874503c9c1b973713b6f4ba729c375)), closes [#334](https://gitlab.local///issues/334)
+* **ui:** create form for edit action ([ff536c9](https://gitlab.local///commit/ff536c9d7d0a2b021b9707f3fdd363be62548161)), closes [#334](https://gitlab.local///issues/334)
+* **ui:** create modal window for edit image action ([e7ba32c](https://gitlab.local///commit/e7ba32caaad43e1655b793736c3598cc0ad248a0)), closes [#333](https://gitlab.local///issues/333)
+* **ui:** set data to form ([5c84075](https://gitlab.local///commit/5c840752da36d4558b702c41159b20490ccadf4b)), closes [#341](https://gitlab.local///issues/341)
+
+
+### Bug Fixes
+
+* **ui:** bug with setting Checkbox form element ([5e5b118](https://gitlab.local///commit/5e5b118a23a19c63aa555e3f80f7e223f3665992)), closes [#344](https://gitlab.local///issues/344)
+* **ui:** open image in new browser tab ([e0779d4](https://gitlab.local///commit/e0779d40583e9cbe94bf31ce498a9f7daf7328cb)), closes [#329](https://gitlab.local///issues/329)
+
 ### [0.2.57](https://gitlab.local///compare/v0.2.55...v0.2.57) (2020-07-31)
 
 

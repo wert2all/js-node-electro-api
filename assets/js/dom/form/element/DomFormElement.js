@@ -19,7 +19,7 @@ export default class DomFormElement extends DomFormElementInterface {
         /**
          *
          * @type {HTMLElement}
-         * @private
+         * @protected
          */
         this._element = element;
         /**

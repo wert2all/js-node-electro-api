@@ -10,6 +10,7 @@
     "devBuild": "gulp dev",
     "test:static": "gulp test:static",
     "test:unit": "gulp test:unit",
+    "test": "npm run test:static & npm run test:unit ",
     "release": "standard-version"
   },
   "husky": {

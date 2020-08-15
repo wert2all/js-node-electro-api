@@ -10,7 +10,7 @@ import UiAuthNodesHolder from './ui/auth/element/UiAuthNodesHolder';
 import UiAuthElementDefaultValues from './ui/auth/element/UiAuthElementDefaultValues';
 import UIUserProfile from './module/profile/UIUserProfile';
 import DomForm from './dom/form/DomForm';
-import DomFormElement from './dom/form/DomFormElement';
+import DomFormElement from './dom/form/element/DomFormElement';
 import UIGrid from './module/grid/UIGrid';
 import UILoader from './module/loader/UILoader';
 import UIContentElement from './module/content/UIContentElement';
@@ -36,10 +36,12 @@ import UIImagesViewHolder from './module/imagelist/UIImagesViewHolder';
 import UIImageList from './module/imagelist/UIImageList';
 import UIFormView from './ui/form/UIFormView';
 import UIImageProfileAction from './module/imagelist/item/actions/actions/UIImageProfileAction';
-import DomFormElementViewHolder from './dom/form/element/DomFormElementViewHolder';
+import DomFormElementViewHolder from './dom/form/element/viewholder/DomFormElementViewHolder';
 import FormRequestModifier from './module/profile/form/FormRequestModifier';
 import UIEditActionFabric from './module/imagelist/item/actions/actions/fabric/UIEditActionFabric';
 import UIEditControl from './module/imagelist/control/UIEditControl';
+import DomFormElementRadio from './dom/form/element/DomFormElementRadio';
+import DomFormElementCheckbox from './dom/form/element/DomFormElementCheckbox';
 
 /**
  * @class UIInit
@@ -211,6 +213,7 @@ export default class UIInit {
         );
         const editActionFabric = new UIEditActionFabric(
             new UIEditControl(
+                document.querySelector('#modal_edit_image img.image'),
                 document.querySelector('#modal_edit_image'),
                 UIkit,
                 new UIFormView(
@@ -398,6 +401,12 @@ export default class UIInit {
             ),
             'edit_image_path': new DomFormElement(
                 document.querySelector('#edit_image_path')
+            ),
+            'edit_image_type': new DomFormElementRadio(
+                document.getElementsByName('image_type')
+            ),
+            'edit_image_ready': new DomFormElementCheckbox(
+                document.querySelector('#edit_is_ready')
             )
         },);
     }

@@ -1,6 +1,6 @@
-import DomFormElementInterface from './DomFormElementInterface';
-import DomFormElementValidatorNull from './validators/DomFormElementValidatorNull';
-import DomStyles from '../utils/DomStyles';
+import DomFormElementInterface from '../DomFormElementInterface';
+import DomFormElementValidatorNull from '../validators/DomFormElementValidatorNull';
+import DomStyles from '../../utils/DomStyles';
 
 /**
  * @class DomFormElement
@@ -19,7 +19,7 @@ export default class DomFormElement extends DomFormElementInterface {
         /**
          *
          * @type {HTMLElement}
-         * @private
+         * @protected
          */
         this._element = element;
         /**
@@ -69,7 +69,7 @@ export default class DomFormElement extends DomFormElementInterface {
     validate() {
         this._cleanErrors();
 
-        const isValid = this._validator.validate(this._element.value);
+        const isValid = this._validator.validate(this.getValue());
         if (!isValid) {
             this.setError(this._validator.getValidationError());
         }

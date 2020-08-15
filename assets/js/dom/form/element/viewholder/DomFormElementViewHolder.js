@@ -2,7 +2,7 @@
  * @class DomFormElementViewHolder
  *
  */
-import DomStyles from '../../utils/DomStyles';
+import DomStyles from '../../../utils/DomStyles';
 
 export default class DomFormElementViewHolder {
     /**

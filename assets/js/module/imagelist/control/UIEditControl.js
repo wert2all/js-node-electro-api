@@ -9,11 +9,18 @@ export default class UIEditControl extends UIControlInterface {
     /**
      *
      * @param {HTMLImageElement} imageElement
+     * @param {HTMLElement} submitButton
      * @param {Node} modalElement
      * @param {UIkit} UIKit
      * @param {UIFormViewInterface} formView
+     * @param {Api} api
+     * @param {UINotifyInterface} notify
+     * @param {AuthProviderInterface} authProvider
      */
-    constructor(imageElement, modalElement, UIKit, formView) {
+    constructor(imageElement, submitButton, modalElement, UIKit, formView,
+                api,
+                notify,
+                authProvider) {
         super();
         /**
          *
@@ -39,6 +46,30 @@ export default class UIEditControl extends UIControlInterface {
          * @private
          */
         this._image = imageElement;
+        /**
+         *
+         * @type {HTMLElement}
+         * @private
+         */
+        this._submitButton = submitButton;
+        /**
+         *
+         * @type {Api}
+         * @private
+         */
+        this._api = api;
+        /**
+         *
+         * @type {AuthProviderInterface}
+         * @private
+         */
+        this._autProvider = authProvider;
+        /**
+         *
+         * @type {UINotifyInterface}
+         * @private
+         */
+        this._notify = notify;
     }
 
     /**
@@ -51,6 +82,30 @@ export default class UIEditControl extends UIControlInterface {
      *
      */
     init() {
+        this._submitButton.addEventListener('click', () => {
+            if (this._formView.validate()) {
+                this._formView.showLoader();
+                // this._api.updateProfile(
+                //     this._authProvider.getUserProfile(),
+                //     {
+                //         data: this._formView.getRequestFormData(),
+                //         userId: this._formView.getFormData().get('profile_user_id')
+                //     }
+                // )
+                //     .then(response => {
+                //         this._formView.hideLoader();
+                //         if (response.getStatus() === true) {
+                //             this._notify.success('Saved!');
+                //         } else {
+                //             this._notify.error(response.getErrorMessage());
+                //         }
+                //     })
+                //     .catch(error => {
+                //         this._formView.hideLoader();
+                //         this._notify.error(error.message);
+                //     });
+            }
+        });
     }
 
     /**

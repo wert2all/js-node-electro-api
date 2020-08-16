@@ -211,17 +211,21 @@ export default class UIInit {
                 '.uk-card-header .uk-grid-small  a.image_profile_icon',
             )
         );
-        const editActionFabric = new UIEditActionFabric(
-            new UIEditControl(
-                document.querySelector('#modal_edit_image img.image'),
-                document.querySelector('#modal_edit_image'),
-                UIkit,
-                new UIFormView(
-                    this._createEditImageForm(document),
-                    document.querySelector('#modal_edit_image form.edit_image')
-                )
-            )
+        const editControl = new UIEditControl(
+            document.querySelector('#modal_edit_image img.image'),
+            document.querySelector('#modal_edit_image button.edit_image_submit'),
+            document.querySelector('#modal_edit_image'),
+            UIkit,
+            new UIFormView(
+                this._createEditImageForm(document),
+                document.querySelector('#modal_edit_image form.edit_image')
+            ),
+            api,
+            this._ui.getNotify(),
+            authProvider,
         );
+        editControl.init();
+        const editActionFabric = new UIEditActionFabric(editControl);
         const imageItem = new UIImageItem(
             document.querySelector('.one_image_card'),
             uiItemConfig,

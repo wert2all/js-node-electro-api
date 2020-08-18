@@ -42,6 +42,7 @@ import UIEditActionFabric from './module/imagelist/item/actions/actions/fabric/U
 import UIEditControl from './module/imagelist/control/UIEditControl';
 import DomFormElementRadio from './dom/form/element/DomFormElementRadio';
 import DomFormElementCheckbox from './dom/form/element/DomFormElementCheckbox';
+import ImageEditFormRequestModifier from './module/imagelist/form/ImageEditFormRequestModifier';
 
 /**
  * @class UIInit
@@ -413,6 +414,13 @@ export default class UIInit {
                     document.querySelector('#edit_is_ready')
                 )
             },
+            new ImageEditFormRequestModifier(
+                {
+                    'id': 'edit_image_id',
+                    'type': 'edit_image_type',
+                    'isReady': 'edit_image_ready'
+                }
+            )
         );
     }
 }

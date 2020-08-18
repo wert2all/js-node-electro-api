@@ -85,6 +85,7 @@ export default class UIEditControl extends UIControlInterface {
         this._submitButton.addEventListener('click', () => {
             if (this._formView.validate()) {
                 this._formView.showLoader();
+                console.log(this._formView.getRequestFormData());
                 // this._api.updateProfile(
                 //     this._authProvider.getUserProfile(),
                 //     {

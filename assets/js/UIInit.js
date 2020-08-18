@@ -400,18 +400,19 @@ export default class UIInit {
      */
     _createEditImageForm(document) {
         return new DomForm({
-            'edit_image_id': new DomFormElement(
-                document.querySelector('#edit_image_id')
-            ),
-            'edit_image_path': new DomFormElement(
-                document.querySelector('#edit_image_path')
-            ),
-            'edit_image_type': new DomFormElementRadio(
-                document.getElementsByName('image_type')
-            ),
-            'edit_image_ready': new DomFormElementCheckbox(
-                document.querySelector('#edit_is_ready')
-            )
-        },);
+                'edit_image_id': new DomFormElement(
+                    document.querySelector('#edit_image_id')
+                ),
+                'edit_image_path': new DomFormElement(
+                    document.querySelector('#edit_image_path')
+                ),
+                'edit_image_type': new DomFormElementRadio(
+                    document.getElementsByName('image_type')
+                ),
+                'edit_image_ready': new DomFormElementCheckbox(
+                    document.querySelector('#edit_is_ready')
+                )
+            },
+        );
     }
 }

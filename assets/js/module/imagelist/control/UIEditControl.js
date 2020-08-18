@@ -63,7 +63,7 @@ export default class UIEditControl extends UIControlInterface {
          * @type {AuthProviderInterface}
          * @private
          */
-        this._autProvider = authProvider;
+        this._authProvider = authProvider;
         /**
          *
          * @type {UINotifyInterface}
@@ -85,25 +85,23 @@ export default class UIEditControl extends UIControlInterface {
         this._submitButton.addEventListener('click', () => {
             if (this._formView.validate()) {
                 this._formView.showLoader();
-                // this._api.updateProfile(
-                //     this._authProvider.getUserProfile(),
-                //     {
-                //         data: this._formView.getRequestFormData(),
-                //         userId: this._formView.getFormData().get('profile_user_id')
-                //     }
-                // )
-                //     .then(response => {
-                //         this._formView.hideLoader();
-                //         if (response.getStatus() === true) {
-                //             this._notify.success('Saved!');
-                //         } else {
-                //             this._notify.error(response.getErrorMessage());
-                //         }
-                //     })
-                //     .catch(error => {
-                //         this._formView.hideLoader();
-                //         this._notify.error(error.message);
-                //     });
+                console.log(this._formView.getRequestFormData());
+                this._api.updateImage(
+                    this._authProvider.getUserProfile(),
+                    this._formView.getRequestFormData()
+                )
+                    .then(response => {
+                        this._formView.hideLoader();
+                        if (response.getStatus() === true) {
+                            this._notify.success('Saved!');
+                        } else {
+                            this._notify.error(response.getErrorMessage());
+                        }
+                    })
+                    .catch(error => {
+                        this._formView.hideLoader();
+                        this._notify.error(error.message);
+                    });
             }
         });
     }

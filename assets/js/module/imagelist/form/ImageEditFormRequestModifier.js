@@ -5,8 +5,7 @@ import ProfileFormRequestModifier from '../../profile/form/ProfileFormRequestMod
  * @extends DomFormRequestModifierInterface
  * @type DomFormRequestModifierInterface
  */
-// eslint-disable-next-line no-unused-vars
-class ImageEditFormRequestModifier extends ProfileFormRequestModifier {
+export default class ImageEditFormRequestModifier extends ProfileFormRequestModifier {
     /**
      *
      * @param {Object<string,Object<string,string>|string>} map

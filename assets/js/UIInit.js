@@ -42,6 +42,7 @@ import UIEditActionFabric from './module/imagelist/item/actions/actions/fabric/U
 import UIEditControl from './module/imagelist/control/UIEditControl';
 import DomFormElementRadio from './dom/form/element/DomFormElementRadio';
 import DomFormElementCheckbox from './dom/form/element/DomFormElementCheckbox';
+import ImageEditFormRequestModifier from './module/imagelist/form/ImageEditFormRequestModifier';
 
 /**
  * @class UIInit
@@ -400,18 +401,26 @@ export default class UIInit {
      */
     _createEditImageForm(document) {
         return new DomForm({
-            'edit_image_id': new DomFormElement(
-                document.querySelector('#edit_image_id')
-            ),
-            'edit_image_path': new DomFormElement(
-                document.querySelector('#edit_image_path')
-            ),
-            'edit_image_type': new DomFormElementRadio(
-                document.getElementsByName('image_type')
-            ),
-            'edit_image_ready': new DomFormElementCheckbox(
-                document.querySelector('#edit_is_ready')
+                'edit_image_id': new DomFormElement(
+                    document.querySelector('#edit_image_id')
+                ),
+                'edit_image_path': new DomFormElement(
+                    document.querySelector('#edit_image_path')
+                ),
+                'edit_image_type': new DomFormElementRadio(
+                    document.getElementsByName('image_type')
+                ),
+                'edit_image_ready': new DomFormElementCheckbox(
+                    document.querySelector('#edit_is_ready')
+                )
+            },
+            new ImageEditFormRequestModifier(
+                {
+                    'id': 'edit_image_id',
+                    'type': 'edit_image_type',
+                    'isReady': 'edit_image_ready'
+                }
             )
-        },);
+        );
     }
 }

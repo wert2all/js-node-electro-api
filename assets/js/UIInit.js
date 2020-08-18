@@ -37,7 +37,7 @@ import UIImageList from './module/imagelist/UIImageList';
 import UIFormView from './ui/form/UIFormView';
 import UIImageProfileAction from './module/imagelist/item/actions/actions/UIImageProfileAction';
 import DomFormElementViewHolder from './dom/form/element/viewholder/DomFormElementViewHolder';
-import FormRequestModifier from './module/profile/form/FormRequestModifier';
+import ProfileFormRequestModifier from './module/profile/form/ProfileFormRequestModifier';
 import UIEditActionFabric from './module/imagelist/item/actions/actions/fabric/UIEditActionFabric';
 import UIEditControl from './module/imagelist/control/UIEditControl';
 import DomFormElementRadio from './dom/form/element/DomFormElementRadio';
@@ -352,7 +352,7 @@ export default class UIInit {
                         this._createProfileElementViewHolder('profile_BIG')
                     ),
             },
-            new FormRequestModifier({
+            new ProfileFormRequestModifier({
                 payment: {
                     'company_name': 'profile_company_name',
                     'iban': 'profile_iban',

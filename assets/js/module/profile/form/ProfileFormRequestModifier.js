@@ -1,11 +1,11 @@
 import DomFormRequestModifierInterface from '../../../dom/form/DomFormRequestModifierInterface';
 
 /**
- * @class FormRequestModifier
+ * @class ProfileFormRequestModifier
  * @extends DomFormRequestModifierInterface
  * @type DomFormRequestModifierInterface
  */
-export default class FormRequestModifier extends DomFormRequestModifierInterface {
+export default class ProfileFormRequestModifier extends DomFormRequestModifierInterface {
     /**
      *
      * @param {Object<string,Object<string,string>|string>} map

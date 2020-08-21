@@ -25,6 +25,7 @@ import LogFormatterInterface from '../../lib/logger/LogFormatterInterface';
 import Logger from '../../extended/logger/Logger';
 import EntityManager from '../../lib/db-entity-manager/EntityManager';
 import AuthNoAdmin from '../auth/error/AuthNoAdmin';
+import ImageListLogEvent from './logs/event/ImageListLogEvent';
 
 /**
  * @class ImagesDeleteRequest
@@ -95,7 +96,9 @@ export default class ImagesDeleteRequest extends RequestInterface {
             }
             response.setStatus(true);
         } catch (e) {
-            console.log(e);
+            DI.getInstance()
+                .get(LoggerInterface)
+                .error(new ImageListLogEvent(e.message));
             response.setStatus(false);
             response.setMessage(e.message);
         }

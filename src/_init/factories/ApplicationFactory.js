@@ -15,6 +15,7 @@ import ResponseFactory from '../../routers/response/ResponseFactory';
 import DI from '../../lib/di/DI';
 import ImagesDeleteRequest from '../../modules/images/ImagesDeleteRequest';
 import UserProfileGetRequest from '../../modules/user/UserProfileGetRequest';
+import ImagesUpdateRequest from '../../modules/images/ImagesUpdateRequest';
 
 export default class ApplicationFactory {
     constructor() {
@@ -71,6 +72,10 @@ export default class ApplicationFactory {
                     new RouteDefinition('/imagelist/delete/',
                         'post',
                         new ImagesDeleteRequest()
+                    ),
+                    new RouteDefinition('/imagelist/update/',
+                        'post',
+                        new ImagesUpdateRequest()
                     ),
                     new RouteDefinition('/ui/',
                         'get',

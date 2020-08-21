@@ -18,6 +18,8 @@ import DefinitionLimit from '../../lib/db-definition/DefinitionLimit';
 import ConnectionInterface from '../../lib/db-connection/ConnectionInterface';
 import StorageConfiguration from '../../storage/configuration/StorageConfiguration';
 import AuthNoAdmin from '../auth/error/AuthNoAdmin';
+import LoggerInterface from '../../lib/logger/LoggerInterface';
+import ImageListLogEvent from './logs/event/ImageListLogEvent';
 
 /**
  * @class ImagesGetRequest
@@ -77,7 +79,10 @@ export default class ImagesGetRequest extends RequestInterface {
             response.setData('limits', imageData.limits);
             response.setStatus(true);
         } catch (e) {
-            console.log(e);
+            DI.getInstance()
+                .get(LoggerInterface)
+                .error(new ImageListLogEvent(e.message));
+
             response.setStatus(false);
             response.setMessage(e.message);
         }

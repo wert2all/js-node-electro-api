@@ -142,4 +142,12 @@ export default class ImagesUpdateDataClass {
         this._account = account;
         return this;
     }
+
+    /**
+     *
+     * @return {GoogleAccount|null}
+     */
+    getAccount() {
+        return this._account;
+    }
 }

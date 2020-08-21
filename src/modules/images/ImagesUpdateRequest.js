@@ -9,6 +9,17 @@ import StorageConfiguration from '../../storage/configuration/StorageConfigurati
 import AuthCheck from '../auth/AuthCheck';
 import AuthParams from '../auth/params/Params';
 import ImagesUpdateDataClass from './data/ImagesUpdateDataClass';
+import UserEntity from '../../data/entity/UserEntity';
+import UserDefinition from '../../db/definition/UserDefinition';
+import AuthNoAdmin from '../auth/error/AuthNoAdmin';
+import UserRepository from '../../db/repository/UserRepository';
+import ConnectionInterface from '../../lib/db-connection/ConnectionInterface';
+import ServerConfig from '../../server/ServerConfig';
+import FileLogger from '../../lib/logger/adapters/FileLogger';
+import LogFormatterInterface from '../../lib/logger/LogFormatterInterface';
+import LoggerStrategy from '../../extended/LoggerStrategy';
+import ImageLogEvent from './log/ImageLogEvent';
+import Logger from '../../extended/logger/Logger';
 
 /**
  * @class ImagesUpdateRequest
@@ -24,6 +35,12 @@ export default class ImagesUpdateRequest extends RequestInterface {
          * @private
          */
         this._di = DI.getInstance();
+        /**
+         *
+         * @type {UserRepository}
+         * @private
+         */
+        this._usersRepository = new UserRepository();
     }
 
     /**
@@ -33,6 +50,8 @@ export default class ImagesUpdateRequest extends RequestInterface {
      */
     // eslint-disable-next-line no-unused-vars
     init(dispatcher) {
+        this._usersRepository.setConnection(this._di.get(ConnectionInterface));
+        this._applyLogger();
         return this;
     }
 
@@ -50,6 +69,7 @@ export default class ImagesUpdateRequest extends RequestInterface {
              * @type {ImagesUpdateDataClass}
              */
             const requestData = await this._prepareRequest(request);
+            await this._checkAdmin(requestData);
 
             response.setData('dump', requestData);
             response.setStatus(true);
@@ -95,5 +115,39 @@ export default class ImagesUpdateRequest extends RequestInterface {
             .check(
                 new AuthParams(requestData.getToken())
             );
+    }
+
+    /**
+     *
+     * @param {ImagesUpdateDataClass} requestData
+     * @private
+     */
+    async _checkAdmin(requestData) {
+        let isAdmin = false;
+        const userEntity = new UserEntity();
+        userEntity.setValue(
+            UserDefinition.COLUMN_GOOGLE_ID,
+            requestData.getAccount().getGoogleUserId()
+        );
+        const users = await this._usersRepository.fetchData(userEntity);
+        if (users.length === 1) {
+            isAdmin = users[0].getIsAdmin() === 'y';
+        }
+        if (isAdmin === false) {
+            throw new AuthNoAdmin();
+        }
+    }
+
+    /**
+     *
+     * @private
+     */
+    _applyLogger() {
+        const path = this._di.get(ServerConfig).getLogDirectory() + 'imagelist.log';
+        const fileLogger = new FileLogger(path, this._di.get(LogFormatterInterface));
+        const loggerStrategy = this._di.get(LoggerStrategy)
+            .addLogger(ImageLogEvent.TAG, fileLogger);
+        this._di.register(LoggerStrategy, loggerStrategy);
+        this._di.register(LoggerInterface, new Logger(this._di.get(LoggerStrategy)));
     }
 }

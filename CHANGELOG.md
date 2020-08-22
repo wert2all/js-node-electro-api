@@ -2,6 +2,34 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.59](https://gitlab.local///compare/v0.2.58...v0.2.59) (2020-08-22)
+
+
+### Features
+
+* **api:** add init support of saving image data ([7434c47](https://gitlab.local///commit/7434c47119f2e2765fd419751a20329110fcd933)), closes [#350](https://gitlab.local///issues/350)
+* **api:** add isActive field to image data db ([972c3a6](https://gitlab.local///commit/972c3a6305dc68fe58c0d651b23b4e7d62489697)), closes [#357](https://gitlab.local///issues/357)
+* **api:** check permissions on image update api ([70f8de3](https://gitlab.local///commit/70f8de305a410976712f4c7d7a23450191008875)), closes [#354](https://gitlab.local///issues/354)
+* **api:** get image entity for updating ([19d63be](https://gitlab.local///commit/19d63bef494fb7892010fb733d0ef5e930b09b82)), closes [#355](https://gitlab.local///issues/355)
+* **api:** prepare request object for image update API ([4bec42e](https://gitlab.local///commit/4bec42ec948483249b7872814b6d43b987d981f9)), closes [#352](https://gitlab.local///issues/352)
+* **api:** save image data on update image api ([066383c](https://gitlab.local///commit/066383ccdb44dedee85691d8e336e6275a32b1b5)), closes [#358](https://gitlab.local///issues/358)
+* **api:** update image entity by post data ([4cc8d08](https://gitlab.local///commit/4cc8d089ef604e0571a2ad6794e10fe9b5e5b8ea)), closes [#356](https://gitlab.local///issues/356)
+* **ui:** add submit function to image edit form ([3416587](https://gitlab.local///commit/3416587c1f6092cebc331acce86a2da4c0111b58)), closes [#347](https://gitlab.local///issues/347)
+* **ui:** create DomFormRequestModifierInterface of image edit form ([0c88f66](https://gitlab.local///commit/0c88f66217c70913120248725b2ae37e230d9db1)), closes [#349](https://gitlab.local///issues/349)
+* **ui:** sent data to api from image edit form ([d9414ae](https://gitlab.local///commit/d9414aec9a2b14f899c07a1f8293cfab1b2023f9)), closes [#348](https://gitlab.local///issues/348)
+* **ui:** sent data to api from image edit form ([30924ae](https://gitlab.local///commit/30924ae1d2979f109217dcd4fd6c3df96ef8cfa3)), closes [#348](https://gitlab.local///issues/348)
+
+
+### Bug Fixes
+
+* **api:** fix id as NaN on API request ([0904006](https://gitlab.local///commit/0904006c74e0c029c49da7f61f4eeb99b4c22d19)), closes [#353](https://gitlab.local///issues/353)
+* **infra:** fiz github actions ([5eb08b9](https://gitlab.local///commit/5eb08b9fa6e37cd3b986f39dae91f0925f1dfd8e))
+* **lib:** fix saving entity ([8c7fb09](https://gitlab.local///commit/8c7fb094cb9860cce1f99069acc5bb815edd93fb)), closes [#359](https://gitlab.local///issues/359)
+* **ui:** add image to edit form action ([68847c0](https://gitlab.local///commit/68847c0a1acde20fd287359cf94736f95f1f0972)), closes [#335](https://gitlab.local///issues/335)
+* **ui:** fix showing is ready in image list ([ac67722](https://gitlab.local///commit/ac677228e29a9980fa4d26c387c205bda51c48ab)), closes [#360](https://gitlab.local///issues/360)
+* **ui:** ui design of image edit form ([beff56f](https://gitlab.local///commit/beff56f28a74ea2bd59621fbe39728b81f6b4653)), closes [#346](https://gitlab.local///issues/346)
+* **ui:** update imagelist after saving image data ([bcc5ea5](https://gitlab.local///commit/bcc5ea596d4e3ae4bc4c09e0d1e510788f17c1c7)), closes [#361](https://gitlab.local///issues/361)
+
 ### [0.2.58](https://gitlab.local///compare/v0.2.57...v0.2.58) (2020-08-12)
 
 

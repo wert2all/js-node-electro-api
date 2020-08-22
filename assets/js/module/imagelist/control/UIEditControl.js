@@ -85,7 +85,6 @@ export default class UIEditControl extends UIControlInterface {
         this._submitButton.addEventListener('click', () => {
             if (this._formView.validate()) {
                 this._formView.showLoader();
-                console.log(this._formView.getRequestFormData());
                 this._api.updateImage(
                     this._authProvider.getUserProfile(),
                     this._formView.getRequestFormData()
@@ -119,7 +118,7 @@ export default class UIEditControl extends UIControlInterface {
             .setElement('edit_image_id', imageData.getId())
             .setElement('edit_image_path', imageData.getPath())
             .setElement('edit_image_type', imageData.getType())
-            .setElement('edit_image_ready', 'false');
+            .setElement('edit_image_ready', imageData.getIsReady() ? 'true' : 'false');
 
         this._image.src = imageData.getUrl();
     }

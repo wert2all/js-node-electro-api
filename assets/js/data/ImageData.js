@@ -46,6 +46,30 @@ export default class ImageData {
          * @private
          */
         this._path = null;
+        /**
+         *
+         * @type {boolean}
+         * @private
+         */
+        this._isReady = false;
+    }
+
+    /**
+     *
+     * @return {boolean}
+     */
+    getIsReady() {
+        return this._isReady;
+    }
+
+    /**
+     *
+     * @param {boolean} value
+     * @return {ImageData}
+     */
+    setIsReady(value) {
+        this._isReady = value;
+        return this;
     }
 
     /**

@@ -154,7 +154,8 @@ export default class UIImageList extends UIElementListInterface {
             const imageObject = new ImageData(image.id, image.url)
                 .setType(image.type)
                 .setYearmon(image.yearmon)
-                .setPath(image.path);
+                .setPath(image.path)
+                .setIsReady(image.isReady === 'true');
 
             if (image.hasOwnProperty('user')) {
                 imageObject.setUser(

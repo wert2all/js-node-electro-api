@@ -9,8 +9,9 @@ export default class UIImageEditAction extends UIImageActionInterface {
     /**
      *
      * @param {UIEditControl} editControl
+     * @param {AfterEditControlFabric} factory
      */
-    constructor(editControl) {
+    constructor(editControl, factory) {
         super();
         /**
          *
@@ -18,6 +19,11 @@ export default class UIImageEditAction extends UIImageActionInterface {
          * @private
          */
         this._editControl = editControl;
+        /**
+         * @type AfterEditControlFabric
+         * @private
+         */
+        this._factory = factory;
     }
 
     /**
@@ -27,6 +33,7 @@ export default class UIImageEditAction extends UIImageActionInterface {
      */
     // eslint-disable-next-line no-unused-vars
     click(imageData, elementList = null) {
+        this._editControl.setAfterControlAction(this._factory.create(elementList));
         this._editControl.show(imageData);
     }
 }

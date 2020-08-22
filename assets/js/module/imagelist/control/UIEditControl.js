@@ -70,6 +70,12 @@ export default class UIEditControl extends UIControlInterface {
          * @private
          */
         this._notify = notify;
+        /**
+         *
+         * @type {UIAfterControlInterface|null}
+         * @private
+         */
+        this._afterControl = null;
     }
 
     /**
@@ -93,6 +99,9 @@ export default class UIEditControl extends UIControlInterface {
                         this._formView.hideLoader();
                         if (response.getStatus() === true) {
                             this._notify.success('Saved!');
+                            if (this._afterControl != null) {
+                                this._afterControl.exec();
+                            }
                         } else {
                             this._notify.error(response.getErrorMessage());
                         }
@@ -130,5 +139,13 @@ export default class UIEditControl extends UIControlInterface {
      */
     _getModal() {
         return this._uikit.modal(this._modalElement);
+    }
+
+    /**
+     *
+     * @param {UIAfterControlInterface} action
+     */
+    setAfterControlAction(action) {
+        this._afterControl = action;
     }
 }

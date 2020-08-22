@@ -43,6 +43,7 @@ import UIEditControl from './module/imagelist/control/UIEditControl';
 import DomFormElementRadio from './dom/form/element/DomFormElementRadio';
 import DomFormElementCheckbox from './dom/form/element/DomFormElementCheckbox';
 import ImageEditFormRequestModifier from './module/imagelist/form/ImageEditFormRequestModifier';
+import AfterEditControlFabric from './module/imagelist/control/after/AfterEditControlFabric';
 
 /**
  * @class UIInit
@@ -226,7 +227,10 @@ export default class UIInit {
             authProvider,
         );
         editControl.init();
-        const editActionFabric = new UIEditActionFabric(editControl);
+        const editActionFabric = new UIEditActionFabric(
+            editControl,
+            new AfterEditControlFabric()
+        );
         const imageItem = new UIImageItem(
             document.querySelector('.one_image_card'),
             uiItemConfig,
@@ -268,6 +272,10 @@ export default class UIInit {
      * @private
      */
     _makeImageList(api, authProvider, profile) {
+        /**
+         *
+         * @type {UIImageItem}
+         */
         const imageItem = this._makeImageItem(
             document,
             api,

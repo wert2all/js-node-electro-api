@@ -1,5 +1,6 @@
 import StringExt from '../../../lib/utils/StringExt';
 import AuthNoToken from '../../auth/error/AuthNoToken';
+import NoIdError from '../error/NoIdError';
 
 export default class ImagesDeleteDataClass {
     /**
@@ -36,6 +37,7 @@ export default class ImagesDeleteDataClass {
     static factory(request) {
         let authToken = null;
         let returnRequest = null;
+        let id = null;
         if (request.body.token) {
             authToken = Buffer.from(
                 new StringExt(request.body.token)
@@ -43,7 +45,12 @@ export default class ImagesDeleteDataClass {
                 'base64'
             ).toString();
         }
-        const id = parseInt(request.body.image, 10);
+        if (request.body.image) {
+            id = parseInt(request.body.image, 10);
+        }
+        if (!Number.isInteger(id)) {
+            throw new NoIdError();
+        }
         if (authToken !== null) {
             returnRequest = new ImagesDeleteDataClass(authToken, id);
         } else {

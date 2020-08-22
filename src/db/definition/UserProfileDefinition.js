@@ -85,4 +85,14 @@ export default class UserProfileDefinition extends DefinitionTableInterface {
     getTableName() {
         return UserProfileDefinition.TABLE_NAME;
     }
+
+    /**
+     * @param {string} key
+     * @return {boolean}
+     */
+    isColumn(key) {
+        return this.getColumns()
+            .map(definition => definition.getColumnName())
+            .includes(key);
+    }
 }

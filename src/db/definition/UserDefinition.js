@@ -89,4 +89,13 @@ export default class UserDefinition extends DefinitionTableInterface {
         return this._primaryColumn;
     }
 
+    /**
+     * @param {string} key
+     * @return {boolean}
+     */
+    isColumn(key) {
+        return this.getColumns()
+            .map(definition => definition.getColumnName())
+            .includes(key);
+    }
 }

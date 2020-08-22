@@ -29,4 +29,14 @@ export default class DefinitionTableInterface {
     getPrimaryColumn() {
         throw new ImplementationError(this, 'getPrimaryColumn');
     }
+
+    /**
+     * @abstract
+     * @param {string} key
+     * @return {boolean}
+     */
+    // eslint-disable-next-line no-unused-vars
+    isColumn(key) {
+        throw new ImplementationError(this, 'isColumn');
+    }
 }

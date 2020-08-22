@@ -75,7 +75,7 @@ export default class ImagesUpdateRequest extends RequestInterface {
      * @return {Promise<ResponseResult>}
      * @public
      */
-    // eslint-disable-next-line no-unused-vars
+    // eslint-disable-next-line max-statements
     async createResponse(request) {
         const response = new ResponseDataClass();
         try {
@@ -92,6 +92,8 @@ export default class ImagesUpdateRequest extends RequestInterface {
             const imageData = await this._getImage(requestData.getImageId());
             if (imageData != null) {
                 //TODO
+                this._updateEntity(imageData, requestData);
+
                 response.setData('dump', imageData.getData());
                 response.setStatus(true);
             } else {
@@ -186,5 +188,17 @@ export default class ImagesUpdateRequest extends RequestInterface {
     async _getImage(imageId) {
         const images = await this._repository.fetchData(UserFilesEntity.factory(imageId));
         return Promise.resolve(images[0]);
+    }
+
+    /**
+     *
+     * @param {UserFilesEntity} imageData
+     * @param {ImagesUpdateDataClass} requestData
+     * @return {ImagesUpdateRequest}
+     * @private
+     */
+    _updateEntity(imageData, requestData) {
+        imageData.setType(requestData.getType());
+        return this;
     }
 }

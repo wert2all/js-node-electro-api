@@ -20,6 +20,9 @@ import LogFormatterInterface from '../../lib/logger/LogFormatterInterface';
 import LoggerStrategy from '../../extended/LoggerStrategy';
 import ImageLogEvent from './log/ImageLogEvent';
 import Logger from '../../extended/logger/Logger';
+import ImageListNoImage from './error/ImageListNoImage';
+import UserFilesEntity from '../../data/entity/UserFilesEntity';
+import FilesRepository from '../../db/repository/FilesRepository';
 
 /**
  * @class ImagesUpdateRequest
@@ -41,6 +44,12 @@ export default class ImagesUpdateRequest extends RequestInterface {
          * @private
          */
         this._usersRepository = new UserRepository();
+        /**
+         *
+         * @type {FilesRepository}
+         * @private
+         */
+        this._repository = new FilesRepository();
     }
 
     /**
@@ -50,7 +59,13 @@ export default class ImagesUpdateRequest extends RequestInterface {
      */
     // eslint-disable-next-line no-unused-vars
     init(dispatcher) {
-        this._usersRepository.setConnection(this._di.get(ConnectionInterface));
+        /**
+         *
+         * @type {ConnectionInterface}
+         */
+        const connection = this._di.get(ConnectionInterface);
+        this._usersRepository.setConnection(connection);
+        this._repository.setConnection(connection);
         this._applyLogger();
         return this;
     }
@@ -70,9 +85,20 @@ export default class ImagesUpdateRequest extends RequestInterface {
              */
             const requestData = await this._prepareRequest(request);
             await this._checkAdmin(requestData);
-
-            response.setData('dump', requestData);
-            response.setStatus(true);
+            /**
+             *
+             * @type {UserFilesEntity|null}
+             */
+            const imageData = await this._getImage(requestData.getImageId());
+            if (imageData != null) {
+                //TODO
+                response.setData('dump', imageData.getData());
+                response.setStatus(true);
+            } else {
+                const error = new ImageListNoImage();
+                response.setStatus(false);
+                response.setMessage(error.message);
+            }
         } catch (e) {
             this._di.get(LoggerInterface)
                 .error(new ImageListLogEvent(e.message));
@@ -149,5 +175,16 @@ export default class ImagesUpdateRequest extends RequestInterface {
             .addLogger(ImageLogEvent.TAG, fileLogger);
         this._di.register(LoggerStrategy, loggerStrategy);
         this._di.register(LoggerInterface, new Logger(this._di.get(LoggerStrategy)));
+    }
+
+    /**
+     *
+     * @param {number} imageId
+     * @return {Promise<UserFilesEntity|null>}
+     * @private
+     */
+    async _getImage(imageId) {
+        const images = await this._repository.fetchData(UserFilesEntity.factory(imageId));
+        return Promise.resolve(images[0]);
     }
 }

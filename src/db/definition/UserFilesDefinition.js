@@ -13,6 +13,7 @@ export default class UserFilesDefinition extends DefinitionTableInterface {
     static COLUMN_YEARMON = 'yearmon';
     static COLUMN_TYPE = 'type';
     static COLUMN_PATH = 'path';
+    static COLUMN_IS_READY = 'isReady';
 
     constructor() {
         super();
@@ -54,6 +55,12 @@ export default class UserFilesDefinition extends DefinitionTableInterface {
                 DefinitionColumn.COLUMN_TYPE_VARCHAR,
                 false,
                 false
+            ),
+            new DefinitionColumn(
+                UserFilesDefinition.COLUMN_IS_READY,
+                DefinitionColumn.COLUMN_TYPE_VARCHAR,
+                false,
+                'false'
             )
         ];
     }

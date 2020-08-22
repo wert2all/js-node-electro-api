@@ -71,6 +71,19 @@ export default class UserFilesEntity extends EntityInterface {
 
     /**
      *
+     * @param {boolean} isReady
+     * @return {UserFilesEntity}
+     */
+    setReady(isReady = true) {
+        this._data.setData(
+            UserFilesDefinition.COLUMN_IS_READY,
+            isReady ? 'true' : 'false'
+        );
+        return this;
+    }
+
+    /**
+     *
      * @return {Object<string, string>}
      */
     getData() {

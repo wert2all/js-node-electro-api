@@ -23,6 +23,7 @@ import Logger from '../../extended/logger/Logger';
 import ImageListNoImage from './error/ImageListNoImage';
 import UserFilesEntity from '../../data/entity/UserFilesEntity';
 import FilesRepository from '../../db/repository/FilesRepository';
+import EntityManager from '../../lib/db-entity-manager/EntityManager';
 
 /**
  * @class ImagesUpdateRequest
@@ -91,10 +92,8 @@ export default class ImagesUpdateRequest extends RequestInterface {
              */
             const imageData = await this._getImage(requestData.getImageId());
             if (imageData != null) {
-                //TODO
-                this._updateEntity(imageData, requestData);
-
-                response.setData('dump', imageData.getData());
+                const imageEntity = this._updateEntity(imageData, requestData);
+                response.setData('dump', await this._saveImage(imageEntity));
                 response.setStatus(true);
             } else {
                 const error = new ImageListNoImage();
@@ -194,12 +193,27 @@ export default class ImagesUpdateRequest extends RequestInterface {
      *
      * @param {UserFilesEntity} imageData
      * @param {ImagesUpdateDataClass} requestData
-     * @return {ImagesUpdateRequest}
+     * @return {UserFilesEntity}
      * @private
      */
     _updateEntity(imageData, requestData) {
         imageData.setType(requestData.getType())
             .setReady(requestData.isReady());
-        return this;
+        return imageData;
+    }
+
+    /**
+     *
+     * @param {UserFilesEntity} imageEntity
+     * @return {Promise<ImagesUpdateRequest>}
+     * @private
+     */
+    async _saveImage(imageEntity) {
+        /**
+         *
+         * @type {EntityManager}
+         */
+        const entityManager = this._di.get(EntityManager);
+        return entityManager.save(this._repository.getDefinition(), imageEntity);
     }
 }

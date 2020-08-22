@@ -87,4 +87,14 @@ export default class UserFilesDefinition extends DefinitionTableInterface {
     getPrimaryColumn() {
         return this._primaryColumn;
     }
+
+    /**
+     * @param {string} key
+     * @return {boolean}
+     */
+    isColumn(key) {
+        return this.getColumns()
+            .map(definition => definition.getColumnName())
+            .includes(key);
+    }
 }

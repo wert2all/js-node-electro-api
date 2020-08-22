@@ -94,7 +94,7 @@ export default class SQLiteConnection extends ConnectionInterface {
         filter.getFilterData().map(filter => {
             data[filter.field] = filter.value;
         });
-        return this._fetch(this._server, sql, this._buildQueryData(data));
+        return this._fetch(this._server, sql, this._buildQueryData(definition, data));
     }
 
     /**
@@ -107,7 +107,7 @@ export default class SQLiteConnection extends ConnectionInterface {
     async insert(definition, data) {
         await this._createTable(definition, this._server);
         const sql = this._builderInsert.buildSQL(definition, data);
-        const prepareValues = this._buildQueryData(data);
+        const prepareValues = this._buildQueryData(definition, data);
         const insertData = await this._exec(this._server, sql, prepareValues);
         return Promise.resolve(insertData.lastID);
     }
@@ -117,11 +117,10 @@ export default class SQLiteConnection extends ConnectionInterface {
      * @param {Object<string, string>} data
      * @return {Promise<void>}
      */
-    // eslint-disable-next-line no-unused-vars
     async update(definition, data) {
         await this._createTable(definition, this._server);
         const sql = this._builderUpdate.buildSQL(definition, data);
-        const prepareValues = this._buildQueryData(data);
+        const prepareValues = this._buildQueryData(definition, data);
         delete (prepareValues[definition.getPrimaryColumn().getColumnName()]);
         return this._exec(this._server, sql, prepareValues);
     }
@@ -175,12 +174,15 @@ export default class SQLiteConnection extends ConnectionInterface {
      *
      * @return {Object<string, string>}
      * @private
+     * @param {DefinitionTableInterface} definition
      * @param {Object<string, string>}data
      */
-    _buildQueryData(data) {
+    _buildQueryData(definition, data) {
         const ret = {};
         Object.keys(data).forEach(key => {
-            ret[':' + key] = data[key];
+            if (definition.isColumn(key)) {
+                ret[':' + key] = data[key];
+            }
         });
         return ret;
     }
@@ -208,7 +210,7 @@ export default class SQLiteConnection extends ConnectionInterface {
         const whereData = {};
         whereData[definition.getPrimaryColumn().getColumnName()] = primaryValue;
         const sql = this._builderDelete.buildSQL(definition, whereData);
-        const prepareValues = this._buildQueryData(whereData);
+        const prepareValues = this._buildQueryData(definition, whereData);
         return this._exec(this._server, sql, prepareValues);
     }
 }

@@ -1,5 +1,6 @@
 import StringExt from '../../../lib/utils/StringExt';
 import AuthNoToken from '../../auth/error/AuthNoToken';
+import NoIdError from '../error/NoIdError';
 
 /**
  * @class ImagesUpdateDataClass
@@ -48,8 +49,10 @@ export default class ImagesUpdateDataClass {
      * @param request
      * @return {ImagesUpdateDataClass}
      */
+    // eslint-disable-next-line max-statements
     static factory(request) {
         let authToken = null;
+        let id = null;
         let returnRequest = null;
         if (request.body.token) {
             authToken = Buffer.from(
@@ -58,7 +61,12 @@ export default class ImagesUpdateDataClass {
                 'base64'
             ).toString();
         }
-        const id = parseInt(request.body.id, 10);
+        if (request.body.id) {
+            id = parseInt(request.body.id, 10);
+        }
+        if (!Number.isInteger(id)) {
+            throw new NoIdError();
+        }
         if (authToken !== null) {
             returnRequest = new ImagesUpdateDataClass(authToken, id);
         } else {

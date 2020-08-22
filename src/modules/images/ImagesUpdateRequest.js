@@ -198,7 +198,8 @@ export default class ImagesUpdateRequest extends RequestInterface {
      * @private
      */
     _updateEntity(imageData, requestData) {
-        imageData.setType(requestData.getType());
+        imageData.setType(requestData.getType())
+            .setReady(requestData.isReady());
         return this;
     }
 }

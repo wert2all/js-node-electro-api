@@ -93,7 +93,12 @@ export default class UIUserProfile extends UIControlInterface {
          * @private
          */
         this._submitButton = submitButton;
-
+        /**
+         *
+         * @type {UIAfterControlInterface|null}
+         * @private
+         */
+        this._afterControl = null;
     }
 
     clean() {
@@ -184,5 +189,13 @@ export default class UIUserProfile extends UIControlInterface {
      */
     _getModal() {
         return this._uikit.modal(this._modalElement);
+    }
+
+    /**
+     *
+     * @param {UIAfterControlInterface} action
+     */
+    setAfterControlAction(action) {
+        this._afterControl = action;
     }
 }

@@ -150,8 +150,23 @@ export default class UIImageItem extends UIElementInterface {
             .setImageType(imageData.getType())
             .setYearMon(imageData.getYearmon())
             .setId(imageData.getId())
-            .setUserData(imageData.getUser());
+            .setUserData(imageData.getUser())
+            .setIsReady(imageData.getIsReady());
         return imageItem;
+    }
+
+    /**
+     *
+     * @param {boolean} isReady
+     * @return {UIImageItem}
+     */
+    setIsReady(isReady) {
+        if (isReady) {
+            this._radioInput.setAttribute('checked', 'checked');
+        } else {
+            this._radioInput.removeAttribute('checked');
+        }
+        return this;
     }
 
     /**

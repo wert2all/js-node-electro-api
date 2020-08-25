@@ -10,7 +10,13 @@ const config = new UIConfig(
             'https://www.googleapis.com/auth/userinfo.profile'
         ),
         'https://apis.google.com/js/api.js?onload=onGApiLoad'
-    )
+    ),
+    {
+        viewMode: 1,
+        autoCrop: false,
+        autoCropArea: 1,
+        zoomOnWheel: false
+    }
 );
 new UIInit(config)
     .init(window);

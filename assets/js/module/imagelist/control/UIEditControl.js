@@ -1,4 +1,5 @@
 import UIControlInterface from '../../../ui/control/UIControlInterface';
+import Cropper from 'cropperjs';
 
 /**
  * @class UIEditControl
@@ -130,6 +131,7 @@ export default class UIEditControl extends UIControlInterface {
             .setElement('edit_image_ready', imageData.getIsReady() ? 'true' : 'false');
 
         this._image.src = imageData.getUrl();
+        this._cropper = new Cropper(this._image);
     }
 
     /**

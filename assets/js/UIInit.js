@@ -44,6 +44,7 @@ import DomFormElementRadio from './dom/form/element/DomFormElementRadio';
 import DomFormElementCheckbox from './dom/form/element/DomFormElementCheckbox';
 import ImageEditFormRequestModifier from './module/imagelist/form/ImageEditFormRequestModifier';
 import AfterEditControlFabric from './module/imagelist/control/after/AfterEditControlFabric';
+import CropperFactory from './module/imagelist/control/cropper/CropperFactory';
 
 /**
  * @class UIInit
@@ -225,6 +226,7 @@ export default class UIInit {
             api,
             this._ui.getNotify(),
             authProvider,
+            new CropperFactory(this._config.getCropperOptions())
         );
         editControl.init();
         const editActionFabric = new UIEditActionFabric(

@@ -1,5 +1,5 @@
 import UIControlInterface from '../../../ui/control/UIControlInterface';
-import Cropper from 'cropperjs';
+
 
 /**
  * @class UIEditControl
@@ -17,11 +17,13 @@ export default class UIEditControl extends UIControlInterface {
      * @param {Api} api
      * @param {UINotifyInterface} notify
      * @param {AuthProviderInterface} authProvider
+     * @param {CropperFactory} cropperFactory
      */
     constructor(imageElement, submitButton, modalElement, UIKit, formView,
                 api,
                 notify,
-                authProvider) {
+                authProvider,
+                cropperFactory) {
         super();
         /**
          *
@@ -77,6 +79,12 @@ export default class UIEditControl extends UIControlInterface {
          * @private
          */
         this._afterControl = null;
+        /**
+         *
+         * @type {CropperFactory}
+         * @private
+         */
+        this._cropperFactory = cropperFactory;
     }
 
     /**
@@ -131,7 +139,11 @@ export default class UIEditControl extends UIControlInterface {
             .setElement('edit_image_ready', imageData.getIsReady() ? 'true' : 'false');
 
         this._image.src = imageData.getUrl();
-        this._cropper = new Cropper(this._image);
+        this._cropperFactory
+            .create(this._image)
+            .then(cropper => {
+                console.log(cropper);
+            });
     }
 
     /**

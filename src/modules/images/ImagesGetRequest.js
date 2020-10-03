@@ -20,6 +20,7 @@ import StorageConfiguration from '../../storage/configuration/StorageConfigurati
 import AuthNoAdmin from '../auth/error/AuthNoAdmin';
 import LoggerInterface from '../../lib/logger/LoggerInterface';
 import ImageListLogEvent from './logs/event/ImageListLogEvent';
+import ExtendedValuesEntity from '../../data/entity/ExtendedValuesEntity';
 
 /**
  * @class ImagesGetRequest
@@ -219,6 +220,7 @@ export default class ImagesGetRequest extends RequestInterface {
         );
         for (const userFileEntity of images) {
             await this._extendUserData(userFileEntity);
+            await this._extendFileData(userFileEntity);
             userFileEntity.unset(UserDefinition.COLUMN_GOOGLE_ID);
             userFileEntity.setValue('url', this._replacePath(userFileEntity));
         }
@@ -234,5 +236,20 @@ export default class ImagesGetRequest extends RequestInterface {
         return (requestOffset == null)
             ? ImagesGetRequest.LIMIT_OFFSET
             : requestOffset;
+    }
+
+    /**
+     *
+     * @param {UserFilesEntity} fileEntity
+     * @return {Promise<void>}
+     * @private
+     */
+    async _extendFileData(fileEntity) {
+        fileEntity.setExtensionEntity(new ExtendedValuesEntity());
+        if (fileEntity.getExtensionEntity() != null) {
+            fileEntity.setValue('ext_data', fileEntity.getExtensionEntity().getData());
+        } else {
+            fileEntity.setValue('ext_data', {});
+        }
     }
 }

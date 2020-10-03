@@ -136,7 +136,8 @@ export default class UIEditControl extends UIControlInterface {
             .setElement('edit_image_id', imageData.getId())
             .setElement('edit_image_path', imageData.getPath())
             .setElement('edit_image_type', imageData.getType())
-            .setElement('edit_image_ready', imageData.getIsReady() ? 'true' : 'false');
+            .setElement('edit_image_ready', imageData.getIsReady() ? 'true' : 'false')
+            .setElement('edit_image_rotation', '0');
 
         this._image.src = imageData.getUrl();
         this._cropperFactory

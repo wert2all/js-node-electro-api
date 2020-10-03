@@ -216,6 +216,18 @@ export default class UIInit {
                 '.uk-card-header .uk-grid-small  a.image_profile_icon',
             )
         );
+        const formView = new UIFormView(
+            this._createEditImageForm(document),
+            document.querySelector('#modal_edit_image form.edit_image')
+        );
+        const rotationFunc = (cropper, rotationVaLue) => {
+            const rotationElement = formView.getElement('edit_image_rotation');
+            rotationElement.setValue(
+                (parseInt(rotationElement.getValue(), 10) + rotationVaLue)
+                    .toString()
+            );
+            return cropper.rotate(rotationVaLue);
+        };
         const cropperAction = new CropperActionComposite([
             new CropperAction(
                 document.querySelector('#modal_edit_image .uk-iconnav .crop_reset'),
@@ -229,16 +241,23 @@ export default class UIInit {
                 document.querySelector('#modal_edit_image .uk-iconnav .crop_zoon_out'),
                 cropper => cropper.zoom(-0.1)
             ),
+            new CropperAction(
+                document.querySelector(
+                    '#modal_edit_image .uk-iconnav .crop_rotate_right'
+                ),
+                cropper => rotationFunc(cropper, 90)
+            ),
+            new CropperAction(
+                document.querySelector('#modal_edit_image .uk-iconnav .crop_rotate_left'),
+                cropper => rotationFunc(cropper, -90)
+            ),
         ]);
         const editControl = new UIEditControl(
             document.querySelector('#modal_edit_image img.image'),
             document.querySelector('#modal_edit_image button.edit_image_submit'),
             document.querySelector('#modal_edit_image'),
             UIkit,
-            new UIFormView(
-                this._createEditImageForm(document),
-                document.querySelector('#modal_edit_image form.edit_image')
-            ),
+            formView,
             api,
             this._ui.getNotify(),
             authProvider,
@@ -438,7 +457,10 @@ export default class UIInit {
                 ),
                 'edit_image_ready': new DomFormElementCheckbox(
                     document.querySelector('#edit_is_ready')
-                )
+                ),
+                'edit_image_rotation': new DomFormElement(
+                    document.querySelector('#edit_image_rotation')
+                ),
             },
             new ImageEditFormRequestModifier(
                 {

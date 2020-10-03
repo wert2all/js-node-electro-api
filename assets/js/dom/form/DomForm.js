@@ -106,4 +106,15 @@ export default class DomForm extends DomFormInterface {
     getRequestFormData() {
         return this._forRequestModifier.modify(this.getFormData());
     }
+
+    /**
+     *
+     * @param {string} elementName
+     * @return {DomFormElementInterface|null}
+     */
+    getElement(elementName) {
+        return (this._elements.hasOwnProperty(elementName))
+            ? this._elements[elementName]
+            : null;
+    }
 }

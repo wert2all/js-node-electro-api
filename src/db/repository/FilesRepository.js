@@ -1,11 +1,12 @@
-/**
- * @class FilesRepository
- *
- */
 import RepositoryAbstract from '../../lib/db-repository/ReposytoryAbstract';
 import FilterFactory from '../../lib/db-filter/FilterFactory';
 import UserFilesDefinition from '../definition/UserFilesDefinition';
 
+/**
+ * @class FilesRepository
+ * @extends RepositoryAbstract
+ * @type RepositoryAbstract
+ */
 export default class FilesRepository extends RepositoryAbstract {
 
     /**
@@ -29,13 +30,14 @@ export default class FilesRepository extends RepositoryAbstract {
 
     /**
      *
-     * @param {EntityInterface} userFilesEntity
+     * @param {EntityInterface} entity
      * @param {DefinitionOrder | null} order
      * @param {DefinitionLimit | null} limit
+     * @param {null| Object<string, string>} fields
      * @return {Promise<EntityInterface[]>}
      */
-    async fetchData(userFilesEntity, order = null, limit = null) {
-        return super.fetchData(userFilesEntity, order, limit);
+    async fetchData(entity, order = null, limit = null, fields = null) {
+        return super.fetchData(entity, order, limit, fields);
     }
 
     /**

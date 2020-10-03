@@ -1,13 +1,14 @@
 import RepositoryAbstract from '../../lib/db-repository/ReposytoryAbstract';
 import FilterFactory from '../../lib/db-filter/FilterFactory';
-import UserDefinition from '../definition/UserDefinition';
+import ExtendedValuesDefinition from '../definition/ExtendedValuesDefinition';
 
 /**
- * @class UserRepository
+ * @class ExtendedValuesRepository
  * @type RepositoryAbstract
  * @extends RepositoryAbstract
  */
-export default class UserRepository extends RepositoryAbstract {
+export default class ExtendedValuesRepository extends RepositoryAbstract {
+
     constructor() {
         super();
         /**
@@ -15,7 +16,7 @@ export default class UserRepository extends RepositoryAbstract {
          * @type {DefinitionTableInterface}
          * @private
          */
-        this._definition = new UserDefinition();
+        this._definition = new ExtendedValuesDefinition();
         /**
          *
          * @type {FilterFactoryInterface}
@@ -26,18 +27,8 @@ export default class UserRepository extends RepositoryAbstract {
 
     /**
      *
-     * @param {EntityInterface} user
-     * @param {DefinitionOrder|null} order
-     * @param {DefinitionLimit|null} limit
-     * @return {Promise<EntityInterface[]>}
-     */
-    async fetchData(user, order = null, limit = null, fields = null) {
-        return super.fetchData(user, order, limit, fields);
-    }
-
-    /**
-     * @protected
-     * @return FilterFactoryInterface
+     * @return {FilterFactoryInterface}
+     * @private
      */
     _filterFactory() {
         return this._filterFactoryObject;
@@ -45,8 +36,7 @@ export default class UserRepository extends RepositoryAbstract {
 
     /**
      *
-     * @protected
-     * @return DefinitionTableInterface
+     * @return {DefinitionTableInterface}
      */
     getDefinition() {
         return this._definition;

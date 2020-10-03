@@ -219,8 +219,16 @@ export default class UIInit {
         const cropperAction = new CropperActionComposite([
             new CropperAction(
                 document.querySelector('#modal_edit_image .uk-iconnav .crop_reset'),
-                (cropper) => cropper.reset()
-            )
+                cropper => cropper.reset()
+            ),
+            new CropperAction(
+                document.querySelector('#modal_edit_image .uk-iconnav .crop_zoon_in'),
+                cropper => cropper.zoom(0.1)
+            ),
+            new CropperAction(
+                document.querySelector('#modal_edit_image .uk-iconnav .crop_zoon_out'),
+                cropper => cropper.zoom(-0.1)
+            ),
         ]);
         const editControl = new UIEditControl(
             document.querySelector('#modal_edit_image img.image'),

@@ -23,6 +23,12 @@ export default class UserFilesEntity extends EntityInterface {
          * @private
          */
         this._user = null;
+        /**
+         *
+         * @type {null|ExtendedValuesEntity}
+         * @private
+         */
+        this._extData = null;
     }
 
     static factory(imageId) {
@@ -151,5 +157,21 @@ export default class UserFilesEntity extends EntityInterface {
     unset(key) {
         this._data.unset(key);
         return this;
+    }
+
+    /**
+     *
+     * @param {ExtendedValuesEntity} entity
+     */
+    setExtensionEntity(entity) {
+        this._extData = entity;
+    }
+
+    /**
+     *
+     * @return {null|ExtendedValuesEntity}
+     */
+    getExtensionEntity() {
+        return this._extData;
     }
 }

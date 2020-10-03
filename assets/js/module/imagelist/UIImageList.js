@@ -156,6 +156,12 @@ export default class UIImageList extends UIElementListInterface {
                 .setYearmon(image.yearmon)
                 .setPath(image.path)
                 .setIsReady(image.isReady === 'true');
+            if (image.hasOwnProperty('ext_data')) {
+                const extData = image.ext_data;
+                imageObject.setRotation(
+                    extData.hasOwnProperty('rotation') ? image.rotation : 0
+                );
+            }
 
             if (image.hasOwnProperty('user')) {
                 imageObject.setUser(

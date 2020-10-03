@@ -52,6 +52,30 @@ export default class ImageData {
          * @private
          */
         this._isReady = false;
+        /**
+         *
+         * @type {number}
+         * @private
+         */
+        this._rotation = 0;
+    }
+
+    /**
+     *
+     * @return {number}
+     */
+    getRotation() {
+        return this._rotation;
+    }
+
+    /**
+     *
+     * @param {number} value
+     * @return {ImageData}
+     */
+    setRotation(value) {
+        this._rotation = value;
+        return this;
     }
 
     /**

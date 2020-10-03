@@ -141,8 +141,7 @@ export default class UIEditControl extends UIControlInterface {
         this._image.src = imageData.getUrl();
         this._cropperFactory
             .create(this._image)
-            .then(cropper => {
-                console.log(cropper);
+            .then(() => {
             });
     }
 

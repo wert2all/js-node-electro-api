@@ -45,6 +45,8 @@ import DomFormElementCheckbox from './dom/form/element/DomFormElementCheckbox';
 import ImageEditFormRequestModifier from './module/imagelist/form/ImageEditFormRequestModifier';
 import AfterEditControlFabric from './module/imagelist/control/after/AfterEditControlFabric';
 import CropperFactory from './module/imagelist/control/cropper/CropperFactory';
+import CropperActionComposite from './module/imagelist/control/cropper/CropperActionComposite';
+import CropperAction from './module/imagelist/control/cropper/CropperAction';
 
 /**
  * @class UIInit
@@ -214,6 +216,12 @@ export default class UIInit {
                 '.uk-card-header .uk-grid-small  a.image_profile_icon',
             )
         );
+        const cropperAction = new CropperActionComposite([
+            new CropperAction(
+                document.querySelector('#modal_edit_image .uk-iconnav .crop_reset'),
+                (cropper) => cropper.reset()
+            )
+        ]);
         const editControl = new UIEditControl(
             document.querySelector('#modal_edit_image img.image'),
             document.querySelector('#modal_edit_image button.edit_image_submit'),
@@ -226,7 +234,7 @@ export default class UIInit {
             api,
             this._ui.getNotify(),
             authProvider,
-            new CropperFactory(this._config.getCropperOptions())
+            new CropperFactory(this._config.getCropperOptions(), cropperAction)
         );
         editControl.init();
         const editActionFabric = new UIEditActionFabric(

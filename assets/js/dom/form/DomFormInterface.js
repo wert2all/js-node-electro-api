@@ -27,6 +27,16 @@ export default class DomFormInterface {
     }
 
     /**
+     * @abstract
+     * @param {string} elementName
+     * @return {DomFormElementInterface|null}
+     */
+    // eslint-disable-next-line no-unused-vars
+    getElement(elementName) {
+
+    }
+
+    /**
      * @return {Promise<Boolean>}
      * @abstract
      */

@@ -124,10 +124,10 @@ html(lang='en')
                                     a.crop_zoon_out(href="#")
                                         i.fas.fa-search-minus.fa-2x
                                 li
-                                    a
+                                    a.crop_rotate_right(href="#")
                                         i.fas.fa-redo.fa-2x
                                 li
-                                    a
+                                    a.crop_rotate_left(href="#")
                                         i.fas.fa-undo.fa-2x
                                 li
                                     a
@@ -136,6 +136,7 @@ html(lang='en')
                         form.uk-form-horizontal.edit_image
                             input#edit_image_id.uk-input(type='hidden')
                             input#edit_image_path.uk-input(type='hidden')
+                            input#edit_image_rotation.uk-input(type='hidden')
                             .uk-margin
                                 label.uk-form-label Image type
                                 .uk-form-controls.edit_image_type

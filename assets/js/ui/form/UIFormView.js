@@ -118,4 +118,13 @@ export default class UIFormView extends UIFormViewInterface {
     getRequestFormData() {
         return this._form.getRequestFormData();
     }
+
+    /**
+     *
+     * @param {string} elementName
+     * @return {DomFormElementInterface|null}
+     */
+    getElement(elementName) {
+        return this._form.getElement(elementName);
+    }
 }

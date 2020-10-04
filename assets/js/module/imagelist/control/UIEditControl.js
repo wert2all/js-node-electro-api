@@ -78,7 +78,13 @@ export default class UIEditControl extends UIControlInterface {
          * @type {UIAfterControlInterface|null}
          * @private
          */
-        this._afterControl = null;
+        this._afterSubmit = null;
+        /**
+         *
+         * @type {UIAfterControlInterface|null}
+         * @private
+         */
+        this._afterShow = null;
         /**
          *
          * @type {CropperFactory}
@@ -108,8 +114,8 @@ export default class UIEditControl extends UIControlInterface {
                         this._formView.hideLoader();
                         if (response.getStatus() === true) {
                             this._notify.success('Saved!');
-                            if (this._afterControl != null) {
-                                this._afterControl.exec();
+                            if (this._afterSubmit != null) {
+                                this._afterSubmit.exec();
                             }
                         } else {
                             this._notify.error(response.getErrorMessage());
@@ -142,6 +148,9 @@ export default class UIEditControl extends UIControlInterface {
         this._cropperFactory
             .create(this._image)
             .then(() => {
+                if (this._afterShow !== null) {
+                    this._afterShow.exec();
+                }
             });
     }
 
@@ -158,7 +167,17 @@ export default class UIEditControl extends UIControlInterface {
      *
      * @param {UIAfterControlInterface} action
      */
-    setAfterControlAction(action) {
-        this._afterControl = action;
+    setAfterSubmitAction(action) {
+        this._afterSubmit = action;
+    }
+
+    /**
+     *
+     * @param {UIAfterControlInterface} action
+     * @return UIEditControl
+     */
+    setAfterShowAction(action) {
+        this._afterShow = action;
+        return this;
     }
 }

@@ -1,3 +1,8 @@
+/**
+ * @interface
+ * @abstract
+ * @class ICropperActionInterface
+ */
 export default class ICropperActionInterface {
     /**
      * @abstract
@@ -6,5 +11,12 @@ export default class ICropperActionInterface {
      */
     // eslint-disable-next-line no-unused-vars
     setCropper(cropper) {
+    }
+
+    /**
+     * @abstract
+     * @return {Cropper}
+     */
+    getCropper() {
     }
 }

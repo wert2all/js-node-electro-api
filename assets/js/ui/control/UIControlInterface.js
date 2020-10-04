@@ -23,7 +23,7 @@ export default class UIControlInterface {
      * @param {UIAfterControlInterface} action
      */
     // eslint-disable-next-line no-unused-vars
-    setAfterControlAction(action) {
+    setAfterSubmitAction(action) {
 
     }
 }

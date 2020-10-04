@@ -1,5 +1,10 @@
 import ICropperActionInterface from './ICropperActionInterface';
 
+/**
+ * @class CropperActionComposite
+ * @extends ICropperActionInterface
+ * @type ICropperActionInterface
+ */
 export default class CropperActionComposite extends ICropperActionInterface {
     /**
      *
@@ -24,5 +29,13 @@ export default class CropperActionComposite extends ICropperActionInterface {
         this._actions
             .forEach(action => action.setCropper(cropper));
         return this;
+    }
+
+    /**
+     *
+     * @return {Cropper}
+     */
+    getCropper() {
+        return this._actions.pop().getCropper();
     }
 };

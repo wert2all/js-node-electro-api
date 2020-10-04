@@ -96,6 +96,14 @@ export default class ImagesUpdateDataClass {
 
     /**
      *
+     * @return {number}
+     */
+    getRotation() {
+        return this._rotation;
+    }
+
+    /**
+     *
      * @return {string}
      */
     getType() {

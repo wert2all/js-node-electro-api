@@ -42,6 +42,12 @@ export default class ImagesUpdateDataClass {
          * @private
          */
         this._type = 'bill';
+        /**
+         *
+         * @type {number}
+         * @private
+         */
+        this._rotation = 0;
     }
 
     /**
@@ -80,6 +86,10 @@ export default class ImagesUpdateDataClass {
             returnRequest.setType(
                 (request.body.type === 'bill') ? 'bill' : 'meter'
             );
+        }
+
+        if (request.body.rotation) {
+            returnRequest.setRotation(request.body.rotation);
         }
         return returnRequest;
     }
@@ -157,5 +167,15 @@ export default class ImagesUpdateDataClass {
      */
     getAccount() {
         return this._account;
+    }
+
+    /**
+     *
+     * @param {number} rotation
+     * @return {ImagesUpdateDataClass}
+     */
+    setRotation(rotation) {
+        this._rotation = rotation;
+        return this;
     }
 }

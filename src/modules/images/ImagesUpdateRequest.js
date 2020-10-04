@@ -93,6 +93,9 @@ export default class ImagesUpdateRequest extends RequestInterface {
             const imageData = await this._getImage(requestData.getImageId());
             if (imageData != null) {
                 const imageEntity = this._updateEntity(imageData, requestData);
+                // const savedImage = await this._saveImage(imageEntity);
+                // const extEntity = this._createExtEntity(requestData);
+                // const savedExtData = this._saveExtData(extEntity);
                 response.setData('dump', await this._saveImage(imageEntity));
                 response.setStatus(true);
             } else {

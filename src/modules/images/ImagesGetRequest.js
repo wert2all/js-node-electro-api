@@ -21,6 +21,7 @@ import AuthNoAdmin from '../auth/error/AuthNoAdmin';
 import LoggerInterface from '../../lib/logger/LoggerInterface';
 import ImageListLogEvent from './logs/event/ImageListLogEvent';
 import ExtendedValuesEntity from '../../data/entity/ExtendedValuesEntity';
+import ExtendedValuesRepository from '../../db/repository/ExtendedValuesRepository';
 
 /**
  * @class ImagesGetRequest
@@ -38,6 +39,12 @@ export default class ImagesGetRequest extends RequestInterface {
          * @private
          */
         this._repository = new FilesRepository();
+        /**
+         *
+         * @type {ExtendedValuesRepository}
+         * @private
+         */
+        this._extRepository = new ExtendedValuesRepository();
         /**
          *
          * @type {UserRepository}
@@ -61,6 +68,7 @@ export default class ImagesGetRequest extends RequestInterface {
     init(dispatcher) {
         this._repository.setConnection(DI.getInstance().get(ConnectionInterface));
         this._usersRepository.setConnection(DI.getInstance().get(ConnectionInterface));
+        this._extRepository.setConnection(DI.getInstance().get(ConnectionInterface));
         return this;
     }
 
@@ -245,7 +253,15 @@ export default class ImagesGetRequest extends RequestInterface {
      * @private
      */
     async _extendFileData(fileEntity) {
-        fileEntity.setExtensionEntity(new ExtendedValuesEntity());
+        const extEntity = new ExtendedValuesEntity();
+        extEntity
+            .setEntityType('file')
+            .setEntityId(fileEntity.getValue(UserFilesDefinition.COLUMN_ID))
+            .fillData(
+                await this._extRepository.fetchData(extEntity)
+            );
+
+        fileEntity.setExtensionEntity(extEntity);
         if (fileEntity.getExtensionEntity() != null) {
             fileEntity.setValue('ext_data', fileEntity.getExtensionEntity().getData());
         } else {

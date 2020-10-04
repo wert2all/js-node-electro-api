@@ -1,5 +1,6 @@
 import EntityInterface from '../../lib/db-entity/EntityInterface';
 import DataValue from '../../lib/data-value/DataValue';
+import ExtendedValuesDefinition from '../../db/definition/ExtendedValuesDefinition';
 
 /**
  * @class ExtendedValuesEntity
@@ -15,6 +16,19 @@ export default class ExtendedValuesEntity extends EntityInterface {
          * @private
          */
         this._data = new DataValue();
+    }
+
+    /**
+     *
+     * @param {ExtendedValuesEntity[]} entities
+     */
+    fillData(entities) {
+        entities.forEach(entity => {
+            this.setValue(
+                entity.getValue(ExtendedValuesDefinition.COLUMN_VALUE_NAME),
+                entity.getValue(ExtendedValuesDefinition.COLUMN_VALUE_VALUE)
+            );
+        });
     }
 
     /**
@@ -65,5 +79,25 @@ export default class ExtendedValuesEntity extends EntityInterface {
      */
     getValue(key) {
         return this._data.getData(key);
+    }
+
+    /**
+     *
+     * @param {number} entityId
+     * @return {ExtendedValuesEntity}
+     */
+    setEntityId(entityId) {
+        this.setValue(ExtendedValuesDefinition.COLUMN_ENTITY_ID, entityId);
+        return this;
+    }
+
+    /**
+     *
+     * @param {string} type
+     * @return {ExtendedValuesEntity}
+     */
+    setEntityType(type) {
+        this.setValue(ExtendedValuesDefinition.COLUMN_ENTITY_TYPE, type);
+        return this;
     }
 }

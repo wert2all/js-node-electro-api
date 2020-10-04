@@ -24,6 +24,10 @@ import ImageListNoImage from './error/ImageListNoImage';
 import UserFilesEntity from '../../data/entity/UserFilesEntity';
 import FilesRepository from '../../db/repository/FilesRepository';
 import EntityManager from '../../lib/db-entity-manager/EntityManager';
+import ExtendedValuesEntity from '../../data/entity/ExtendedValuesEntity';
+import UserFilesDefinition from '../../db/definition/UserFilesDefinition';
+import ExtendedValuesDefinition from '../../db/definition/ExtendedValuesDefinition';
+import ExtendedValuesRepository from '../../db/repository/ExtendedValuesRepository';
 
 /**
  * @class ImagesUpdateRequest
@@ -51,6 +55,18 @@ export default class ImagesUpdateRequest extends RequestInterface {
          * @private
          */
         this._repository = new FilesRepository();
+        /**
+         *
+         * @type {ExtendedValuesRepository}
+         * @private
+         */
+        this._extRepository = new ExtendedValuesRepository();
+        /**
+         *
+         * @type {EntityManager}
+         * @private
+         */
+        this._em = this._di.get(EntityManager);
     }
 
     /**
@@ -66,6 +82,7 @@ export default class ImagesUpdateRequest extends RequestInterface {
          */
         const connection = this._di.get(ConnectionInterface);
         this._usersRepository.setConnection(connection);
+        this._extRepository.setConnection(connection);
         this._repository.setConnection(connection);
         this._applyLogger();
         return this;
@@ -93,10 +110,10 @@ export default class ImagesUpdateRequest extends RequestInterface {
             const imageData = await this._getImage(requestData.getImageId());
             if (imageData != null) {
                 const imageEntity = this._updateEntity(imageData, requestData);
-                // const savedImage = await this._saveImage(imageEntity);
-                // const extEntity = this._createExtEntity(requestData);
-                // const savedExtData = this._saveExtData(extEntity);
-                response.setData('dump', await this._saveImage(imageEntity));
+                await this._saveImage(imageEntity);
+                const extEntity = this._createExtEntity(requestData, imageEntity);
+                const savedExtData = await this._saveExtData(extEntity);
+                response.setData('dump', savedExtData);
                 response.setStatus(true);
             } else {
                 const error = new ImageListNoImage();
@@ -218,5 +235,77 @@ export default class ImagesUpdateRequest extends RequestInterface {
          */
         const entityManager = this._di.get(EntityManager);
         return entityManager.save(this._repository.getDefinition(), imageEntity);
+    }
+
+    /**
+     *
+     * @param {ImagesUpdateDataClass} requestData
+     * @param {UserFilesEntity} imageEntity
+     * @return {ExtendedValuesEntity}
+     * @private
+     */
+    _createExtEntity(requestData, imageEntity) {
+        const entity = new ExtendedValuesEntity();
+        entity.setEntityType('file')
+            .setEntityId(imageEntity.getValue(UserFilesDefinition.COLUMN_ID))
+            .setValue('rotation', requestData.getRotation());
+        return entity;
+    }
+
+    /**
+     *
+     * @param {ExtendedValuesEntity} entity
+     * @return {null}
+     * @private
+     */
+    async _saveExtData(entity) {
+        const ret = [];
+        const entities = this._makeEntities(entity);
+        await this._deleteEntities(entity);
+        entities.forEach(entity =>
+            ret.push(
+                this._em.save(
+                    this._extRepository.getDefinition(),
+                    entity
+                )
+            ));
+        return ret;
+    }
+
+    /**
+     *
+     * @param {ExtendedValuesEntity} entity
+     * @return {ExtendedValuesEntity[]}
+     * @private
+     */
+    _makeEntities(entity) {
+        return Object.keys(entity.getData())
+            .map(key => key === ExtendedValuesDefinition.COLUMN_ENTITY_TYPE ? false : key)
+            .map(key => key === ExtendedValuesDefinition.COLUMN_ENTITY_ID ? false : key)
+            .filter(key => !!key)
+            .map(key => new ExtendedValuesEntity()
+                .setEntityId(entity.getEntityId())
+                .setEntityType(entity.getEntityType())
+                .setValue(ExtendedValuesDefinition.COLUMN_VALUE_NAME, key)
+                .setValue(
+                    ExtendedValuesDefinition.COLUMN_VALUE_VALUE,
+                    entity.getValue(key))
+            );
+    }
+
+    /**
+     *
+     * @param {ExtendedValuesEntity} entity
+     * @return {Promise<void>}
+     * @private
+     */
+    async _deleteEntities(entity) {
+        const deleteEntities = await this._extRepository.fetchData(entity);
+        for (let key in deleteEntities) {
+            await this._em.delete(
+                this._extRepository.getDefinition(),
+                deleteEntities[key].getValue(ExtendedValuesDefinition.COLUMN_ID)
+            );
+        }
     }
 }

@@ -159,7 +159,7 @@ export default class UIImageList extends UIElementListInterface {
             if (image.hasOwnProperty('ext_data')) {
                 const extData = image.ext_data;
                 imageObject.setRotation(
-                    extData.hasOwnProperty('rotation') ? image.rotation : 0
+                    extData.hasOwnProperty('rotation') ? extData.rotation : 0
                 );
             }
 

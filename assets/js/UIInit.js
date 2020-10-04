@@ -47,6 +47,7 @@ import AfterEditControlFabric from './module/imagelist/control/after/AfterEditCo
 import CropperFactory from './module/imagelist/control/cropper/CropperFactory';
 import CropperActionComposite from './module/imagelist/control/cropper/CropperActionComposite';
 import CropperAction from './module/imagelist/control/cropper/CropperAction';
+import AfterEditShowAction from './module/imagelist/control/after/AfterEditShowAction';
 
 /**
  * @class UIInit
@@ -252,6 +253,7 @@ export default class UIInit {
                 cropper => rotationFunc(cropper, -90)
             ),
         ]);
+        const afterShowAction = new AfterEditShowAction(formView, cropperAction);
         const editControl = new UIEditControl(
             document.querySelector('#modal_edit_image img.image'),
             document.querySelector('#modal_edit_image button.edit_image_submit'),
@@ -263,7 +265,9 @@ export default class UIInit {
             authProvider,
             new CropperFactory(this._config.getCropperOptions(), cropperAction)
         );
-        editControl.init();
+        editControl.setAfterShowAction(afterShowAction)
+            .init();
+
         const editActionFabric = new UIEditActionFabric(
             editControl,
             new AfterEditControlFabric()

@@ -1,5 +1,10 @@
 import ICropperActionInterface from './ICropperActionInterface';
 
+/**
+ * @class CropperAction
+ * @extends ICropperActionInterface
+ * @type ICropperActionInterface
+ */
 export default class CropperAction extends ICropperActionInterface {
     /**
      * @param {HTMLElement} element

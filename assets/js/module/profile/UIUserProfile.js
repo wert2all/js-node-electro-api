@@ -195,7 +195,7 @@ export default class UIUserProfile extends UIControlInterface {
      *
      * @param {UIAfterControlInterface} action
      */
-    setAfterControlAction(action) {
+    setAfterSubmitAction(action) {
         this._afterControl = action;
     }
 }

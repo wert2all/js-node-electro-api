@@ -466,7 +466,8 @@ export default class UIInit {
                 {
                     'id': 'edit_image_id',
                     'type': 'edit_image_type',
-                    'isReady': 'edit_image_ready'
+                    'isReady': 'edit_image_ready',
+                    'rotation': 'edit_image_rotation'
                 }
             )
         );

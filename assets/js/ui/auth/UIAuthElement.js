@@ -1,4 +1,4 @@
-import UIAuthElementInterface from '../interfaces/UIAuthElementInterface';
+import UIAuthElementInterface from "../interfaces/UIAuthElementInterface";
 
 /**
  * @class UIAuthElement
@@ -57,11 +57,11 @@ export default class UIAuthElement extends UIAuthElementInterface {
 
         if (signOut != null) {
             if (this._authProvider != null) {
-                signOut.addEventListener('click', () => this._authProvider.signOut());
+                signOut.addEventListener("click", () => this._authProvider.signOut());
             }
         }
         if (profileLink != null) {
-            profileLink.addEventListener('click', (event) => event.preventDefault());
+            profileLink.addEventListener("click", (event) => event.preventDefault());
         }
         if (avatar != null) {
             avatar.src = this._defaultValues.getAvatar();
@@ -99,14 +99,11 @@ export default class UIAuthElement extends UIAuthElementInterface {
     applyProfileClick(listener) {
         const profileLink = this._nodeHolder.getProfileLinkWithoutListeners();
         if (profileLink != null) {
-            profileLink.addEventListener(
-                'click',
-                () => {
-                    if (this._authProvider != null) {
-                        listener(this._authProvider.getUserProfile());
-                    }
+            profileLink.addEventListener("click", () => {
+                if (this._authProvider != null) {
+                    listener(this._authProvider.getUserProfile());
                 }
-            );
+            });
         }
     }
 }

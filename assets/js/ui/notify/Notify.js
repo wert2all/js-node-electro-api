@@ -1,4 +1,4 @@
-import UINotifyInterface from '../interfaces/UINotifyInterface';
+import UINotifyInterface from "../interfaces/UINotifyInterface";
 
 /**
  * @class Notify
@@ -20,10 +20,11 @@ export default class Notify extends UINotifyInterface {
          */
         this._options = Object.assign(
             {
-                pos: 'top-right',
-                timeout: 5000
+                pos: "top-right",
+                timeout: 5000,
             },
-            options);
+            options
+        );
         /**
          *
          * @private
@@ -32,23 +33,14 @@ export default class Notify extends UINotifyInterface {
     }
 
     error(message) {
-        this._uikit.notification(
-            message,
-            Object.assign({status: 'danger'}, this._options)
-        );
+        this._uikit.notification(message, Object.assign({ status: "danger" }, this._options));
     }
 
     success(message) {
-        this._uikit.notification(
-            message,
-            Object.assign({status: 'success'}, this._options)
-        );
+        this._uikit.notification(message, Object.assign({ status: "success" }, this._options));
     }
 
     warning(message) {
-        this._uikit.notification(
-            message,
-            Object.assign({status: 'warning'}, this._options)
-        );
+        this._uikit.notification(message, Object.assign({ status: "warning" }, this._options));
     }
 }

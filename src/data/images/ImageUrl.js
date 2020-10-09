@@ -1,7 +1,6 @@
-import path from 'path';
-import UserFilesDefinition from '../../db/definition/UserFilesDefinition';
-import ImageProcessDirectoryProcessor
-    from '../../storage/file/process/image/ImageProcessDirectoryProcessor';
+import path from "path";
+import UserFilesDefinition from "../../db/definition/UserFilesDefinition";
+import ImageProcessDirectoryProcessor from "../../storage/file/process/image/ImageProcessDirectoryProcessor";
 
 /**
  * @class ImageUrl
@@ -44,9 +43,8 @@ export default class ImageUrl {
     // eslint-disable-next-line no-unused-vars
     _makeUrl(fileData) {
         return this._makeAbsolutePath(
-            this._makeRelativePath(path.normalize(
-                fileData.getValue(UserFilesDefinition.COLUMN_PATH)
-            )));
+            this._makeRelativePath(path.normalize(fileData.getValue(UserFilesDefinition.COLUMN_PATH)))
+        );
     }
 
     /**
@@ -56,7 +54,7 @@ export default class ImageUrl {
      * @private
      */
     _makeAbsolutePath(relativePath) {
-        return this._keyValueStorage.fetch('api:url:static:image') + relativePath;
+        return this._keyValueStorage.fetch("api:url:static:image") + relativePath;
     }
 
     /**
@@ -66,8 +64,7 @@ export default class ImageUrl {
      * @private
      */
     _makeRelativePath(imagePath) {
-        const rootPath = new ImageProcessDirectoryProcessor()
-            .getDirectoryRoot(this._fileStorageConfig);
+        const rootPath = new ImageProcessDirectoryProcessor().getDirectoryRoot(this._fileStorageConfig);
         return imagePath.substr(rootPath.length, imagePath.length);
     }
 }

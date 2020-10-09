@@ -4,13 +4,12 @@
  * @abstract
  */
 export default class RoutersInterface {
-
     /**
      * @return {string}
      * @abstract
      */
     getURL() {
-        throw Error('Implement RoutersInterface:getURL');
+        throw Error("Implement RoutersInterface:getURL");
     }
 
     /**
@@ -18,6 +17,6 @@ export default class RoutersInterface {
      * @abstract
      */
     getRequest() {
-        throw Error('Implement RoutersInterface:getRequest');
+        throw Error("Implement RoutersInterface:getRequest");
     }
 }

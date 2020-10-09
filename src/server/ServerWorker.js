@@ -1,5 +1,5 @@
-import ServerWorkerInterface from './ServerWorkerInterface';
-import http from 'http';
+import ServerWorkerInterface from "./ServerWorkerInterface";
+import http from "http";
 
 /**
  * @class ServerWorker
@@ -7,7 +7,6 @@ import http from 'http';
  * @type ServerWorkerInterface
  */
 export default class ServerWorker extends ServerWorkerInterface {
-
     /**
      *
      * @param {ServerApplicationInterface} application
@@ -24,25 +23,24 @@ export default class ServerWorker extends ServerWorkerInterface {
 
     run() {
         const pid = process.pid;
-        this._application
-            .init()
-            .run();
+        this._application.init().run();
 
-        const server = http.createServer(this._application.getRequestListener())
+        const server = http
+            .createServer(this._application.getRequestListener())
             .listen(3000, () => console.log(`Worker started. Pid: ${pid}`));
 
-        process.on('SIGINT', () => {
-            console.log('Signal is SIGINT');
+        process.on("SIGINT", () => {
+            console.log("Signal is SIGINT");
             server.close(() => process.exit(0));
         });
 
-        process.on('SIGTERM', () => {
-            console.log('Signal is SIGTERM');
+        process.on("SIGTERM", () => {
+            console.log("Signal is SIGTERM");
             server.close(() => process.exit(0));
         });
 
-        process.on('SIGUSR2', () => {
-            console.log('Signal is SIGUSR2');
+        process.on("SIGUSR2", () => {
+            console.log("Signal is SIGUSR2");
             server.close(() => process.exit(1));
         });
     }

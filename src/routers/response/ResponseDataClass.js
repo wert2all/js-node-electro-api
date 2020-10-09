@@ -1,5 +1,5 @@
-'use strict';
-import DataValue from '../../lib/data-value/DataValue';
+"use strict";
+import DataValue from "../../lib/data-value/DataValue";
 
 /**
  * @class ResponseDataClass
@@ -18,7 +18,7 @@ export default class ResponseDataClass {
          * @type {string}
          * @private
          */
-        this._message = '';
+        this._message = "";
         /**
          *
          * @type {*}
@@ -47,7 +47,7 @@ export default class ResponseDataClass {
     toHash() {
         const ret = {
             status: this._status,
-            message: this._message
+            message: this._message,
         };
         if (this._dump) {
             ret.dump = this._dump;

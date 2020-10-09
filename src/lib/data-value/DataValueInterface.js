@@ -1,4 +1,4 @@
-import ImplementationError from '../implementation-error/ImplementationError';
+import ImplementationError from "../implementation-error/ImplementationError";
 
 /**
  * @interface
@@ -13,7 +13,7 @@ export default class DataValueInterface {
      */
     // eslint-disable-next-line no-unused-vars
     getData(key) {
-        throw new ImplementationError(this, 'getData');
+        throw new ImplementationError(this, "getData");
     }
 
     /**
@@ -24,7 +24,7 @@ export default class DataValueInterface {
      */
     // eslint-disable-next-line no-unused-vars
     setData(key, value) {
-        throw new ImplementationError(this, 'setData');
+        throw new ImplementationError(this, "setData");
     }
 
     /**
@@ -32,7 +32,7 @@ export default class DataValueInterface {
      * @return {Object<string,string>}
      */
     toHash() {
-        throw new ImplementationError(this, 'toHash');
+        throw new ImplementationError(this, "toHash");
     }
 
     /**
@@ -42,6 +42,6 @@ export default class DataValueInterface {
      */
     // eslint-disable-next-line no-unused-vars
     unset(key) {
-        throw new ImplementationError(this, 'unset');
+        throw new ImplementationError(this, "unset");
     }
 }

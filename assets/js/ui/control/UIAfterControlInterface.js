@@ -6,7 +6,5 @@ export default class UIAfterControlInterface {
     /**
      * @abstract
      */
-    exec() {
-
-    }
+    exec() {}
 }

@@ -1,4 +1,4 @@
-import DomFormElementValidatorInterface from '../DomFormElementValidatorInterface';
+import DomFormElementValidatorInterface from "../DomFormElementValidatorInterface";
 
 /**
  * @class DomFormElementValidatorComposite
@@ -32,7 +32,7 @@ export default class DomFormElementValidatorComposite extends DomFormElementVali
      * @return {string}
      */
     getValidationError() {
-        return this._errors.join('\n ');
+        return this._errors.join("\n ");
     }
 
     /**
@@ -43,7 +43,7 @@ export default class DomFormElementValidatorComposite extends DomFormElementVali
     validate(value) {
         let validationResult = true;
         this._cleanErrors();
-        this._validators.forEach(validator => {
+        this._validators.forEach((validator) => {
             const isValid = validator.validate(value);
             if (!isValid) {
                 validationResult = false;

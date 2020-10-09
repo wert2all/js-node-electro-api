@@ -1,4 +1,4 @@
-import UIGridElementInterface from './UIGridElementInterface';
+import UIGridElementInterface from "./UIGridElementInterface";
 
 /**
  * @class UIGrid
@@ -36,8 +36,7 @@ export default class UIGrid extends UIGridElementInterface {
     /**
      * @return {void}
      */
-    init() {
-    }
+    init() {}
 
     /**
      * @return {ParentNode}
@@ -61,7 +60,7 @@ export default class UIGrid extends UIGridElementInterface {
      * @return {void}
      */
     clean() {
-        this._elements.forEach(element => {
+        this._elements.forEach((element) => {
             element.clean();
             this._grid.removeChild(element.getNode());
         });

@@ -1,5 +1,5 @@
 // eslint-disable-next-line max-len
-import ImplementationError from '../../../../lib/implementation-error/ImplementationError';
+import ImplementationError from "../../../../lib/implementation-error/ImplementationError";
 
 /**
  * @interface
@@ -14,6 +14,6 @@ export default class FilePostProcessorInterface {
      */
     // eslint-disable-next-line no-unused-vars
     async postProcess(fileData) {
-        throw new ImplementationError(this, 'postProcess');
+        throw new ImplementationError(this, "postProcess");
     }
 }

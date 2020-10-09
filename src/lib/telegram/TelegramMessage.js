@@ -6,5 +6,4 @@ export default class TelegramMessage {
     constructor(response) {
         this._response = response;
     }
-
 }

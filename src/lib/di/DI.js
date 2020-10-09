@@ -3,7 +3,6 @@ let _instance = null;
  * @class DI
  */
 export default class DI {
-
     constructor() {
         /**
          *
@@ -39,8 +38,7 @@ export default class DI {
      * @return {DI}
      */
     setup(objects) {
-        Object.keys(objects)
-            .forEach(className => this.register(className, objects[className]));
+        Object.keys(objects).forEach((className) => this.register(className, objects[className]));
         return this;
     }
 
@@ -62,10 +60,10 @@ export default class DI {
      */
     _getKey(className) {
         let key = null;
-        if (typeof className == 'function') {
+        if (typeof className == "function") {
             key = className.name;
         }
-        if (typeof className === 'string') {
+        if (typeof className === "string") {
             key = className;
         }
         if (key != null) {
@@ -81,11 +79,13 @@ export default class DI {
      * @private
      */
     _upperCamelCaseToSnakeCase(value) {
-        return value
-            // first char to lower case
-            .replace(/^([A-Z])/, $1 => $1.toLowerCase())
-            // following upper chars get preceded with a dash
-            .replace(/([A-Z])/g, $1 => '-' + $1.toLowerCase());
+        return (
+            value
+                // first char to lower case
+                .replace(/^([A-Z])/, ($1) => $1.toLowerCase())
+                // following upper chars get preceded with a dash
+                .replace(/([A-Z])/g, ($1) => "-" + $1.toLowerCase())
+        );
     }
 
     /**

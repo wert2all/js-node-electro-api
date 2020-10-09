@@ -1,4 +1,4 @@
-import ImplementationError from '../implementation-error/ImplementationError';
+import ImplementationError from "../implementation-error/ImplementationError";
 
 /**
  * @interface
@@ -11,7 +11,7 @@ export default class EventInterface {
      * @return {String}
      */
     getEventName() {
-        throw new ImplementationError(this, 'getEventName');
+        throw new ImplementationError(this, "getEventName");
     }
 
     /**
@@ -19,7 +19,6 @@ export default class EventInterface {
      * @return {*}
      */
     getEventData() {
-        throw new ImplementationError(this, 'getEventData');
+        throw new ImplementationError(this, "getEventData");
     }
-
 }

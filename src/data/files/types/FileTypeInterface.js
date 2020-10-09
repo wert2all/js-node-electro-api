@@ -1,4 +1,4 @@
-import ImplementationError from '../../../lib/implementation-error/ImplementationError';
+import ImplementationError from "../../../lib/implementation-error/ImplementationError";
 
 /**
  * @interface
@@ -11,7 +11,6 @@ export default class FileTypeInterface {
      * @return {string}
      */
     getType() {
-        throw new ImplementationError(this, 'getType');
+        throw new ImplementationError(this, "getType");
     }
-
 }

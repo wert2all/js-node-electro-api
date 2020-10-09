@@ -1,6 +1,6 @@
-import EntityInterface from '../../lib/db-entity/EntityInterface';
-import DataValue from '../../lib/data-value/DataValue';
-import ExtendedValuesDefinition from '../../db/definition/ExtendedValuesDefinition';
+import EntityInterface from "../../lib/db-entity/EntityInterface";
+import DataValue from "../../lib/data-value/DataValue";
+import ExtendedValuesDefinition from "../../db/definition/ExtendedValuesDefinition";
 
 /**
  * @class ExtendedValuesEntity
@@ -23,7 +23,7 @@ export default class ExtendedValuesEntity extends EntityInterface {
      * @param {ExtendedValuesEntity[]} entities
      */
     fillData(entities) {
-        entities.forEach(entity => {
+        entities.forEach((entity) => {
             this.setValue(
                 entity.getValue(ExtendedValuesDefinition.COLUMN_VALUE_NAME),
                 entity.getValue(ExtendedValuesDefinition.COLUMN_VALUE_VALUE)
@@ -56,7 +56,7 @@ export default class ExtendedValuesEntity extends EntityInterface {
      */
     create(value) {
         const newObj = new ExtendedValuesEntity();
-        Object.keys(value).map(key => {
+        Object.keys(value).map((key) => {
             newObj.setValue(key, value[key]);
         });
         return newObj;

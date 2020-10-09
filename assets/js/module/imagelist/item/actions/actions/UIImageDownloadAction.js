@@ -1,4 +1,4 @@
-import UIImageActionInterface from '../UIImageActionInterface';
+import UIImageActionInterface from "../UIImageActionInterface";
 
 /**
  * @class UIImageDownloadAction
@@ -13,6 +13,6 @@ export default class UIImageDownloadAction extends UIImageActionInterface {
      */
     // eslint-disable-next-line no-unused-vars
     click(imageData, elementList = null) {
-        window.open(imageData.getUrl(), '_blank');
+        window.open(imageData.getUrl(), "_blank");
     }
 }

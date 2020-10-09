@@ -1,4 +1,4 @@
-import UIElementInterface from '../interfaces/element/UIElementInterface';
+import UIElementInterface from "../interfaces/element/UIElementInterface";
 
 /**
  * @class UISimpleElement
@@ -6,7 +6,6 @@ import UIElementInterface from '../interfaces/element/UIElementInterface';
  * @extends UIElementInterface
  */
 export default class UISimpleElement extends UIElementInterface {
-
     /**
      *
      * @param {Node} node
@@ -49,6 +48,5 @@ export default class UISimpleElement extends UIElementInterface {
     /**
      * @return void
      */
-    init() {
-    }
+    init() {}
 }

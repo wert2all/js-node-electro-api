@@ -1,4 +1,4 @@
-import FileNameProviderInterface from './FileNameProviderInterface';
+import FileNameProviderInterface from "./FileNameProviderInterface";
 
 /**
  * @class DefaultFileNameProvider

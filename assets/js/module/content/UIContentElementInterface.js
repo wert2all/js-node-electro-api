@@ -1,5 +1,4 @@
-import UIMutableElementInterface
-    from '../../ui/interfaces/element/UIMutableElementInterface';
+import UIMutableElementInterface from "../../ui/interfaces/element/UIMutableElementInterface";
 
 /**
  * @class UIContentElementInterface
@@ -7,6 +6,4 @@ import UIMutableElementInterface
  * @abstract
  * @extends UIMutableElementInterface
  */
-export default class UIContentElementInterface extends UIMutableElementInterface {
-
-}
+export default class UIContentElementInterface extends UIMutableElementInterface {}

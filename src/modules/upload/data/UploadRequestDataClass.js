@@ -1,9 +1,9 @@
-'use strict';
+"use strict";
 
-import UploadRequestNoToken from '../error/UploadRequestNoToken';
-import UploadRequestNoFiles from '../error/UploadRequestNoFiles';
-import YearMon from '../../../data/YearMon';
-import StringExt from '../../../lib/utils/StringExt';
+import UploadRequestNoToken from "../error/UploadRequestNoToken";
+import UploadRequestNoFiles from "../error/UploadRequestNoFiles";
+import YearMon from "../../../data/YearMon";
+import StringExt from "../../../lib/utils/StringExt";
 
 /**
  * @class UploadRequestDataClass
@@ -30,7 +30,7 @@ export default class UploadRequestDataClass {
          * @type {string}
          * @private
          */
-        this._type = 'bill';
+        this._type = "bill";
     }
 
     /**
@@ -99,11 +99,7 @@ export default class UploadRequestDataClass {
      */
     // eslint-disable-next-line max-statements
     static factory(request) {
-        const authToken = Buffer.from(
-            new StringExt(request.body.token)
-                .replaceAll('"', ''),
-            'base64'
-        ).toString();
+        const authToken = Buffer.from(new StringExt(request.body.token).replaceAll('"', ""), "base64").toString();
         if (!authToken) {
             throw new UploadRequestNoToken();
         }
@@ -117,23 +113,14 @@ export default class UploadRequestDataClass {
 
         const requestData = new UploadRequestDataClass(authToken, request.files.images);
         if (request.body.yearmon) {
-            const yearMon = YearMon.create(
-                new StringExt(request.body.yearmon)
-                    .replaceAll('"', '')
-            );
+            const yearMon = YearMon.create(new StringExt(request.body.yearmon).replaceAll('"', ""));
             if (yearMon != null) {
                 requestData.setYearMon(yearMon);
             }
         }
         if (request.body.type) {
             requestData.setType(
-                (
-                    new StringExt(request.body.type)
-                        .replaceAll('"', '')
-                        .toLowerCase() === 'meter'
-                )
-                    ? 'meter'
-                    : 'bill'
+                new StringExt(request.body.type).replaceAll('"', "").toLowerCase() === "meter" ? "meter" : "bill"
             );
         }
         return requestData;

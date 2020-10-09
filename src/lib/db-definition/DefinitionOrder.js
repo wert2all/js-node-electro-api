@@ -2,8 +2,8 @@
  * @class DefinitionOrder
  */
 export default class DefinitionOrder {
-    static TYPE_DESC = 'desc';
-    static TYPE_ASC = 'asc';
+    static TYPE_DESC = "desc";
+    static TYPE_ASC = "asc";
 
     /**
      *
@@ -22,9 +22,7 @@ export default class DefinitionOrder {
          * @type {string}
          * @private
          */
-        this._type = type === DefinitionOrder.TYPE_DESC
-            ? DefinitionOrder.TYPE_DESC
-            : DefinitionOrder.TYPE_ASC;
+        this._type = type === DefinitionOrder.TYPE_DESC ? DefinitionOrder.TYPE_DESC : DefinitionOrder.TYPE_ASC;
     }
 
     /**

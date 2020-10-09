@@ -1,9 +1,9 @@
-import path from 'path';
-import fs from 'fs';
+import path from "path";
+import fs from "fs";
 /**
  * @class ImageProcessDirectoryProcessor
  */
-import YearMon from '../../../../data/YearMon';
+import YearMon from "../../../../data/YearMon";
 
 export default class ImageProcessDirectoryProcessor {
     /**
@@ -26,7 +26,7 @@ export default class ImageProcessDirectoryProcessor {
     create(config) {
         return new Promise((resolve, reject) => {
             const directory = this.getDirectoryName(config);
-            fs.mkdir(directory, {recursive: true}, (err) => {
+            fs.mkdir(directory, { recursive: true }, (err) => {
                 if (err) {
                     reject(err);
                 }
@@ -42,9 +42,7 @@ export default class ImageProcessDirectoryProcessor {
      */
     getDirectoryName(config) {
         return path.normalize(
-            this.getDirectoryRoot(config)
-            + this._yearMon.getYear() + path.sep
-            + this._yearMon.getMonth() + path.sep
+            this.getDirectoryRoot(config) + this._yearMon.getYear() + path.sep + this._yearMon.getMonth() + path.sep
         );
     }
 
@@ -54,6 +52,6 @@ export default class ImageProcessDirectoryProcessor {
      * @returns {string}
      */
     getDirectoryRoot(config) {
-        return path.normalize(config.getStoragePath() + path.sep + 'images' + path.sep);
+        return path.normalize(config.getStoragePath() + path.sep + "images" + path.sep);
     }
 }

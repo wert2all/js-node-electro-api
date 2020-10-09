@@ -4,6 +4,6 @@
  */
 export default class UploadRequestNoToken extends Error {
     constructor() {
-        super('Bad request: No token');
+        super("Bad request: No token");
     }
 }

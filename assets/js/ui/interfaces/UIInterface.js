@@ -8,56 +8,47 @@ export default class UIInterface {
      * @abstract
      * @return {UIAuthElementInterface}
      */
-    getAuthElement() {
-    }
+    getAuthElement() {}
 
     /**
      * @abstract
      * @return {UIGridElementInterface}
      */
-    getGrid() {
-    }
+    getGrid() {}
 
     /**
      * @abstract
      * @return {UIElementInterface}
      */
-    getLoader() {
-    }
+    getLoader() {}
 
     /**
      * @abstract
      * @return {UIContentElementInterface}
      */
-    getContent() {
-    }
+    getContent() {}
 
     /**
      * @abstract
      * @return {UINotifyInterface}
      */
-    getNotify() {
-    }
+    getNotify() {}
 
     /**
      * @abstract
      * @return {UIPager}
      */
-    getPager() {
-    }
+    getPager() {}
 
     /**
      * @abstract
      * @return {void}
      */
-    init() {
-
-    }
+    init() {}
 
     /**
      * @abstract
      * @return {void}
      */
-    clean() {
-    }
+    clean() {}
 }

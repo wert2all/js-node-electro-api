@@ -1,4 +1,4 @@
-import Cropper from 'cropperjs';
+import Cropper from "cropperjs";
 
 /**
  * @class CropperFactory
@@ -30,7 +30,7 @@ export default class CropperFactory {
      * @return {Promise<Cropper>}
      */
     create(image) {
-        return new Promise(resolve => {
+        return new Promise((resolve) => {
             const self = this;
             this._options.ready = function () {
                 self._cropperAction.setCropper(this.cropper);
@@ -38,6 +38,5 @@ export default class CropperFactory {
             };
             new Cropper(image, this._options);
         });
-
     }
 }

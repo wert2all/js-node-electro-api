@@ -1,4 +1,4 @@
-import ImplementationError from '../implementation-error/ImplementationError';
+import ImplementationError from "../implementation-error/ImplementationError";
 
 /**
  * @class RendererInterface
@@ -11,7 +11,7 @@ export default class RendererInterface {
      * @return RendererInterface
      */
     init() {
-        throw new ImplementationError(this, 'init');
+        throw new ImplementationError(this, "init");
     }
 
     /**
@@ -22,7 +22,7 @@ export default class RendererInterface {
      */
     // eslint-disable-next-line no-unused-vars
     setValues(values) {
-        throw new ImplementationError(this, 'setValues');
+        throw new ImplementationError(this, "setValues");
     }
 
     /**
@@ -30,6 +30,6 @@ export default class RendererInterface {
      * @return {string}
      */
     render() {
-        throw new ImplementationError(this, 'render');
+        throw new ImplementationError(this, "render");
     }
 }

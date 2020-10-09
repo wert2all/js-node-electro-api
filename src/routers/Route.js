@@ -1,4 +1,4 @@
-import RoutersInterface from './RoutersInterface';
+import RoutersInterface from "./RoutersInterface";
 
 export default class Route extends RoutersInterface {
     /**

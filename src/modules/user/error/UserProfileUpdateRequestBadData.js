@@ -4,6 +4,6 @@
  */
 export default class UserProfileUpdateRequestBadData extends Error {
     constructor() {
-        super('Bad request: Bad JSON data');
+        super("Bad request: Bad JSON data");
     }
 }

@@ -1,14 +1,14 @@
-import RequestInterface from '../../routers/request/RequestInterface';
-import ResponseDataClass from '../../routers/response/ResponseDataClass';
-import ApiKeyProvider from '../auth/key/KeyProvider';
-import AuthCheck from '../auth/AuthCheck';
-import AuthParams from '../auth/params/Params';
-import UploadGetCountRequestDataClass from './data/UploadGetCountRequestDataClass';
-import FilesRepository from '../../db/repository/FilesRepository';
-import UserEntity from '../../data/entity/UserEntity';
-import UserFilesEntity from '../../data/entity/UserFilesEntity';
-import DI from '../../lib/di/DI';
-import ConnectionInterface from '../../lib/db-connection/ConnectionInterface';
+import RequestInterface from "../../routers/request/RequestInterface";
+import ResponseDataClass from "../../routers/response/ResponseDataClass";
+import ApiKeyProvider from "../auth/key/KeyProvider";
+import AuthCheck from "../auth/AuthCheck";
+import AuthParams from "../auth/params/Params";
+import UploadGetCountRequestDataClass from "./data/UploadGetCountRequestDataClass";
+import FilesRepository from "../../db/repository/FilesRepository";
+import UserEntity from "../../data/entity/UserEntity";
+import UserFilesEntity from "../../data/entity/UserFilesEntity";
+import DI from "../../lib/di/DI";
+import ConnectionInterface from "../../lib/db-connection/ConnectionInterface";
 
 /**
  * @class UploadGetCountRequest
@@ -48,7 +48,7 @@ export default class UploadGetCountRequest extends RequestInterface {
         try {
             const requestData = await this._prepareRequest(request);
             const userData = await this._fetchUserData(requestData);
-            response.setData('counts', this._groupData(userData));
+            response.setData("counts", this._groupData(userData));
             response.setStatus(true);
         } catch (e) {
             console.log(e);
@@ -67,9 +67,7 @@ export default class UploadGetCountRequest extends RequestInterface {
      */
     async _prepareRequest(request) {
         const requestData = UploadGetCountRequestDataClass.factory(request);
-        requestData.setGoogleAccount(
-            await this._getGoogleAccount(requestData)
-        );
+        requestData.setGoogleAccount(await this._getGoogleAccount(requestData));
         return Promise.resolve(requestData);
     }
 
@@ -80,10 +78,7 @@ export default class UploadGetCountRequest extends RequestInterface {
      * @private
      */
     async _getGoogleAccount(requestData) {
-        return await new AuthCheck(ApiKeyProvider.getDefault())
-            .check(
-                new AuthParams(requestData.token)
-            );
+        return await new AuthCheck(ApiKeyProvider.getDefault()).check(new AuthParams(requestData.token));
     }
 
     /**
@@ -93,11 +88,8 @@ export default class UploadGetCountRequest extends RequestInterface {
      * @private
      */
     async _fetchUserData(requestData) {
-        const userEntity = new UserEntity()
-            .setGoogleAccount(requestData.getGoogleAccount());
-        const userFilesEntity = new UserFilesEntity()
-            .setUser(userEntity)
-            .setYearMon(requestData.getYearMon());
+        const userEntity = new UserEntity().setGoogleAccount(requestData.getGoogleAccount());
+        const userFilesEntity = new UserFilesEntity().setUser(userEntity).setYearMon(requestData.getYearMon());
         return Promise.resolve(this._repository.fetchData(userFilesEntity));
     }
 
@@ -110,11 +102,11 @@ export default class UploadGetCountRequest extends RequestInterface {
     _groupData(userData) {
         const ret = {
             bill: 0,
-            meter: 0
+            meter: 0,
         };
-        userData.forEach(fileData => {
-            if (ret.hasOwnProperty(fileData.getValue('type'))) {
-                ret[fileData.getValue('type')]++;
+        userData.forEach((fileData) => {
+            if (ret.hasOwnProperty(fileData.getValue("type"))) {
+                ret[fileData.getValue("type")]++;
             }
         });
         return ret;

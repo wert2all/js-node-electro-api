@@ -1,33 +1,33 @@
-import RequestInterface from '../../routers/request/RequestInterface';
-import ResponseResult from '../../routers/response/ResponseResult';
-import ResponseDataClass from '../../routers/response/ResponseDataClass';
-import DI from '../../lib/di/DI';
-import LoggerInterface from '../../lib/logger/LoggerInterface';
-import ImageListLogEvent from './logs/event/ImageListLogEvent';
-import ApiKeyProvider from '../auth/key/KeyProvider';
-import StorageConfiguration from '../../storage/configuration/StorageConfiguration';
-import AuthCheck from '../auth/AuthCheck';
-import AuthParams from '../auth/params/Params';
-import ImagesUpdateDataClass from './data/ImagesUpdateDataClass';
-import UserEntity from '../../data/entity/UserEntity';
-import UserDefinition from '../../db/definition/UserDefinition';
-import AuthNoAdmin from '../auth/error/AuthNoAdmin';
-import UserRepository from '../../db/repository/UserRepository';
-import ConnectionInterface from '../../lib/db-connection/ConnectionInterface';
-import ServerConfig from '../../server/ServerConfig';
-import FileLogger from '../../lib/logger/adapters/FileLogger';
-import LogFormatterInterface from '../../lib/logger/LogFormatterInterface';
-import LoggerStrategy from '../../extended/LoggerStrategy';
-import ImageLogEvent from './log/ImageLogEvent';
-import Logger from '../../extended/logger/Logger';
-import ImageListNoImage from './error/ImageListNoImage';
-import UserFilesEntity from '../../data/entity/UserFilesEntity';
-import FilesRepository from '../../db/repository/FilesRepository';
-import EntityManager from '../../lib/db-entity-manager/EntityManager';
-import ExtendedValuesEntity from '../../data/entity/ExtendedValuesEntity';
-import UserFilesDefinition from '../../db/definition/UserFilesDefinition';
-import ExtendedValuesDefinition from '../../db/definition/ExtendedValuesDefinition';
-import ExtendedValuesRepository from '../../db/repository/ExtendedValuesRepository';
+import RequestInterface from "../../routers/request/RequestInterface";
+import ResponseResult from "../../routers/response/ResponseResult";
+import ResponseDataClass from "../../routers/response/ResponseDataClass";
+import DI from "../../lib/di/DI";
+import LoggerInterface from "../../lib/logger/LoggerInterface";
+import ImageListLogEvent from "./logs/event/ImageListLogEvent";
+import ApiKeyProvider from "../auth/key/KeyProvider";
+import StorageConfiguration from "../../storage/configuration/StorageConfiguration";
+import AuthCheck from "../auth/AuthCheck";
+import AuthParams from "../auth/params/Params";
+import ImagesUpdateDataClass from "./data/ImagesUpdateDataClass";
+import UserEntity from "../../data/entity/UserEntity";
+import UserDefinition from "../../db/definition/UserDefinition";
+import AuthNoAdmin from "../auth/error/AuthNoAdmin";
+import UserRepository from "../../db/repository/UserRepository";
+import ConnectionInterface from "../../lib/db-connection/ConnectionInterface";
+import ServerConfig from "../../server/ServerConfig";
+import FileLogger from "../../lib/logger/adapters/FileLogger";
+import LogFormatterInterface from "../../lib/logger/LogFormatterInterface";
+import LoggerStrategy from "../../extended/LoggerStrategy";
+import ImageLogEvent from "./log/ImageLogEvent";
+import Logger from "../../extended/logger/Logger";
+import ImageListNoImage from "./error/ImageListNoImage";
+import UserFilesEntity from "../../data/entity/UserFilesEntity";
+import FilesRepository from "../../db/repository/FilesRepository";
+import EntityManager from "../../lib/db-entity-manager/EntityManager";
+import ExtendedValuesEntity from "../../data/entity/ExtendedValuesEntity";
+import UserFilesDefinition from "../../db/definition/UserFilesDefinition";
+import ExtendedValuesDefinition from "../../db/definition/ExtendedValuesDefinition";
+import ExtendedValuesRepository from "../../db/repository/ExtendedValuesRepository";
 
 /**
  * @class ImagesUpdateRequest
@@ -113,7 +113,7 @@ export default class ImagesUpdateRequest extends RequestInterface {
                 await this._saveImage(imageEntity);
                 const extEntity = this._createExtEntity(requestData, imageEntity);
                 const savedExtData = await this._saveExtData(extEntity);
-                response.setData('dump', savedExtData);
+                response.setData("dump", savedExtData);
                 response.setStatus(true);
             } else {
                 const error = new ImageListNoImage();
@@ -121,14 +121,11 @@ export default class ImagesUpdateRequest extends RequestInterface {
                 response.setMessage(error.message);
             }
         } catch (e) {
-            this._di.get(LoggerInterface)
-                .error(new ImageListLogEvent(e.message));
+            this._di.get(LoggerInterface).error(new ImageListLogEvent(e.message));
             response.setStatus(false);
             response.setMessage(e.message);
         }
-        return Promise.resolve(
-            new ResponseResult(ResponseResult.TYPE_JSON, response.getData())
-        );
+        return Promise.resolve(new ResponseResult(ResponseResult.TYPE_JSON, response.getData()));
     }
 
     /**
@@ -139,9 +136,7 @@ export default class ImagesUpdateRequest extends RequestInterface {
      */
     async _prepareRequest(request) {
         const requestData = ImagesUpdateDataClass.factory(request);
-        requestData.setGoogleAccount(
-            await this._getGoogleAccount(requestData)
-        );
+        requestData.setGoogleAccount(await this._getGoogleAccount(requestData));
         return Promise.resolve(requestData);
     }
 
@@ -153,15 +148,10 @@ export default class ImagesUpdateRequest extends RequestInterface {
      */
     async _getGoogleAccount(requestData) {
         const apiKey = new ApiKeyProvider(
-            this._di.get(StorageConfiguration)
-                .getSecretStorage(),
-            'google:api:signin:client:key'
-        )
-            .get();
-        return await new AuthCheck(apiKey)
-            .check(
-                new AuthParams(requestData.getToken())
-            );
+            this._di.get(StorageConfiguration).getSecretStorage(),
+            "google:api:signin:client:key"
+        ).get();
+        return await new AuthCheck(apiKey).check(new AuthParams(requestData.getToken()));
     }
 
     /**
@@ -172,13 +162,10 @@ export default class ImagesUpdateRequest extends RequestInterface {
     async _checkAdmin(requestData) {
         let isAdmin = false;
         const userEntity = new UserEntity();
-        userEntity.setValue(
-            UserDefinition.COLUMN_GOOGLE_ID,
-            requestData.getAccount().getGoogleUserId()
-        );
+        userEntity.setValue(UserDefinition.COLUMN_GOOGLE_ID, requestData.getAccount().getGoogleUserId());
         const users = await this._usersRepository.fetchData(userEntity);
         if (users.length === 1) {
-            isAdmin = users[0].getIsAdmin() === 'y';
+            isAdmin = users[0].getIsAdmin() === "y";
         }
         if (isAdmin === false) {
             throw new AuthNoAdmin();
@@ -190,10 +177,9 @@ export default class ImagesUpdateRequest extends RequestInterface {
      * @private
      */
     _applyLogger() {
-        const path = this._di.get(ServerConfig).getLogDirectory() + 'imagelist.log';
+        const path = this._di.get(ServerConfig).getLogDirectory() + "imagelist.log";
         const fileLogger = new FileLogger(path, this._di.get(LogFormatterInterface));
-        const loggerStrategy = this._di.get(LoggerStrategy)
-            .addLogger(ImageLogEvent.TAG, fileLogger);
+        const loggerStrategy = this._di.get(LoggerStrategy).addLogger(ImageLogEvent.TAG, fileLogger);
         this._di.register(LoggerStrategy, loggerStrategy);
         this._di.register(LoggerInterface, new Logger(this._di.get(LoggerStrategy)));
     }
@@ -217,8 +203,7 @@ export default class ImagesUpdateRequest extends RequestInterface {
      * @private
      */
     _updateEntity(imageData, requestData) {
-        imageData.setType(requestData.getType())
-            .setReady(requestData.isReady());
+        imageData.setType(requestData.getType()).setReady(requestData.isReady());
         return imageData;
     }
 
@@ -246,9 +231,10 @@ export default class ImagesUpdateRequest extends RequestInterface {
      */
     _createExtEntity(requestData, imageEntity) {
         const entity = new ExtendedValuesEntity();
-        entity.setEntityType('file')
+        entity
+            .setEntityType("file")
             .setEntityId(imageEntity.getValue(UserFilesDefinition.COLUMN_ID))
-            .setValue('rotation', requestData.getRotation());
+            .setValue("rotation", requestData.getRotation());
         return entity;
     }
 
@@ -262,13 +248,7 @@ export default class ImagesUpdateRequest extends RequestInterface {
         const ret = [];
         const entities = this._makeEntities(entity);
         await this._deleteEntities(entity);
-        entities.forEach(entity =>
-            ret.push(
-                this._em.save(
-                    this._extRepository.getDefinition(),
-                    entity
-                )
-            ));
+        entities.forEach((entity) => ret.push(this._em.save(this._extRepository.getDefinition(), entity)));
         return ret;
     }
 
@@ -280,16 +260,15 @@ export default class ImagesUpdateRequest extends RequestInterface {
      */
     _makeEntities(entity) {
         return Object.keys(entity.getData())
-            .map(key => key === ExtendedValuesDefinition.COLUMN_ENTITY_TYPE ? false : key)
-            .map(key => key === ExtendedValuesDefinition.COLUMN_ENTITY_ID ? false : key)
-            .filter(key => !!key)
-            .map(key => new ExtendedValuesEntity()
-                .setEntityId(entity.getEntityId())
-                .setEntityType(entity.getEntityType())
-                .setValue(ExtendedValuesDefinition.COLUMN_VALUE_NAME, key)
-                .setValue(
-                    ExtendedValuesDefinition.COLUMN_VALUE_VALUE,
-                    entity.getValue(key))
+            .map((key) => (key === ExtendedValuesDefinition.COLUMN_ENTITY_TYPE ? false : key))
+            .map((key) => (key === ExtendedValuesDefinition.COLUMN_ENTITY_ID ? false : key))
+            .filter((key) => !!key)
+            .map((key) =>
+                new ExtendedValuesEntity()
+                    .setEntityId(entity.getEntityId())
+                    .setEntityType(entity.getEntityType())
+                    .setValue(ExtendedValuesDefinition.COLUMN_VALUE_NAME, key)
+                    .setValue(ExtendedValuesDefinition.COLUMN_VALUE_VALUE, entity.getValue(key))
             );
     }
 

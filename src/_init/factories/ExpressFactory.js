@@ -1,4 +1,4 @@
-import express from 'express';
+import express from "express";
 
 export default class ExpressFactory {
     /**
@@ -9,17 +9,11 @@ export default class ExpressFactory {
     static create(serverConfig) {
         const expressInstance = express();
         // static middleware
+        expressInstance.use("/images", express.static(serverConfig.getApplicationDirectory() + "data/files/images/"));
+        expressInstance.use("/assets", express.static(serverConfig.getApplicationDirectory() + "dist/assets/"));
         expressInstance.use(
-            '/images',
-            express.static(serverConfig.getApplicationDirectory() + 'data/files/images/')
-        );
-        expressInstance.use(
-            '/assets',
-            express.static(serverConfig.getApplicationDirectory() + 'dist/assets/')
-        );
-        expressInstance.use(
-            '/error.html',
-            express.static(serverConfig.getWebserverDirectory() + 'templates/error.html')
+            "/error.html",
+            express.static(serverConfig.getWebserverDirectory() + "templates/error.html")
         );
         return expressInstance;
     }

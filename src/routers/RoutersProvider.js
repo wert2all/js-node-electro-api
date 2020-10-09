@@ -3,7 +3,6 @@
  * @type RoutersProvider
  */
 export default class RoutersProvider {
-
     /**
      *
      * @param {Route[]} routers

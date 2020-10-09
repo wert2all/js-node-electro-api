@@ -1,4 +1,4 @@
-import ProfileFormRequestModifier from '../../profile/form/ProfileFormRequestModifier';
+import ProfileFormRequestModifier from "../../profile/form/ProfileFormRequestModifier";
 
 /**
  * @class ImageEditFormRequestModifier

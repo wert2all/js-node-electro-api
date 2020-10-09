@@ -1,6 +1,6 @@
-import RepositoryAbstract from '../../lib/db-repository/ReposytoryAbstract';
-import FilterFactory from '../../lib/db-filter/FilterFactory';
-import UserFilesDefinition from '../definition/UserFilesDefinition';
+import RepositoryAbstract from "../../lib/db-repository/ReposytoryAbstract";
+import FilterFactory from "../../lib/db-filter/FilterFactory";
+import UserFilesDefinition from "../definition/UserFilesDefinition";
 
 /**
  * @class FilesRepository
@@ -8,7 +8,6 @@ import UserFilesDefinition from '../definition/UserFilesDefinition';
  * @type RepositoryAbstract
  */
 export default class FilesRepository extends RepositoryAbstract {
-
     /**
      *
      */

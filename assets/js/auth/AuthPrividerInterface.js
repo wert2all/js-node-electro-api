@@ -7,21 +7,17 @@ export default class AuthProviderInterface {
      * @return {void}
      * @abstract
      */
-    signIn() {
-    }
+    signIn() {}
 
     /**
      * @return {void}
      * @abstract
      */
-    signOut() {
-    }
+    signOut() {}
 
     /**
      * @return {DataGoogleAuthUser}
      * @abstract
      */
-    getUserProfile() {
-
-    }
+    getUserProfile() {}
 }

@@ -1,4 +1,4 @@
-import DefinitionColumnInterface from './DefinitionColumnInterface';
+import DefinitionColumnInterface from "./DefinitionColumnInterface";
 
 /**
  * @class DefinitionColumn
@@ -6,9 +6,8 @@ import DefinitionColumnInterface from './DefinitionColumnInterface';
  * @extends DefinitionColumnInterface
  */
 export default class DefinitionColumn extends DefinitionColumnInterface {
-    static COLUMN_TYPE_VARCHAR = 'varchar';
-    static COLUMN_TYPE_INTEGER = 'INTEGER';
-
+    static COLUMN_TYPE_VARCHAR = "varchar";
+    static COLUMN_TYPE_INTEGER = "INTEGER";
 
     /**
      *
@@ -18,13 +17,7 @@ export default class DefinitionColumn extends DefinitionColumnInterface {
      * @param {string|boolean} defaultValue
      * @param {boolean} isPrimary
      */
-    constructor(
-        columnName,
-        columnType,
-        isNull = true,
-        defaultValue = false,
-        isPrimary = false
-    ) {
+    constructor(columnName, columnType, isNull = true, defaultValue = false, isPrimary = false) {
         super();
         /**
          *

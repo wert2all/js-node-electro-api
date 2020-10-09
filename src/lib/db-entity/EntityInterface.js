@@ -1,4 +1,4 @@
-import ImplementationError from '../implementation-error/ImplementationError';
+import ImplementationError from "../implementation-error/ImplementationError";
 
 /**
  * @interface
@@ -6,7 +6,7 @@ import ImplementationError from '../implementation-error/ImplementationError';
  * @abstract
  */
 export default class EntityInterface {
-    static ROW_ID = 'rowId';
+    static ROW_ID = "rowId";
 
     /**
      * @abstract
@@ -15,7 +15,7 @@ export default class EntityInterface {
      */
     // eslint-disable-next-line no-unused-vars
     create(value) {
-        throw new ImplementationError(this, 'create');
+        throw new ImplementationError(this, "create");
     }
 
     /**
@@ -23,7 +23,7 @@ export default class EntityInterface {
      * @return {Object<string, string>}
      */
     getData() {
-        throw new ImplementationError(this, 'getData');
+        throw new ImplementationError(this, "getData");
     }
 
     /**
@@ -33,7 +33,7 @@ export default class EntityInterface {
      */
     // eslint-disable-next-line no-unused-vars
     getValue(key) {
-        throw new ImplementationError(this, 'getValue');
+        throw new ImplementationError(this, "getValue");
     }
 
     /**
@@ -44,7 +44,7 @@ export default class EntityInterface {
      */
     // eslint-disable-next-line no-unused-vars
     setValue(key, value) {
-        throw new ImplementationError(this, 'setValue');
+        throw new ImplementationError(this, "setValue");
     }
 
     /**
@@ -54,6 +54,6 @@ export default class EntityInterface {
      */
     // eslint-disable-next-line no-unused-vars
     unset(key) {
-        throw new ImplementationError(this, 'unset');
+        throw new ImplementationError(this, "unset");
     }
 }

@@ -1,7 +1,7 @@
-import EntityInterface from '../../lib/db-entity/EntityInterface';
-import DataValue from '../../lib/data-value/DataValue';
-import UserFilesDefinition from '../../db/definition/UserFilesDefinition';
-import UserDefinition from '../../db/definition/UserDefinition';
+import EntityInterface from "../../lib/db-entity/EntityInterface";
+import DataValue from "../../lib/data-value/DataValue";
+import UserFilesDefinition from "../../db/definition/UserFilesDefinition";
+import UserDefinition from "../../db/definition/UserDefinition";
 
 /**
  * @class UserFilesEntity
@@ -55,10 +55,7 @@ export default class UserFilesEntity extends EntityInterface {
      * @return {UserFilesEntity}
      */
     setYearMon(yearMon) {
-        this._data.setData(
-            UserFilesDefinition.COLUMN_YEARMON,
-            yearMon.toString()
-        );
+        this._data.setData(UserFilesDefinition.COLUMN_YEARMON, yearMon.toString());
         return this;
     }
 
@@ -68,10 +65,7 @@ export default class UserFilesEntity extends EntityInterface {
      * @return {UserFilesEntity}
      */
     setType(type) {
-        this._data.setData(
-            UserFilesDefinition.COLUMN_TYPE,
-            type
-        );
+        this._data.setData(UserFilesDefinition.COLUMN_TYPE, type);
         return this;
     }
 
@@ -81,10 +75,7 @@ export default class UserFilesEntity extends EntityInterface {
      * @return {UserFilesEntity}
      */
     setReady(isReady = true) {
-        this._data.setData(
-            UserFilesDefinition.COLUMN_IS_READY,
-            isReady ? 'true' : 'false'
-        );
+        this._data.setData(UserFilesDefinition.COLUMN_IS_READY, isReady ? "true" : "false");
         return this;
     }
 
@@ -110,10 +101,7 @@ export default class UserFilesEntity extends EntityInterface {
      * @return {UserFilesEntity}
      */
     setFilePath(path) {
-        this._data.setData(
-            UserFilesDefinition.COLUMN_PATH,
-            path
-        );
+        this._data.setData(UserFilesDefinition.COLUMN_PATH, path);
         return this;
     }
 
@@ -143,7 +131,7 @@ export default class UserFilesEntity extends EntityInterface {
      */
     create(value) {
         const newObj = new UserFilesEntity();
-        Object.keys(value).map(key => {
+        Object.keys(value).map((key) => {
             newObj.setValue(key, value[key]);
         });
         return newObj;

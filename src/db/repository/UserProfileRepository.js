@@ -1,6 +1,6 @@
-import RepositoryAbstract from '../../lib/db-repository/ReposytoryAbstract';
-import FilterFactory from '../../lib/db-filter/FilterFactory';
-import UserProfileDefinition from '../definition/UserProfileDefinition';
+import RepositoryAbstract from "../../lib/db-repository/ReposytoryAbstract";
+import FilterFactory from "../../lib/db-filter/FilterFactory";
+import UserProfileDefinition from "../definition/UserProfileDefinition";
 
 /**
  * @class UserProfileRepository
@@ -8,7 +8,6 @@ import UserProfileDefinition from '../definition/UserProfileDefinition';
  * @type RepositoryAbstract
  */
 export default class UserProfileRepository extends RepositoryAbstract {
-
     constructor() {
         super();
         /**

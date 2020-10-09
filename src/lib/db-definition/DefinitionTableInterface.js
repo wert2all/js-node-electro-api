@@ -1,4 +1,4 @@
-import ImplementationError from '../implementation-error/ImplementationError';
+import ImplementationError from "../implementation-error/ImplementationError";
 
 /**
  * @interface
@@ -11,7 +11,7 @@ export default class DefinitionTableInterface {
      * @return {DefinitionColumnInterface[]}
      */
     getColumns() {
-        throw new ImplementationError(this, 'getColumns');
+        throw new ImplementationError(this, "getColumns");
     }
 
     /**
@@ -19,7 +19,7 @@ export default class DefinitionTableInterface {
      * @return {string}
      */
     getTableName() {
-        throw new ImplementationError(this, 'getTableName');
+        throw new ImplementationError(this, "getTableName");
     }
 
     /**
@@ -27,7 +27,7 @@ export default class DefinitionTableInterface {
      * @return {DefinitionColumnInterface}
      */
     getPrimaryColumn() {
-        throw new ImplementationError(this, 'getPrimaryColumn');
+        throw new ImplementationError(this, "getPrimaryColumn");
     }
 
     /**
@@ -37,6 +37,6 @@ export default class DefinitionTableInterface {
      */
     // eslint-disable-next-line no-unused-vars
     isColumn(key) {
-        throw new ImplementationError(this, 'isColumn');
+        throw new ImplementationError(this, "isColumn");
     }
 }

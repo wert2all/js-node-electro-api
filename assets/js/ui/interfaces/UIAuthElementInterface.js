@@ -1,4 +1,4 @@
-import UIElementInterface from './element/UIElementInterface';
+import UIElementInterface from "./element/UIElementInterface";
 
 /**
  * @class UIAuthElementInterface
@@ -15,16 +15,12 @@ export default class UIAuthElementInterface extends UIElementInterface {
      * @abstract
      */
     // eslint-disable-next-line no-unused-vars
-    setAuthProvider(authProvider) {
-
-    }
+    setAuthProvider(authProvider) {}
 
     /**
      * @abstract
      * @param {function} listener
      */
     // eslint-disable-next-line no-unused-vars
-    applyProfileClick(listener) {
-
-    }
+    applyProfileClick(listener) {}
 }

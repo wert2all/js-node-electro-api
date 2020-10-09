@@ -1,4 +1,4 @@
-import UIAuthElementInterface from '../interfaces/UIAuthElementInterface';
+import UIAuthElementInterface from "../interfaces/UIAuthElementInterface";
 
 /**
  * @class UIAuthElementComposite
@@ -24,14 +24,14 @@ export default class UIAuthElementComposite extends UIAuthElementInterface {
      * @return {void}
      */
     clean() {
-        this._elements.forEach(element => element.clean());
+        this._elements.forEach((element) => element.clean());
     }
 
     /**
      * @return {void}
      */
     init() {
-        this._elements.forEach(element => element.init());
+        this._elements.forEach((element) => element.init());
     }
 
     /**
@@ -40,7 +40,7 @@ export default class UIAuthElementComposite extends UIAuthElementInterface {
      * @return UIAuthElementInterface
      */
     setAuthProvider(authProvider) {
-        this._elements.forEach(element => element.setAuthProvider(authProvider));
+        this._elements.forEach((element) => element.setAuthProvider(authProvider));
         return this;
     }
 
@@ -49,6 +49,6 @@ export default class UIAuthElementComposite extends UIAuthElementInterface {
      * @param {function} listener
      */
     applyProfileClick(listener) {
-        this._elements.forEach(element => element.applyProfileClick(listener));
+        this._elements.forEach((element) => element.applyProfileClick(listener));
     }
 }

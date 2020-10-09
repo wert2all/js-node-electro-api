@@ -1,4 +1,4 @@
-import ImplementationError from '../implementation-error/ImplementationError';
+import ImplementationError from "../implementation-error/ImplementationError";
 
 /**
  * @interface
@@ -11,6 +11,6 @@ export default class ReaderInterface {
      * @return {Object<string, string>}
      */
     read() {
-        throw new ImplementationError(this, 'read');
+        throw new ImplementationError(this, "read");
     }
 }

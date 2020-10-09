@@ -1,4 +1,4 @@
-import ImplementationError from '../../../../../../src/lib/implementation-error/ImplementationError';
+import ImplementationError from "../../../../../../src/lib/implementation-error/ImplementationError";
 
 /**
  * @interface
@@ -13,6 +13,6 @@ export default class UIImageActionInterface {
      */
     // eslint-disable-next-line no-unused-vars
     click(imageData, elementList = null) {
-        throw new ImplementationError(this, 'click');
+        throw new ImplementationError(this, "click");
     }
 }

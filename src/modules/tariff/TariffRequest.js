@@ -1,10 +1,10 @@
-import RequestInterface from '../../routers/request/RequestInterface';
-import RequestParams from './request/RequestParams';
-import VersionFactory from './VersionFactory';
-import TariffRepository from './db/TariffRepository';
-import TariffDB from './db/TariffDB';
-import ResponseResult from '../../routers/response/ResponseResult';
-import DataValue from '../../lib/data-value/DataValue';
+import RequestInterface from "../../routers/request/RequestInterface";
+import RequestParams from "./request/RequestParams";
+import VersionFactory from "./VersionFactory";
+import TariffRepository from "./db/TariffRepository";
+import TariffDB from "./db/TariffDB";
+import ResponseResult from "../../routers/response/ResponseResult";
+import DataValue from "../../lib/data-value/DataValue";
 
 /**
  * @class TariffRequest
@@ -30,19 +30,12 @@ export default class TariffRequest extends RequestInterface {
             /**
              * @type {ApiDataInterface}
              */
-            const api = new VersionFactory(
-                params.getVersion(),
-                new TariffRepository(new TariffDB())
-            ).create();
+            const api = new VersionFactory(params.getVersion(), new TariffRepository(new TariffDB())).create();
 
             const resultHash =
-                (request.query.hasOwnProperty('all') && request.query.all === '1')
-                    ? api.all()
-                    : api.result(params);
+                request.query.hasOwnProperty("all") && request.query.all === "1" ? api.all() : api.result(params);
 
-            result(
-                new ResponseResult(ResponseResult.TYPE_JSON, DataValue.create(resultHash))
-            );
+            result(new ResponseResult(ResponseResult.TYPE_JSON, DataValue.create(resultHash)));
         });
     }
 

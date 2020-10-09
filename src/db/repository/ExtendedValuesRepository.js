@@ -1,6 +1,6 @@
-import RepositoryAbstract from '../../lib/db-repository/ReposytoryAbstract';
-import FilterFactory from '../../lib/db-filter/FilterFactory';
-import ExtendedValuesDefinition from '../definition/ExtendedValuesDefinition';
+import RepositoryAbstract from "../../lib/db-repository/ReposytoryAbstract";
+import FilterFactory from "../../lib/db-filter/FilterFactory";
+import ExtendedValuesDefinition from "../definition/ExtendedValuesDefinition";
 
 /**
  * @class ExtendedValuesRepository
@@ -8,7 +8,6 @@ import ExtendedValuesDefinition from '../definition/ExtendedValuesDefinition';
  * @extends RepositoryAbstract
  */
 export default class ExtendedValuesRepository extends RepositoryAbstract {
-
     constructor() {
         super();
         /**

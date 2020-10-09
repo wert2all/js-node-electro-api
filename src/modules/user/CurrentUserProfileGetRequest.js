@@ -1,16 +1,16 @@
-import RequestInterface from '../../routers/request/RequestInterface';
-import ResponseDataClass from '../../routers/response/ResponseDataClass';
-import ApiKeyProvider from '../auth/key/KeyProvider';
-import AuthCheck from '../auth/AuthCheck';
-import AuthParams from '../auth/params/Params';
-import UserProfileRequestDataClass from './data/UserProfileRequestDataClass';
-import UserProfileRepository from '../../db/repository/UserProfileRepository';
-import ResponseResult from '../../routers/response/ResponseResult';
-import DI from '../../lib/di/DI';
-import ConnectionInterface from '../../lib/db-connection/ConnectionInterface';
-import LoggerInterface from '../../lib/logger/LoggerInterface';
-import UserProfileLogEvent from './logs/event/UserProfileLogEvent';
-import UserProfileFetchModel from './model/UserProfileFetchModel';
+import RequestInterface from "../../routers/request/RequestInterface";
+import ResponseDataClass from "../../routers/response/ResponseDataClass";
+import ApiKeyProvider from "../auth/key/KeyProvider";
+import AuthCheck from "../auth/AuthCheck";
+import AuthParams from "../auth/params/Params";
+import UserProfileRequestDataClass from "./data/UserProfileRequestDataClass";
+import UserProfileRepository from "../../db/repository/UserProfileRepository";
+import ResponseResult from "../../routers/response/ResponseResult";
+import DI from "../../lib/di/DI";
+import ConnectionInterface from "../../lib/db-connection/ConnectionInterface";
+import LoggerInterface from "../../lib/logger/LoggerInterface";
+import UserProfileLogEvent from "./logs/event/UserProfileLogEvent";
+import UserProfileFetchModel from "./model/UserProfileFetchModel";
 
 /**
  * @class CurrentUserProfileGetRequest
@@ -52,16 +52,12 @@ export default class CurrentUserProfileGetRequest extends RequestInterface {
             await this._fetchModel.extendResponseUserProfile(response, requestData);
             response.setStatus(true);
         } catch (e) {
-            DI.getInstance()
-                .get(LoggerInterface)
-                .error(new UserProfileLogEvent(e.message));
+            DI.getInstance().get(LoggerInterface).error(new UserProfileLogEvent(e.message));
             response.setStatus(false);
             response.setMessage(e.message);
         }
 
-        return Promise.resolve(
-            new ResponseResult(ResponseResult.TYPE_JSON, response.getData())
-        );
+        return Promise.resolve(new ResponseResult(ResponseResult.TYPE_JSON, response.getData()));
     }
 
     /**
@@ -72,9 +68,7 @@ export default class CurrentUserProfileGetRequest extends RequestInterface {
      */
     async _prepareRequest(request) {
         const requestData = UserProfileRequestDataClass.factory(request);
-        requestData.setGoogleAccount(
-            await this._getGoogleAccount(requestData)
-        );
+        requestData.setGoogleAccount(await this._getGoogleAccount(requestData));
         return Promise.resolve(requestData);
     }
 
@@ -85,10 +79,7 @@ export default class CurrentUserProfileGetRequest extends RequestInterface {
      * @private
      */
     async _getGoogleAccount(requestData) {
-        return await new AuthCheck(ApiKeyProvider.getDefault())
-            .check(
-                new AuthParams(requestData.getToken())
-            );
+        return await new AuthCheck(ApiKeyProvider.getDefault()).check(new AuthParams(requestData.getToken()));
     }
 
     /**

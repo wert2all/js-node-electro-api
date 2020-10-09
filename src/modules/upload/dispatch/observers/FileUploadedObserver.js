@@ -1,10 +1,10 @@
-import ObserverInterface from '../../../../lib/dispatcher/ObserverInterface';
-import UserFilesDefinition from '../../../../db/definition/UserFilesDefinition';
-import UserDefinition from '../../../../db/definition/UserDefinition';
-import EntityInterface from '../../../../lib/db-entity/EntityInterface';
-import LoggerInterface from '../../../../lib/logger/LoggerInterface';
-import UploadEvent from '../../logger/UploadEvent';
-import DI from '../../../../lib/di/DI';
+import ObserverInterface from "../../../../lib/dispatcher/ObserverInterface";
+import UserFilesDefinition from "../../../../db/definition/UserFilesDefinition";
+import UserDefinition from "../../../../db/definition/UserDefinition";
+import EntityInterface from "../../../../lib/db-entity/EntityInterface";
+import LoggerInterface from "../../../../lib/logger/LoggerInterface";
+import UploadEvent from "../../logger/UploadEvent";
+import DI from "../../../../lib/di/DI";
 
 /**
  * @class FileUploadedObserver
@@ -39,7 +39,7 @@ export default class FileUploadedObserver extends ObserverInterface {
     notify(event) {
         return this._telegram
             .sendPhoto(this._getPhotoPath(event), this._createMessageText(event))
-            .then(() => this._logger.info(new UploadEvent('Send image.')))
+            .then(() => this._logger.info(new UploadEvent("Send image.")))
             .then(() => true)
             .catch((error) => this._logger.error(new UploadEvent(error.message)));
     }

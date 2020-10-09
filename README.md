@@ -2,4 +2,4 @@
 
 For run development environment
 
-  npm run dev - starts webserver and build script
+npm run dev - starts webserver and build script

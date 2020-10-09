@@ -1,21 +1,21 @@
-import RequestInterface from '../../routers/request/RequestInterface';
-import ResponseDataClass from '../../routers/response/ResponseDataClass';
-import ApiKeyProvider from '../auth/key/KeyProvider';
-import AuthCheck from '../auth/AuthCheck';
-import AuthParams from '../auth/params/Params';
-import UserProfileRequestDataClass from './data/UserProfileRequestDataClass';
-import UserProfileRepository from '../../db/repository/UserProfileRepository';
-import UserEntity from '../../data/entity/UserEntity';
-import ResponseResult from '../../routers/response/ResponseResult';
-import DI from '../../lib/di/DI';
-import ConnectionInterface from '../../lib/db-connection/ConnectionInterface';
-import UserDefinition from '../../db/definition/UserDefinition';
-import AuthNoAdmin from '../auth/error/AuthNoAdmin';
-import LoggerInterface from '../../lib/logger/LoggerInterface';
-import UserProfileLogEvent from './logs/event/UserProfileLogEvent';
-import StorageConfiguration from '../../storage/configuration/StorageConfiguration';
-import UserRepository from '../../db/repository/UserRepository';
-import UserProfileFetchModel from './model/UserProfileFetchModel';
+import RequestInterface from "../../routers/request/RequestInterface";
+import ResponseDataClass from "../../routers/response/ResponseDataClass";
+import ApiKeyProvider from "../auth/key/KeyProvider";
+import AuthCheck from "../auth/AuthCheck";
+import AuthParams from "../auth/params/Params";
+import UserProfileRequestDataClass from "./data/UserProfileRequestDataClass";
+import UserProfileRepository from "../../db/repository/UserProfileRepository";
+import UserEntity from "../../data/entity/UserEntity";
+import ResponseResult from "../../routers/response/ResponseResult";
+import DI from "../../lib/di/DI";
+import ConnectionInterface from "../../lib/db-connection/ConnectionInterface";
+import UserDefinition from "../../db/definition/UserDefinition";
+import AuthNoAdmin from "../auth/error/AuthNoAdmin";
+import LoggerInterface from "../../lib/logger/LoggerInterface";
+import UserProfileLogEvent from "./logs/event/UserProfileLogEvent";
+import StorageConfiguration from "../../storage/configuration/StorageConfiguration";
+import UserRepository from "../../db/repository/UserRepository";
+import UserProfileFetchModel from "./model/UserProfileFetchModel";
 
 /**
  * @class UserProfileGetRequest
@@ -62,16 +62,12 @@ export default class UserProfileGetRequest extends RequestInterface {
             await this._fetchModel.extendResponseUserProfile(response, requestData);
             response.setStatus(true);
         } catch (e) {
-            DI.getInstance()
-                .get(LoggerInterface)
-                .error(new UserProfileLogEvent(e.message));
+            DI.getInstance().get(LoggerInterface).error(new UserProfileLogEvent(e.message));
             response.setStatus(false);
             response.setMessage(e.message);
         }
 
-        return Promise.resolve(
-            new ResponseResult(ResponseResult.TYPE_JSON, response.getData())
-        );
+        return Promise.resolve(new ResponseResult(ResponseResult.TYPE_JSON, response.getData()));
     }
 
     /**
@@ -82,9 +78,7 @@ export default class UserProfileGetRequest extends RequestInterface {
      */
     async _prepareRequest(request) {
         const requestData = UserProfileRequestDataClass.factory(request);
-        requestData.setGoogleAccount(
-            await this._getGoogleAccount(requestData)
-        );
+        requestData.setGoogleAccount(await this._getGoogleAccount(requestData));
         return Promise.resolve(requestData);
     }
 
@@ -96,16 +90,10 @@ export default class UserProfileGetRequest extends RequestInterface {
      */
     async _getGoogleAccount(requestData) {
         const apiKey = new ApiKeyProvider(
-            DI.getInstance()
-                .get(StorageConfiguration)
-                .getSecretStorage(),
-            'google:api:signin:client:key'
-        )
-            .get();
-        return await new AuthCheck(apiKey)
-            .check(
-                new AuthParams(requestData.getToken())
-            );
+            DI.getInstance().get(StorageConfiguration).getSecretStorage(),
+            "google:api:signin:client:key"
+        ).get();
+        return await new AuthCheck(apiKey).check(new AuthParams(requestData.getToken()));
     }
 
     /**
@@ -128,13 +116,10 @@ export default class UserProfileGetRequest extends RequestInterface {
     async _checkAdmin(requestData) {
         let isAdmin = false;
         const userEntity = new UserEntity();
-        userEntity.setValue(
-            UserDefinition.COLUMN_GOOGLE_ID,
-            requestData.getGoogleAccount().getGoogleUserId()
-        );
+        userEntity.setValue(UserDefinition.COLUMN_GOOGLE_ID, requestData.getGoogleAccount().getGoogleUserId());
         const users = await this._usersRepository.fetchData(userEntity);
         if (users.length === 1) {
-            isAdmin = users[0].getIsAdmin() === 'y';
+            isAdmin = users[0].getIsAdmin() === "y";
         }
         if (isAdmin === false) {
             throw new AuthNoAdmin();

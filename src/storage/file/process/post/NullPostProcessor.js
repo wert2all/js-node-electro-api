@@ -1,4 +1,4 @@
-import FilePostProcessorInterface from './FilePostProcessorInterface';
+import FilePostProcessorInterface from "./FilePostProcessorInterface";
 
 /**
  * @class NullPostProcessor

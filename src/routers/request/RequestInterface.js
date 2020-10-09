@@ -1,4 +1,4 @@
-import ImplementationError from '../../lib/implementation-error/ImplementationError';
+import ImplementationError from "../../lib/implementation-error/ImplementationError";
 
 /**
  * @interface
@@ -14,7 +14,7 @@ export default class RequestInterface {
      */
     // eslint-disable-next-line no-unused-vars
     init(dispatcher) {
-        throw new ImplementationError(this, 'init');
+        throw new ImplementationError(this, "init");
     }
 
     /**
@@ -25,6 +25,6 @@ export default class RequestInterface {
      */
     // eslint-disable-next-line no-unused-vars
     createResponse(request) {
-        throw new ImplementationError(this, 'createResponse');
+        throw new ImplementationError(this, "createResponse");
     }
 }

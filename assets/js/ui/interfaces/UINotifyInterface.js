@@ -9,23 +9,19 @@ export default class UINotifyInterface {
      * @param {string} message
      */
     // eslint-disable-next-line no-unused-vars
-    success(message) {
-
-    }
+    success(message) {}
 
     /**
      * @abstract
      * @param {string} message
      */
     // eslint-disable-next-line no-unused-vars
-    warning(message) {
-    }
+    warning(message) {}
 
     /**
      * @abstract
      * @param {string} message
      */
     // eslint-disable-next-line no-unused-vars
-    error(message) {
-    }
+    error(message) {}
 }

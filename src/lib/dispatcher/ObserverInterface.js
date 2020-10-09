@@ -1,4 +1,4 @@
-import ImplementationError from '../implementation-error/ImplementationError';
+import ImplementationError from "../implementation-error/ImplementationError";
 
 /**
  * @interface
@@ -13,6 +13,6 @@ export default class ObserverInterface {
      */
     // eslint-disable-next-line no-unused-vars
     notify(event) {
-        throw new ImplementationError(this, 'notify');
+        throw new ImplementationError(this, "notify");
     }
 }

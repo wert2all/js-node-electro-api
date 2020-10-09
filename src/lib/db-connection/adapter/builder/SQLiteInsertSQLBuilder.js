@@ -1,5 +1,5 @@
 // eslint-disable-next-line max-len
-import DefinitionSQLBuilderInterface from '../../../db-definition/builder/DefinitionSQLBuilderInterface';
+import DefinitionSQLBuilderInterface from "../../../db-definition/builder/DefinitionSQLBuilderInterface";
 
 /**
  * @class SQLiteInsertSQLBuilder
@@ -14,19 +14,19 @@ export default class SQLiteInsertSQLBuilder extends DefinitionSQLBuilderInterfac
      * @return string
      */
     buildSQL(definition, data) {
-        let sql = ' insert into ' + definition.getTableName() + ' ( ';
+        let sql = " insert into " + definition.getTableName() + " ( ";
         const columns = {};
-        definition.getColumns().map(col => {
+        definition.getColumns().map((col) => {
             columns[col.getColumnName()] = true;
         });
 
         const cols = Object.keys(data)
-            .map(key => columns.hasOwnProperty(key) ? key : false)
-            .filter(index => !!index);
-        sql += cols.join(',');
-        sql += ' ) values (';
-        sql += cols.map(key => ':' + key).join(',');
-        sql += ' )';
+            .map((key) => (columns.hasOwnProperty(key) ? key : false))
+            .filter((index) => !!index);
+        sql += cols.join(",");
+        sql += " ) values (";
+        sql += cols.map((key) => ":" + key).join(",");
+        sql += " )";
         return sql;
     }
 }

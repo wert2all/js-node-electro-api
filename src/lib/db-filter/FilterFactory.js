@@ -1,5 +1,5 @@
-import FilterFactoryInterface from './FilterFactoryInterface';
-import Filter from './Filter';
+import FilterFactoryInterface from "./FilterFactoryInterface";
+import Filter from "./Filter";
 
 /**
  * @class FilterFactory
@@ -28,7 +28,7 @@ export default class FilterFactory extends FilterFactoryInterface {
     create(entity) {
         const entityData = entity.getData();
         const filter = new Filter();
-        this._definition.getColumns().forEach(column => {
+        this._definition.getColumns().forEach((column) => {
             if (entityData.hasOwnProperty(column.getColumnName())) {
                 filter.addColumn(column, entityData[column.getColumnName()]);
             }

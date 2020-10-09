@@ -1,4 +1,4 @@
-import EventInterface from '../../../../lib/dispatcher/EventInterface';
+import EventInterface from "../../../../lib/dispatcher/EventInterface";
 
 /**
  * @class EventFileUpload
@@ -6,7 +6,7 @@ import EventInterface from '../../../../lib/dispatcher/EventInterface';
  * @type EventInterface
  */
 export default class EventFileUpload extends EventInterface {
-    static EVENT_NAME = 'upload.file';
+    static EVENT_NAME = "upload.file";
 
     /**
      *
@@ -21,7 +21,6 @@ export default class EventFileUpload extends EventInterface {
          */
         this._file = file;
     }
-
 
     getEventName() {
         return EventFileUpload.EVENT_NAME;

@@ -9,8 +9,7 @@ export default class DomStyles {
      * @return {HTMLElement}
      */
     removeClass(element, style) {
-        element.className = element.className
-            .replace(new RegExp('/\b' + style + '\b/g'), '');
+        element.className = element.className.replace(new RegExp("/\b" + style + "\b/g"), "");
         return element;
     }
 
@@ -21,7 +20,7 @@ export default class DomStyles {
      * @return {HTMLElement}
      */
     addClass(element, style) {
-        element.className = element.className + ' ' + style;
+        element.className = element.className + " " + style;
         return element;
     }
 }

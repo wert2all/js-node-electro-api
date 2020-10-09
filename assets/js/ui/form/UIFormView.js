@@ -1,4 +1,4 @@
-import UIFormViewInterface from './UIFormViewInterface';
+import UIFormViewInterface from "./UIFormViewInterface";
 
 /**
  * @class UIFormView
@@ -73,7 +73,7 @@ export default class UIFormView extends UIFormViewInterface {
      */
     hideLoader() {
         if (this._loader != null) {
-            this._formNode.style.visibility = 'visible';
+            this._formNode.style.visibility = "visible";
             if (this._showedLoader != null) {
                 this._formNode.parentNode.removeChild(this._showedLoader);
             }
@@ -88,7 +88,7 @@ export default class UIFormView extends UIFormViewInterface {
      */
     showLoader() {
         if (this._loader != null) {
-            this._formNode.style.visibility = 'hidden';
+            this._formNode.style.visibility = "hidden";
             this._showedLoader = this._loader.clone().getNode();
             this._formNode.parentNode.append(this._showedLoader);
         }

@@ -1,23 +1,23 @@
-import RequestInterface from '../../routers/request/RequestInterface';
-import UserProfileRepository from '../../db/repository/UserProfileRepository';
-import ApiKeyProvider from '../auth/key/KeyProvider';
-import AuthCheck from '../auth/AuthCheck';
-import AuthParams from '../auth/params/Params';
-import ResponseDataClass from '../../routers/response/ResponseDataClass';
-import UserProfileUpdateRequestDataClass from './data/UserProfileUpdateRequestDataClass';
-import UserEntity from '../../data/entity/UserEntity';
-import UserProfileEntity from '../../data/entity/UserProfileEntity';
-import EntityManager from '../../lib/db-entity-manager/EntityManager';
-import ResponseResult from '../../routers/response/ResponseResult';
-import UserRepository from '../../db/repository/UserRepository';
-import DI from '../../lib/di/DI';
-import ConnectionInterface from '../../lib/db-connection/ConnectionInterface';
-import UserProfileDefinition from '../../db/definition/UserProfileDefinition';
-import LoggerInterface from '../../lib/logger/LoggerInterface';
-import UserProfileLogEvent from './logs/event/UserProfileLogEvent';
-import StorageConfiguration from '../../storage/configuration/StorageConfiguration';
-import UserDefinition from '../../db/definition/UserDefinition';
-import AuthNoAdmin from '../auth/error/AuthNoAdmin';
+import RequestInterface from "../../routers/request/RequestInterface";
+import UserProfileRepository from "../../db/repository/UserProfileRepository";
+import ApiKeyProvider from "../auth/key/KeyProvider";
+import AuthCheck from "../auth/AuthCheck";
+import AuthParams from "../auth/params/Params";
+import ResponseDataClass from "../../routers/response/ResponseDataClass";
+import UserProfileUpdateRequestDataClass from "./data/UserProfileUpdateRequestDataClass";
+import UserEntity from "../../data/entity/UserEntity";
+import UserProfileEntity from "../../data/entity/UserProfileEntity";
+import EntityManager from "../../lib/db-entity-manager/EntityManager";
+import ResponseResult from "../../routers/response/ResponseResult";
+import UserRepository from "../../db/repository/UserRepository";
+import DI from "../../lib/di/DI";
+import ConnectionInterface from "../../lib/db-connection/ConnectionInterface";
+import UserProfileDefinition from "../../db/definition/UserProfileDefinition";
+import LoggerInterface from "../../lib/logger/LoggerInterface";
+import UserProfileLogEvent from "./logs/event/UserProfileLogEvent";
+import StorageConfiguration from "../../storage/configuration/StorageConfiguration";
+import UserDefinition from "../../db/definition/UserDefinition";
+import AuthNoAdmin from "../auth/error/AuthNoAdmin";
 
 /**
  * @class UserProfileUpdatePostRequest
@@ -59,7 +59,6 @@ export default class UserProfileUpdatePostRequest extends RequestInterface {
         return this;
     }
 
-
     /**
      * @request {*} request
      * @return {Promise<ResponseResult>}
@@ -77,28 +76,19 @@ export default class UserProfileUpdatePostRequest extends RequestInterface {
 
             const hash = await this._createProfileHash(requestData.getUserId());
             const profileEntities = await this._createEntities(requestData, hash);
-            profileEntities.map(async entity =>
-                await em.save(this._profileRepository.getDefinition(), entity)
-            );
+            profileEntities.map(async (entity) => await em.save(this._profileRepository.getDefinition(), entity));
             await em.save(
                 this._userRepository.getDefinition(),
-                new UserEntity()
-                    .create(
-                        requestData.getGoogleAccount().toHash()
-                    )
+                new UserEntity().create(requestData.getGoogleAccount().toHash())
             );
             response.setStatus(true);
         } catch (e) {
-            DI.getInstance()
-                .get(LoggerInterface)
-                .error(new UserProfileLogEvent(e.message));
+            DI.getInstance().get(LoggerInterface).error(new UserProfileLogEvent(e.message));
             response.setStatus(false);
             response.setMessage(e.message);
         }
 
-        return Promise.resolve(
-            new ResponseResult(ResponseResult.TYPE_JSON, response.getData())
-        );
+        return Promise.resolve(new ResponseResult(ResponseResult.TYPE_JSON, response.getData()));
     }
 
     /**
@@ -111,20 +101,18 @@ export default class UserProfileUpdatePostRequest extends RequestInterface {
         const requestData = UserProfileUpdateRequestDataClass.factory(request);
         if (request.body.userId) {
             requestData.setGoogleAccount(
-                await this._getGoogleAccount(requestData, new ApiKeyProvider(
-                    DI.getInstance()
-                        .get(StorageConfiguration)
-                        .getSecretStorage(),
-                    'google:api:signin:client:key'
+                await this._getGoogleAccount(
+                    requestData,
+                    new ApiKeyProvider(
+                        DI.getInstance().get(StorageConfiguration).getSecretStorage(),
+                        "google:api:signin:client:key"
+                    ).get()
                 )
-                    .get())
             );
             requestData.setUserId(request.body.userId);
             await this._checkAdmin(requestData);
         } else {
-            requestData.setGoogleAccount(
-                await this._getGoogleAccount(requestData, ApiKeyProvider.getDefault())
-            );
+            requestData.setGoogleAccount(await this._getGoogleAccount(requestData, ApiKeyProvider.getDefault()));
             requestData.setUserId(requestData.getGoogleAccount().getGoogleUserId());
         }
         return Promise.resolve(requestData);
@@ -138,8 +126,7 @@ export default class UserProfileUpdatePostRequest extends RequestInterface {
      * @private
      */
     async _getGoogleAccount(requestData, key) {
-        return await new AuthCheck(key)
-            .check(new AuthParams(requestData.getToken()));
+        return await new AuthCheck(key).check(new AuthParams(requestData.getToken()));
     }
 
     /**
@@ -152,22 +139,14 @@ export default class UserProfileUpdatePostRequest extends RequestInterface {
     async _createEntities(requestData, hash) {
         const ret = [];
         const payment = requestData.getPayment();
-        ['company_name', 'iban', 'bic', 'edrpou', 'personal_number', 'cs']
-            .map(valueName => {
-                const entity = this._makeEntity(
-                    requestData.getUserId(),
-                    valueName,
-                    payment.getData(valueName)
-                );
-                const key = this._createKey(
-                    entity.getValue('value_type'),
-                    entity.getValue('value_name')
-                );
-                if (hash.hasOwnProperty(key)) {
-                    entity.setValue(UserProfileDefinition.COLUMN_ID, hash[key]);
-                }
-                ret.push(entity);
-            });
+        ["company_name", "iban", "bic", "edrpou", "personal_number", "cs"].map((valueName) => {
+            const entity = this._makeEntity(requestData.getUserId(), valueName, payment.getData(valueName));
+            const key = this._createKey(entity.getValue("value_type"), entity.getValue("value_name"));
+            if (hash.hasOwnProperty(key)) {
+                entity.setValue(UserProfileDefinition.COLUMN_ID, hash[key]);
+            }
+            ret.push(entity);
+        });
         return ret;
     }
 
@@ -178,14 +157,9 @@ export default class UserProfileUpdatePostRequest extends RequestInterface {
      * @private
      */
     async _createProfileHash(userId) {
-        const userProfile = await this._profileRepository.fetchData(
-            this._createCleanProfileEntity(userId)
-        );
+        const userProfile = await this._profileRepository.fetchData(this._createCleanProfileEntity(userId));
         return userProfile.reduce((prev, entity) => {
-            const key = this._createKey(
-                entity.getValue('value_type'),
-                entity.getValue('value_name')
-            );
+            const key = this._createKey(entity.getValue("value_type"), entity.getValue("value_name"));
             prev[key] = entity.getValue(UserProfileDefinition.COLUMN_ID);
             return prev;
         }, {});
@@ -202,9 +176,9 @@ export default class UserProfileUpdatePostRequest extends RequestInterface {
     _makeEntity(userId, valueName, value) {
         const userProfileEntity = this._createCleanProfileEntity(userId);
 
-        userProfileEntity.setValue('value_type', 'payment');
-        userProfileEntity.setValue('value_name', valueName);
-        userProfileEntity.setValue('value', value);
+        userProfileEntity.setValue("value_type", "payment");
+        userProfileEntity.setValue("value_name", valueName);
+        userProfileEntity.setValue("value", value);
 
         return userProfileEntity;
     }
@@ -235,7 +209,7 @@ export default class UserProfileUpdatePostRequest extends RequestInterface {
      * @private
      */
     _createKey(type, name) {
-        return type + ':' + name;
+        return type + ":" + name;
     }
 
     /**
@@ -246,13 +220,10 @@ export default class UserProfileUpdatePostRequest extends RequestInterface {
     async _checkAdmin(requestData) {
         let isAdmin = false;
         const userEntity = new UserEntity();
-        userEntity.setValue(
-            UserDefinition.COLUMN_GOOGLE_ID,
-            requestData.getGoogleAccount().getGoogleUserId()
-        );
+        userEntity.setValue(UserDefinition.COLUMN_GOOGLE_ID, requestData.getGoogleAccount().getGoogleUserId());
         const users = await this._userRepository.fetchData(userEntity);
         if (users.length === 1) {
-            isAdmin = users[0].getIsAdmin() === 'y';
+            isAdmin = users[0].getIsAdmin() === "y";
         }
         if (isAdmin === false) {
             throw new AuthNoAdmin();

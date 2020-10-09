@@ -1,4 +1,4 @@
-import UIElementInterface from '../../ui/interfaces/element/UIElementInterface';
+import UIElementInterface from "../../ui/interfaces/element/UIElementInterface";
 
 /**
  * @class UIImageItem
@@ -76,10 +76,10 @@ export default class UIImageItem extends UIElementInterface {
          * @type {UIProfileView|null}
          * @private
          */
-        this._profileView = this._profileViewFactory != null
-            ? this._profileViewFactory
-                .create(this._node, this._config.getProfileSelector())
-            : null;
+        this._profileView =
+            this._profileViewFactory != null
+                ? this._profileViewFactory.create(this._node, this._config.getProfileSelector())
+                : null;
     }
 
     /**
@@ -90,20 +90,14 @@ export default class UIImageItem extends UIElementInterface {
         return this._actions;
     }
 
-    clean() {
-    }
+    clean() {}
 
     /**
      * @return {UIElementInterface|null}
      */
     clone() {
         const parentNode = this._node.cloneNode(true);
-        return new UIImageItem(
-            parentNode,
-            this._config,
-            this._actions,
-            this._profileViewFactory
-        );
+        return new UIImageItem(parentNode, this._config, this._actions, this._profileViewFactory);
     }
 
     getNode() {
@@ -112,17 +106,11 @@ export default class UIImageItem extends UIElementInterface {
 
     init() {
         this._image = this._node.querySelector(this._config.getImage());
-        this._imageTypeTitle = this._node
-            .querySelector(this._config.getImageTypeTitleSelector());
-        this._imageTypeContainer = this._node
-            .querySelector(this._config.getImageTypeTitleContainerSelector());
+        this._imageTypeTitle = this._node.querySelector(this._config.getImageTypeTitleSelector());
+        this._imageTypeContainer = this._node.querySelector(this._config.getImageTypeTitleContainerSelector());
         this._yearmon = this._node.querySelector(this._config.getYearmonSelector());
-        this._radioLabel = this._node.querySelector(
-            this._config.getRadioSelector().getLabelSelector()
-        );
-        this._radioInput = this._node.querySelector(
-            this._config.getRadioSelector().getInputSelector()
-        );
+        this._radioLabel = this._node.querySelector(this._config.getRadioSelector().getLabelSelector());
+        this._radioInput = this._node.querySelector(this._config.getRadioSelector().getInputSelector());
         if (this._profileView != null) {
             this._profileView.init();
         }
@@ -146,7 +134,8 @@ export default class UIImageItem extends UIElementInterface {
         if (actions !== null) {
             actions.applyData(imageItem.getNode(), imageData, elementList);
         }
-        imageItem.setImage(imageData.getUrl())
+        imageItem
+            .setImage(imageData.getUrl())
             .setImageType(imageData.getType())
             .setYearMon(imageData.getYearmon())
             .setId(imageData.getId())
@@ -162,9 +151,9 @@ export default class UIImageItem extends UIElementInterface {
      */
     setIsReady(isReady) {
         if (isReady) {
-            this._radioInput.setAttribute('checked', 'checked');
+            this._radioInput.setAttribute("checked", "checked");
         } else {
-            this._radioInput.removeAttribute('checked');
+            this._radioInput.removeAttribute("checked");
         }
         return this;
     }
@@ -191,7 +180,7 @@ export default class UIImageItem extends UIElementInterface {
             this._imageTypeTitle.innerHTML = type;
         }
         if (this._imageTypeContainer !== null) {
-            this._imageTypeContainer.classList.add('uk-custom-image-type-' + type);
+            this._imageTypeContainer.classList.add("uk-custom-image-type-" + type);
         }
         return this;
     }
@@ -203,8 +192,8 @@ export default class UIImageItem extends UIElementInterface {
      */
     setYearMon(yearmon) {
         if (this._yearmon !== null && yearmon !== null) {
-            this._yearmon.innerHTML = yearmon.getYear()
-                + ', ' + yearmon.getDate().toLocaleString('default', {month: 'long'});
+            this._yearmon.innerHTML =
+                yearmon.getYear() + ", " + yearmon.getDate().toLocaleString("default", { month: "long" });
         }
         return this;
     }
@@ -216,8 +205,8 @@ export default class UIImageItem extends UIElementInterface {
      */
     setId(id) {
         if (this._radioInput !== null && this._radioLabel !== null) {
-            this._radioLabel.setAttribute('for', this._createRadioId(id));
-            this._radioInput.setAttribute('id', this._createRadioId(id));
+            this._radioLabel.setAttribute("for", this._createRadioId(id));
+            this._radioInput.setAttribute("id", this._createRadioId(id));
         }
         return this;
     }
@@ -229,7 +218,7 @@ export default class UIImageItem extends UIElementInterface {
      * @private
      */
     _createRadioId(id) {
-        return 'image_active_' + id;
+        return "image_active_" + id;
     }
 
     /**

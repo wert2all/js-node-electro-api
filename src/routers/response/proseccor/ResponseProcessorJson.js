@@ -1,4 +1,4 @@
-import ResponseProcessorInterface from '../ResponseProcessorInterface';
+import ResponseProcessorInterface from "../ResponseProcessorInterface";
 
 /**
  * @class ResponseProcessorJson
@@ -21,7 +21,7 @@ export default class ResponseProcessorJson extends ResponseProcessorInterface {
      * @return {*}
      */
     send(response) {
-        response.setHeader('Content-Type', 'application/json');
+        response.setHeader("Content-Type", "application/json");
         return response.json(this._result.getData().toHash());
     }
 
@@ -31,10 +31,10 @@ export default class ResponseProcessorJson extends ResponseProcessorInterface {
      * @param response
      */
     sendError(error, response) {
-        response.setHeader('Content-Type', 'application/json');
+        response.setHeader("Content-Type", "application/json");
         return response.json({
             error: true,
-            message: error.message
+            message: error.message,
         });
     }
 }

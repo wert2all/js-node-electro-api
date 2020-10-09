@@ -3,16 +3,15 @@
  * @interface
  * @abstract
  */
-import ImplementationError from '../../lib/implementation-error/ImplementationError';
+import ImplementationError from "../../lib/implementation-error/ImplementationError";
 
 export default class ResponseProcessorInterface {
-
     /**
      * @abstract
      */
     // eslint-disable-next-line no-unused-vars
     send(response) {
-        throw new ImplementationError(this, 'send');
+        throw new ImplementationError(this, "send");
     }
 
     /**
@@ -23,6 +22,6 @@ export default class ResponseProcessorInterface {
      */
     // eslint-disable-next-line no-unused-vars
     sendError(error, response) {
-        throw new ImplementationError(this, 'sendError');
+        throw new ImplementationError(this, "sendError");
     }
 }

@@ -1,4 +1,4 @@
-import LogEventInterface from '../../../lib/logger/LogEventInterface';
+import LogEventInterface from "../../../lib/logger/LogEventInterface";
 
 /**
  * @class UploadEvent
@@ -6,7 +6,7 @@ import LogEventInterface from '../../../lib/logger/LogEventInterface';
  * @extends LogEventInterface
  */
 export default class UploadEvent extends LogEventInterface {
-    static TAG = 'upload';
+    static TAG = "upload";
 
     /**
      *

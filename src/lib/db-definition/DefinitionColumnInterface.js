@@ -1,4 +1,4 @@
-import ImplementationError from '../implementation-error/ImplementationError';
+import ImplementationError from "../implementation-error/ImplementationError";
 
 /**
  * @interface
@@ -11,7 +11,7 @@ export default class DefinitionColumnInterface {
      * @return {string}
      */
     getColumnName() {
-        throw new ImplementationError(this, 'getColumnName');
+        throw new ImplementationError(this, "getColumnName");
     }
 
     /**
@@ -19,7 +19,7 @@ export default class DefinitionColumnInterface {
      * @return {string}
      */
     getType() {
-        throw new ImplementationError(this, 'getType');
+        throw new ImplementationError(this, "getType");
     }
 
     /**
@@ -27,7 +27,7 @@ export default class DefinitionColumnInterface {
      * @return boolean
      */
     isNull() {
-        throw new ImplementationError(this, 'isNull');
+        throw new ImplementationError(this, "isNull");
     }
 
     /**
@@ -35,7 +35,7 @@ export default class DefinitionColumnInterface {
      * @return {*|boolean}
      */
     getDefault() {
-        throw new ImplementationError(this, 'getDefault');
+        throw new ImplementationError(this, "getDefault");
     }
 
     /**
@@ -43,6 +43,6 @@ export default class DefinitionColumnInterface {
      * @return boolean
      */
     isPrimary() {
-        throw new ImplementationError(this, 'isPrimary');
+        throw new ImplementationError(this, "isPrimary");
     }
 }

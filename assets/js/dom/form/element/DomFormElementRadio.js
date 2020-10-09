@@ -1,4 +1,4 @@
-import DomFormElement from './DomFormElement';
+import DomFormElement from "./DomFormElement";
 
 /**
  * @class DomFormElementRadio
@@ -28,8 +28,8 @@ export default class DomFormElementRadio extends DomFormElement {
      * @return DomFormElementInterface
      */
     setValue(value) {
-        this._radios.forEach(radio => {
-            return radio.checked = (radio.value === value);
+        this._radios.forEach((radio) => {
+            return (radio.checked = radio.value === value);
         });
     }
 
@@ -40,9 +40,8 @@ export default class DomFormElementRadio extends DomFormElement {
         const length = this._radios.length;
         for (let i = 0; i < length; i++) {
             if (this._radios[i].checked) {
-                return (this._radios[i].value);
+                return this._radios[i].value;
             }
         }
     }
-
 }

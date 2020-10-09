@@ -5,6 +5,6 @@
  */
 export default class UploadRequestNoYearMon extends Error {
     constructor() {
-        super('Bad request: No yearMon');
+        super("Bad request: No yearMon");
     }
 }

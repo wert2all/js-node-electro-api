@@ -1,11 +1,8 @@
-import UIMutableElementInterface
-    from '../../ui/interfaces/element/UIMutableElementInterface';
+import UIMutableElementInterface from "../../ui/interfaces/element/UIMutableElementInterface";
 
 /**
  * @interface
  * @abstract
  * @class UIGridElementInterface
  */
-export default class UIGridElementInterface extends UIMutableElementInterface {
-
-}
+export default class UIGridElementInterface extends UIMutableElementInterface {}

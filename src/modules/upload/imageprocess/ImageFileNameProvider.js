@@ -1,6 +1,6 @@
 // eslint-disable-next-line max-len
-import FileNameProviderInterface from '../../../storage/file/nameprovider/FileNameProviderInterface';
-import UserDefinition from '../../../db/definition/UserDefinition';
+import FileNameProviderInterface from "../../../storage/file/nameprovider/FileNameProviderInterface";
+import UserDefinition from "../../../db/definition/UserDefinition";
 
 /**
  * @class ImageFileNameProvider
@@ -28,6 +28,6 @@ export default class ImageFileNameProvider extends FileNameProviderInterface {
      * @return {string}
      */
     getName(fileData) {
-        return this._userID + '_' + fileData.getName();
+        return this._userID + "_" + fileData.getName();
     }
 }

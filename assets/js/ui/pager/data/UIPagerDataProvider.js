@@ -106,7 +106,7 @@ export default class UIPagerDataProvider {
      */
     getPagesCount() {
         const pages = this._calcQuotient(this._count, this._offset);
-        return (this.getFromByPage(pages) < this._count) ? pages + 1 : pages;
+        return this.getFromByPage(pages) < this._count ? pages + 1 : pages;
     }
 
     /**

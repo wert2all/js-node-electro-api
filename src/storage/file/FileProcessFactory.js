@@ -1,7 +1,7 @@
 /**
  * @class FileProcessFactory
  */
-import ImageProcess from './process/ImageProcess';
+import ImageProcess from "./process/ImageProcess";
 
 export default class FileProcessFactory {
     /**

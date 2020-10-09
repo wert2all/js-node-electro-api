@@ -66,6 +66,4 @@ export default class UIImageItemConfigActions {
     getEditSelector() {
         return this._editSelector;
     }
-
-
 }

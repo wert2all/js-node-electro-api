@@ -4,6 +4,6 @@
  */
 export default class EntityManagerError extends Error {
     constructor() {
-        super('Can\t save entity.');
+        super("Can\t save entity.");
     }
 }

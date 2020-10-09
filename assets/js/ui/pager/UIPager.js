@@ -1,6 +1,6 @@
-import UIPagerDataProvider from './data/UIPagerDataProvider';
-import UICloneableInterface from '../interfaces/UICloneableInterface';
-import UISimpleElement from '../elements/UISimpleElement';
+import UIPagerDataProvider from "./data/UIPagerDataProvider";
+import UICloneableInterface from "../interfaces/UICloneableInterface";
+import UISimpleElement from "../elements/UISimpleElement";
 
 /**
  * @class UIPager
@@ -21,9 +21,7 @@ export default class UIPager extends UICloneableInterface {
          * @type {UIPagerDataProvider}
          * @private
          */
-        this._dataProvider = dataProvider == null
-            ? new UIPagerDataProvider()
-            : dataProvider;
+        this._dataProvider = dataProvider == null ? new UIPagerDataProvider() : dataProvider;
         /**
          *
          * @type {ParentNode}
@@ -90,7 +88,7 @@ export default class UIPager extends UICloneableInterface {
      */
     build(clickListener = null) {
         const node = this._parentNode.cloneNode(true);
-        node.innerHTML = '';
+        node.innerHTML = "";
         const pagesCount = this._dataProvider.getPagesCount();
         for (let i = 1; i < pagesCount + 1; i++) {
             const page = this._pageItem.clone();
@@ -99,11 +97,7 @@ export default class UIPager extends UICloneableInterface {
             } else {
                 page.init();
             }
-            node.append(
-                page.setNumber(i)
-                    .setClickListener(clickListener)
-                    .getNode()
-            );
+            node.append(page.setNumber(i).setClickListener(clickListener).getNode());
         }
         return new UISimpleElement(node);
     }

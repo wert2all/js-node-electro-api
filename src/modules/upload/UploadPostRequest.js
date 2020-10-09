@@ -1,35 +1,35 @@
-'use strict';
-import RequestInterface from '../../routers/request/RequestInterface';
-import UploadRequestDataClass from './data/UploadRequestDataClass';
-import AuthCheck from '../auth/AuthCheck';
-import ApiKeyProvider from '../auth/key/KeyProvider';
-import AuthParams from '../auth/params/Params';
-import UserEntity from '../../data/entity/UserEntity';
-import UserFilesEntity from '../../data/entity/UserFilesEntity';
-import FilesRepository from '../../db/repository/FilesRepository';
-import UploadRequestBadMime from './error/UploadRequestBadMime';
-import UploadRequestBadSize from './error/UploadRequestBadSize';
-import FileTypeImage from '../../data/files/types/FileTypeImage';
-import FileData from '../../data/files/FileData';
-import FileSize from '../../data/files/size/FileSize';
-import UploadRequestCantTmpUpload from './error/UploadRequestCantTmpUpload';
-import ImageFileNameProvider from './imageprocess/ImageFileNameProvider';
-import EntityManager from '../../lib/db-entity-manager/EntityManager';
-import UserRepository from '../../db/repository/UserRepository';
-import UploadRequestCantSave from './error/UploadRequestCantSave';
-import EventFileUpload from './dispatch/event/EventFileUpload';
-import ResponseResult from '../../routers/response/ResponseResult';
-import ResponseDataClass from '../../routers/response/ResponseDataClass';
-import DI from '../../lib/di/DI';
-import ConnectionInterface from '../../lib/db-connection/ConnectionInterface';
-import FileStorage from '../../storage/FileStorage';
-import ServerConfig from '../../server/ServerConfig';
-import FileLogger from '../../lib/logger/adapters/FileLogger';
-import LogFormatterInterface from '../../lib/logger/LogFormatterInterface';
-import LoggerStrategy from '../../extended/LoggerStrategy';
-import LoggerInterface from '../../lib/logger/LoggerInterface';
-import Logger from '../../extended/logger/Logger';
-import UploadEvent from './logger/UploadEvent';
+"use strict";
+import RequestInterface from "../../routers/request/RequestInterface";
+import UploadRequestDataClass from "./data/UploadRequestDataClass";
+import AuthCheck from "../auth/AuthCheck";
+import ApiKeyProvider from "../auth/key/KeyProvider";
+import AuthParams from "../auth/params/Params";
+import UserEntity from "../../data/entity/UserEntity";
+import UserFilesEntity from "../../data/entity/UserFilesEntity";
+import FilesRepository from "../../db/repository/FilesRepository";
+import UploadRequestBadMime from "./error/UploadRequestBadMime";
+import UploadRequestBadSize from "./error/UploadRequestBadSize";
+import FileTypeImage from "../../data/files/types/FileTypeImage";
+import FileData from "../../data/files/FileData";
+import FileSize from "../../data/files/size/FileSize";
+import UploadRequestCantTmpUpload from "./error/UploadRequestCantTmpUpload";
+import ImageFileNameProvider from "./imageprocess/ImageFileNameProvider";
+import EntityManager from "../../lib/db-entity-manager/EntityManager";
+import UserRepository from "../../db/repository/UserRepository";
+import UploadRequestCantSave from "./error/UploadRequestCantSave";
+import EventFileUpload from "./dispatch/event/EventFileUpload";
+import ResponseResult from "../../routers/response/ResponseResult";
+import ResponseDataClass from "../../routers/response/ResponseDataClass";
+import DI from "../../lib/di/DI";
+import ConnectionInterface from "../../lib/db-connection/ConnectionInterface";
+import FileStorage from "../../storage/FileStorage";
+import ServerConfig from "../../server/ServerConfig";
+import FileLogger from "../../lib/logger/adapters/FileLogger";
+import LogFormatterInterface from "../../lib/logger/LogFormatterInterface";
+import LoggerStrategy from "../../extended/LoggerStrategy";
+import LoggerInterface from "../../lib/logger/LoggerInterface";
+import Logger from "../../extended/logger/Logger";
+import UploadEvent from "./logger/UploadEvent";
 
 /**
  * @class UploadPostRequest
@@ -37,7 +37,6 @@ import UploadEvent from './logger/UploadEvent';
  * @extends RequestInterface
  */
 export default class UploadPostRequest extends RequestInterface {
-
     constructor() {
         super();
         /**
@@ -80,9 +79,7 @@ export default class UploadPostRequest extends RequestInterface {
             response.setMessage(e.message);
         }
 
-        return Promise.resolve(
-            new ResponseResult(ResponseResult.TYPE_JSON, response.getData())
-        );
+        return Promise.resolve(new ResponseResult(ResponseResult.TYPE_JSON, response.getData()));
     }
 
     /**
@@ -91,8 +88,7 @@ export default class UploadPostRequest extends RequestInterface {
      * @return {UserFilesEntity}
      */
     makeUserFilesEntity(requestData) {
-        const userEntity = new UserEntity()
-            .setGoogleAccount(requestData.getGoogleAccount());
+        const userEntity = new UserEntity().setGoogleAccount(requestData.getGoogleAccount());
         return new UserFilesEntity()
             .setUser(userEntity)
             .setType(requestData.getType())
@@ -106,10 +102,7 @@ export default class UploadPostRequest extends RequestInterface {
      * @private
      */
     async _getGoogleAccount(requestData) {
-        return await new AuthCheck(ApiKeyProvider.getDefault())
-            .check(
-                new AuthParams(requestData.token)
-            );
+        return await new AuthCheck(ApiKeyProvider.getDefault()).check(new AuthParams(requestData.token));
     }
 
     /**
@@ -122,27 +115,20 @@ export default class UploadPostRequest extends RequestInterface {
     // eslint-disable-next-line no-unused-vars
     async _saveFile(fileData, userFiles) {
         try {
-            const tmpFilePath = await this._moveFileToTmpDirectory(
-                fileData.getFsLink(),
-                fileData.getName()
+            const tmpFilePath = await this._moveFileToTmpDirectory(fileData.getFsLink(), fileData.getName());
+            fileData = await this._fileStorage.moveFile(
+                fileData.setPath(tmpFilePath),
+                new ImageFileNameProvider(userFiles)
             );
-            fileData = await this._fileStorage
-                .moveFile(
-                    fileData.setPath(tmpFilePath),
-                    new ImageFileNameProvider(userFiles)
-                );
 
             const entityManager = new EntityManager(this._repository.getConnection());
-            const userEntity = await entityManager
-                .save(new UserRepository().getDefinition(), userFiles.getUser());
-            userFiles.setUser(userEntity)
-                .setFilePath(fileData.getPath());
+            const userEntity = await entityManager.save(new UserRepository().getDefinition(), userFiles.getUser());
+            userFiles.setUser(userEntity).setFilePath(fileData.getPath());
             /**
              *
              * @type {EntityInterface}
              */
-            const file = await entityManager
-                .save(this._repository.getDefinition(), userFiles);
+            const file = await entityManager.save(this._repository.getDefinition(), userFiles);
             await this._dispatcher.dispatch(new EventFileUpload(file));
         } catch (e) {
             console.log(e.message);
@@ -159,14 +145,14 @@ export default class UploadPostRequest extends RequestInterface {
      * @private
      */
     async _getFileData(requestData) {
-        if (!requestData.billFile.hasOwnProperty('mimetype')) {
+        if (!requestData.billFile.hasOwnProperty("mimetype")) {
             return Promise.reject(new UploadRequestBadMime());
         }
         const fileType = FileTypeImage.fabric(requestData.billFile.mimetype);
         if (fileType === false) {
             return Promise.reject(new UploadRequestBadMime());
         }
-        if (!requestData.billFile.hasOwnProperty(('size'))) {
+        if (!requestData.billFile.hasOwnProperty("size")) {
             return Promise.reject(new UploadRequestBadSize());
         }
         const fileSize = FileSize.fabric(requestData.billFile.size);
@@ -175,8 +161,7 @@ export default class UploadPostRequest extends RequestInterface {
         }
 
         return Promise.resolve(
-            new FileData(requestData.billFile.name, fileType, fileSize)
-                .setFileFsLink(requestData.billFile)
+            new FileData(requestData.billFile.name, fileType, fileSize).setFileFsLink(requestData.billFile)
         );
     }
 
@@ -204,10 +189,8 @@ export default class UploadPostRequest extends RequestInterface {
      * @private
      */
     _getTmpFilePath(fileName) {
-        const tmpDirectory = this._fileStorage
-            .getConfig()
-            .getTmpDirectory();
-        return tmpDirectory + new Date().valueOf().toString() + '_' + fileName;
+        const tmpDirectory = this._fileStorage.getConfig().getTmpDirectory();
+        return tmpDirectory + new Date().valueOf().toString() + "_" + fileName;
     }
 
     /**
@@ -237,9 +220,7 @@ export default class UploadPostRequest extends RequestInterface {
      */
     async _prepareRequest(request) {
         const requestData = UploadRequestDataClass.factory(request);
-        requestData.setGoogleAccount(
-            await this._getGoogleAccount(requestData)
-        );
+        requestData.setGoogleAccount(await this._getGoogleAccount(requestData));
         return Promise.resolve(requestData);
     }
 
@@ -249,10 +230,9 @@ export default class UploadPostRequest extends RequestInterface {
      */
     _applyLogger() {
         const di = DI.getInstance();
-        const path = di.get(ServerConfig).getLogDirectory() + 'upload.log';
+        const path = di.get(ServerConfig).getLogDirectory() + "upload.log";
         const fileLogger = new FileLogger(path, di.get(LogFormatterInterface));
-        const loggerStrategy = di.get(LoggerStrategy)
-            .addLogger(UploadEvent.TAG, fileLogger);
+        const loggerStrategy = di.get(LoggerStrategy).addLogger(UploadEvent.TAG, fileLogger);
         di.register(LoggerStrategy, loggerStrategy);
         di.register(LoggerInterface, new Logger(di.get(LoggerStrategy)));
     }

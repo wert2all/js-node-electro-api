@@ -1,10 +1,10 @@
-import ConnectionInterface from '../ConnectionInterface';
-import SQLiteTableSQLBuilder from './builder/SQLiteTableSQLBuilder';
-import SQLiteSelectSQLBuilder from './builder/SQLiteSelectSQLBuilder';
-import SQLiteInsertSQLBuilder from './builder/SQLiteInsertSQLBuilder';
-import SQLiteUpdateSQLBuilder from './builder/SQLiteUpdateSQLBuilder';
-import SQLLogEvent from '../../../extended/logger/events/SQLLogEvent';
-import SQLiteDeleteSQLBuilder from './builder/SQLiteDeleteSQLBuilder';
+import ConnectionInterface from "../ConnectionInterface";
+import SQLiteTableSQLBuilder from "./builder/SQLiteTableSQLBuilder";
+import SQLiteSelectSQLBuilder from "./builder/SQLiteSelectSQLBuilder";
+import SQLiteInsertSQLBuilder from "./builder/SQLiteInsertSQLBuilder";
+import SQLiteUpdateSQLBuilder from "./builder/SQLiteUpdateSQLBuilder";
+import SQLLogEvent from "../../../extended/logger/events/SQLLogEvent";
+import SQLiteDeleteSQLBuilder from "./builder/SQLiteDeleteSQLBuilder";
 
 /**
  * @class SQLiteConnection
@@ -82,8 +82,8 @@ export default class SQLiteConnection extends ConnectionInterface {
     async select(definition, filter, order = null, limit = null, fields = null) {
         await this._createTable(definition, this._server);
         let data = {};
-        filter.getFilterData().forEach(filter => {
-            data[filter.field] = ' ' + filter.sign + ' :' + filter.field;
+        filter.getFilterData().forEach((filter) => {
+            data[filter.field] = " " + filter.sign + " :" + filter.field;
         });
         const sql = this._buiderSelect
             .applyFields(fields)
@@ -91,7 +91,7 @@ export default class SQLiteConnection extends ConnectionInterface {
             .applyOrder(order)
             .buildSQL(definition, data);
         data = {};
-        filter.getFilterData().map(filter => {
+        filter.getFilterData().map((filter) => {
             data[filter.field] = filter.value;
         });
         return this._fetch(this._server, sql, this._buildQueryData(definition, data));
@@ -121,7 +121,7 @@ export default class SQLiteConnection extends ConnectionInterface {
         await this._createTable(definition, this._server);
         const sql = this._builderUpdate.buildSQL(definition, data);
         const prepareValues = this._buildQueryData(definition, data);
-        delete (prepareValues[definition.getPrimaryColumn().getColumnName()]);
+        delete prepareValues[definition.getPrimaryColumn().getColumnName()];
         return this._exec(this._server, sql, prepareValues);
     }
 
@@ -135,17 +135,16 @@ export default class SQLiteConnection extends ConnectionInterface {
      */
     async _fetch(connection, sql, whereData) {
         return new Promise((resolve, reject) => {
-                this._logger.info(new SQLLogEvent(sql));
-                const stmt = connection.prepare(sql, whereData);
-                stmt.all(whereData, (err, rows) => {
-                    if (err) {
-                        reject(err);
-                    } else {
-                        resolve(rows);
-                    }
-                });
-            }
-        );
+            this._logger.info(new SQLLogEvent(sql));
+            const stmt = connection.prepare(sql, whereData);
+            stmt.all(whereData, (err, rows) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(rows);
+                }
+            });
+        });
     }
 
     /**
@@ -160,7 +159,7 @@ export default class SQLiteConnection extends ConnectionInterface {
         return new Promise((resolve, reject) => {
             this._logger.info(new SQLLogEvent(sql));
             const stmt = connection.prepare(sql, whereData);
-            stmt.run(whereData, err => {
+            stmt.run(whereData, (err) => {
                 if (err) {
                     reject(err);
                 } else {
@@ -179,9 +178,9 @@ export default class SQLiteConnection extends ConnectionInterface {
      */
     _buildQueryData(definition, data) {
         const ret = {};
-        Object.keys(data).forEach(key => {
+        Object.keys(data).forEach((key) => {
             if (definition.isColumn(key)) {
-                ret[':' + key] = data[key];
+                ret[":" + key] = data[key];
             }
         });
         return ret;

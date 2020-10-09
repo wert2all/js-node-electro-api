@@ -1,4 +1,4 @@
-import UIContentElementInterface from './UIContentElementInterface';
+import UIContentElementInterface from "./UIContentElementInterface";
 
 /**
  * @class UIContentElement
@@ -6,7 +6,6 @@ import UIContentElementInterface from './UIContentElementInterface';
  * @type UIContentElementInterface
  */
 export default class UIContentElement extends UIContentElementInterface {
-
     /**
      *
      * @param {Node} element
@@ -39,7 +38,7 @@ export default class UIContentElement extends UIContentElementInterface {
     }
 
     clean() {
-        this._elements.forEach(element => element.clean());
+        this._elements.forEach((element) => element.clean());
     }
 
     /**
@@ -50,6 +49,5 @@ export default class UIContentElement extends UIContentElementInterface {
         return this._parentElement;
     }
 
-    init() {
-    }
+    init() {}
 }

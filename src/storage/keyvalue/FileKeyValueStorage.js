@@ -1,5 +1,5 @@
-import KeyValueStorageInterface from './KeyValueStorageInterface';
-import ImplementationError from '../../lib/implementation-error/ImplementationError';
+import KeyValueStorageInterface from "./KeyValueStorageInterface";
+import ImplementationError from "../../lib/implementation-error/ImplementationError";
 
 /**
  * @class FileKeyValueStorage
@@ -56,6 +56,6 @@ export default class FileKeyValueStorage extends KeyValueStorageInterface {
      * @protected
      */
     _defaultFetch() {
-        throw new ImplementationError(this, '_doError');
+        throw new ImplementationError(this, "_doError");
     }
 }

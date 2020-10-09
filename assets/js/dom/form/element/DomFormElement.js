@@ -1,6 +1,6 @@
-import DomFormElementInterface from '../DomFormElementInterface';
-import DomFormElementValidatorNull from '../validators/DomFormElementValidatorNull';
-import DomStyles from '../../utils/DomStyles';
+import DomFormElementInterface from "../DomFormElementInterface";
+import DomFormElementValidatorNull from "../validators/DomFormElementValidatorNull";
+import DomStyles from "../../utils/DomStyles";
 
 /**
  * @class DomFormElement
@@ -27,9 +27,7 @@ export default class DomFormElement extends DomFormElementInterface {
          * @type {DomFormElementValidatorInterface}
          * @private
          */
-        this._validator = (validator == null)
-            ? new DomFormElementValidatorNull()
-            : validator;
+        this._validator = validator == null ? new DomFormElementValidatorNull() : validator;
         /**
          *
          * @type {DomFormElementViewHolder|null}
@@ -41,7 +39,7 @@ export default class DomFormElement extends DomFormElementInterface {
          * @type {string}
          * @private
          */
-        this._errorStyle = 'uk-form-danger';
+        this._errorStyle = "uk-form-danger";
     }
 
     /**
@@ -105,7 +103,6 @@ export default class DomFormElement extends DomFormElementInterface {
         if (this._viewHolder != null) {
             this._viewHolder.cleanErrors();
         }
-        this._element = new DomStyles()
-            .removeClass(this._element, this._errorStyle);
+        this._element = new DomStyles().removeClass(this._element, this._errorStyle);
     }
 }

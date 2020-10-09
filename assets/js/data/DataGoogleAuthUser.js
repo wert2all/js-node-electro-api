@@ -7,7 +7,7 @@ export default class DataGoogleAuthUser {
      * @param {string|null} userImage
      * @param {string} token
      */
-    constructor(userId, userName, userEmail, userImage = null, token = '') {
+    constructor(userId, userName, userEmail, userImage = null, token = "") {
         /**
          *
          * @type {string}

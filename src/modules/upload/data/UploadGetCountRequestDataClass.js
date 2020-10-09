@@ -1,7 +1,7 @@
-import StringExt from '../../../lib/utils/StringExt';
-import UploadRequestNoToken from '../error/get/UploadRequestNoToken';
-import YearMon from '../../../data/YearMon';
-import UploadRequestNoYearMon from '../error/get/UploadRequestNoYearMon';
+import StringExt from "../../../lib/utils/StringExt";
+import UploadRequestNoToken from "../error/get/UploadRequestNoToken";
+import YearMon from "../../../data/YearMon";
+import UploadRequestNoYearMon from "../error/get/UploadRequestNoYearMon";
 
 /**
  * @class UploadGetCountRequestDataClass
@@ -71,11 +71,7 @@ export default class UploadGetCountRequestDataClass {
      * @return UploadGetCountRequestDataClass
      */
     static factory(request) {
-        const authToken = Buffer.from(
-            new StringExt(request.query.token)
-                .replaceAll('"', ''),
-            'base64'
-        ).toString();
+        const authToken = Buffer.from(new StringExt(request.query.token).replaceAll('"', ""), "base64").toString();
         if (!authToken) {
             throw new UploadRequestNoToken();
         }
@@ -85,10 +81,7 @@ export default class UploadGetCountRequestDataClass {
          */
         let yearMon = null;
         if (request.query.yearmon) {
-            yearMon = YearMon.create(
-                new StringExt(request.query.yearmon)
-                    .replaceAll('"', '')
-            );
+            yearMon = YearMon.create(new StringExt(request.query.yearmon).replaceAll('"', ""));
         }
         if (yearMon == null) {
             throw new UploadRequestNoYearMon();

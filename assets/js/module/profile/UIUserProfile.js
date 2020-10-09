@@ -1,5 +1,5 @@
-import UserProfile from '../../data/UserProfile';
-import UIControlInterface from '../../ui/control/UIControlInterface';
+import UserProfile from "../../data/UserProfile";
+import UIControlInterface from "../../ui/control/UIControlInterface";
 
 /**
  * @class UIUserProfile
@@ -107,25 +107,23 @@ export default class UIUserProfile extends UIControlInterface {
 
     init() {
         this._getModal();
-        this._submitButton.addEventListener('click', () => {
+        this._submitButton.addEventListener("click", () => {
             if (this._formView.validate()) {
                 this._formView.showLoader();
-                this._api.updateProfile(
-                    this._authProvider.getUserProfile(),
-                    {
+                this._api
+                    .updateProfile(this._authProvider.getUserProfile(), {
                         data: this._formView.getRequestFormData(),
-                        userId: this._formView.getFormData().get('profile_user_id')
-                    }
-                )
-                    .then(response => {
+                        userId: this._formView.getFormData().get("profile_user_id"),
+                    })
+                    .then((response) => {
                         this._formView.hideLoader();
                         if (response.getStatus() === true) {
-                            this._notify.success('Saved!');
+                            this._notify.success("Saved!");
                         } else {
                             this._notify.error(response.getErrorMessage());
                         }
                     })
-                    .catch(error => {
+                    .catch((error) => {
                         this._formView.hideLoader();
                         this._notify.error(error.message);
                     });
@@ -153,30 +151,24 @@ export default class UIUserProfile extends UIControlInterface {
      * @private
      */
     _setProfileData(googleUser) {
-        this._api.getUserProfile(
-            this._authProvider.getUserProfile(),
-            googleUser.getUserId()
-        )
-            .then(response => {
+        this._api
+            .getUserProfile(this._authProvider.getUserProfile(), googleUser.getUserId())
+            .then((response) => {
                 if (response.getStatus()) {
                     this._formView.hideLoader();
                     const userProfile = UserProfile.factory(response);
                     this._formView
-                        .setElement(
-                            'profile_personal_number',
-                            userProfile.getPersonalNumber()
-                        )
-                        .setElement('profile_user_id', googleUser.getUserId())
-                        .setElement('profile_KC', userProfile.getCs())
-                        .setElement('profile_company_name', userProfile.getCompanyName())
-                        .setElement('profile_iban', userProfile.getIban())
-                        .setElement('profile_BIG', userProfile.getBic());
-
+                        .setElement("profile_personal_number", userProfile.getPersonalNumber())
+                        .setElement("profile_user_id", googleUser.getUserId())
+                        .setElement("profile_KC", userProfile.getCs())
+                        .setElement("profile_company_name", userProfile.getCompanyName())
+                        .setElement("profile_iban", userProfile.getIban())
+                        .setElement("profile_BIG", userProfile.getBic());
                 } else {
                     throw new Error(response.getErrorMessage());
                 }
             })
-            .catch(error => {
+            .catch((error) => {
                 this._getModal().hide();
                 return this._notify.error(error.message);
             });

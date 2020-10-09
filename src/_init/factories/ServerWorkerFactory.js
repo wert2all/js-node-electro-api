@@ -1,4 +1,4 @@
-import ServerWorker from '../../server/ServerWorker';
+import ServerWorker from "../../server/ServerWorker";
 
 export default class ServerWorkerFactory {
     /**
@@ -22,8 +22,6 @@ export default class ServerWorkerFactory {
     }
 
     create() {
-        return new ServerWorker(
-            this._applicationFactory.create(this._di)
-        );
+        return new ServerWorker(this._applicationFactory.create(this._di));
     }
 }

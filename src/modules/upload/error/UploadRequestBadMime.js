@@ -3,6 +3,6 @@
  */
 export default class UploadRequestBadMime extends Error {
     constructor() {
-        super('Bad file type');
+        super("Bad file type");
     }
 }

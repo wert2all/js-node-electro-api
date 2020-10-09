@@ -1,4 +1,4 @@
-import UIImageActionInterface from '../UIImageActionInterface';
+import UIImageActionInterface from "../UIImageActionInterface";
 
 /**
  * @class UIImageEditAction

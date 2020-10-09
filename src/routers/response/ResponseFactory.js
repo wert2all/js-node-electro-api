@@ -1,6 +1,6 @@
-import ResponseProcessorJson from './proseccor/ResponseProcessorJson';
-import ResponseResult from './ResponseResult';
-import ResponseProcessorHtml from './proseccor/ResponseProcessorHtml';
+import ResponseProcessorJson from "./proseccor/ResponseProcessorJson";
+import ResponseResult from "./ResponseResult";
+import ResponseProcessorHtml from "./proseccor/ResponseProcessorHtml";
 
 /**
  * @class ResponseFactory

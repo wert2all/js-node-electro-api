@@ -1,5 +1,5 @@
-import DefinitionTableInterface from '../../lib/db-definition/DefinitionTableInterface';
-import DefinitionColumn from '../../lib/db-definition/DefinitionColumn';
+import DefinitionTableInterface from "../../lib/db-definition/DefinitionTableInterface";
+import DefinitionColumn from "../../lib/db-definition/DefinitionColumn";
 
 /**
  * @class ExtendedValuesDefinition
@@ -7,12 +7,12 @@ import DefinitionColumn from '../../lib/db-definition/DefinitionColumn';
  * @extends DefinitionTableInterface
  */
 export default class ExtendedValuesDefinition extends DefinitionTableInterface {
-    static TABLE_NAME = 'ext_values';
-    static COLUMN_ID = 'id';
-    static COLUMN_ENTITY_ID = 'entity_id';
-    static COLUMN_ENTITY_TYPE = 'entity_type';
-    static COLUMN_VALUE_NAME = 'entity_value_name';
-    static COLUMN_VALUE_VALUE = 'entity_value_value';
+    static TABLE_NAME = "ext_values";
+    static COLUMN_ID = "id";
+    static COLUMN_ENTITY_ID = "entity_id";
+    static COLUMN_ENTITY_TYPE = "entity_type";
+    static COLUMN_VALUE_NAME = "entity_value_name";
+    static COLUMN_VALUE_VALUE = "entity_value_value";
 
     constructor() {
         super();
@@ -85,7 +85,7 @@ export default class ExtendedValuesDefinition extends DefinitionTableInterface {
      */
     isColumn(key) {
         return this.getColumns()
-            .map(definition => definition.getColumnName())
+            .map((definition) => definition.getColumnName())
             .includes(key);
     }
 

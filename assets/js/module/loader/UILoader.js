@@ -1,4 +1,4 @@
-import UIElementInterface from '../../ui/interfaces/element/UIElementInterface';
+import UIElementInterface from "../../ui/interfaces/element/UIElementInterface";
 
 /**
  * @class UILoader
@@ -31,8 +31,7 @@ export default class UILoader extends UIElementInterface {
     /**
      * @return {void}
      */
-    init() {
-    }
+    init() {}
 
     /**
      * @abstract
@@ -46,6 +45,5 @@ export default class UILoader extends UIElementInterface {
      * @abstract
      * @return {void}
      */
-    clean() {
-    }
+    clean() {}
 }

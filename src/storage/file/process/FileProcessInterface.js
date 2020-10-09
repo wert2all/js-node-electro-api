@@ -1,4 +1,4 @@
-import ImplementationError from '../../../lib/implementation-error/ImplementationError';
+import ImplementationError from "../../../lib/implementation-error/ImplementationError";
 
 /**
  * @interface
@@ -14,7 +14,7 @@ export default class FileProcessInterface {
      */
     // eslint-disable-next-line no-unused-vars
     async process(fileData, fileNameProvider) {
-        throw new ImplementationError(this, 'process');
+        throw new ImplementationError(this, "process");
     }
 
     /**
@@ -24,7 +24,7 @@ export default class FileProcessInterface {
      */
     // eslint-disable-next-line no-unused-vars
     checkType(type) {
-        throw new ImplementationError(this, 'checkType');
+        throw new ImplementationError(this, "checkType");
     }
 
     /**
@@ -33,6 +33,6 @@ export default class FileProcessInterface {
      */
     // eslint-disable-next-line no-unused-vars
     setConfig(config) {
-        throw new ImplementationError(this, 'setConfig');
+        throw new ImplementationError(this, "setConfig");
     }
 }

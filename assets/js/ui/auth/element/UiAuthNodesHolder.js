@@ -10,13 +10,7 @@ export default class UiAuthNodesHolder {
      * @param {Node|null} profileLink
      * @param {Node|null} signOffLink
      */
-    constructor(
-        domListeners,
-        userName = null,
-        avatarImg = null,
-        profileLink = null,
-        signOffLink = null
-    ) {
+    constructor(domListeners, userName = null, avatarImg = null, profileLink = null, signOffLink = null) {
         /**
          *
          * @type {Node|null}
@@ -71,8 +65,7 @@ export default class UiAuthNodesHolder {
      */
     getSigOutWithoutListeners() {
         if (this._signOutLink !== null) {
-            this._signOutLink = this._domListeners
-                .removeEventListeners(this._signOutLink);
+            this._signOutLink = this._domListeners.removeEventListeners(this._signOutLink);
         }
         return this._signOutLink;
     }
@@ -83,8 +76,7 @@ export default class UiAuthNodesHolder {
      */
     getProfileLinkWithoutListeners() {
         if (this._profileLink !== null) {
-            this._profileLink = this._domListeners
-                .removeEventListeners(this._profileLink);
+            this._profileLink = this._domListeners.removeEventListeners(this._profileLink);
         }
         return this._profileLink;
     }

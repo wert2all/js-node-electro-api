@@ -1,31 +1,31 @@
-import RequestInterface from '../../routers/request/RequestInterface';
-import FilesRepository from '../../db/repository/FilesRepository';
-import ResponseDataClass from '../../routers/response/ResponseDataClass';
-import ResponseResult from '../../routers/response/ResponseResult';
-import ApiKeyProvider from '../auth/key/KeyProvider';
-import AuthCheck from '../auth/AuthCheck';
-import AuthParams from '../auth/params/Params';
-import UserRepository from '../../db/repository/UserRepository';
-import UserEntity from '../../data/entity/UserEntity';
-import UserDefinition from '../../db/definition/UserDefinition';
-import DI from '../../lib/di/DI';
-import ImageUrl from '../../data/images/ImageUrl';
-import ConnectionInterface from '../../lib/db-connection/ConnectionInterface';
-import StorageConfiguration from '../../storage/configuration/StorageConfiguration';
-import ImagesDeleteDataClass from './data/ImagesDeleteDataClass';
-import UserFilesEntity from '../../data/entity/UserFilesEntity';
-import UserFilesDefinition from '../../db/definition/UserFilesDefinition';
-import fs from 'fs';
-import LoggerInterface from '../../lib/logger/LoggerInterface';
-import ImageLogEvent from './log/ImageLogEvent';
-import LoggerStrategy from '../../extended/LoggerStrategy';
-import FileLogger from '../../lib/logger/adapters/FileLogger';
-import ServerConfig from '../../server/ServerConfig';
-import LogFormatterInterface from '../../lib/logger/LogFormatterInterface';
-import Logger from '../../extended/logger/Logger';
-import EntityManager from '../../lib/db-entity-manager/EntityManager';
-import AuthNoAdmin from '../auth/error/AuthNoAdmin';
-import ImageListLogEvent from './logs/event/ImageListLogEvent';
+import RequestInterface from "../../routers/request/RequestInterface";
+import FilesRepository from "../../db/repository/FilesRepository";
+import ResponseDataClass from "../../routers/response/ResponseDataClass";
+import ResponseResult from "../../routers/response/ResponseResult";
+import ApiKeyProvider from "../auth/key/KeyProvider";
+import AuthCheck from "../auth/AuthCheck";
+import AuthParams from "../auth/params/Params";
+import UserRepository from "../../db/repository/UserRepository";
+import UserEntity from "../../data/entity/UserEntity";
+import UserDefinition from "../../db/definition/UserDefinition";
+import DI from "../../lib/di/DI";
+import ImageUrl from "../../data/images/ImageUrl";
+import ConnectionInterface from "../../lib/db-connection/ConnectionInterface";
+import StorageConfiguration from "../../storage/configuration/StorageConfiguration";
+import ImagesDeleteDataClass from "./data/ImagesDeleteDataClass";
+import UserFilesEntity from "../../data/entity/UserFilesEntity";
+import UserFilesDefinition from "../../db/definition/UserFilesDefinition";
+import fs from "fs";
+import LoggerInterface from "../../lib/logger/LoggerInterface";
+import ImageLogEvent from "./log/ImageLogEvent";
+import LoggerStrategy from "../../extended/LoggerStrategy";
+import FileLogger from "../../lib/logger/adapters/FileLogger";
+import ServerConfig from "../../server/ServerConfig";
+import LogFormatterInterface from "../../lib/logger/LogFormatterInterface";
+import Logger from "../../extended/logger/Logger";
+import EntityManager from "../../lib/db-entity-manager/EntityManager";
+import AuthNoAdmin from "../auth/error/AuthNoAdmin";
+import ImageListLogEvent from "./logs/event/ImageListLogEvent";
 
 /**
  * @class ImagesDeleteRequest
@@ -96,16 +96,12 @@ export default class ImagesDeleteRequest extends RequestInterface {
             }
             response.setStatus(true);
         } catch (e) {
-            DI.getInstance()
-                .get(LoggerInterface)
-                .error(new ImageListLogEvent(e.message));
+            DI.getInstance().get(LoggerInterface).error(new ImageListLogEvent(e.message));
             response.setStatus(false);
             response.setMessage(e.message);
         }
 
-        return Promise.resolve(
-            new ResponseResult(ResponseResult.TYPE_JSON, response.getData())
-        );
+        return Promise.resolve(new ResponseResult(ResponseResult.TYPE_JSON, response.getData()));
     }
 
     /**
@@ -116,9 +112,7 @@ export default class ImagesDeleteRequest extends RequestInterface {
      */
     async _prepareRequest(request) {
         const requestData = ImagesDeleteDataClass.factory(request);
-        requestData.setGoogleAccount(
-            await this._getGoogleAccount(requestData)
-        );
+        requestData.setGoogleAccount(await this._getGoogleAccount(requestData));
         return Promise.resolve(requestData);
     }
 
@@ -130,15 +124,10 @@ export default class ImagesDeleteRequest extends RequestInterface {
      */
     async _getGoogleAccount(requestData) {
         const apiKey = new ApiKeyProvider(
-            this._di.get(StorageConfiguration)
-                .getSecretStorage(),
-            'google:api:signin:client:key'
-        )
-            .get();
-        return await new AuthCheck(apiKey)
-            .check(
-                new AuthParams(requestData.getToken())
-            );
+            this._di.get(StorageConfiguration).getSecretStorage(),
+            "google:api:signin:client:key"
+        ).get();
+        return await new AuthCheck(apiKey).check(new AuthParams(requestData.getToken()));
     }
 
     /**
@@ -149,13 +138,10 @@ export default class ImagesDeleteRequest extends RequestInterface {
     async _checkAdmin(requestData) {
         let isAdmin = false;
         const userEntity = new UserEntity();
-        userEntity.setValue(
-            UserDefinition.COLUMN_GOOGLE_ID,
-            requestData.getAccount().getGoogleUserId()
-        );
+        userEntity.setValue(UserDefinition.COLUMN_GOOGLE_ID, requestData.getAccount().getGoogleUserId());
         const users = await this._usersRepository.fetchData(userEntity);
         if (users.length === 1) {
-            isAdmin = users[0].getIsAdmin() === 'y';
+            isAdmin = users[0].getIsAdmin() === "y";
         }
         if (isAdmin === false) {
             throw new AuthNoAdmin();
@@ -180,11 +166,9 @@ export default class ImagesDeleteRequest extends RequestInterface {
      */
     _deleteImageFile(imageData) {
         const path = imageData.getValue(UserFilesDefinition.COLUMN_PATH);
-        fs.unlink(path, err => {
+        fs.unlink(path, (err) => {
             if (err != null) {
-                this._di
-                    .get(LoggerInterface)
-                    .info(new ImageLogEvent(err.message));
+                this._di.get(LoggerInterface).info(new ImageLogEvent(err.message));
             }
         });
     }
@@ -194,10 +178,9 @@ export default class ImagesDeleteRequest extends RequestInterface {
      * @private
      */
     _applyLogger() {
-        const path = this._di.get(ServerConfig).getLogDirectory() + 'imagelist.log';
+        const path = this._di.get(ServerConfig).getLogDirectory() + "imagelist.log";
         const fileLogger = new FileLogger(path, this._di.get(LogFormatterInterface));
-        const loggerStrategy = this._di.get(LoggerStrategy)
-            .addLogger(ImageLogEvent.TAG, fileLogger);
+        const loggerStrategy = this._di.get(LoggerStrategy).addLogger(ImageLogEvent.TAG, fileLogger);
         this._di.register(LoggerStrategy, loggerStrategy);
         this._di.register(LoggerInterface, new Logger(this._di.get(LoggerStrategy)));
     }
@@ -209,10 +192,8 @@ export default class ImagesDeleteRequest extends RequestInterface {
      * @private
      */
     async _deleteImageFromDB(imageData) {
-        return this._di.get(EntityManager)
-            .delete(
-                this._repository.getDefinition(),
-                imageData.getValue(UserFilesDefinition.COLUMN_ID)
-            );
+        return this._di
+            .get(EntityManager)
+            .delete(this._repository.getDefinition(), imageData.getValue(UserFilesDefinition.COLUMN_ID));
     }
 }

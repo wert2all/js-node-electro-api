@@ -1,4 +1,4 @@
-import DispatchInterface from './DispatchInterface';
+import DispatchInterface from "./DispatchInterface";
 
 /**
  * @class Dispatcher
@@ -20,7 +20,6 @@ export default class Dispatcher extends DispatchInterface {
         this._observers = observers;
     }
 
-
     /**
      *
      * @param {EventInterface}  event
@@ -28,9 +27,7 @@ export default class Dispatcher extends DispatchInterface {
      * @private
      */
     _getEventObservers(event) {
-        return this._observers.hasOwnProperty(event.getEventName())
-            ? this._observers[event.getEventName()]
-            : [];
+        return this._observers.hasOwnProperty(event.getEventName()) ? this._observers[event.getEventName()] : [];
     }
 
     /**
@@ -39,10 +36,8 @@ export default class Dispatcher extends DispatchInterface {
      * @return {Promise<*>}
      */
     dispatch(event) {
-        Promise.all(
-            this._getEventObservers(event).map(observer => observer.notify(event))
-        )
-            .then(data => Promise.resolve(data))
-            .catch(e => Promise.reject(e));
+        Promise.all(this._getEventObservers(event).map((observer) => observer.notify(event)))
+            .then((data) => Promise.resolve(data))
+            .catch((e) => Promise.reject(e));
     }
 }

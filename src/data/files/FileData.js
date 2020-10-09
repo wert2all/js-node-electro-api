@@ -2,7 +2,6 @@
  * @class FileData
  */
 export default class FileData {
-
     /**
      *
      * @param {string} name

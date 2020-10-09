@@ -1,6 +1,6 @@
 // eslint-disable-next-line max-len
-import DefinitionSQLBuilderInterface from '../../../db-definition/builder/DefinitionSQLBuilderInterface';
-import ErrorConnection from '../../error/ErrorConnection';
+import DefinitionSQLBuilderInterface from "../../../db-definition/builder/DefinitionSQLBuilderInterface";
+import ErrorConnection from "../../error/ErrorConnection";
 
 /**
  * @class SQLiteUpdateSQLBuilder
@@ -15,30 +15,29 @@ export default class SQLiteUpdateSQLBuilder extends DefinitionSQLBuilderInterfac
      * @return string
      */
     buildSQL(definition, data) {
-        const primaryValue = (
-            data.hasOwnProperty(
-                definition.getPrimaryColumn().getColumnName()
-            )
-        )
+        const primaryValue = data.hasOwnProperty(definition.getPrimaryColumn().getColumnName())
             ? data[definition.getPrimaryColumn().getColumnName()]
             : false;
         if (primaryValue !== false) {
-            let sql = 'update ' + definition.getTableName() + ' set ';
-            sql += definition.getColumns()
-                .map(column => {
-                    if (definition.getPrimaryColumn().getColumnName()
-                        === column.getColumnName()) {
+            let sql = "update " + definition.getTableName() + " set ";
+            sql += definition
+                .getColumns()
+                .map((column) => {
+                    if (definition.getPrimaryColumn().getColumnName() === column.getColumnName()) {
                         return false;
                     }
                     if (!data.hasOwnProperty(column.getColumnName())) {
                         return false;
                     }
-                    return column.getColumnName() + ' = :' + column.getColumnName();
+                    return column.getColumnName() + " = :" + column.getColumnName();
                 })
-                .filter(index => !!index)
-                .join(',');
-            sql += ' where ' + definition.getPrimaryColumn().getColumnName() +
-                ' = :' + definition.getPrimaryColumn().getColumnName();
+                .filter((index) => !!index)
+                .join(",");
+            sql +=
+                " where " +
+                definition.getPrimaryColumn().getColumnName() +
+                " = :" +
+                definition.getPrimaryColumn().getColumnName();
             return sql;
         } else {
             throw new ErrorConnection();

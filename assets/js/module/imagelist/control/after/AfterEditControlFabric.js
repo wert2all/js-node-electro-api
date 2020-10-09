@@ -1,4 +1,4 @@
-import AfterEditControl from './AfterEditControl';
+import AfterEditControl from "./AfterEditControl";
 
 /**
  * @class AfterEditControlFabric

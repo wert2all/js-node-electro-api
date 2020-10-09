@@ -5,6 +5,6 @@
  */
 export default class ErrorFileStorageProcessMove extends Error {
     constructor() {
-        super('Can\'t move file.');
+        super("Can't move file.");
     }
 }

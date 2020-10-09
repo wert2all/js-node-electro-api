@@ -8,31 +8,31 @@ export default class UserProfile {
          * @type {string}
          * @private
          */
-        this._personalNumber = '';
+        this._personalNumber = "";
         /**
          *
          * @type {string}
          * @private
          */
-        this._cs = '';
+        this._cs = "";
         /**
          *
          * @type {string}
          * @private
          */
-        this._companyName = '';
+        this._companyName = "";
         /**
          *
          * @type {string}
          * @private
          */
-        this._iban = '';
+        this._iban = "";
         /**
          *
          * @type {string}
          * @private
          */
-        this._bic = '';
+        this._bic = "";
     }
 
     /**
@@ -45,20 +45,20 @@ export default class UserProfile {
         if (response.getStatus()) {
             const data = response.getData();
             const profile = new UserProfile();
-            if (data.hasOwnProperty('payment')) {
-                if (data.payment.hasOwnProperty('personal_number')) {
+            if (data.hasOwnProperty("payment")) {
+                if (data.payment.hasOwnProperty("personal_number")) {
                     profile.setPersonalNumber(data.payment.personal_number);
                 }
-                if (data.payment.hasOwnProperty('cs')) {
+                if (data.payment.hasOwnProperty("cs")) {
                     profile.setCs(data.payment.cs);
                 }
-                if (data.payment.hasOwnProperty('company_name')) {
+                if (data.payment.hasOwnProperty("company_name")) {
                     profile.setCompanyName(data.payment.company_name);
                 }
-                if (data.payment.hasOwnProperty('iban')) {
+                if (data.payment.hasOwnProperty("iban")) {
                     profile.setIban(data.payment.iban);
                 }
-                if (data.payment.hasOwnProperty('edrpou')) {
+                if (data.payment.hasOwnProperty("edrpou")) {
                     profile.setBic(data.payment.edrpou);
                 }
             }

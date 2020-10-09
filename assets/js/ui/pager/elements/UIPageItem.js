@@ -1,4 +1,4 @@
-import UIElementInterface from '../../interfaces/element/UIElementInterface';
+import UIElementInterface from "../../interfaces/element/UIElementInterface";
 
 /**
  * @class UIPageItem
@@ -94,9 +94,7 @@ export default class UIPageItem extends UIElementInterface {
      */
     setClickListener(func = Function.prototype) {
         this._pageItem = this._pageItem.cloneNode(true);
-        this._pageItem.addEventListener(
-            'click',
-            (event) => func(event, this._pageNumber));
+        this._pageItem.addEventListener("click", (event) => func(event, this._pageNumber));
         return this;
     }
 }

@@ -3,6 +3,4 @@
  * @abstract
  * @class FileSizeInterface
  */
-export default class FileSizeInterface {
-
-}
+export default class FileSizeInterface {}

@@ -1,4 +1,4 @@
-import DataValue from '../../../lib/data-value/DataValue';
+import DataValue from "../../../lib/data-value/DataValue";
 
 /**
  * @class UserPaymentDataClass
@@ -8,11 +8,11 @@ import DataValue from '../../../lib/data-value/DataValue';
 export default class UserPaymentDataClass extends DataValue {
     constructor() {
         super();
-        this.setData('company_name', '');
-        this.setData('iban', '');
-        this.setData('bic', '');
-        this.setData('edrpou', '');
-        this.setData('personal_number', '');
-        this.setData('cs', '');
+        this.setData("company_name", "");
+        this.setData("iban", "");
+        this.setData("bic", "");
+        this.setData("edrpou", "");
+        this.setData("personal_number", "");
+        this.setData("cs", "");
     }
 }

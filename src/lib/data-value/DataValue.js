@@ -1,4 +1,4 @@
-import DataValueInterface from './DataValueInterface';
+import DataValueInterface from "./DataValueInterface";
 
 /**
  * @class DataValue
@@ -22,9 +22,7 @@ export default class DataValue extends DataValueInterface {
      * @return {DataValue}
      */
     static create(hash) {
-        return Object.keys(hash)
-            .reduce((prev, key) =>
-                prev.setData(key, hash[key]), new DataValue());
+        return Object.keys(hash).reduce((prev, key) => prev.setData(key, hash[key]), new DataValue());
     }
 
     /**

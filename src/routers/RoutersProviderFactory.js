@@ -1,5 +1,5 @@
-import Route from './Route';
-import RoutersProvider from './RoutersProvider';
+import Route from "./Route";
+import RoutersProvider from "./RoutersProvider";
 
 /**
  * @class RoutersProviderFactory
@@ -20,13 +20,13 @@ export default class RoutersProviderFactory {
      */
     create(dispatcher) {
         return new RoutersProvider(
-            this._routeDefinitions.map(routeDefinition =>
-                new Route(
-                    routeDefinition.route,
-                    routeDefinition.method,
-                    routeDefinition.requestClass
-                        .init(dispatcher)
-                )
+            this._routeDefinitions.map(
+                (routeDefinition) =>
+                    new Route(
+                        routeDefinition.route,
+                        routeDefinition.method,
+                        routeDefinition.requestClass.init(dispatcher)
+                    )
             )
         );
     }

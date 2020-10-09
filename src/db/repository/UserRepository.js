@@ -1,6 +1,6 @@
-import RepositoryAbstract from '../../lib/db-repository/ReposytoryAbstract';
-import FilterFactory from '../../lib/db-filter/FilterFactory';
-import UserDefinition from '../definition/UserDefinition';
+import RepositoryAbstract from "../../lib/db-repository/ReposytoryAbstract";
+import FilterFactory from "../../lib/db-filter/FilterFactory";
+import UserDefinition from "../definition/UserDefinition";
 
 /**
  * @class UserRepository

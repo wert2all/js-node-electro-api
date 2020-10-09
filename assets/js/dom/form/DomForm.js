@@ -1,4 +1,4 @@
-import DomFormInterface from './DomFormInterface';
+import DomFormInterface from "./DomFormInterface";
 
 /**
  * @class DomForm
@@ -32,8 +32,7 @@ export default class DomForm extends DomFormInterface {
      * @param {function} submitFunction
      */
     // eslint-disable-next-line no-unused-vars
-    init(submitFunction) {
-    }
+    init(submitFunction) {}
 
     /**
      *
@@ -79,10 +78,10 @@ export default class DomForm extends DomFormInterface {
      */
     validate() {
         return (
-            Object.keys(this._elements).map(key => this._elements[key])
-                .map(element => element.validate())
-                .filter(value => !value)
-                .length === 0
+            Object.keys(this._elements)
+                .map((key) => this._elements[key])
+                .map((element) => element.validate())
+                .filter((value) => !value).length === 0
         );
     }
 
@@ -92,10 +91,9 @@ export default class DomForm extends DomFormInterface {
      */
     getFormData() {
         const formData = new FormData();
-        Object.keys(this._elements)
-            .map(key => {
-                formData.set(key, this._elements[key].getValue());
-            });
+        Object.keys(this._elements).map((key) => {
+            formData.set(key, this._elements[key].getValue());
+        });
         return formData;
     }
 
@@ -113,8 +111,6 @@ export default class DomForm extends DomFormInterface {
      * @return {DomFormElementInterface|null}
      */
     getElement(elementName) {
-        return (this._elements.hasOwnProperty(elementName))
-            ? this._elements[elementName]
-            : null;
+        return this._elements.hasOwnProperty(elementName) ? this._elements[elementName] : null;
     }
 }

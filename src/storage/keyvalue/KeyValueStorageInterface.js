@@ -1,4 +1,4 @@
-import ImplementationError from '../../lib/implementation-error/ImplementationError';
+import ImplementationError from "../../lib/implementation-error/ImplementationError";
 
 /**
  * @class KeyValueStorageInterface
@@ -13,6 +13,6 @@ export default class KeyValueStorageInterface {
      */
     // eslint-disable-next-line no-unused-vars
     fetch(key) {
-        throw new ImplementationError(this, 'fetch');
+        throw new ImplementationError(this, "fetch");
     }
 }

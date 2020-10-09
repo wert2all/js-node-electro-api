@@ -4,7 +4,6 @@
  * @abstract
  */
 export default class DomFormElementInterface {
-
     /**
      *
      * @param {string} value
@@ -12,32 +11,25 @@ export default class DomFormElementInterface {
      * @abstract
      */
     // eslint-disable-next-line no-unused-vars
-    setValue(value) {
-    }
+    setValue(value) {}
 
     /**
      * @return {string}
      * @abstract
      */
-    getValue() {
-
-    }
+    getValue() {}
 
     /**
      * @abstract
      * @return boolean
      */
-    validate() {
-
-    }
+    validate() {}
 
     /**
      * @abstract
      * @return DomFormElementInterface
      */
-    setFocus() {
-
-    }
+    setFocus() {}
 
     /**
      * @abstract
@@ -45,7 +37,5 @@ export default class DomFormElementInterface {
      * @return DomFormElementInterface
      */
     // eslint-disable-next-line no-unused-vars
-    setError(message) {
-
-    }
+    setError(message) {}
 }

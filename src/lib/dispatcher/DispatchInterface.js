@@ -1,4 +1,4 @@
-import ImplementationError from '../implementation-error/ImplementationError';
+import ImplementationError from "../implementation-error/ImplementationError";
 
 /**
  * @interface
@@ -13,6 +13,6 @@ export default class DispatchInterface {
      */
     // eslint-disable-next-line no-unused-vars
     dispatch(event) {
-        throw new ImplementationError(this, 'dispatch');
+        throw new ImplementationError(this, "dispatch");
     }
 }

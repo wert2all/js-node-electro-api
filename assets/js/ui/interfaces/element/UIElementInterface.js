@@ -1,4 +1,4 @@
-import UICloneableInterface from '../UICloneableInterface';
+import UICloneableInterface from "../UICloneableInterface";
 
 /**
  * @interface
@@ -11,21 +11,17 @@ export default class UIElementInterface extends UICloneableInterface {
      * @abstract
      * @return {void}
      */
-    init() {
-
-    }
+    init() {}
 
     /**
      * @abstract
      * @return {void}
      */
-    clean() {
-    }
+    clean() {}
 
     /**
      * @abstract
      * @return {ParentNode}
      */
-    getNode() {
-    }
+    getNode() {}
 }

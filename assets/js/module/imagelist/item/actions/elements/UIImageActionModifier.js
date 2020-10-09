@@ -1,4 +1,4 @@
-import UIImageActionsModifierInterface from '../UIImageActionsModifierInterface';
+import UIImageActionsModifierInterface from "../UIImageActionsModifierInterface";
 
 /**
  * @class UIImageActionModifier
@@ -42,7 +42,7 @@ export default class UIImageActionModifier extends UIImageActionsModifierInterfa
      * @param {UIElementListInterface} elementList
      */
     applyData(node, imageData, elementList = null) {
-        node.querySelector(this._selector).addEventListener('click', (event) => {
+        node.querySelector(this._selector).addEventListener("click", (event) => {
             event.preventDefault();
             this._onClickAction.click(imageData, elementList);
         });

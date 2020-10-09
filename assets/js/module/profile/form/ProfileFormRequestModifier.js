@@ -1,4 +1,4 @@
-import DomFormRequestModifierInterface from '../../../dom/form/DomFormRequestModifierInterface';
+import DomFormRequestModifierInterface from "../../../dom/form/DomFormRequestModifierInterface";
 
 /**
  * @class ProfileFormRequestModifier
@@ -26,17 +26,16 @@ export default class ProfileFormRequestModifier extends DomFormRequestModifierIn
      */
     modify(formData) {
         const returnValue = {};
-        Object.keys(this._map)
-            .forEach(rootKey => {
-                if (typeof this._map[rootKey] == 'string') {
-                    returnValue[rootKey] = formData.get(this._map[rootKey]);
-                } else {
-                    returnValue[rootKey] = {};
-                    Object.keys(this._map[rootKey])
-                        .forEach(key => returnValue[rootKey][key]
-                            = formData.get(this._map[rootKey][key]));
-                }
-            });
+        Object.keys(this._map).forEach((rootKey) => {
+            if (typeof this._map[rootKey] == "string") {
+                returnValue[rootKey] = formData.get(this._map[rootKey]);
+            } else {
+                returnValue[rootKey] = {};
+                Object.keys(this._map[rootKey]).forEach(
+                    (key) => (returnValue[rootKey][key] = formData.get(this._map[rootKey][key]))
+                );
+            }
+        });
         return returnValue;
     }
 }

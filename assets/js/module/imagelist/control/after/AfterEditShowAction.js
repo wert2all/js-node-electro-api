@@ -1,4 +1,4 @@
-import UIAfterControlInterface from '../../../../ui/control/UIAfterControlInterface';
+import UIAfterControlInterface from "../../../../ui/control/UIAfterControlInterface";
 
 /**
  * @class AfterEditShowAction
@@ -27,11 +27,8 @@ export default class AfterEditShowAction extends UIAfterControlInterface {
         this._formView = formView;
     }
 
-
     exec() {
-        const rotation = this._formView
-            .getElement('edit_image_rotation')
-            .getValue();
+        const rotation = this._formView.getElement("edit_image_rotation").getValue();
         this._cropperAction.getCropper().rotate(rotation);
     }
 }

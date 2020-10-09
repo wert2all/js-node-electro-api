@@ -8,6 +8,5 @@ export default class UICloneableInterface {
      * @abstract
      * @return {UICloneableInterface|null}
      */
-    clone() {
-    }
+    clone() {}
 }

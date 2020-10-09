@@ -1,5 +1,5 @@
-import AuthProviderInterface from '../../auth/AuthPrividerInterface';
-import DataGoogleAuthUser from '../../data/DataGoogleAuthUser';
+import AuthProviderInterface from "../../auth/AuthPrividerInterface";
+import DataGoogleAuthUser from "../../data/DataGoogleAuthUser";
 
 /**
  * @class GApiAuth
@@ -35,17 +35,18 @@ export default class GApiAuth extends AuthProviderInterface {
     }
 
     init() {
-        gapi.client.init({
-            'clientId': this._config.getClientId(),
-            'scope': this._config.getScope()
-        })
+        gapi.client
+            .init({
+                clientId: this._config.getClientId(),
+                scope: this._config.getScope(),
+            })
             .then(() => {
                 const GoogleAuth = this._gapi.auth2.getAuthInstance();
                 GoogleAuth.isSignedIn.listen(this._getAuthCheckFunction(GoogleAuth));
                 this._getAuthCheckFunction(GoogleAuth)();
             })
-            .catch(e => {
-                console.log('cant init client');
+            .catch((e) => {
+                console.log("cant init client");
                 console.log(e);
             });
     }

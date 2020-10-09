@@ -1,4 +1,4 @@
-import LogEventInterface from '../../../lib/logger/LogEventInterface';
+import LogEventInterface from "../../../lib/logger/LogEventInterface";
 
 /**
  * @class ImageLogEvent
@@ -6,7 +6,7 @@ import LogEventInterface from '../../../lib/logger/LogEventInterface';
  * @extends LogEventInterface
  */
 export default class ImageLogEvent extends LogEventInterface {
-    static  TAG = 'imagelist';
+    static TAG = "imagelist";
 
     /**
      *

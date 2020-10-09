@@ -1,4 +1,4 @@
-import UserDefinition from '../db/definition/UserDefinition';
+import UserDefinition from "../db/definition/UserDefinition";
 
 /**
  * @class GoogleAccount
@@ -11,7 +11,7 @@ export default class GoogleAccount {
      * @param {string} email
      * @param {string} photo
      */
-    constructor(googleUserId, name, email, photo = '') {
+    constructor(googleUserId, name, email, photo = "") {
         /**
          *
          * @type {string}
@@ -44,12 +44,7 @@ export default class GoogleAccount {
      * @return GoogleAccount
      */
     static create(tokenPayload) {
-        return new GoogleAccount(
-            tokenPayload.sub,
-            tokenPayload.name,
-            tokenPayload.email,
-            tokenPayload.picture
-        );
+        return new GoogleAccount(tokenPayload.sub, tokenPayload.name, tokenPayload.email, tokenPayload.picture);
     }
 
     /**

@@ -1,4 +1,4 @@
-import UIElementInterface from './UIElementInterface';
+import UIElementInterface from "./UIElementInterface";
 
 /**
  * @class UIMutableElementInterface
@@ -12,6 +12,5 @@ export default class UIMutableElementInterface extends UIElementInterface {
      * @return UIElementInterface
      */
     // eslint-disable-next-line no-unused-vars
-    addElement(element) {
-    }
+    addElement(element) {}
 }

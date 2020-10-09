@@ -1,4 +1,4 @@
-import AuthParams from './Params';
+import AuthParams from "./Params";
 
 /**
  * @class AuthParamsFactory
@@ -10,6 +10,6 @@ export default class AuthParamsFactory {
      * @return {AuthParams}
      */
     create(request) {
-        return new AuthParams(Buffer.from(request.body.token, 'base64').toString());
+        return new AuthParams(Buffer.from(request.body.token, "base64").toString());
     }
 }

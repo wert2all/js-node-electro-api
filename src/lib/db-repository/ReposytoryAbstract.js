@@ -1,5 +1,5 @@
-import ImplementationError from '../implementation-error/ImplementationError';
-import RepositoryErrorNoConnection from './error/RepositoryErrorNoConnection';
+import ImplementationError from "../implementation-error/ImplementationError";
+import RepositoryErrorNoConnection from "./error/RepositoryErrorNoConnection";
 
 /**
  * @abstract
@@ -44,14 +44,8 @@ export default class RepositoryAbstract {
      * @return {Promise<EntityInterface[]>}
      */
     async fetchData(entity, order = null, limit = null, fields = null) {
-        const list = await this._fetch(
-            this.getDefinition(),
-            entity,
-            order,
-            limit,
-            fields
-        );
-        return Promise.resolve(list.map(value => entity.create(value)));
+        const list = await this._fetch(this.getDefinition(), entity, order, limit, fields);
+        return Promise.resolve(list.map((value) => entity.create(value)));
     }
 
     /**
@@ -61,9 +55,7 @@ export default class RepositoryAbstract {
      */
     async fetchCount(entity) {
         //FIXME count
-        const result = await this._fetch(
-            this.getDefinition(), entity, null, null, {count: 'count(*)'}
-        );
+        const result = await this._fetch(this.getDefinition(), entity, null, null, { count: "count(*)" });
         return result.pop().count;
     }
 
@@ -82,8 +74,7 @@ export default class RepositoryAbstract {
             return Promise.reject(new RepositoryErrorNoConnection());
         }
         const filter = this._filterFactory().create(entity);
-        return await this._connection
-            .select(definition, filter, order, limit, fields);
+        return await this._connection.select(definition, filter, order, limit, fields);
     }
 
     /**
@@ -92,7 +83,7 @@ export default class RepositoryAbstract {
      * @return FilterFactoryInterface
      */
     _filterFactory() {
-        throw new ImplementationError(this, '_filterFactory');
+        throw new ImplementationError(this, "_filterFactory");
     }
 
     /**
@@ -101,6 +92,6 @@ export default class RepositoryAbstract {
      * @return DefinitionTableInterface
      */
     getDefinition() {
-        throw new ImplementationError(this, '_getDefinition');
+        throw new ImplementationError(this, "_getDefinition");
     }
 }

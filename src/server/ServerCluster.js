@@ -1,4 +1,4 @@
-import cluster from 'cluster';
+import cluster from "cluster";
 
 /**
  * @class ServerCluster
@@ -33,7 +33,7 @@ export default class ServerCluster {
                 cluster.fork();
             }
 
-            cluster.on('exit', (worker, code) => {
+            cluster.on("exit", (worker, code) => {
                 console.log(`Worker died! Pid: ${worker.process.pid}. Code ${code}`);
                 if (code === 1) {
                     cluster.fork();
@@ -45,5 +45,4 @@ export default class ServerCluster {
             this._worker.run();
         }
     }
-
 }

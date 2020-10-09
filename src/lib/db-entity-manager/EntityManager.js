@@ -1,10 +1,10 @@
 /**
  * @class EntityManager
  */
-import EntityManagerError from './error/EntityManagerError';
-import Filter from '../db-filter/Filter';
-import EntityInterface from '../db-entity/EntityInterface';
-import DefinitionLimit from '../db-definition/DefinitionLimit';
+import EntityManagerError from "./error/EntityManagerError";
+import Filter from "../db-filter/Filter";
+import EntityInterface from "../db-entity/EntityInterface";
+import DefinitionLimit from "../db-definition/DefinitionLimit";
 
 export default class EntityManager {
     /**
@@ -31,8 +31,7 @@ export default class EntityManager {
             if (await this._isExist(definition, entity)) {
                 await this._connection.update(definition, entity.getData());
             } else {
-                const rowIdValue = await this._connection
-                    .insert(definition, entity.getData());
+                const rowIdValue = await this._connection.insert(definition, entity.getData());
                 entity.setValue(EntityInterface.ROW_ID, rowIdValue);
             }
             return Promise.resolve(entity);
@@ -49,14 +48,11 @@ export default class EntityManager {
      * @private
      */
     async _isExist(definition, entity) {
-        const primaryValue = entity.getValue(
-            definition.getPrimaryColumn().getColumnName()
-        );
+        const primaryValue = entity.getValue(definition.getPrimaryColumn().getColumnName());
         if (primaryValue != null) {
             const filter = new Filter();
             filter.addColumn(definition.getPrimaryColumn(), primaryValue);
-            const entityDbValue = await this._connection
-                .select(definition, filter, null, new DefinitionLimit(0, 1));
+            const entityDbValue = await this._connection.select(definition, filter, null, new DefinitionLimit(0, 1));
             return Promise.resolve(entityDbValue.length > 0);
         } else {
             return Promise.resolve(false);

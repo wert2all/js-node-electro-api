@@ -1,4 +1,4 @@
-import FileKeyValueStorage from './FileKeyValueStorage';
+import FileKeyValueStorage from "./FileKeyValueStorage";
 
 /**
  * @class SecretStorage
@@ -19,6 +19,6 @@ export default class SecretStorage extends FileKeyValueStorage {
      * @protected
      */
     _defaultFetch() {
-        throw Error('Error fetching secret key');
+        throw Error("Error fetching secret key");
     }
 }

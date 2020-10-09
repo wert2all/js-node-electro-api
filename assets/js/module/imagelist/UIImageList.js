@@ -1,9 +1,9 @@
-import ImageData from '../../data/ImageData';
-import ApiLimits from '../api/ApiLimits';
-import ApiImagesLimitData from './data/ApiImagesLimitData';
-import ApiImagesHolder from './data/ApiImagesHolder';
-import UIElementListInterface from '../../ui/interfaces/element/UIElementListInterface';
-import DataGoogleAuthUser from '../../data/DataGoogleAuthUser';
+import ImageData from "../../data/ImageData";
+import ApiLimits from "../api/ApiLimits";
+import ApiImagesLimitData from "./data/ApiImagesLimitData";
+import ApiImagesHolder from "./data/ApiImagesHolder";
+import UIElementListInterface from "../../ui/interfaces/element/UIElementListInterface";
+import DataGoogleAuthUser from "../../data/DataGoogleAuthUser";
 
 /**
  * @class UIImageList
@@ -78,11 +78,7 @@ export default class UIImageList extends UIElementListInterface {
      * @private
      */
     _showLoader() {
-        this._viewHolder
-            .getGrid()
-            .addElement(
-                this._viewHolder.getLoader().clone()
-            );
+        this._viewHolder.getGrid().addElement(this._viewHolder.getLoader().clone());
     }
 
     /**
@@ -100,23 +96,21 @@ export default class UIImageList extends UIElementListInterface {
      */
     _fetchData(fromValue = 0) {
         this._apiLimits = this._apiLimits.setFrom(fromValue);
-        return this._api
-            .getImages(this._authProvider.getUserProfile(), this._apiLimits)
-            .then(apiResult => {
-                if (apiResult.getStatus()) {
-                    let images = [];
-                    let limit = null;
-                    if (apiResult.getData().hasOwnProperty('files')) {
-                        images = this._aggregateImages(apiResult.getData().files);
-                    }
-                    if (apiResult.getData().hasOwnProperty('limits')) {
-                        limit = this._aggregateLimit(apiResult.getData().limits);
-                    }
-                    return new ApiImagesHolder(images, limit);
-                } else {
-                    throw new Error(apiResult.getErrorMessage());
+        return this._api.getImages(this._authProvider.getUserProfile(), this._apiLimits).then((apiResult) => {
+            if (apiResult.getStatus()) {
+                let images = [];
+                let limit = null;
+                if (apiResult.getData().hasOwnProperty("files")) {
+                    images = this._aggregateImages(apiResult.getData().files);
                 }
-            });
+                if (apiResult.getData().hasOwnProperty("limits")) {
+                    limit = this._aggregateLimit(apiResult.getData().limits);
+                }
+                return new ApiImagesHolder(images, limit);
+            } else {
+                throw new Error(apiResult.getErrorMessage());
+            }
+        });
     }
 
     /**
@@ -127,19 +121,12 @@ export default class UIImageList extends UIElementListInterface {
      */
     _applyImages(data) {
         if (data.getImages().length === 0) {
-            this._viewHolder.getNotify().warning('No image data');
+            this._viewHolder.getNotify().warning("No image data");
         }
         this._hideLoader();
-        data.getImages()
-            .forEach(imageData => {
-                this._viewHolder
-                    .getGrid()
-                    .addElement(
-                        this._viewHolder
-                            .getImageItem()
-                            .create(imageData, this)
-                    );
-            });
+        data.getImages().forEach((imageData) => {
+            this._viewHolder.getGrid().addElement(this._viewHolder.getImageItem().create(imageData, this));
+        });
         return Promise.resolve(data);
     }
 
@@ -150,27 +137,20 @@ export default class UIImageList extends UIElementListInterface {
      * @private
      */
     _aggregateImages(files) {
-        return files.map(image => {
+        return files.map((image) => {
             const imageObject = new ImageData(image.id, image.url)
                 .setType(image.type)
                 .setYearmon(image.yearmon)
                 .setPath(image.path)
-                .setIsReady(image.isReady === 'true');
-            if (image.hasOwnProperty('ext_data')) {
+                .setIsReady(image.isReady === "true");
+            if (image.hasOwnProperty("ext_data")) {
                 const extData = image.ext_data;
-                imageObject.setRotation(
-                    extData.hasOwnProperty('rotation') ? extData.rotation : 0
-                );
+                imageObject.setRotation(extData.hasOwnProperty("rotation") ? extData.rotation : 0);
             }
 
-            if (image.hasOwnProperty('user')) {
+            if (image.hasOwnProperty("user")) {
                 imageObject.setUser(
-                    new DataGoogleAuthUser(
-                        image.user.id,
-                        image.user.name,
-                        image.user.email,
-                        image.user.image
-                    )
+                    new DataGoogleAuthUser(image.user.id, image.user.name, image.user.email, image.user.image)
                 );
             }
             return imageObject;
@@ -204,11 +184,7 @@ export default class UIImageList extends UIElementListInterface {
      * @private
      */
     _aggregateLimit(limits) {
-        return (
-            limits.hasOwnProperty('count')
-            && limits.hasOwnProperty('from')
-            && limits.hasOwnProperty('offset')
-        )
+        return limits.hasOwnProperty("count") && limits.hasOwnProperty("from") && limits.hasOwnProperty("offset")
             ? new ApiImagesLimitData(limits.count, limits.from, limits.offset)
             : null;
     }
@@ -220,7 +196,8 @@ export default class UIImageList extends UIElementListInterface {
      * @private
      */
     _applyPagerData(limit) {
-        this._viewHolder.getPager()
+        this._viewHolder
+            .getPager()
             .setPagerItemsCount(limit.getCount())
             .setPagerFrom(limit.getFrom())
             .setPagerOffset(limit.getOffset());
@@ -236,9 +213,9 @@ export default class UIImageList extends UIElementListInterface {
         this._setElements();
         this._showLoader();
         this._fetchData(fromValue)
-            .then(data => this._applyImages(data))
-            .then(data => this._applyPager(data))
-            .catch(error => {
+            .then((data) => this._applyImages(data))
+            .then((data) => this._applyPager(data))
+            .catch((error) => {
                 this._hideLoader();
                 return this._viewHolder.getNotify().error(error.message);
             });

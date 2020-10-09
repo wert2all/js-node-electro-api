@@ -1,27 +1,27 @@
-import RequestInterface from '../../routers/request/RequestInterface';
-import FilesRepository from '../../db/repository/FilesRepository';
-import ResponseDataClass from '../../routers/response/ResponseDataClass';
-import ResponseResult from '../../routers/response/ResponseResult';
-import ImagesGetDataClass from './data/ImagesGetDataClass';
-import ApiKeyProvider from '../auth/key/KeyProvider';
-import AuthCheck from '../auth/AuthCheck';
-import AuthParams from '../auth/params/Params';
-import UserRepository from '../../db/repository/UserRepository';
-import UserEntity from '../../data/entity/UserEntity';
-import UserDefinition from '../../db/definition/UserDefinition';
-import UserFilesEntity from '../../data/entity/UserFilesEntity';
-import UserFilesDefinition from '../../db/definition/UserFilesDefinition';
-import DI from '../../lib/di/DI';
-import ImageUrl from '../../data/images/ImageUrl';
-import DefinitionOrder from '../../lib/db-definition/DefinitionOrder';
-import DefinitionLimit from '../../lib/db-definition/DefinitionLimit';
-import ConnectionInterface from '../../lib/db-connection/ConnectionInterface';
-import StorageConfiguration from '../../storage/configuration/StorageConfiguration';
-import AuthNoAdmin from '../auth/error/AuthNoAdmin';
-import LoggerInterface from '../../lib/logger/LoggerInterface';
-import ImageListLogEvent from './logs/event/ImageListLogEvent';
-import ExtendedValuesEntity from '../../data/entity/ExtendedValuesEntity';
-import ExtendedValuesRepository from '../../db/repository/ExtendedValuesRepository';
+import RequestInterface from "../../routers/request/RequestInterface";
+import FilesRepository from "../../db/repository/FilesRepository";
+import ResponseDataClass from "../../routers/response/ResponseDataClass";
+import ResponseResult from "../../routers/response/ResponseResult";
+import ImagesGetDataClass from "./data/ImagesGetDataClass";
+import ApiKeyProvider from "../auth/key/KeyProvider";
+import AuthCheck from "../auth/AuthCheck";
+import AuthParams from "../auth/params/Params";
+import UserRepository from "../../db/repository/UserRepository";
+import UserEntity from "../../data/entity/UserEntity";
+import UserDefinition from "../../db/definition/UserDefinition";
+import UserFilesEntity from "../../data/entity/UserFilesEntity";
+import UserFilesDefinition from "../../db/definition/UserFilesDefinition";
+import DI from "../../lib/di/DI";
+import ImageUrl from "../../data/images/ImageUrl";
+import DefinitionOrder from "../../lib/db-definition/DefinitionOrder";
+import DefinitionLimit from "../../lib/db-definition/DefinitionLimit";
+import ConnectionInterface from "../../lib/db-connection/ConnectionInterface";
+import StorageConfiguration from "../../storage/configuration/StorageConfiguration";
+import AuthNoAdmin from "../auth/error/AuthNoAdmin";
+import LoggerInterface from "../../lib/logger/LoggerInterface";
+import ImageListLogEvent from "./logs/event/ImageListLogEvent";
+import ExtendedValuesEntity from "../../data/entity/ExtendedValuesEntity";
+import ExtendedValuesRepository from "../../db/repository/ExtendedValuesRepository";
 
 /**
  * @class ImagesGetRequest
@@ -84,21 +84,17 @@ export default class ImagesGetRequest extends RequestInterface {
             const requestData = await this._prepareRequest(request);
             await this._checkAdmin(requestData);
             const imageData = await this._fetchData(requestData);
-            response.setData('files', imageData.images);
-            response.setData('limits', imageData.limits);
+            response.setData("files", imageData.images);
+            response.setData("limits", imageData.limits);
             response.setStatus(true);
         } catch (e) {
-            DI.getInstance()
-                .get(LoggerInterface)
-                .error(new ImageListLogEvent(e.message));
+            DI.getInstance().get(LoggerInterface).error(new ImageListLogEvent(e.message));
 
             response.setStatus(false);
             response.setMessage(e.message);
         }
 
-        return Promise.resolve(
-            new ResponseResult(ResponseResult.TYPE_JSON, response.getData())
-        );
+        return Promise.resolve(new ResponseResult(ResponseResult.TYPE_JSON, response.getData()));
     }
 
     /**
@@ -109,9 +105,7 @@ export default class ImagesGetRequest extends RequestInterface {
      */
     async _prepareRequest(request) {
         const requestData = ImagesGetDataClass.factory(request);
-        requestData.setGoogleAccount(
-            await this._getGoogleAccount(requestData)
-        );
+        requestData.setGoogleAccount(await this._getGoogleAccount(requestData));
         return Promise.resolve(requestData);
     }
 
@@ -123,16 +117,10 @@ export default class ImagesGetRequest extends RequestInterface {
      */
     async _getGoogleAccount(requestData) {
         const apiKey = new ApiKeyProvider(
-            DI.getInstance()
-                .get(StorageConfiguration)
-                .getSecretStorage(),
-            'google:api:signin:client:key'
-        )
-            .get();
-        return await new AuthCheck(apiKey)
-            .check(
-                new AuthParams(requestData.getToken())
-            );
+            DI.getInstance().get(StorageConfiguration).getSecretStorage(),
+            "google:api:signin:client:key"
+        ).get();
+        return await new AuthCheck(apiKey).check(new AuthParams(requestData.getToken()));
     }
 
     /**
@@ -143,13 +131,10 @@ export default class ImagesGetRequest extends RequestInterface {
     async _checkAdmin(requestData) {
         let isAdmin = false;
         const userEntity = new UserEntity();
-        userEntity.setValue(
-            UserDefinition.COLUMN_GOOGLE_ID,
-            requestData.getAccount().getGoogleUserId()
-        );
+        userEntity.setValue(UserDefinition.COLUMN_GOOGLE_ID, requestData.getAccount().getGoogleUserId());
         const users = await this._usersRepository.fetchData(userEntity);
         if (users.length === 1) {
-            isAdmin = users[0].getIsAdmin() === 'y';
+            isAdmin = users[0].getIsAdmin() === "y";
         }
         if (isAdmin === false) {
             throw new AuthNoAdmin();
@@ -173,7 +158,7 @@ export default class ImagesGetRequest extends RequestInterface {
                 from: limits.getFrom(),
                 offset: limits.getOffset(),
                 count: await this._repository.fetchCount(new UserFilesEntity()),
-            }
+            },
         };
     }
 
@@ -184,23 +169,18 @@ export default class ImagesGetRequest extends RequestInterface {
      * @private
      */
     async _extendUserData(userFileEntity) {
-        const userId = userFileEntity
-            .getValue(UserFilesDefinition.COLUMN_GOOGLE_USER_ID);
+        const userId = userFileEntity.getValue(UserFilesDefinition.COLUMN_GOOGLE_USER_ID);
         const user = new UserEntity();
         user.setValue(UserDefinition.COLUMN_GOOGLE_ID, userId);
         const userData = await this._usersRepository.fetchData(user);
-        const extendUserData = {id: null, name: null, email: null, image: null};
+        const extendUserData = { id: null, name: null, email: null, image: null };
         if (userData.length === 1) {
-            extendUserData.id = userData[0]
-                .getValue(UserDefinition.COLUMN_GOOGLE_ID);
-            extendUserData.name = userData[0]
-                .getValue(UserDefinition.COLUMN_GOOGLE_NAME);
-            extendUserData.email = userData[0]
-                .getValue(UserDefinition.COLUMN_GOOGLE_EMAIL);
-            extendUserData.image = userData[0]
-                .getValue(UserDefinition.COLUMN_PHOTO_PATH);
+            extendUserData.id = userData[0].getValue(UserDefinition.COLUMN_GOOGLE_ID);
+            extendUserData.name = userData[0].getValue(UserDefinition.COLUMN_GOOGLE_NAME);
+            extendUserData.email = userData[0].getValue(UserDefinition.COLUMN_GOOGLE_EMAIL);
+            extendUserData.image = userData[0].getValue(UserDefinition.COLUMN_PHOTO_PATH);
         }
-        userFileEntity.setValue('user', extendUserData);
+        userFileEntity.setValue("user", extendUserData);
     }
 
     /**
@@ -230,9 +210,9 @@ export default class ImagesGetRequest extends RequestInterface {
             await this._extendUserData(userFileEntity);
             await this._extendFileData(userFileEntity);
             userFileEntity.unset(UserDefinition.COLUMN_GOOGLE_ID);
-            userFileEntity.setValue('url', this._replacePath(userFileEntity));
+            userFileEntity.setValue("url", this._replacePath(userFileEntity));
         }
-        return images.map(imageEntity => imageEntity.getData());
+        return images.map((imageEntity) => imageEntity.getData());
     }
 
     /**
@@ -241,9 +221,7 @@ export default class ImagesGetRequest extends RequestInterface {
      * @private
      */
     _getLimitOffset(requestOffset = null) {
-        return (requestOffset == null)
-            ? ImagesGetRequest.LIMIT_OFFSET
-            : requestOffset;
+        return requestOffset == null ? ImagesGetRequest.LIMIT_OFFSET : requestOffset;
     }
 
     /**
@@ -255,17 +233,15 @@ export default class ImagesGetRequest extends RequestInterface {
     async _extendFileData(fileEntity) {
         const extEntity = new ExtendedValuesEntity();
         extEntity
-            .setEntityType('file')
+            .setEntityType("file")
             .setEntityId(fileEntity.getValue(UserFilesDefinition.COLUMN_ID))
-            .fillData(
-                await this._extRepository.fetchData(extEntity)
-            );
+            .fillData(await this._extRepository.fetchData(extEntity));
 
         fileEntity.setExtensionEntity(extEntity);
         if (fileEntity.getExtensionEntity() != null) {
-            fileEntity.setValue('ext_data', fileEntity.getExtensionEntity().getData());
+            fileEntity.setValue("ext_data", fileEntity.getExtensionEntity().getData());
         } else {
-            fileEntity.setValue('ext_data', {});
+            fileEntity.setValue("ext_data", {});
         }
     }
 }

@@ -1,6 +1,6 @@
-import UIImageActionModifier from '../../elements/UIImageActionModifier';
-import DomListenersModifier from '../../../../../../dom/utils/DomListenersModifier';
-import UIImageEditAction from '../UIImageEditAction';
+import UIImageActionModifier from "../../elements/UIImageActionModifier";
+import DomListenersModifier from "../../../../../../dom/utils/DomListenersModifier";
+import UIImageEditAction from "../UIImageEditAction";
 
 /**
  * @class UIEditActionFabric

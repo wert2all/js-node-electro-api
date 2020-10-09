@@ -10,13 +10,11 @@ export default class ICropperActionInterface {
      * @return ICropperActionInterface
      */
     // eslint-disable-next-line no-unused-vars
-    setCropper(cropper) {
-    }
+    setCropper(cropper) {}
 
     /**
      * @abstract
      * @return {Cropper}
      */
-    getCropper() {
-    }
+    getCropper() {}
 }

@@ -1,5 +1,5 @@
-import DefinitionTableInterface from '../../lib/db-definition/DefinitionTableInterface';
-import DefinitionColumn from '../../lib/db-definition/DefinitionColumn';
+import DefinitionTableInterface from "../../lib/db-definition/DefinitionTableInterface";
+import DefinitionColumn from "../../lib/db-definition/DefinitionColumn";
 
 /**
  * @class UserFilesDefinition
@@ -7,13 +7,13 @@ import DefinitionColumn from '../../lib/db-definition/DefinitionColumn';
  * @extends DefinitionTableInterface
  */
 export default class UserFilesDefinition extends DefinitionTableInterface {
-    static TABLE_NAME = 'user_files';
-    static COLUMN_ID = 'id';
-    static COLUMN_GOOGLE_USER_ID = 'google_user_id';
-    static COLUMN_YEARMON = 'yearmon';
-    static COLUMN_TYPE = 'type';
-    static COLUMN_PATH = 'path';
-    static COLUMN_IS_READY = 'isReady';
+    static TABLE_NAME = "user_files";
+    static COLUMN_ID = "id";
+    static COLUMN_GOOGLE_USER_ID = "google_user_id";
+    static COLUMN_YEARMON = "yearmon";
+    static COLUMN_TYPE = "type";
+    static COLUMN_PATH = "path";
+    static COLUMN_IS_READY = "isReady";
 
     constructor() {
         super();
@@ -44,24 +44,14 @@ export default class UserFilesDefinition extends DefinitionTableInterface {
                 false,
                 false
             ),
-            new DefinitionColumn(
-                UserFilesDefinition.COLUMN_TYPE,
-                DefinitionColumn.COLUMN_TYPE_VARCHAR,
-                false,
-                'bill'
-            ),
-            new DefinitionColumn(
-                UserFilesDefinition.COLUMN_PATH,
-                DefinitionColumn.COLUMN_TYPE_VARCHAR,
-                false,
-                false
-            ),
+            new DefinitionColumn(UserFilesDefinition.COLUMN_TYPE, DefinitionColumn.COLUMN_TYPE_VARCHAR, false, "bill"),
+            new DefinitionColumn(UserFilesDefinition.COLUMN_PATH, DefinitionColumn.COLUMN_TYPE_VARCHAR, false, false),
             new DefinitionColumn(
                 UserFilesDefinition.COLUMN_IS_READY,
                 DefinitionColumn.COLUMN_TYPE_VARCHAR,
                 false,
-                'false'
-            )
+                "false"
+            ),
         ];
     }
 
@@ -94,7 +84,7 @@ export default class UserFilesDefinition extends DefinitionTableInterface {
      */
     isColumn(key) {
         return this.getColumns()
-            .map(definition => definition.getColumnName())
+            .map((definition) => definition.getColumnName())
             .includes(key);
     }
 }

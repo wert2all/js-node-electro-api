@@ -1,4 +1,4 @@
-import DomFormElement from './DomFormElement';
+import DomFormElement from "./DomFormElement";
 
 /**
  * @class DomFormElementCheckbox
@@ -22,10 +22,10 @@ export default class DomFormElementCheckbox extends DomFormElement {
      * @return DomFormElementInterface
      */
     setValue(value) {
-        if (value === 'true') {
-            this._element.setAttribute('checked', 'checked');
+        if (value === "true") {
+            this._element.setAttribute("checked", "checked");
         } else {
-            this._element.removeAttribute('checked');
+            this._element.removeAttribute("checked");
         }
     }
 
@@ -33,7 +33,6 @@ export default class DomFormElementCheckbox extends DomFormElement {
      * @return {string}
      */
     getValue() {
-        return (this._element.checked) ? 'true' : 'false';
+        return this._element.checked ? "true" : "false";
     }
-
 }

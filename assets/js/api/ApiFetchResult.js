@@ -8,7 +8,7 @@ export default class ApiFetchResult {
      * @param {string} errorMessage
      * @param {*}data
      */
-    constructor(status, errorMessage = '', data = null) {
+    constructor(status, errorMessage = "", data = null) {
         /**
          *
          * @type {boolean}
@@ -70,5 +70,4 @@ export default class ApiFetchResult {
     getStatus() {
         return this._status;
     }
-
 }

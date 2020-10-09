@@ -2,8 +2,8 @@
  * @class UserProfileRequestDataClass
  *
  */
-import StringExt from '../../../lib/utils/StringExt';
-import AuthNoToken from '../../auth/error/AuthNoToken';
+import StringExt from "../../../lib/utils/StringExt";
+import AuthNoToken from "../../auth/error/AuthNoToken";
 
 export default class UserProfileRequestDataClass {
     /**
@@ -36,16 +36,12 @@ export default class UserProfileRequestDataClass {
      * @return UserProfileRequestDataClass
      */
     static factory(request) {
-        const authToken = Buffer.from(
-            new StringExt(request.query.token)
-                .replaceAll('"', ''),
-            'base64'
-        ).toString();
+        const authToken = Buffer.from(new StringExt(request.query.token).replaceAll('"', ""), "base64").toString();
         if (!authToken) {
             throw new AuthNoToken();
         }
         const requestDataClass = new UserProfileRequestDataClass(authToken);
-        if (request.query.hasOwnProperty('userid')) {
+        if (request.query.hasOwnProperty("userid")) {
             return requestDataClass.setGoogleUserId(request.query.userid);
         }
         return requestDataClass;

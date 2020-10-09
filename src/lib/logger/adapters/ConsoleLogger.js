@@ -1,4 +1,4 @@
-import LoggerInterface from '../LoggerInterface';
+import LoggerInterface from "../LoggerInterface";
 
 /**
  * @class ConsoleLogger

@@ -21,9 +21,7 @@ export default class YearMonClient {
         const date = new Date();
         if (yearMonString.length === 6) {
             if (parseInt(yearMonString.substr(0, 4), 10) > 1970) {
-                if (parseInt(yearMonString.substr(4, 2), 10) > 0
-                    && parseInt(yearMonString.substr(4, 2), 10) <= 12
-                ) {
+                if (parseInt(yearMonString.substr(4, 2), 10) > 0 && parseInt(yearMonString.substr(4, 2), 10) <= 12) {
                     date.setFullYear(
                         parseInt(yearMonString.substr(0, 4), 10),
                         parseInt(yearMonString.substr(4, 2), 10) - 1,
@@ -57,6 +55,6 @@ export default class YearMonClient {
      * @return {string}
      */
     getMonth() {
-        return (this._date.getMonth() + 1 < 10 ? '0' : '') + (this._date.getMonth() + 1);
+        return (this._date.getMonth() + 1 < 10 ? "0" : "") + (this._date.getMonth() + 1);
     }
 }

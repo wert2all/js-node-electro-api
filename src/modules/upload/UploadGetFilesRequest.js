@@ -1,17 +1,17 @@
-import RequestInterface from '../../routers/request/RequestInterface';
-import ResponseDataClass from '../../routers/response/ResponseDataClass';
-import ApiKeyProvider from '../auth/key/KeyProvider';
-import AuthCheck from '../auth/AuthCheck';
-import AuthParams from '../auth/params/Params';
-import FilesRepository from '../../db/repository/FilesRepository';
-import UserEntity from '../../data/entity/UserEntity';
-import UserFilesEntity from '../../data/entity/UserFilesEntity';
-import UploadFilesRequestDataClass from './data/UploadFilesRequestDataClass';
-import UserFilesDefinition from '../../db/definition/UserFilesDefinition';
-import ResponseResult from '../../routers/response/ResponseResult';
-import DI from '../../lib/di/DI';
-import ImageUrl from '../../data/images/ImageUrl';
-import ConnectionInterface from '../../lib/db-connection/ConnectionInterface';
+import RequestInterface from "../../routers/request/RequestInterface";
+import ResponseDataClass from "../../routers/response/ResponseDataClass";
+import ApiKeyProvider from "../auth/key/KeyProvider";
+import AuthCheck from "../auth/AuthCheck";
+import AuthParams from "../auth/params/Params";
+import FilesRepository from "../../db/repository/FilesRepository";
+import UserEntity from "../../data/entity/UserEntity";
+import UserFilesEntity from "../../data/entity/UserFilesEntity";
+import UploadFilesRequestDataClass from "./data/UploadFilesRequestDataClass";
+import UserFilesDefinition from "../../db/definition/UserFilesDefinition";
+import ResponseResult from "../../routers/response/ResponseResult";
+import DI from "../../lib/di/DI";
+import ImageUrl from "../../data/images/ImageUrl";
+import ConnectionInterface from "../../lib/db-connection/ConnectionInterface";
 
 /**
  * @class UploadGetFilesRequest
@@ -57,7 +57,7 @@ export default class UploadGetFilesRequest extends RequestInterface {
         try {
             const requestData = await this._prepareRequest(request);
             const userData = await this._fetchUserData(requestData);
-            response.setData('files', this._formatFiles(userData));
+            response.setData("files", this._formatFiles(userData));
             response.setStatus(true);
         } catch (e) {
             console.log(e);
@@ -65,9 +65,7 @@ export default class UploadGetFilesRequest extends RequestInterface {
             response.setMessage(e.message);
         }
 
-        return Promise.resolve(
-            new ResponseResult(ResponseResult.TYPE_JSON, response.getData())
-        );
+        return Promise.resolve(new ResponseResult(ResponseResult.TYPE_JSON, response.getData()));
     }
 
     /**
@@ -78,9 +76,7 @@ export default class UploadGetFilesRequest extends RequestInterface {
      */
     async _prepareRequest(request) {
         const requestData = UploadFilesRequestDataClass.factory(request);
-        requestData.setGoogleAccount(
-            await this._getGoogleAccount(requestData)
-        );
+        requestData.setGoogleAccount(await this._getGoogleAccount(requestData));
         return Promise.resolve(requestData);
     }
 
@@ -91,10 +87,7 @@ export default class UploadGetFilesRequest extends RequestInterface {
      * @private
      */
     async _getGoogleAccount(requestData) {
-        return await new AuthCheck(ApiKeyProvider.getDefault())
-            .check(
-                new AuthParams(requestData.token)
-            );
+        return await new AuthCheck(ApiKeyProvider.getDefault()).check(new AuthParams(requestData.token));
     }
 
     /**
@@ -104,11 +97,8 @@ export default class UploadGetFilesRequest extends RequestInterface {
      * @private
      */
     async _fetchUserData(requestData) {
-        const userEntity = new UserEntity()
-            .setGoogleAccount(requestData.getGoogleAccount());
-        const userFilesEntity = new UserFilesEntity()
-            .setUser(userEntity)
-            .setYearMon(requestData.getYearMon());
+        const userEntity = new UserEntity().setGoogleAccount(requestData.getGoogleAccount());
+        const userFilesEntity = new UserFilesEntity().setUser(userEntity).setYearMon(requestData.getYearMon());
         return Promise.resolve(this._repository.fetchData(userFilesEntity));
     }
 
@@ -119,13 +109,12 @@ export default class UploadGetFilesRequest extends RequestInterface {
      * @private
      */
     _formatFiles(userData) {
-        return userData.map(fileData => {
+        return userData.map((fileData) => {
             return {
                 id: fileData.getValue(UserFilesDefinition.COLUMN_ID),
                 type: fileData.getValue(UserFilesDefinition.COLUMN_TYPE),
-                url: this._imageUrlProvider.getUrl(fileData)
+                url: this._imageUrlProvider.getUrl(fileData),
             };
         });
     }
-
 }

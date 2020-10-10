@@ -1,3 +1,5 @@
+import GulpTask from "./src/ml/GulpTask";
+
 const gulp = require("gulp");
 const babel = require("gulp-babel");
 const clean = require("gulp-clean");
@@ -74,6 +76,8 @@ function watchFiles() {
     gulp.watch("./templates/**/*", gulp.series("copy:templates", "serve:reload"));
 }
 
+gulp.task("ml", () => gulp.watch("data/files/**/*", (cb) => new GulpTask().go(cb)));
+gulp.task("test:ml", (cb) => new GulpTask().go(cb));
 const watch = gulp.series("serve", watchFiles);
 
 exports.dev = watch;

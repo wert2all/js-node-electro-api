@@ -1,4 +1,4 @@
-import ImplementationError from '../implementation-error/ImplementationError';
+import ImplementationError from "../implementation-error/ImplementationError";
 
 /**
  * @interface
@@ -12,7 +12,7 @@ export default class ConnectionInterface {
      */
     // eslint-disable-next-line no-unused-vars
     setServer(serverConnection) {
-        throw new ImplementationError(this, 'setServer');
+        throw new ImplementationError(this, "setServer");
     }
 
     /**
@@ -26,7 +26,7 @@ export default class ConnectionInterface {
      */
     // eslint-disable-next-line no-unused-vars
     async select(definition, filter, order = null, limit = null, fields = null) {
-        throw new ImplementationError(this, 'select');
+        throw new ImplementationError(this, "select");
     }
 
     /**
@@ -37,7 +37,7 @@ export default class ConnectionInterface {
      */
     // eslint-disable-next-line no-unused-vars
     async update(definition, data) {
-        throw new ImplementationError(this, 'update');
+        throw new ImplementationError(this, "update");
     }
 
     /**
@@ -48,7 +48,7 @@ export default class ConnectionInterface {
      */
     // eslint-disable-next-line no-unused-vars
     async insert(definition, data) {
-        throw new ImplementationError(this, 'insert');
+        throw new ImplementationError(this, "insert");
     }
 
     /**
@@ -59,6 +59,6 @@ export default class ConnectionInterface {
      */
     // eslint-disable-next-line no-unused-vars
     async delete(definition, primaryValue) {
-        throw new ImplementationError(this, 'delete');
+        throw new ImplementationError(this, "delete");
     }
 }

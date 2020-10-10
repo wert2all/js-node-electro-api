@@ -1,6 +1,6 @@
-import RendererInterface from '../RendererInterface';
-import pug from 'pug';
-import DataValue from '../../data-value/DataValue';
+import RendererInterface from "../RendererInterface";
+import pug from "pug";
+import DataValue from "../../data-value/DataValue";
 
 /**
  * @class PugAdapter

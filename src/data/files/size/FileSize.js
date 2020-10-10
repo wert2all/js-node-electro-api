@@ -1,4 +1,4 @@
-import FileSizeInterface from './FileSizeInterface';
+import FileSizeInterface from "./FileSizeInterface";
 
 /**
  * @class FileSize
@@ -19,7 +19,6 @@ export default class FileSize extends FileSizeInterface {
          */
         this._size = size;
     }
-
 
     /**
      *

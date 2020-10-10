@@ -1,7 +1,7 @@
-import DefaultFileNameProvider from './file/nameprovider/DefaultFileNameProvider';
-import ErrorFileStorageProcessType from './file/error/ErrorFileStorageProcessType';
-import FileProcessFactory from './file/FileProcessFactory';
-import NullPostProcessor from './file/process/post/NullPostProcessor';
+import DefaultFileNameProvider from "./file/nameprovider/DefaultFileNameProvider";
+import ErrorFileStorageProcessType from "./file/error/ErrorFileStorageProcessType";
+import FileProcessFactory from "./file/FileProcessFactory";
+import NullPostProcessor from "./file/process/post/NullPostProcessor";
 
 /**
  * @class FileStorage
@@ -41,16 +41,16 @@ export default class FileStorage {
      * @param {FilePostProcessorInterface} postProcessor
      * @return {Promise<FileData>}
      */
-    async moveFile(fileData,
-                   fileNameProvider = new DefaultFileNameProvider(),
-                   postProcessor = new NullPostProcessor()
+    async moveFile(
+        fileData,
+        fileNameProvider = new DefaultFileNameProvider(),
+        postProcessor = new NullPostProcessor()
     ) {
         /**
          *
          * @type {FileProcessInterface|boolean}
          */
-        const fileProcessor = this._fileProcessorFactory
-            .create(fileData.getType());
+        const fileProcessor = this._fileProcessorFactory.create(fileData.getType());
         if (fileProcessor === false) {
             return Promise.reject(new ErrorFileStorageProcessType());
         }

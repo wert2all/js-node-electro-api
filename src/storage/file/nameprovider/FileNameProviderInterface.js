@@ -1,4 +1,4 @@
-import ImplementationError from '../../../lib/implementation-error/ImplementationError';
+import ImplementationError from "../../../lib/implementation-error/ImplementationError";
 
 /**
  * @interface
@@ -13,6 +13,6 @@ export default class FileNameProviderInterface {
      */
     // eslint-disable-next-line no-unused-vars
     getName(fileData) {
-        throw new ImplementationError(this, 'getName');
+        throw new ImplementationError(this, "getName");
     }
 }

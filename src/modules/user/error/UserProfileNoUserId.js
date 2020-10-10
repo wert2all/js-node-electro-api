@@ -4,6 +4,6 @@
  */
 export default class UserProfileNoUserId extends Error {
     constructor() {
-        super('Bad request: No userId');
+        super("Bad request: No userId");
     }
 }

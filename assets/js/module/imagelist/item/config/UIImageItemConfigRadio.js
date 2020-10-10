@@ -7,10 +7,7 @@ export default class UIImageItemConfigRadio {
      * @param {string} labelSelector
      * @param {string} inputSelector
      */
-    constructor(
-        labelSelector,
-        inputSelector
-    ) {
+    constructor(labelSelector, inputSelector) {
         /**
          *
          * @type {string}

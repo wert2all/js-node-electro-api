@@ -1,4 +1,4 @@
-import ImplementationError from '../../implementation-error/ImplementationError';
+import ImplementationError from "../../implementation-error/ImplementationError";
 
 /**
  * @interface
@@ -14,6 +14,6 @@ export default class DefinitionSQLBuilderInterface {
      */
     // eslint-disable-next-line no-unused-vars
     buildSQL(definition, data) {
-        throw new ImplementationError(this, 'create');
+        throw new ImplementationError(this, "create");
     }
 }

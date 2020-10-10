@@ -1,4 +1,4 @@
-import DomFormElementValidatorInterface from '../DomFormElementValidatorInterface';
+import DomFormElementValidatorInterface from "../DomFormElementValidatorInterface";
 
 /**
  * @class DomFormElementValidatorNull
@@ -21,6 +21,6 @@ export default class DomFormElementValidatorNull extends DomFormElementValidator
      * @return {string}
      */
     getValidationError() {
-        return '';
+        return "";
     }
 }

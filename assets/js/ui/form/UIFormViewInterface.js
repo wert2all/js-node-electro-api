@@ -1,4 +1,4 @@
-import DomFormInterface from '../../dom/form/DomFormInterface';
+import DomFormInterface from "../../dom/form/DomFormInterface";
 
 /**
  * @interface
@@ -9,14 +9,10 @@ export default class UIFormViewInterface extends DomFormInterface {
     /**
      * @return UIFormViewInterface
      */
-    showLoader() {
-
-    }
+    showLoader() {}
 
     /**
      * @return UIFormViewInterface
      */
-    hideLoader() {
-
-    }
+    hideLoader() {}
 }

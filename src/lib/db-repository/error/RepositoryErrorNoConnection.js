@@ -5,6 +5,6 @@
  */
 export default class RepositoryErrorNoConnection extends Error {
     constructor() {
-        super('No connection');
+        super("No connection");
     }
 }

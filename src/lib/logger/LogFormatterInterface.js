@@ -1,4 +1,4 @@
-import ImplementationError from '../implementation-error/ImplementationError';
+import ImplementationError from "../implementation-error/ImplementationError";
 
 /**
  * @interface
@@ -14,6 +14,6 @@ export default class LogFormatterInterface {
      */
     // eslint-disable-next-line no-unused-vars
     format(logEvent, level) {
-        throw new ImplementationError(this, 'format');
+        throw new ImplementationError(this, "format");
     }
 }

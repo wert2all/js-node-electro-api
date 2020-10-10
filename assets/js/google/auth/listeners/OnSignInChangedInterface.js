@@ -8,17 +8,14 @@ export default class OnSignInChangedInterface {
      * @abstract
      */
     // eslint-disable-next-line no-unused-vars
-    onAuth(authProvider) {
-
-    }
+    onAuth(authProvider) {}
 
     /**
      * @param {AuthProviderInterface} authProvider
      * @abstract
      */
     // eslint-disable-next-line no-unused-vars
-    onNonAuth(authProvider) {
-    }
+    onNonAuth(authProvider) {}
 
     /**
      *
@@ -26,7 +23,5 @@ export default class OnSignInChangedInterface {
      * @return OnSignInChangedInterface
      */
     // eslint-disable-next-line no-unused-vars
-    addAfterAuth(afterAuthFunction = Function.prototype) {
-
-    }
+    addAfterAuth(afterAuthFunction = Function.prototype) {}
 }

@@ -1,4 +1,4 @@
-import ImplementationError from '../implementation-error/ImplementationError';
+import ImplementationError from "../implementation-error/ImplementationError";
 
 /**
  * @interface
@@ -13,7 +13,7 @@ export default class FilterInterface {
      */
     // eslint-disable-next-line no-unused-vars
     addColumn(column, value) {
-        throw new ImplementationError(this, 'addFilterData');
+        throw new ImplementationError(this, "addFilterData");
     }
 
     /**
@@ -21,6 +21,6 @@ export default class FilterInterface {
      * @return {Array<FilterData>}
      */
     getFilterData() {
-        throw new ImplementationError(this, 'getFilterData');
+        throw new ImplementationError(this, "getFilterData");
     }
 }

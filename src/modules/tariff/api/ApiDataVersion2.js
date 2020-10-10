@@ -1,4 +1,4 @@
-import ApiDataInterface from './ApiDataInterface';
+import ApiDataInterface from "./ApiDataInterface";
 
 export default class ApiDataVersion2 extends ApiDataInterface {
     /**
@@ -28,9 +28,8 @@ export default class ApiDataVersion2 extends ApiDataInterface {
         return {
             data: this.tariffRepository
                 .get(params.getYearMon())
-                .data
-                .map(item => item)
-                .filter(item => !!item)
+                .data.map((item) => item)
+                .filter((item) => !!item),
         };
     }
 }

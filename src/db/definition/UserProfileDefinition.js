@@ -1,5 +1,5 @@
-import DefinitionTableInterface from '../../lib/db-definition/DefinitionTableInterface';
-import DefinitionColumn from '../../lib/db-definition/DefinitionColumn';
+import DefinitionTableInterface from "../../lib/db-definition/DefinitionTableInterface";
+import DefinitionColumn from "../../lib/db-definition/DefinitionColumn";
 
 /**
  * @class UserProfileDefinition
@@ -7,12 +7,12 @@ import DefinitionColumn from '../../lib/db-definition/DefinitionColumn';
  * @type DefinitionTableInterface
  */
 export default class UserProfileDefinition extends DefinitionTableInterface {
-    static TABLE_NAME = 'user_profile';
-    static COLUMN_ID = 'id';
-    static COLUMN_GOOGLE_USER_ID = 'google_user_id';
-    static COLUMN_VALUE_TYPE = 'value_type';
-    static COLUMN_VALUE_NAME = 'value_name';
-    static COLUMN_VALUE_VALUE = 'value';
+    static TABLE_NAME = "user_profile";
+    static COLUMN_ID = "id";
+    static COLUMN_GOOGLE_USER_ID = "google_user_id";
+    static COLUMN_VALUE_TYPE = "value_type";
+    static COLUMN_VALUE_NAME = "value_name";
+    static COLUMN_VALUE_VALUE = "value";
 
     constructor() {
         super();
@@ -92,7 +92,7 @@ export default class UserProfileDefinition extends DefinitionTableInterface {
      */
     isColumn(key) {
         return this.getColumns()
-            .map(definition => definition.getColumnName())
+            .map((definition) => definition.getColumnName())
             .includes(key);
     }
 }

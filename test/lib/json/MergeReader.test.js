@@ -1,71 +1,55 @@
-import {test} from '@jest/globals';
-import MergeReader from '../../../src/lib/json/MergeReader';
+import { test } from "@jest/globals";
+import MergeReader from "../../../src/lib/json/MergeReader";
 
-test('MergeReader:read:ok:default', () => {
+test("MergeReader:read:ok:default", () => {
     const defaultMock = () => ({
-        read: () => ({default: 'defaultValue'})
+        read: () => ({ default: "defaultValue" }),
     });
     const extentMock = () => ({
-        read: () => ({})
+        read: () => ({}),
     });
-    const model = new MergeReader(
-        defaultMock(),
-        extentMock()
-    );
+    const model = new MergeReader(defaultMock(), extentMock());
 
-    expect(model.read())
-        .toStrictEqual({default: 'defaultValue'});
+    expect(model.read()).toStrictEqual({ default: "defaultValue" });
 });
 
-test('MergeReader:read:ok:extended', () => {
+test("MergeReader:read:ok:extended", () => {
     const defaultMock = () => ({
-        read: () => ({default: 'defaultValue'})
+        read: () => ({ default: "defaultValue" }),
     });
     const extentMock = () => ({
-        read: () => ({default: 'extendedValue'})
+        read: () => ({ default: "extendedValue" }),
     });
-    const model = new MergeReader(
-        defaultMock(),
-        extentMock()
-    );
+    const model = new MergeReader(defaultMock(), extentMock());
 
-    expect(model.read())
-        .toStrictEqual({default: 'extendedValue'});
+    expect(model.read()).toStrictEqual({ default: "extendedValue" });
 });
 
-test('MergeReader:read:ok:extends_data', () => {
+test("MergeReader:read:ok:extends_data", () => {
     const defaultMock = () => ({
-        read: () => ({default: 'defaultValue'})
+        read: () => ({ default: "defaultValue" }),
     });
     const extentMock = () => ({
-        read: () => ({extended: 'extendedValue'})
+        read: () => ({ extended: "extendedValue" }),
     });
-    const model = new MergeReader(
-        defaultMock(),
-        extentMock()
-    );
+    const model = new MergeReader(defaultMock(), extentMock());
 
-    expect(model.read())
-        .toStrictEqual({
-            'default': 'defaultValue',
-            'extended': 'extendedValue'
-        });
+    expect(model.read()).toStrictEqual({
+        default: "defaultValue",
+        extended: "extendedValue",
+    });
 });
 
-test('MergeReader:read:ok:null_default', () => {
+test("MergeReader:read:ok:null_default", () => {
     const defaultMock = () => ({
-        read: () => null
+        read: () => null,
     });
     const extentMock = () => ({
-        read: () => ({extended: 'extendedValue'})
+        read: () => ({ extended: "extendedValue" }),
     });
-    const model = new MergeReader(
-        defaultMock(),
-        extentMock()
-    );
+    const model = new MergeReader(defaultMock(), extentMock());
 
-    expect(model.read())
-        .toStrictEqual({
-            'extended': 'extendedValue'
-        });
+    expect(model.read()).toStrictEqual({
+        extended: "extendedValue",
+    });
 });

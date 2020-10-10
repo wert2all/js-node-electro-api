@@ -1,4 +1,4 @@
-import FileKeyValueStorage from './FileKeyValueStorage';
+import FileKeyValueStorage from "./FileKeyValueStorage";
 
 /**
  * @class ConfigStorage

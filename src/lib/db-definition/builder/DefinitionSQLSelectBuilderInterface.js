@@ -1,5 +1,5 @@
-import ImplementationError from '../../implementation-error/ImplementationError';
-import DefinitionSQLBuilderInterface from './DefinitionSQLBuilderInterface';
+import ImplementationError from "../../implementation-error/ImplementationError";
+import DefinitionSQLBuilderInterface from "./DefinitionSQLBuilderInterface";
 
 /**
  * @interface
@@ -7,8 +7,7 @@ import DefinitionSQLBuilderInterface from './DefinitionSQLBuilderInterface';
  * @extends DefinitionSQLBuilderInterface
  * @class DefinitionSQLSelectBuilderInterface
  */
-export default class DefinitionSQLSelectBuilderInterface
-    extends DefinitionSQLBuilderInterface {
+export default class DefinitionSQLSelectBuilderInterface extends DefinitionSQLBuilderInterface {
     /**
      * @abstract
      * @param {DefinitionOrder} order
@@ -16,7 +15,7 @@ export default class DefinitionSQLSelectBuilderInterface
      */
     // eslint-disable-next-line no-unused-vars
     applyOrder(order) {
-        throw new ImplementationError(this, 'applyOrder');
+        throw new ImplementationError(this, "applyOrder");
     }
 
     /**
@@ -26,7 +25,7 @@ export default class DefinitionSQLSelectBuilderInterface
      */
     // eslint-disable-next-line no-unused-vars
     applyFields(fields) {
-        throw new ImplementationError(this, 'applyFields');
+        throw new ImplementationError(this, "applyFields");
     }
 
     /**
@@ -36,6 +35,6 @@ export default class DefinitionSQLSelectBuilderInterface
      */
     // eslint-disable-next-line no-unused-vars
     applyLimit(limit) {
-        throw new ImplementationError(this, 'applyLimit');
+        throw new ImplementationError(this, "applyLimit");
     }
 }

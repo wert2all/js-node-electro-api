@@ -1,7 +1,7 @@
-import LogEventInterface from '../../../lib/logger/LogEventInterface';
+import LogEventInterface from "../../../lib/logger/LogEventInterface";
 
 export default class SQLLogEvent extends LogEventInterface {
-    static TAG = 'SQL';
+    static TAG = "SQL";
 
     /**
      *

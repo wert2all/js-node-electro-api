@@ -10,7 +10,5 @@ export default class DomFormRequestModifierInterface {
      * @return {Object<string, string>}
      */
     // eslint-disable-next-line no-unused-vars
-    modify(formData) {
-
-    }
+    modify(formData) {}
 }

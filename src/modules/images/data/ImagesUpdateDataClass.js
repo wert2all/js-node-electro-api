@@ -1,6 +1,6 @@
-import StringExt from '../../../lib/utils/StringExt';
-import AuthNoToken from '../../auth/error/AuthNoToken';
-import NoIdError from '../error/NoIdError';
+import StringExt from "../../../lib/utils/StringExt";
+import AuthNoToken from "../../auth/error/AuthNoToken";
+import NoIdError from "../error/NoIdError";
 
 /**
  * @class ImagesUpdateDataClass
@@ -41,7 +41,7 @@ export default class ImagesUpdateDataClass {
          * @type {string}
          * @private
          */
-        this._type = 'bill';
+        this._type = "bill";
         /**
          *
          * @type {number}
@@ -61,11 +61,7 @@ export default class ImagesUpdateDataClass {
         let id = null;
         let returnRequest = null;
         if (request.body.token) {
-            authToken = Buffer.from(
-                new StringExt(request.body.token)
-                    .replaceAll('"', ''),
-                'base64'
-            ).toString();
+            authToken = Buffer.from(new StringExt(request.body.token).replaceAll('"', ""), "base64").toString();
         }
         if (request.body.id) {
             id = parseInt(request.body.id, 10);
@@ -79,13 +75,11 @@ export default class ImagesUpdateDataClass {
             throw new AuthNoToken();
         }
 
-        if (request.body.isReady && request.body.isReady === 'true') {
+        if (request.body.isReady && request.body.isReady === "true") {
             returnRequest.setIsReady(true);
         }
         if (request.body.type) {
-            returnRequest.setType(
-                (request.body.type === 'bill') ? 'bill' : 'meter'
-            );
+            returnRequest.setType(request.body.type === "bill" ? "bill" : "meter");
         }
 
         if (request.body.rotation) {

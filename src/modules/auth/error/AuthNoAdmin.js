@@ -3,6 +3,6 @@
  */
 export default class AuthNoAdmin extends Error {
     constructor() {
-        super('Bad request: No admin');
+        super("Bad request: No admin");
     }
 }

@@ -1,4 +1,4 @@
-import UIInterface from './interfaces/UIInterface';
+import UIInterface from "./interfaces/UIInterface";
 
 /**
  * @class UIHolder
@@ -65,14 +65,14 @@ export default class UIHolder extends UIInterface {
      * @return {void}
      */
     clean() {
-        this._elements.forEach(element => element.clean());
+        this._elements.forEach((element) => element.clean());
     }
 
     /**
      * @return {void}
      */
     init() {
-        this._elements.forEach(element => element.init());
+        this._elements.forEach((element) => element.init());
     }
 
     /**

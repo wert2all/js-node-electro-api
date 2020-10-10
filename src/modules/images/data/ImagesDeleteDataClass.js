@@ -1,6 +1,6 @@
-import StringExt from '../../../lib/utils/StringExt';
-import AuthNoToken from '../../auth/error/AuthNoToken';
-import NoIdError from '../error/NoIdError';
+import StringExt from "../../../lib/utils/StringExt";
+import AuthNoToken from "../../auth/error/AuthNoToken";
+import NoIdError from "../error/NoIdError";
 
 export default class ImagesDeleteDataClass {
     /**
@@ -39,11 +39,7 @@ export default class ImagesDeleteDataClass {
         let returnRequest = null;
         let id = null;
         if (request.body.token) {
-            authToken = Buffer.from(
-                new StringExt(request.body.token)
-                    .replaceAll('"', ''),
-                'base64'
-            ).toString();
+            authToken = Buffer.from(new StringExt(request.body.token).replaceAll('"', ""), "base64").toString();
         }
         if (request.body.image) {
             id = parseInt(request.body.image, 10);

@@ -30,13 +30,10 @@ export default class Api {
      */
     async getImages(userProfile, limits = null) {
         const options = {
-            method: 'GET'
+            method: "GET",
         };
         return await this._fetcher.fetch(
-            this._createUrl(
-                'imagelist/get/?token=' + this._createToken(userProfile),
-                limits
-            ),
+            this._createUrl("imagelist/get/?token=" + this._createToken(userProfile), limits),
             options
         );
     }
@@ -49,19 +46,16 @@ export default class Api {
      */
     async deleteImage(userProfile, imageData) {
         const options = {
-            method: 'POST',
+            method: "POST",
             headers: {
-                'Content-Type': 'application/json'
+                "Content-Type": "application/json",
             },
             body: JSON.stringify({
                 token: this._createToken(userProfile),
-                image: imageData.getId()
-            })
+                image: imageData.getId(),
+            }),
         };
-        return await this._fetcher.fetch(
-            this._createUrl('imagelist/delete/'),
-            options
-        );
+        return await this._fetcher.fetch(this._createUrl("imagelist/delete/"), options);
     }
 
     /**
@@ -72,13 +66,10 @@ export default class Api {
      */
     async getUserProfile(userProfile, userId) {
         const options = {
-            method: 'GET'
+            method: "GET",
         };
         return await this._fetcher.fetch(
-            this._createUrl(
-                'user/profile/get/?token='
-                + this._createToken(userProfile) + '&userid=' + userId
-            ),
+            this._createUrl("user/profile/get/?token=" + this._createToken(userProfile) + "&userid=" + userId),
             options
         );
     }
@@ -90,19 +81,16 @@ export default class Api {
      * @return {Promise<ApiFetchResult>}
      */
     async updateProfile(userProfile, formData) {
-        formData['token'] = this._createToken(userProfile);
-        formData['data'] = JSON.stringify(formData['data']);
+        formData["token"] = this._createToken(userProfile);
+        formData["data"] = JSON.stringify(formData["data"]);
         const options = {
-            method: 'POST',
+            method: "POST",
             headers: {
-                'Content-Type': 'application/json'
+                "Content-Type": "application/json",
             },
-            body: JSON.stringify(formData)
+            body: JSON.stringify(formData),
         };
-        return await this._fetcher.fetch(
-            this._createUrl('user/profile/update/'),
-            options
-        );
+        return await this._fetcher.fetch(this._createUrl("user/profile/update/"), options);
     }
 
     /**
@@ -112,18 +100,15 @@ export default class Api {
      * @return {Promise<ApiFetchResult>}
      */
     async updateImage(userProfile, formData) {
-        formData['token'] = this._createToken(userProfile);
+        formData["token"] = this._createToken(userProfile);
         const options = {
-            method: 'POST',
+            method: "POST",
             headers: {
-                'Content-Type': 'application/json'
+                "Content-Type": "application/json",
             },
-            body: JSON.stringify(formData)
+            body: JSON.stringify(formData),
         };
-        return await this._fetcher.fetch(
-            this._createUrl('imagelist/update/'),
-            options
-        );
+        return await this._fetcher.fetch(this._createUrl("imagelist/update/"), options);
     }
 
     /**
@@ -144,7 +129,7 @@ export default class Api {
      * @private
      */
     _createUrl(url, limits = null) {
-        return this._rootURL + url + ((limits) ? this._createLimits(limits) : '');
+        return this._rootURL + url + (limits ? this._createLimits(limits) : "");
     }
 
     /**
@@ -157,10 +142,11 @@ export default class Api {
         // first we use encodeURIComponent to get percent-encoded UTF-8,
         // then we convert the percent encodings into raw bytes which
         // can be fed into btoa.
-        return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g,
-            function toSolidBytes(match, p1) {
-                return String.fromCharCode('0x' + p1);
-            }));
+        return btoa(
+            encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, function toSolidBytes(match, p1) {
+                return String.fromCharCode("0x" + p1);
+            })
+        );
     }
 
     /**
@@ -171,9 +157,9 @@ export default class Api {
      */
     _createLimits(limits) {
         if (limits !== null) {
-            return '&&from=' + limits.getFrom() + '&&offset=' + limits.getOffset();
+            return "&&from=" + limits.getFrom() + "&&offset=" + limits.getOffset();
         } else {
-            return '';
+            return "";
         }
     }
 }

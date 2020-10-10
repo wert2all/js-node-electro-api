@@ -1,4 +1,4 @@
-import UIAfterControlInterface from '../../../../ui/control/UIAfterControlInterface';
+import UIAfterControlInterface from "../../../../ui/control/UIAfterControlInterface";
 
 /**
  * @class AfterEditControl
@@ -6,7 +6,6 @@ import UIAfterControlInterface from '../../../../ui/control/UIAfterControlInterf
  * @type UIAfterControlInterface
  */
 export default class AfterEditControl extends UIAfterControlInterface {
-
     /**
      *
      * @param {UIElementListInterface} list

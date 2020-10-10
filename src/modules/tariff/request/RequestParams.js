@@ -1,4 +1,4 @@
-import YearMon from './YearMon';
+import YearMon from "./YearMon";
 
 /**
  * @class RequestParams
@@ -6,14 +6,14 @@ import YearMon from './YearMon';
 export default class RequestParams {
     constructor(query) {
         this._params = {
-            version: '1',
-            yearmon: new YearMon().toInt()
+            version: "1",
+            yearmon: new YearMon().toInt(),
         };
 
-        if (query.hasOwnProperty('version')) {
+        if (query.hasOwnProperty("version")) {
             this._params.version = query.version;
         }
-        if (query.hasOwnProperty('yearmon')) {
+        if (query.hasOwnProperty("yearmon")) {
             this._params.yearmon = new YearMon(query.yearmon).toInt();
         }
     }

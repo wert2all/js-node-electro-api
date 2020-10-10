@@ -35,12 +35,9 @@ export default class UIProfileView {
     }
 
     init() {
-        this._nameNode = this._parentNode
-            .querySelector(this._selectorsHolder.getNameSelector());
-        this._avatarNode = this._parentNode
-            .querySelector(this._selectorsHolder.getAvatarSelector());
+        this._nameNode = this._parentNode.querySelector(this._selectorsHolder.getNameSelector());
+        this._avatarNode = this._parentNode.querySelector(this._selectorsHolder.getAvatarSelector());
     }
-
 
     /**
      *
@@ -51,7 +48,7 @@ export default class UIProfileView {
         if (this._nameNode !== null) {
             this._nameNode.innerHTML = userData.getUserName();
         }
-        if (this._avatarNode != null && userData.getUserImage() !== '') {
+        if (this._avatarNode != null && userData.getUserImage() !== "") {
             this._avatarNode.src = userData.getUserImage();
         }
     }

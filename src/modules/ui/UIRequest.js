@@ -1,6 +1,6 @@
-import RequestInterface from '../../routers/request/RequestInterface';
-import DataValue from '../../lib/data-value/DataValue';
-import ResponseResult from '../../routers/response/ResponseResult';
+import RequestInterface from "../../routers/request/RequestInterface";
+import DataValue from "../../lib/data-value/DataValue";
+import ResponseResult from "../../routers/response/ResponseResult";
 
 /**
  * @class UIRequest
@@ -25,8 +25,6 @@ export default class UIRequest extends RequestInterface {
      */
     // eslint-disable-next-line no-unused-vars
     createResponse(request) {
-        return Promise.resolve(
-            new ResponseResult(ResponseResult.TYPE_HTML, new DataValue())
-        );
+        return Promise.resolve(new ResponseResult(ResponseResult.TYPE_HTML, new DataValue()));
     }
 }

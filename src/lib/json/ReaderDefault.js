@@ -1,4 +1,4 @@
-import ReaderInterface from './ReaderInterface';
+import ReaderInterface from "./ReaderInterface";
 
 /**
  * @class ReaderDefault

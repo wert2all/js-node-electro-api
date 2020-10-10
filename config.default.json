@@ -1,5 +1,5 @@
 {
-  "api:url:static:image": "http://localhost:3001/images/",
-  "render.pug.template.directory": "templates/",
-  "render.pug.template.name": "ui.pug"
+    "api:url:static:image": "http://localhost:3001/images/",
+    "render.pug.template.directory": "templates/",
+    "render.pug.template.name": "ui.pug"
 }

@@ -1,4 +1,4 @@
-import LogEventInterface from '../../../../lib/logger/LogEventInterface';
+import LogEventInterface from "../../../../lib/logger/LogEventInterface";
 
 /**
  * @class UserProfileLogEvent
@@ -6,7 +6,7 @@ import LogEventInterface from '../../../../lib/logger/LogEventInterface';
  * @extends LogEventInterface
  */
 export default class UserProfileLogEvent extends LogEventInterface {
-    static TAG = 'user_profile';
+    static TAG = "user_profile";
 
     /**
      *

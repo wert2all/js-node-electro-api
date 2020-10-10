@@ -1,4 +1,4 @@
-import ImplementationError from '../implementation-error/ImplementationError';
+import ImplementationError from "../implementation-error/ImplementationError";
 
 /**
  * @interface
@@ -11,7 +11,7 @@ export default class LogEventInterface {
      * @return {string}
      */
     getTag() {
-        throw new ImplementationError(this, 'getTag');
+        throw new ImplementationError(this, "getTag");
     }
 
     /**
@@ -19,7 +19,7 @@ export default class LogEventInterface {
      * @return Date
      */
     getTime() {
-        throw new ImplementationError(this, 'getTime');
+        throw new ImplementationError(this, "getTime");
     }
 
     /**
@@ -27,6 +27,6 @@ export default class LogEventInterface {
      * @return {string}
      */
     getMessage() {
-        throw new ImplementationError(this, 'getMessage');
+        throw new ImplementationError(this, "getMessage");
     }
 }

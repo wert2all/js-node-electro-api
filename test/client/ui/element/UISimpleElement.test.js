@@ -1,4 +1,3 @@
-import {test} from '@jest/globals';
+import { test } from "@jest/globals";
 
-test('UISimpleElement:test', () => {
-});
+test("UISimpleElement:test", () => {});

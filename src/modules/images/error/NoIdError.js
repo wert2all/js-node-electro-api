@@ -4,6 +4,6 @@
  */
 export default class NoIdError extends Error {
     constructor() {
-        super('No id');
+        super("No id");
     }
 }

@@ -1,4 +1,4 @@
-import YearMonClient from './YearMonClient';
+import YearMonClient from "./YearMonClient";
 
 /**
  * @class ImageData
@@ -27,7 +27,7 @@ export default class ImageData {
          * @type {string}
          * @private
          */
-        this._type = 'bill';
+        this._type = "bill";
         /**
          *
          * @type {null|YearMonClient}

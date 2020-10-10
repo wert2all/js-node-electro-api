@@ -1,4 +1,4 @@
-import ImplementationError from '../implementation-error/ImplementationError';
+import ImplementationError from "../implementation-error/ImplementationError";
 
 /**
  * @interface
@@ -6,12 +6,12 @@ import ImplementationError from '../implementation-error/ImplementationError';
  * @class LoggerInterface
  */
 export default class LoggerInterface {
-    static DEBUG = 'debug';
-    static TRACE = 'trace';
-    static INFO = 'info';
-    static WARN = 'warn';
-    static ERROR = 'error';
-    static FATAl = 'fatal';
+    static DEBUG = "debug";
+    static TRACE = "trace";
+    static INFO = "info";
+    static WARN = "warn";
+    static ERROR = "error";
+    static FATAl = "fatal";
 
     /**
      * @abstract
@@ -21,8 +21,8 @@ export default class LoggerInterface {
      */
     // eslint-disable-next-line no-unused-vars
     trace(logEvent) {
-        throw new ImplementationError(this, 'trace');
-    };
+        throw new ImplementationError(this, "trace");
+    }
 
     /**
      * @abstract
@@ -32,8 +32,8 @@ export default class LoggerInterface {
      */
     // eslint-disable-next-line no-unused-vars
     debug(logEvent) {
-        throw new ImplementationError(this, 'debug');
-    };
+        throw new ImplementationError(this, "debug");
+    }
 
     /**
      * @abstract
@@ -43,8 +43,8 @@ export default class LoggerInterface {
      */
     // eslint-disable-next-line no-unused-vars
     info(logEvent) {
-        throw new ImplementationError(this, 'info');
-    };
+        throw new ImplementationError(this, "info");
+    }
 
     /**
      * @abstract
@@ -54,8 +54,8 @@ export default class LoggerInterface {
      */
     // eslint-disable-next-line no-unused-vars
     warn(logEvent) {
-        throw new ImplementationError(this, 'warn');
-    };
+        throw new ImplementationError(this, "warn");
+    }
 
     /**
      * @abstract
@@ -65,8 +65,8 @@ export default class LoggerInterface {
      */
     // eslint-disable-next-line no-unused-vars
     error(logEvent) {
-        throw new ImplementationError(this, 'error');
-    };
+        throw new ImplementationError(this, "error");
+    }
 
     /**
      * @abstract
@@ -76,7 +76,6 @@ export default class LoggerInterface {
      */
     // eslint-disable-next-line no-unused-vars
     fatal(logEvent) {
-        throw new ImplementationError(this, 'fatal');
-    };
-
+        throw new ImplementationError(this, "fatal");
+    }
 }

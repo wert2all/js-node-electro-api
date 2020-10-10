@@ -1,5 +1,5 @@
-import LoggerInterface from '../LoggerInterface';
-import fs from 'fs';
+import LoggerInterface from "../LoggerInterface";
+import fs from "fs";
 
 /**
  * @class FileLogger
@@ -31,7 +31,7 @@ export default class FileLogger extends LoggerInterface {
          * @type {string}
          * @private
          */
-        this._newLine = /^win/.test(process.platform) ? '\r\n' : '\n';
+        this._newLine = /^win/.test(process.platform) ? "\r\n" : "\n";
     }
 
     /**
@@ -40,10 +40,7 @@ export default class FileLogger extends LoggerInterface {
      * @return {LoggerInterface}
      */
     debug(logEvent) {
-        this._log(
-            this._formatter
-                .format(logEvent, LoggerInterface.DEBUG)
-        );
+        this._log(this._formatter.format(logEvent, LoggerInterface.DEBUG));
         return this;
     }
 
@@ -62,10 +59,7 @@ export default class FileLogger extends LoggerInterface {
      * @return {LoggerInterface}
      */
     error(logEvent) {
-        this._log(
-            this._formatter
-                .format(logEvent, LoggerInterface.ERROR)
-        );
+        this._log(this._formatter.format(logEvent, LoggerInterface.ERROR));
         return this;
     }
 
@@ -75,10 +69,7 @@ export default class FileLogger extends LoggerInterface {
      * @return {LoggerInterface}
      */
     fatal(logEvent) {
-        this._log(
-            this._formatter
-                .format(logEvent, LoggerInterface.FATAl)
-        );
+        this._log(this._formatter.format(logEvent, LoggerInterface.FATAl));
         return this;
     }
 
@@ -88,10 +79,7 @@ export default class FileLogger extends LoggerInterface {
      * @return {LoggerInterface}
      */
     info(logEvent) {
-        this._log(
-            this._formatter
-                .format(logEvent, LoggerInterface.INFO)
-        );
+        this._log(this._formatter.format(logEvent, LoggerInterface.INFO));
         return this;
     }
 
@@ -101,10 +89,7 @@ export default class FileLogger extends LoggerInterface {
      * @return {LoggerInterface}
      */
     trace(logEvent) {
-        this._log(
-            this._formatter
-                .format(logEvent, LoggerInterface.TRACE)
-        );
+        this._log(this._formatter.format(logEvent, LoggerInterface.TRACE));
         return this;
     }
 
@@ -114,11 +99,7 @@ export default class FileLogger extends LoggerInterface {
      * @return {LoggerInterface}
      */
     warn(logEvent) {
-        this._log(
-            this._formatter
-                .format(logEvent, LoggerInterface.WARN)
-        );
+        this._log(this._formatter.format(logEvent, LoggerInterface.WARN));
         return this;
     }
 }
-

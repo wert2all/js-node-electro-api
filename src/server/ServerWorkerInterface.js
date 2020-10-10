@@ -1,4 +1,4 @@
-import ImplementationError from '../lib/implementation-error/ImplementationError';
+import ImplementationError from "../lib/implementation-error/ImplementationError";
 
 /**
  * @interface
@@ -6,11 +6,10 @@ import ImplementationError from '../lib/implementation-error/ImplementationError
  * @class ServerWorkerInterface
  */
 export default class ServerWorkerInterface {
-
     /**
      * @abstract
      */
     run() {
-        throw new ImplementationError(this, 'run');
+        throw new ImplementationError(this, "run");
     }
 }

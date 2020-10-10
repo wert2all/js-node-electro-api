@@ -1,4 +1,4 @@
-import ReaderInterface from './ReaderInterface';
+import ReaderInterface from "./ReaderInterface";
 
 /**
  * @class MergeReader
@@ -38,9 +38,7 @@ export default class MergeReader extends ReaderInterface {
         try {
             defaultValues = this._defaultReader.read();
             extendedValues = this._extendReader.read();
-        } catch (e) {
-
-        }
+        } catch (e) {}
         if (defaultValues === null) {
             defaultValues = {};
         }

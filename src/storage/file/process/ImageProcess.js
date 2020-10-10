@@ -1,8 +1,8 @@
-import fs from 'fs';
-import FileProcessInterface from './FileProcessInterface';
-import FileTypeImage from '../../../data/files/types/FileTypeImage';
-import ErrorFileStorageProcessMove from '../error/ErrorFileStorageProcessMove';
-import ImageProcessDirectoryProcessor from './image/ImageProcessDirectoryProcessor';
+import fs from "fs";
+import FileProcessInterface from "./FileProcessInterface";
+import FileTypeImage from "../../../data/files/types/FileTypeImage";
+import ErrorFileStorageProcessMove from "../error/ErrorFileStorageProcessMove";
+import ImageProcessDirectoryProcessor from "./image/ImageProcessDirectoryProcessor";
 
 /**
  * @class ImageProcess
@@ -25,7 +25,7 @@ export default class ImageProcess extends FileProcessInterface {
      * @return {boolean}
      */
     checkType(type) {
-        return (FileTypeImage.TYPE === type.getType());
+        return FileTypeImage.TYPE === type.getType();
     }
 
     setConfig(config) {
@@ -47,20 +47,17 @@ export default class ImageProcess extends FileProcessInterface {
         return new Promise((resolve, reject) => {
             this._directoryProcessor
                 .create(this._config)
-                .then(directory => {
+                .then((directory) => {
                     const oldPath = fileData.getPath();
                     const newPath = directory + fileNameProvider.getName(fileData);
                     if (oldPath !== false) {
-                        fs.rename(
-                            fileData.getPath().toString(),
-                            newPath,
-                            err => {
-                                if (err) {
-                                    throw err;
-                                }
-                                fileData.setPath(newPath);
-                                resolve(fileData);
-                            });
+                        fs.rename(fileData.getPath().toString(), newPath, (err) => {
+                            if (err) {
+                                throw err;
+                            }
+                            fileData.setPath(newPath);
+                            resolve(fileData);
+                        });
                     } else {
                         throw new ErrorFileStorageProcessMove();
                     }

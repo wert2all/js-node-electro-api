@@ -10,9 +10,7 @@ export default class DomFormInterface {
      * @abstract
      */
     // eslint-disable-next-line no-unused-vars
-    init(submitFunction) {
-
-    }
+    init(submitFunction) {}
 
     /**
      *
@@ -22,9 +20,7 @@ export default class DomFormInterface {
      * @abstract
      */
     // eslint-disable-next-line no-unused-vars
-    setElement(elementName, value) {
-
-    }
+    setElement(elementName, value) {}
 
     /**
      * @abstract
@@ -32,37 +28,28 @@ export default class DomFormInterface {
      * @return {DomFormElementInterface|null}
      */
     // eslint-disable-next-line no-unused-vars
-    getElement(elementName) {
-
-    }
+    getElement(elementName) {}
 
     /**
      * @return {Promise<Boolean>}
      * @abstract
      */
-    submit() {
-    }
+    submit() {}
 
     /**
      * @abstract
      * @return boolean
      */
-    validate() {
-
-    }
+    validate() {}
 
     /**
      * @return FormData
      */
-    getFormData() {
-
-    }
+    getFormData() {}
 
     /**
      * @abstract
      * @return {Object<string, string>}
      */
-    getRequestFormData() {
-
-    }
+    getRequestFormData() {}
 }

@@ -2,7 +2,7 @@
  * @class DomFormElementViewHolder
  *
  */
-import DomStyles from '../../../utils/DomStyles';
+import DomStyles from "../../../utils/DomStyles";
 
 export default class DomFormElementViewHolder {
     /**
@@ -34,7 +34,7 @@ export default class DomFormElementViewHolder {
          * @type {string}
          * @private
          */
-        this._errorStyle = 'error';
+        this._errorStyle = "error";
     }
 
     /**

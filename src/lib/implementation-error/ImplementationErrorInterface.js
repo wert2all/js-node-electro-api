@@ -3,6 +3,4 @@ export default class ImplementationError extends Error {
         super();
         this.message = message;
     }
-
-
 }

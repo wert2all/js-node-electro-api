@@ -1,4 +1,4 @@
-import LoggerInterface from '../../lib/logger/LoggerInterface';
+import LoggerInterface from "../../lib/logger/LoggerInterface";
 
 /**
  * @class Logger
@@ -26,9 +26,7 @@ export default class Logger extends LoggerInterface {
      * @return {LoggerInterface}
      */
     debug(logEvent) {
-        this._strategy
-            .get(logEvent)
-            .debug(logEvent);
+        this._strategy.get(logEvent).debug(logEvent);
         return this;
     }
 

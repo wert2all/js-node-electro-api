@@ -12,7 +12,7 @@ export default class StringExt {
          * @type {string}
          * @private
          */
-        this._string = (value) ? value : '';
+        this._string = value ? value : "";
     }
 
     /**
@@ -22,6 +22,6 @@ export default class StringExt {
      * @return {string}
      */
     replaceAll(search, replacement) {
-        return this._string.replace(new RegExp(search, 'g'), replacement);
+        return this._string.replace(new RegExp(search, "g"), replacement);
     }
 }

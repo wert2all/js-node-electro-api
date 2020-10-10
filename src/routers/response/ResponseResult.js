@@ -2,8 +2,8 @@
  * @class ResponseResult
  */
 export default class ResponseResult {
-    static TYPE_JSON = 'json';
-    static TYPE_HTML = 'html';
+    static TYPE_JSON = "json";
+    static TYPE_HTML = "html";
 
     /**
      *
@@ -11,7 +11,6 @@ export default class ResponseResult {
      * @param {DataValueInterface} responseData
      */
     constructor(responseType, responseData) {
-
         this._responseType = responseType;
         /**
          *

@@ -1,4 +1,4 @@
-import path from 'path';
+import path from "path";
 
 /**
  * @class FileStorageConfig
@@ -10,7 +10,7 @@ export default class FileStorageConfig {
      * @param {string} storagePath
      * @param {string} tmpSubDirectory
      */
-    constructor(storagePath, tmpSubDirectory = 'tmp') {
+    constructor(storagePath, tmpSubDirectory = "tmp") {
         /**
          *
          * @type {string}
@@ -22,10 +22,7 @@ export default class FileStorageConfig {
          * @type {string}
          * @private
          */
-        this._tmpPath = path.normalize(
-            this._storagePath + path.sep + tmpSubDirectory + path.sep
-        );
-
+        this._tmpPath = path.normalize(this._storagePath + path.sep + tmpSubDirectory + path.sep);
     }
 
     /**

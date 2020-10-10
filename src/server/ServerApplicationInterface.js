@@ -1,4 +1,4 @@
-import ImplementationError from '../lib/implementation-error/ImplementationError';
+import ImplementationError from "../lib/implementation-error/ImplementationError";
 
 /**
  * @interface
@@ -12,7 +12,7 @@ export default class ServerApplicationInterface {
      */
     // eslint-disable-next-line no-unused-vars
     init() {
-        throw new ImplementationError(this, 'init');
+        throw new ImplementationError(this, "init");
     }
 
     /**
@@ -20,14 +20,12 @@ export default class ServerApplicationInterface {
      * @return ServerApplicationInterface
      */
     run() {
-        throw new ImplementationError(this, 'run');
+        throw new ImplementationError(this, "run");
     }
 
     /**
      * @abstract
      * @return {*}
      */
-    getRequestListener() {
-
-    }
+    getRequestListener() {}
 }

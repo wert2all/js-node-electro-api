@@ -9,15 +9,11 @@ export default class DomFormElementValidatorInterface {
      * @return boolean
      */
     // eslint-disable-next-line no-unused-vars
-    validate(value) {
-
-    }
+    validate(value) {}
 
     /**
      * @abstract
      * @return string
      */
-    getValidationError() {
-
-    }
+    getValidationError() {}
 }

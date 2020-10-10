@@ -11,7 +11,7 @@ export default class ApiDataInterface {
      */
     // eslint-disable-next-line no-unused-vars
     result(params) {
-        throw Error('Implement ApiDataInterface:result');
+        throw Error("Implement ApiDataInterface:result");
     }
 
     /**
@@ -19,6 +19,6 @@ export default class ApiDataInterface {
      * @abstract
      */
     all() {
-        throw Error('Implement ApiDataInterface:all');
+        throw Error("Implement ApiDataInterface:all");
     }
 }

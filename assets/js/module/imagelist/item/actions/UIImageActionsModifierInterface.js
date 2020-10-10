@@ -11,6 +11,5 @@ export default class UIImageActionsModifierInterface {
      * @param {UIElementListInterface} elementList
      */
     // eslint-disable-next-line no-unused-vars
-    applyData(node, imageData, elementList = null) {
-    }
+    applyData(node, imageData, elementList = null) {}
 }

@@ -13,7 +13,7 @@ export default class DomScript {
     }
 
     create(url) {
-        const scriptElement = this._document.createElement('script');
+        const scriptElement = this._document.createElement("script");
         scriptElement.src = url;
         this._document.body.appendChild(scriptElement);
     }

@@ -1,4 +1,4 @@
-import ImplementationError from '../implementation-error/ImplementationError';
+import ImplementationError from "../implementation-error/ImplementationError";
 
 /**
  * @class FilterFactoryInterface
@@ -14,6 +14,6 @@ export default class FilterFactoryInterface {
      */
     // eslint-disable-next-line no-unused-vars
     create(entity) {
-        throw new ImplementationError(this, 'create');
+        throw new ImplementationError(this, "create");
     }
 }

@@ -1,6 +1,6 @@
 // eslint-disable-next-line max-len
-import DefinitionSQLBuilderInterface from '../../../db-definition/builder/DefinitionSQLBuilderInterface';
-import DefinitionColumn from '../../../db-definition/DefinitionColumn';
+import DefinitionSQLBuilderInterface from "../../../db-definition/builder/DefinitionSQLBuilderInterface";
+import DefinitionColumn from "../../../db-definition/DefinitionColumn";
 
 /**
  * @class SQLiteTableSQLBuilder
@@ -15,8 +15,7 @@ export default class SQLiteTableSQLBuilder extends DefinitionSQLBuilderInterface
      */
     // eslint-disable-next-line no-unused-vars
     buildSQL(definition, data) {
-        return 'CREATE TABLE IF NOT EXISTS ' + definition.getTableName() +
-            '(' + this._columnsSQL(definition) + ')';
+        return "CREATE TABLE IF NOT EXISTS " + definition.getTableName() + "(" + this._columnsSQL(definition) + ")";
     }
 
     /**
@@ -24,13 +23,16 @@ export default class SQLiteTableSQLBuilder extends DefinitionSQLBuilderInterface
      * @return string
      */
     _columnsSQL(definition) {
-        return definition.getColumns().map(column => {
-            let columnSQL = ' ' + column.getColumnName() + ' ' + column.getType() + ' ';
-            columnSQL += (!column.isNull()) ? ' not null ' : ' ';
-            columnSQL += this._createDefault(column);
-            columnSQL += (column.isPrimary()) ? ' primary key ' : ' ';
-            return columnSQL;
-        }).join(',\n');
+        return definition
+            .getColumns()
+            .map((column) => {
+                let columnSQL = " " + column.getColumnName() + " " + column.getType() + " ";
+                columnSQL += !column.isNull() ? " not null " : " ";
+                columnSQL += this._createDefault(column);
+                columnSQL += column.isPrimary() ? " primary key " : " ";
+                return columnSQL;
+            })
+            .join(",\n");
     }
 
     /**
@@ -40,9 +42,7 @@ export default class SQLiteTableSQLBuilder extends DefinitionSQLBuilderInterface
      * @private
      */
     _createDefault(column) {
-        return (column.getDefault() !== false)
-            ? (' default ' + this._wrapValue(column, column.getDefault()))
-            : ' ';
+        return column.getDefault() !== false ? " default " + this._wrapValue(column, column.getDefault()) : " ";
     }
 
     /**
@@ -53,8 +53,6 @@ export default class SQLiteTableSQLBuilder extends DefinitionSQLBuilderInterface
      * @private
      */
     _wrapValue(column, value) {
-        return (column.getType() === DefinitionColumn.COLUMN_TYPE_VARCHAR)
-            ? '"' + value + '"'
-            : value;
+        return column.getType() === DefinitionColumn.COLUMN_TYPE_VARCHAR ? '"' + value + '"' : value;
     }
 }

@@ -1,4 +1,4 @@
-import ICropperActionInterface from './ICropperActionInterface';
+import ICropperActionInterface from "./ICropperActionInterface";
 
 /**
  * @class CropperAction
@@ -55,6 +55,6 @@ export default class CropperAction extends ICropperActionInterface {
      * @private
      */
     _init() {
-        this._element.addEventListener('click', () => this._clickFunction(this._cropper));
+        this._element.addEventListener("click", () => this._clickFunction(this._cropper));
     }
 }

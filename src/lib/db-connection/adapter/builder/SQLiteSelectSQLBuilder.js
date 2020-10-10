@@ -1,5 +1,5 @@
 // eslint-disable-next-line max-len
-import DefinitionSQLSelectBuilderInterface from '../../../db-definition/builder/DefinitionSQLSelectBuilderInterface';
+import DefinitionSQLSelectBuilderInterface from "../../../db-definition/builder/DefinitionSQLSelectBuilderInterface";
 
 /**
  * @class SQLiteSelectSQLBuilder
@@ -35,16 +35,18 @@ export default class SQLiteSelectSQLBuilder extends DefinitionSQLSelectBuilderIn
      * @return string
      */
     buildSQL(definition, data) {
-        const whereCond = Object.keys(data).map(key => {
-            return ' ' + key + ' ' + data[key];
+        const whereCond = Object.keys(data).map((key) => {
+            return " " + key + " " + data[key];
         });
-        return 'Select '
-            + this._buildFields()
-            + ' from '
-            + definition.getTableName()
-            + this._buildWhere(whereCond)
-            + this._buildOrder()
-            + this._buildLimit();
+        return (
+            "Select " +
+            this._buildFields() +
+            " from " +
+            definition.getTableName() +
+            this._buildWhere(whereCond) +
+            this._buildOrder() +
+            this._buildLimit()
+        );
     }
 
     /**
@@ -54,7 +56,7 @@ export default class SQLiteSelectSQLBuilder extends DefinitionSQLSelectBuilderIn
      * @private
      */
     _buildWhere(whereCond) {
-        return whereCond.length > 0 ? ' where ' + whereCond.join(' and ') : '';
+        return whereCond.length > 0 ? " where " + whereCond.join(" and ") : "";
     }
 
     /**
@@ -63,11 +65,9 @@ export default class SQLiteSelectSQLBuilder extends DefinitionSQLSelectBuilderIn
      * @private
      */
     _buildOrder() {
-        let returnValue = '';
+        let returnValue = "";
         if (this._order !== null) {
-            returnValue = ' order by '
-                + this._order.getOrderField() + ' '
-                + this._order.getOrderType();
+            returnValue = " order by " + this._order.getOrderField() + " " + this._order.getOrderType();
         }
         return returnValue;
     }
@@ -78,11 +78,9 @@ export default class SQLiteSelectSQLBuilder extends DefinitionSQLSelectBuilderIn
      * @private
      */
     _buildLimit() {
-        let returnValue = '';
+        let returnValue = "";
         if (this._limit !== null) {
-            returnValue = ' limit '
-                + this._limit.getFrom() + ' , '
-                + this._limit.getOffset();
+            returnValue = " limit " + this._limit.getFrom() + " , " + this._limit.getOffset();
         }
         return returnValue;
     }
@@ -115,12 +113,11 @@ export default class SQLiteSelectSQLBuilder extends DefinitionSQLSelectBuilderIn
     _buildFields() {
         if (this._fields != null) {
             return Object.keys(this._fields)
-                .map(alias => `${this._fields[alias]} as ${alias}`)
-                .join(', ');
+                .map((alias) => `${this._fields[alias]} as ${alias}`)
+                .join(", ");
         } else {
-            return ' * ';
+            return " * ";
         }
-
     }
 
     /**

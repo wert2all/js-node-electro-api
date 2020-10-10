@@ -1,5 +1,4 @@
-import UIControlInterface from '../../../ui/control/UIControlInterface';
-
+import UIControlInterface from "../../../ui/control/UIControlInterface";
 
 /**
  * @class UIEditControl
@@ -19,11 +18,7 @@ export default class UIEditControl extends UIControlInterface {
      * @param {AuthProviderInterface} authProvider
      * @param {CropperFactory} cropperFactory
      */
-    constructor(imageElement, submitButton, modalElement, UIKit, formView,
-                api,
-                notify,
-                authProvider,
-                cropperFactory) {
+    constructor(imageElement, submitButton, modalElement, UIKit, formView, api, notify, authProvider, cropperFactory) {
         super();
         /**
          *
@@ -96,24 +91,21 @@ export default class UIEditControl extends UIControlInterface {
     /**
      *
      */
-    clean() {
-    }
+    clean() {}
 
     /**
      *
      */
     init() {
-        this._submitButton.addEventListener('click', () => {
+        this._submitButton.addEventListener("click", () => {
             if (this._formView.validate()) {
                 this._formView.showLoader();
-                this._api.updateImage(
-                    this._authProvider.getUserProfile(),
-                    this._formView.getRequestFormData()
-                )
-                    .then(response => {
+                this._api
+                    .updateImage(this._authProvider.getUserProfile(), this._formView.getRequestFormData())
+                    .then((response) => {
                         this._formView.hideLoader();
                         if (response.getStatus() === true) {
-                            this._notify.success('Saved!');
+                            this._notify.success("Saved!");
                             if (this._afterSubmit != null) {
                                 this._afterSubmit.exec();
                             }
@@ -121,7 +113,7 @@ export default class UIEditControl extends UIControlInterface {
                             this._notify.error(response.getErrorMessage());
                         }
                     })
-                    .catch(error => {
+                    .catch((error) => {
                         this._formView.hideLoader();
                         this._notify.error(error.message);
                     });
@@ -138,20 +130,18 @@ export default class UIEditControl extends UIControlInterface {
         this._getModal().show();
 
         this._formView
-            .setElement('edit_image_id', imageData.getId())
-            .setElement('edit_image_path', imageData.getPath())
-            .setElement('edit_image_type', imageData.getType())
-            .setElement('edit_image_ready', imageData.getIsReady() ? 'true' : 'false')
-            .setElement('edit_image_rotation', imageData.getRotation());
+            .setElement("edit_image_id", imageData.getId())
+            .setElement("edit_image_path", imageData.getPath())
+            .setElement("edit_image_type", imageData.getType())
+            .setElement("edit_image_ready", imageData.getIsReady() ? "true" : "false")
+            .setElement("edit_image_rotation", imageData.getRotation());
 
         this._image.src = imageData.getUrl();
-        this._cropperFactory
-            .create(this._image)
-            .then(() => {
-                if (this._afterShow !== null) {
-                    this._afterShow.exec();
-                }
-            });
+        this._cropperFactory.create(this._image).then(() => {
+            if (this._afterShow !== null) {
+                this._afterShow.exec();
+            }
+        });
     }
 
     /**

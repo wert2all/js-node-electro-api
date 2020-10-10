@@ -1,7 +1,7 @@
-import EntityInterface from '../../lib/db-entity/EntityInterface';
-import DataValue from '../../lib/data-value/DataValue';
-import UserDefinition from '../../db/definition/UserDefinition';
-import UserProfileDefinition from '../../db/definition/UserProfileDefinition';
+import EntityInterface from "../../lib/db-entity/EntityInterface";
+import DataValue from "../../lib/data-value/DataValue";
+import UserDefinition from "../../db/definition/UserDefinition";
+import UserProfileDefinition from "../../db/definition/UserProfileDefinition";
 
 /**
  * @class UserProfileEntity
@@ -84,7 +84,7 @@ export default class UserProfileEntity extends EntityInterface {
      */
     create(value) {
         const newObj = new UserProfileEntity();
-        Object.keys(value).map(key => {
+        Object.keys(value).map((key) => {
             newObj.setValue(key, value[key]);
         });
         return newObj;

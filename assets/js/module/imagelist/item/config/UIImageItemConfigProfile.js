@@ -52,6 +52,4 @@ export default class UIImageItemConfigProfile {
     getAvatarSelector() {
         return this._avatarSelector;
     }
-
-
 }

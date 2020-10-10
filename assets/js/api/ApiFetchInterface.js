@@ -11,7 +11,5 @@ export default class ApiFetchInterface {
      * @return Promise<ApiFetchResult>
      */
     // eslint-disable-next-line no-unused-vars
-    async fetch(url, options) {
-
-    }
+    async fetch(url, options) {}
 }

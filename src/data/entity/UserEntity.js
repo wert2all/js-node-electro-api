@@ -1,6 +1,6 @@
-import EntityInterface from '../../lib/db-entity/EntityInterface';
-import DataValue from '../../lib/data-value/DataValue';
-import UserDefinition from '../../db/definition/UserDefinition';
+import EntityInterface from "../../lib/db-entity/EntityInterface";
+import DataValue from "../../lib/data-value/DataValue";
+import UserDefinition from "../../db/definition/UserDefinition";
 
 /**
  * @class UserEntity
@@ -24,10 +24,7 @@ export default class UserEntity extends EntityInterface {
      * @return {UserEntity}
      */
     setGoogleAccount(googleAccount) {
-        this._data.setData(
-            UserDefinition.COLUMN_GOOGLE_ID,
-            googleAccount.getGoogleUserId()
-        );
+        this._data.setData(UserDefinition.COLUMN_GOOGLE_ID, googleAccount.getGoogleUserId());
         this._data.setData(UserDefinition.COLUMN_GOOGLE_NAME, googleAccount.getName());
         this._data.setData(UserDefinition.COLUMN_GOOGLE_EMAIL, googleAccount.getEmail());
         this._data.setData(UserDefinition.COLUMN_PHOTO_PATH, googleAccount.getPhoto());
@@ -76,7 +73,7 @@ export default class UserEntity extends EntityInterface {
      */
     create(value) {
         const newObj = new UserEntity();
-        Object.keys(value).map(key => {
+        Object.keys(value).map((key) => {
             newObj.setValue(key, value[key]);
         });
         return newObj;

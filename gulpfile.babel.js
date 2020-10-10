@@ -1,4 +1,9 @@
 import GulpTask from "./src/ml/GulpTask";
+import ImageRepository from "./src/ml/gulp/image/ImageRepository";
+import DIFactory from "./src/_init/factories/DIFactory";
+import ConsoleConfigFactory from "./src/_init/factories/ConsoleConfigFactory";
+import SQLConnectionFactory from "./src/_init/factories/SQLConnectionFactory";
+import ConnectionInterface from "./src/lib/db-connection/ConnectionInterface";
 
 const gulp = require("gulp");
 const babel = require("gulp-babel");
@@ -76,8 +81,17 @@ function watchFiles() {
     gulp.watch("./templates/**/*", gulp.series("copy:templates", "serve:reload"));
 }
 
-gulp.task("ml", () => gulp.watch("data/files/**/*", (cb) => new GulpTask().go(cb)));
-gulp.task("test:ml", (cb) => new GulpTask().go(cb));
+gulp.task("test:ml", (cb) => {
+    const di = DIFactory.create(ConsoleConfigFactory);
+    SQLConnectionFactory.create(di)
+        .then((connection) => di.get(ConnectionInterface).setServer(connection))
+        .then(() => di.get(ConnectionInterface))
+        .then((connection) => new GulpTask(new ImageRepository(connection)).go(cb))
+        .catch((err) => {
+            console.log(err);
+            cb();
+        });
+});
 const watch = gulp.series("serve", watchFiles);
 
 exports.dev = watch;

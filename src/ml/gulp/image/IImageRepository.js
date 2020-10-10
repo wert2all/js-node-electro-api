@@ -1,3 +1,5 @@
+import ImplementationError from "../../../lib/implementation-error/ImplementationError";
+
 /**
  * @interface
  * @abstract
@@ -8,5 +10,7 @@ export default class IImageRepository {
      * @abstract
      * @return {IImageManager[]}
      */
-    getImages() {}
+    async getImages() {
+        throw new ImplementationError(this, "getImages");
+    }
 }

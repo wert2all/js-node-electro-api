@@ -3,6 +3,7 @@ import SQLConnectionFactory from "./factories/SQLConnectionFactory";
 import ConnectionInterface from "../lib/db-connection/ConnectionInterface";
 import LoggerInterface from "../lib/logger/LoggerInterface";
 import AppLogEvent from "../extended/logger/events/AppLogEvent";
+import ServerConfigFactory from "./factories/ServerConfigFactory";
 
 export default class Runner {
     /**
@@ -17,7 +18,7 @@ export default class Runner {
      *
      */
     run() {
-        const di = DIFactory.create();
+        const di = DIFactory.create(ServerConfigFactory);
 
         SQLConnectionFactory.create(di)
             .then((connection) => di.get(ConnectionInterface).setServer(connection))

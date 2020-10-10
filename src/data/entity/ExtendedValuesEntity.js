@@ -116,4 +116,14 @@ export default class ExtendedValuesEntity extends EntityInterface {
     getEntityType() {
         return this.getValue(ExtendedValuesDefinition.COLUMN_ENTITY_TYPE);
     }
+
+    /**
+     *
+     * @param {string} type
+     * @param {number} entityId
+     * @return {ExtendedValuesEntity}
+     */
+    static createExtended(type, entityId) {
+        return new ExtendedValuesEntity().setEntityType(type).setEntityId(entityId);
+    }
 }

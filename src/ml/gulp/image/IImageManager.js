@@ -16,17 +16,17 @@ export default class IImageManager {
 
     /**
      * @abstract
-     * @return IImageManager
+     * @return {Promise<void>}
      */
-    startProcess() {
+    async startProcess() {
         throw new ImplementationError(this, "startProcess");
     }
 
     /**
      * @abstract
-     * @return IImageManager
+     * @return {Promise<void>}
      */
-    stopProcess() {
+    async stopProcess() {
         throw new ImplementationError(this, "stopProcess");
     }
 

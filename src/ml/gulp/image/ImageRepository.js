@@ -10,14 +10,22 @@ export default class ImageRepository extends IImageRepository {
     /**
      *
      * @param {ConnectionInterface} connection
+     * @param {ExtendedValuesEntityManager} em
      */
-    constructor(connection) {
+    constructor(connection, em) {
         super();
         this._filesRepository = new FilesRepository();
         this._extRepository = new ExtendedValuesRepository();
 
         this._filesRepository.setConnection(connection);
         this._extRepository.setConnection(connection);
+
+        /**
+         *
+         * @type {ExtendedValuesEntityManager}
+         * @private
+         */
+        this._em = em;
     }
 
     /**
@@ -36,7 +44,7 @@ export default class ImageRepository extends IImageRepository {
                 .setEntityId(fileEntity.getValue(UserFilesDefinition.COLUMN_ID))
                 .fillData(await this._extRepository.fetchData(extEntity));
             fileEntity.setExtensionEntity(extEntity);
-            returnValues.push(new ImageManager(fileEntity));
+            returnValues.push(new ImageManager(fileEntity, this._em));
         }
         return returnValues;
     }

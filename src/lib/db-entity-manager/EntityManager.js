@@ -22,6 +22,14 @@ export default class EntityManager {
 
     /**
      *
+     * @return {ConnectionInterface}
+     */
+    getConnection() {
+        return this._connection;
+    }
+
+    /**
+     *
      * @param {DefinitionTableInterface} definition
      * @param {EntityInterface} entity
      * @return {Promise<EntityInterface>}

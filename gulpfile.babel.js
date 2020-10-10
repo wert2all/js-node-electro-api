@@ -4,6 +4,8 @@ import DIFactory from "./src/_init/factories/DIFactory";
 import ConsoleConfigFactory from "./src/_init/factories/ConsoleConfigFactory";
 import SQLConnectionFactory from "./src/_init/factories/SQLConnectionFactory";
 import ConnectionInterface from "./src/lib/db-connection/ConnectionInterface";
+import ExtendedValuesEntityManager from "./src/extended/ExtendedValuesEntityManager";
+import EntityManager from "./src/lib/db-entity-manager/EntityManager";
 
 const gulp = require("gulp");
 const babel = require("gulp-babel");
@@ -86,7 +88,13 @@ gulp.task("test:ml", (cb) => {
     SQLConnectionFactory.create(di)
         .then((connection) => di.get(ConnectionInterface).setServer(connection))
         .then(() => di.get(ConnectionInterface))
-        .then((connection) => new GulpTask(new ImageRepository(connection)).go(cb))
+        .then((connection) => {
+            const task = new GulpTask(
+                new ImageRepository(connection, new ExtendedValuesEntityManager(di.get(EntityManager)))
+            );
+            return task.go(cb);
+        })
+        .then(() => cb())
         .catch((err) => {
             console.log(err);
             cb();

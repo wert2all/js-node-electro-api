@@ -19,8 +19,8 @@ export default class GulpTask {
      *
      * @param {Function} cb
      */
-    go(cb) {
-        this._repository.getImages().forEach((imageManager) => {
+    async go(cb) {
+        (await this._repository.getImages()).forEach((imageManager) => {
             if (imageManager.canProcess()) {
                 imageManager.startProcess();
                 const mlProcessor = this._getImageMlProcessor(imageManager.getData());

@@ -38,9 +38,9 @@ export default class DIFactory {
      * @return DI
      */
     // eslint-disable-next-line max-statements
-    static create() {
+    static create(configFactory) {
         const di = DI.getInstance();
-        const serverConfig = ServerConfigFactory.create();
+        const serverConfig = configFactory.create();
         const applicationDirectory = serverConfig.getApplicationDirectory();
 
         di.register(ServerConfig, serverConfig);

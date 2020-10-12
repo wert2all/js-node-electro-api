@@ -94,4 +94,12 @@ export default class ImageManager extends IImageManager {
     setResult(result) {
         return this;
     }
+
+    /**
+     *
+     * @return {UserFilesEntity}
+     */
+    getData() {
+        return this._fileEntity;
+    }
 }

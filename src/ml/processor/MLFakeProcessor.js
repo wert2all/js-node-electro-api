@@ -9,6 +9,20 @@ import ImageResult from "../gulp/image/ImageResult";
 export default class MLFakeProcessor extends IMlProcessor {
     /**
      *
+     * @param {IMLModel|null} prevModel
+     */
+    constructor(prevModel) {
+        super();
+        /**
+         *
+         * @type {IMLModel|null}
+         * @private
+         */
+        this._prevModel = prevModel;
+    }
+
+    /**
+     *
      * @param {UserFilesEntity} entity
      * @param {ImageResult} result
      */

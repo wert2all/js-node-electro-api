@@ -10,6 +10,6 @@ export default class MLProcessorFactory {
      * @return {IMlProcessor|null}
      */
     create(entity) {
-        return new MLFakeProcessor();
+        return new MLFakeProcessor(null);
     }
 }

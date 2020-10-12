@@ -37,4 +37,13 @@ export default class IImageManager {
     getData() {
         throw new ImplementationError(this, "getData");
     }
+
+    /**
+     * @abstract
+     * @param {ImageResult|null} result
+     * @return {IImageManager}
+     */
+    setResult(result) {
+        throw new ImplementationError(this, "setResult");
+    }
 }

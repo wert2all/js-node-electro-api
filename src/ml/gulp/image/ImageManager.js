@@ -85,4 +85,13 @@ export default class ImageManager extends IImageManager {
         await this._em.save(this._fileEntity.getExtensionEntity());
         return Promise.resolve();
     }
+
+    /**
+     *
+     * @param {ImageResult|null} result
+     * @return {IImageManager}
+     */
+    setResult(result) {
+        return this;
+    }
 }

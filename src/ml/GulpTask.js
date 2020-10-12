@@ -23,11 +23,11 @@ export default class GulpTask {
                 if (imageManager.canProcess()) {
                     await imageManager.startProcess();
                     // const mlProcessor = this._getImageMlProcessor(imageManager.getData());
-                    // let result = null;
+                    let result = null;
                     // if (mlProcessor) {
                     //     result = mlProcessor.processImage(imageManager.getData());
                     // }
-                    // imageManager.setResult(result);
+                    imageManager.setResult(result);
                     await imageManager.stopProcess();
                 }
             }

@@ -92,6 +92,11 @@ export default class ImageManager extends IImageManager {
      * @return {IImageManager}
      */
     setResult(result) {
+        if (result) {
+            const extensionEntity = this._fileEntity.getExtensionEntity();
+            const resultValues = result.getResultValues();
+            Object.keys(resultValues).map((key) => extensionEntity.setValue(key, resultValues[key]));
+        }
         return this;
     }
 

@@ -9,9 +9,9 @@ export default class IMlProcessor {
     /**
      *
      * @param {UserFilesEntity} entity
-     * @return {ImageResult|null}
+     * @param {ImageResult} result
      */
-    processImage(entity) {
+    async processImage(entity, result) {
         throw new ImplementationError(this, "processImage");
     }
 }

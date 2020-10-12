@@ -1,6 +1,8 @@
 /**
  * @class GulpTask
  */
+import ImageResult from "./gulp/image/ImageResult";
+
 export default class GulpTask {
     /**
      *
@@ -26,14 +28,19 @@ export default class GulpTask {
                  */
                 const imageManager = entities[key];
                 if (imageManager.canProcess()) {
-                    await imageManager.startProcess();
-                    const processor = this._processorFactory.create(imageManager.getData());
-                    let result = null;
-                    if (processor) {
-                        result = processor.processImage(imageManager.getData());
+                    const result = new ImageResult();
+                    try {
+                        await imageManager.startProcess();
+                        const processor = this._processorFactory.create(imageManager.getData());
+                        if (processor) {
+                            await processor.processImage(imageManager.getData(), result);
+                        }
+                    } catch (e) {
+                        result.setError(e);
+                    } finally {
+                        imageManager.setResult(result);
+                        await imageManager.stopProcess();
                     }
-                    imageManager.setResult(result);
-                    await imageManager.stopProcess();
                 }
             }
         }

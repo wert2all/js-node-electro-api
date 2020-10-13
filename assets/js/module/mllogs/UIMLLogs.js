@@ -6,13 +6,22 @@ import UIElementListInterface from "../../ui/interfaces/element/UIElementListInt
  * @type UIElementListInterface
  */
 export default class UIMLLogs extends UIElementListInterface {
+    static HIDDEN_STYLE = "uk-invisible";
+
     /**
      *
      * @param {DomFormElementInterface} entityId
+     * @param {HTMLElement} spinnerElement
      * @param {Api} api
      */
-    constructor(entityId, api) {
+    constructor(entityId, spinnerElement, api) {
         super();
+        /**
+         *
+         * @type {HTMLElement}
+         * @private
+         */
+        this._spinnerElement = spinnerElement;
         /**
          *
          * @type {DomFormElementInterface}
@@ -30,6 +39,26 @@ export default class UIMLLogs extends UIElementListInterface {
     init() {}
 
     refresh() {
+        this._showSpinner().hideSpinner();
         console.log(this._entityId.getValue());
+    }
+
+    /**
+     *
+     * @return {UIMLLogs}
+     * @private
+     */
+    _showSpinner() {
+        this._spinnerElement.classList.remove(UIMLLogs.HIDDEN_STYLE);
+        return this;
+    }
+
+    /**
+     *
+     * @return {UIMLLogs}
+     */
+    hideSpinner() {
+        this._spinnerElement.classList.add(UIMLLogs.HIDDEN_STYLE);
+        return this;
     }
 }

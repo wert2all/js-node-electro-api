@@ -90,6 +90,7 @@ export default class EditImageInit {
         this._mlLogs = new UIMLLogs(
             this._editImageViewForm.getElement("edit_image_id"),
             this._document.querySelector("div.ml-logs-spinner"),
+            this._document.querySelector("table.ml-logs-table"),
             api
         );
         const rotationFunc = (cropper, rotationVaLue) => {

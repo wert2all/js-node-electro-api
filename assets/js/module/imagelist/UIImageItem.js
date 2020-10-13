@@ -8,13 +8,20 @@ import UIElementInterface from "../../ui/interfaces/element/UIElementInterface";
 export default class UIImageItem extends UIElementInterface {
     /**
      *
+     * @param {UIkit} uiKit
      * @param {ParentNode} itemNode
      * @param {UIImageItemConfig} config
      * @param {UIImageActionsModifierInterface} actions
      * @param {UIProfileViewFactory|null} profileViewFactory
      */
-    constructor(itemNode, config, actions = null, profileViewFactory = null) {
+    constructor(uiKit, itemNode, config, actions = null, profileViewFactory = null) {
         super();
+        /**
+         *
+         * @type {UIkit}
+         * @private
+         */
+        this._uiKit = uiKit;
         /**
          *
          * @type {ParentNode}
@@ -29,7 +36,7 @@ export default class UIImageItem extends UIElementInterface {
         this._config = config;
         /**
          *
-         * @type {null|Node}
+         * @type {null|HTMLImageElement}
          * @private
          */
         this._image = null;
@@ -97,7 +104,7 @@ export default class UIImageItem extends UIElementInterface {
      */
     clone() {
         const parentNode = this._node.cloneNode(true);
-        return new UIImageItem(parentNode, this._config, this._actions, this._profileViewFactory);
+        return new UIImageItem(this._uiKit, parentNode, this._config, this._actions, this._profileViewFactory);
     }
 
     getNode() {
@@ -165,7 +172,8 @@ export default class UIImageItem extends UIElementInterface {
      */
     setImage(url) {
         if (this._image !== null) {
-            this._image.src = url;
+            this._image.setAttribute("data-src", url);
+            this._uiKit.img(this._image);
         }
         return this;
     }

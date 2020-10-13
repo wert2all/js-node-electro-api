@@ -238,6 +238,7 @@ export default class UIInit {
 
         const editActionFabric = new UIEditActionFabric(editControl, new AfterEditControlFabric());
         const imageItem = new UIImageItem(
+            UIkit,
             document.querySelector(".one_image_card"),
             uiItemConfig,
             new UIImageActionsModifierComposite([

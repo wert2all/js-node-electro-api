@@ -1,6 +1,7 @@
 import UIElementInterface from "../../interfaces/element/UIElementInterface";
 
 /**
+ * FIXME fix li and a as pageItem
  * @class UIPageItem
  * @type UIElementInterface
  * @extends UIElementInterface

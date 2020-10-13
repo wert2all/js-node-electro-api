@@ -51,6 +51,6 @@ export default class ImageResult {
      * @return {boolean}
      */
     getStatus() {
-        return this._isError;
+        return this._isError !== true;
     }
 }

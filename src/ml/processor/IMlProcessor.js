@@ -7,9 +7,10 @@ import ImplementationError from "../../lib/implementation-error/ImplementationEr
  */
 export default class IMlProcessor {
     /**
-     *
+     * @abstract
      * @param {UserFilesEntity} entity
      * @param {ImageResult} result
+     * @return {Promise<ImageResult>} result
      */
     async processImage(entity, result) {
         throw new ImplementationError(this, "processImage");

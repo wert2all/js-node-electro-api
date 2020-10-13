@@ -92,7 +92,7 @@ gulp.task("test:ml", (cb) => {
         .then((connection) => {
             const task = new GulpTask(
                 new ImageRepository(connection, new ExtendedValuesEntityManager(di.get(EntityManager))),
-                new MLProcessorFactory()
+                new MLProcessorFactory(connection)
             );
             return task.go(cb);
         })

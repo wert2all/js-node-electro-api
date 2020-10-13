@@ -87,7 +87,11 @@ export default class EditImageInit {
      * @param {AuthProviderInterface} authProvider
      */
     init(api, authProvider) {
-        this._mlLogs = new UIMLLogs(this._editImageViewForm.getElement("edit_image_id"), api);
+        this._mlLogs = new UIMLLogs(
+            this._editImageViewForm.getElement("edit_image_id"),
+            this._document.querySelector("div.ml-logs-spinner"),
+            api
+        );
         const rotationFunc = (cropper, rotationVaLue) => {
             const rotationElement = this._editImageViewForm.getElement("edit_image_rotation");
             rotationElement.setValue((parseInt(rotationElement.getValue(), 10) + rotationVaLue).toString());

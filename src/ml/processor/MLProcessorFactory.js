@@ -1,4 +1,5 @@
-import MLFakeProcessor from "./MLFakeProcessor";
+import MLProcessor from "./MLProcessor";
+import MLFakeModel from "../model/MLFakeModel";
 
 /**
  * @class MLProcessorFactory
@@ -20,9 +21,9 @@ export default class MLProcessorFactory {
     /**
      *
      * @param {UserFilesEntity} entity
-     * @return {IMlProcessor|null}
+     * @return {IMLProcessor|null}
      */
     create(entity) {
-        return new MLFakeProcessor(this._connection, null);
+        return new MLProcessor(this._connection, new MLFakeModel());
     }
 }

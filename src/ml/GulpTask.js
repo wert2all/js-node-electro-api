@@ -36,6 +36,7 @@ export default class GulpTask {
                             await processor.processImage(imageManager.getData(), result);
                         }
                     } catch (e) {
+                        console.log(e);
                         result.setError(e);
                     } finally {
                         imageManager.setResult(result);

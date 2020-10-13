@@ -12,10 +12,17 @@ export default class UIMLLogs extends UIElementListInterface {
      *
      * @param {DomFormElementInterface} entityId
      * @param {HTMLElement} spinnerElement
+     * @param {HTMLTableElement} tableElement
      * @param {Api} api
      */
-    constructor(entityId, spinnerElement, api) {
+    constructor(entityId, spinnerElement, tableElement, api) {
         super();
+        /**
+         *
+         * @type {HTMLTableElement}
+         * @private
+         */
+        this._tableElement = tableElement;
         /**
          *
          * @type {HTMLElement}
@@ -39,7 +46,8 @@ export default class UIMLLogs extends UIElementListInterface {
     init() {}
 
     refresh() {
-        this._showSpinner().hideSpinner();
+        this._hideTable()._showSpinner();
+
         console.log(this._entityId.getValue());
     }
 
@@ -59,6 +67,25 @@ export default class UIMLLogs extends UIElementListInterface {
      */
     hideSpinner() {
         this._spinnerElement.classList.add(UIMLLogs.HIDDEN_STYLE);
+        return this;
+    }
+
+    /**
+     *
+     * @return {UIMLLogs}
+     * @private
+     */
+    _showTable() {
+        this._tableElement.classList.remove(UIMLLogs.HIDDEN_STYLE);
+        return this;
+    }
+
+    /**
+     *
+     * @return {UIMLLogs}
+     */
+    _hideTable() {
+        this._tableElement.classList.add(UIMLLogs.HIDDEN_STYLE);
         return this;
     }
 }

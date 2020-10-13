@@ -38,16 +38,7 @@ import UIFormView from "./ui/form/UIFormView";
 import UIImageProfileAction from "./module/imagelist/item/actions/actions/UIImageProfileAction";
 import DomFormElementViewHolder from "./dom/form/element/viewholder/DomFormElementViewHolder";
 import ProfileFormRequestModifier from "./module/profile/form/ProfileFormRequestModifier";
-import UIEditActionFabric from "./module/imagelist/item/actions/actions/fabric/UIEditActionFabric";
-import UIEditControl from "./module/imagelist/control/UIEditControl";
-import DomFormElementRadio from "./dom/form/element/DomFormElementRadio";
-import DomFormElementCheckbox from "./dom/form/element/DomFormElementCheckbox";
-import ImageEditFormRequestModifier from "./module/imagelist/form/ImageEditFormRequestModifier";
-import AfterEditControlFabric from "./module/imagelist/control/after/AfterEditControlFabric";
-import CropperFactory from "./module/imagelist/control/cropper/CropperFactory";
-import CropperActionComposite from "./module/imagelist/control/cropper/CropperActionComposite";
-import CropperAction from "./module/imagelist/control/cropper/CropperAction";
-import AfterEditShowAction from "./module/imagelist/control/after/AfterEditShowAction";
+import EditImageInit from "./module/init/EditImageInit";
 
 /**
  * @class UIInit
@@ -70,12 +61,19 @@ export default class UIInit {
          * @private
          */
         this._ui = null;
+        /**
+         *
+         * @type {EditImageInit}
+         * @private
+         */
+        this._editImage = null;
     }
 
     init(window) {
         this._initUI(window.document);
         this._appendGApi(window);
         this._initIcons();
+        this._initOnEvent();
     }
 
     /**
@@ -94,6 +92,8 @@ export default class UIInit {
                         new AuthListener(this._ui).addAfterAuth((authProvider) => {
                             const api = new Api(new ApiFetcher(), ApiUrlFactory.create(window));
                             const uiProfile = this._makeProfile(api, window.document, authProvider);
+                            this._editImage = new EditImageInit(window.document, this._ui, this._config);
+                            this._editImage.init(api, authProvider);
                             this._makeImageList(api, authProvider, uiProfile);
                             this._makeAuthElements(authProvider, uiProfile);
                         })
@@ -164,7 +164,8 @@ export default class UIInit {
             new UIPager(
                 document.querySelector("#system ul.uk-pagination"),
                 new UIPageItem(document.querySelector("#system ul.uk-pagination"), "li a", "li.uk-active span")
-            )
+            ),
+            UIkit
         );
     }
 
@@ -196,47 +197,7 @@ export default class UIInit {
                 ".uk-card-header .uk-grid-small  a.image_profile_icon"
             )
         );
-        const formView = new UIFormView(
-            this._createEditImageForm(document),
-            document.querySelector("#modal_edit_image form.edit_image")
-        );
-        const rotationFunc = (cropper, rotationVaLue) => {
-            const rotationElement = formView.getElement("edit_image_rotation");
-            rotationElement.setValue((parseInt(rotationElement.getValue(), 10) + rotationVaLue).toString());
-            return cropper.rotate(rotationVaLue);
-        };
-        const cropperAction = new CropperActionComposite([
-            new CropperAction(document.querySelector("#modal_edit_image .uk-iconnav .crop_reset"), (cropper) =>
-                cropper.reset()
-            ),
-            new CropperAction(document.querySelector("#modal_edit_image .uk-iconnav .crop_zoon_in"), (cropper) =>
-                cropper.zoom(0.1)
-            ),
-            new CropperAction(document.querySelector("#modal_edit_image .uk-iconnav .crop_zoon_out"), (cropper) =>
-                cropper.zoom(-0.1)
-            ),
-            new CropperAction(document.querySelector("#modal_edit_image .uk-iconnav .crop_rotate_right"), (cropper) =>
-                rotationFunc(cropper, 90)
-            ),
-            new CropperAction(document.querySelector("#modal_edit_image .uk-iconnav .crop_rotate_left"), (cropper) =>
-                rotationFunc(cropper, -90)
-            ),
-        ]);
-        const afterShowAction = new AfterEditShowAction(formView, cropperAction);
-        const editControl = new UIEditControl(
-            document.querySelector("#modal_edit_image img.image"),
-            document.querySelector("#modal_edit_image button.edit_image_submit"),
-            document.querySelector("#modal_edit_image"),
-            UIkit,
-            formView,
-            api,
-            this._ui.getNotify(),
-            authProvider,
-            new CropperFactory(this._config.getCropperOptions(), cropperAction)
-        );
-        editControl.setAfterShowAction(afterShowAction).init();
 
-        const editActionFabric = new UIEditActionFabric(editControl, new AfterEditControlFabric());
         const imageItem = new UIImageItem(
             UIkit,
             document.querySelector(".one_image_card"),
@@ -247,8 +208,8 @@ export default class UIInit {
                     actionsConfig.getDownloadSelector(),
                     new UIImageDownloadAction()
                 ),
-                editActionFabric.create(actionsConfig.getEditSelector()),
-                editActionFabric.create(actionsConfig.getMainCardSelector()),
+                this._editImage.getEditActionFabric().create(actionsConfig.getEditSelector()),
+                this._editImage.getEditActionFabric().create(actionsConfig.getMainCardSelector()),
                 new UIImageActionModifier(
                     new DomListenersModifier(),
                     actionsConfig.getDeleteSelector(),
@@ -389,25 +350,14 @@ export default class UIInit {
 
     /**
      *
-     * @param {Document} document
-     * @return {DomForm}
      * @private
      */
-    _createEditImageForm(document) {
-        return new DomForm(
-            {
-                edit_image_id: new DomFormElement(document.querySelector("#edit_image_id")),
-                edit_image_path: new DomFormElement(document.querySelector("#edit_image_path")),
-                edit_image_type: new DomFormElementRadio(document.getElementsByName("image_type")),
-                edit_image_ready: new DomFormElementCheckbox(document.querySelector("#edit_is_ready")),
-                edit_image_rotation: new DomFormElement(document.querySelector("#edit_image_rotation")),
-            },
-            new ImageEditFormRequestModifier({
-                id: "edit_image_id",
-                type: "edit_image_type",
-                isReady: "edit_image_ready",
-                rotation: "edit_image_rotation",
-            })
-        );
+    _initOnEvent() {
+        const self = this;
+        UIkit.util.on("ul.uk-switcher.edit-tab-container", "shown", (event) => {
+            if (event.target.classList.contains("ml-logs") && self._editImage.getMLLogs()) {
+                self._editImage.getMLLogs().refresh();
+            }
+        });
     }
 }

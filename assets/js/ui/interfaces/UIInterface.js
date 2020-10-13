@@ -36,6 +36,12 @@ export default class UIInterface {
 
     /**
      * @abstract
+     * @return {UIkit}
+     */
+    getUIKit() {}
+
+    /**
+     * @abstract
      * @return {UIPager}
      */
     getPager() {}

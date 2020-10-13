@@ -14,9 +14,16 @@ export default class UIHolder extends UIInterface {
      * @param {UIContentElementInterface} contentElement
      * @param {UINotifyInterface} notify
      * @param {UIPager} pager
+     * @param {UIkit} uikit
      */
-    constructor(authElement, gridElement, loaderElement, contentElement, notify, pager) {
+    constructor(authElement, gridElement, loaderElement, contentElement, notify, pager, uikit) {
         super();
+        /**
+         *
+         * @type {UIkit}
+         * @private
+         */
+        this._uikit = uikit;
         /**
          *
          * @type {UIElementInterface[]}
@@ -118,5 +125,13 @@ export default class UIHolder extends UIInterface {
      */
     getPager() {
         return this._pager.clone();
+    }
+
+    /**
+     *
+     * @return {UIkit}
+     */
+    getUIKit() {
+        return this._uikit;
     }
 }

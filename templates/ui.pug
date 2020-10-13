@@ -158,11 +158,14 @@ html(lang='en')
                                                 label.uk-switch.uk-switch-small(for='edit_is_ready')
                                                     input#edit_is_ready(type='checkbox', value='1')
                                                     .uk-switch-slider
-                            li
+                            li.ml-logs
                                 div.uk-container.ml-logs
-                                    h3 ML Logs
-                                    table.uk-table.uk-table-striped.uk-table-hover
-                                        caption Table Caption
+                                    div.uk-position-center.ml-logs-spinner.uk-invisible
+                                        div(uk-spinner='ratio: 3')
+
+                                    table.uk-table.uk-table-striped.uk-table-hover.uk-invisible.ml-logs-table
+                                        caption
+                                            span.uk-text-large.uk-text-bold.uk-text-emphasis ML Logs
                                         thead
                                             tr
                                                 th.uk-width-small

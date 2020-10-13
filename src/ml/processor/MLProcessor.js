@@ -55,8 +55,9 @@ export default class MLProcessor extends IMLProcessor {
     async processImage(entity, result) {
         await this._loggingStart(entity);
         await this._learnPrevModel(entity);
+        await this._loggingProcess(entity, result, true);
         await this._processModel(entity, result);
-        await this._loggingProcess(entity, result);
+        await this._loggingProcess(entity, result, false);
         return Promise.resolve(result);
     }
 
@@ -69,8 +70,9 @@ export default class MLProcessor extends IMLProcessor {
     async _learnPrevModel(entity) {
         if (this._prevModel) {
             if ((await this._prevModel.isLearned(entity)) !== true) {
-                await this._loggingLearning(entity);
+                await this._loggingLearning(entity, true);
                 await this._prevModel.training(entity);
+                await this._loggingLearning(entity, false);
             }
         }
         return Promise.resolve();
@@ -101,12 +103,13 @@ export default class MLProcessor extends IMLProcessor {
      *
      * @param {UserFilesEntity} entity
      * @param {ImageResult} result
+     * @param {boolean} isStart
      * @return {Promise<void>} result
      */
-    async _loggingProcess(entity, result) {
+    async _loggingProcess(entity, result, isStart = true) {
         const logEntity = this._createLoggingEntity(entity, this._currentModel);
         logEntity.setStatus(result.getStatus());
-        logEntity.setMessage("Process model");
+        logEntity.setMessage("Process model: " + (isStart ? "start" : "end"));
         return this._logging(logEntity);
     }
 
@@ -125,11 +128,14 @@ export default class MLProcessor extends IMLProcessor {
     /**
      *
      * @param {UserFilesEntity} entity
+     * @param {boolean} isStart
      * @return {Promise<void>}
      * @private
      */
-    async _loggingLearning(entity) {
-        const logEntity = this._createLoggingEntity(entity, this._prevModel).setMessage("Learning model");
+    async _loggingLearning(entity, isStart = true) {
+        const logEntity = this._createLoggingEntity(entity, this._prevModel).setMessage(
+            "Learning model: " + (isStart ? "start" : "end")
+        );
         return this._logging(logEntity);
     }
 

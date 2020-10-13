@@ -25,4 +25,10 @@ export default class IMLModel {
      * @return {Promise<ImageResult>}
      */
     async process(entity, result) {}
+
+    /**
+     * @abstract
+     * @return {string}
+     */
+    getAlias() {}
 }

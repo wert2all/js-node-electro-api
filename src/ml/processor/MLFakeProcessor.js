@@ -3,6 +3,7 @@ import ImageResult from "../gulp/image/ImageResult";
 import MLModelLoggingRepository from "../../db/repository/ml/MLModelLoggingRepository";
 import DI from "../../lib/di/DI";
 import EntityManager from "../../lib/db-entity-manager/EntityManager";
+import MLLoggingEntity from "../../data/entity/ml/MLLoggingEntity";
 
 /**
  * @class MLFakeProcessor
@@ -53,7 +54,7 @@ export default class MLFakeProcessor extends IMlProcessor {
      */
     async processImage(entity, result) {
         await this._learnPrevModel(entity);
-        return this._currentModel.process(entity, result);
+        return this._processModel(entity, result);
     }
 
     /**
@@ -79,6 +80,42 @@ export default class MLFakeProcessor extends IMlProcessor {
      * @private
      */
     async _loggingLearning(entity) {
+        const loggingEntity = this._createLoggingEntity(entity);
+        await this._em.save(this._loggingRepository.getDefinition(), loggingEntity);
+        return Promise.resolve();
+    }
+
+    /**
+     *
+     * @param {UserFilesEntity} entity
+     * @return {MLLoggingEntity}
+     * @private
+     */
+    _createLoggingEntity(entity) {
+        const returnEntity = new MLLoggingEntity();
+        returnEntity
+            .setModelAlias(this._prevModel.getAlias())
+            .setEntityId(entity.getExtensionEntity().getEntityId())
+            .setStatus(true)
+            .setMessage("Learning model");
+        return returnEntity;
+    }
+
+    async _processModel(entity, result) {
+        await this._currentModel.process(entity, result);
+        await this._loggingProcess(entity, result);
+        return Promise.resolve(result);
+    }
+
+    /**
+     *
+     * @param {UserFilesEntity} entity
+     * @param {ImageResult} result
+     * @return {Promise<void>} result
+     */
+    async _loggingProcess(entity, result) {
+        const logEntity = this._createLoggingEntity(entity).setStatus(result.getStatus());
+        await this._em.save(this._loggingRepository.getDefinition(), logEntity);
         return Promise.resolve();
     }
 }

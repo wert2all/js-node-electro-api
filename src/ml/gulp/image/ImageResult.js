@@ -45,4 +45,12 @@ export default class ImageResult {
         this._data.setData(key, value);
         return this;
     }
+
+    /**
+     *
+     * @return {boolean}
+     */
+    getStatus() {
+        return this._isError;
+    }
 }

@@ -105,51 +105,63 @@ html(lang='en')
                             a.uk-icon-link.uk-icon.image-icon-edit(href='#', title='', data-uk-tooltip='', data-uk-icon='icon: file-edit', aria-expanded='false')
                             a.uk-icon-link.uk-icon.image-icon-delete(href='#', title='', data-uk-tooltip='', data-uk-icon='icon: trash', aria-expanded='false')
 
-            #modal_edit_image(uk-modal='')
+            #modal_edit_image(uk-modal='').uk-modal-container
                 .uk-modal-dialog.uk-margin-auto-vertical
                     button.uk-modal-close-default(type='button', uk-close='')
-                    .uk-modal-header
-                        h2.uk-modal-title Edit image
                     .uk-modal-body
-                        .uk-card-media-bottom
-                            img.image(src='../assets/img/avatar.svg', alt='')
-                            ul.uk-iconnav
-                                li
-                                    a.crop_reset(href="#")
-                                        i.fas.fa-arrows-alt.fa-2x
-                                li
-                                    a.crop_zoon_in(href="#")
-                                        i.fas.fa-search-plus.fa-2x
-                                li
-                                    a.crop_zoon_out(href="#")
-                                        i.fas.fa-search-minus.fa-2x
-                                li
-                                    a.crop_rotate_right(href="#")
-                                        i.fas.fa-redo.fa-2x
-                                li
-                                    a.crop_rotate_left(href="#")
-                                        i.fas.fa-undo.fa-2x
-                                li
-                                    a
-                                        i.fas.fa-plus-square.fa-2x
+                        ul(uk-tab='connect: .edit-tab-container')
+                            li
+                                a(href='#') Edit image
+                            li
+                                a(href='#') ML Logs
 
-                        form.uk-form-horizontal.edit_image
-                            input#edit_image_id.uk-input(type='hidden')
-                            input#edit_image_path.uk-input(type='hidden')
-                            input#edit_image_rotation.uk-input(type='hidden')
-                            .uk-margin
-                                label.uk-form-label Image type
-                                .uk-form-controls.edit_image_type
-                                    label.uk-margin-right(for='image_type_meter') Meter
-                                        input#image_type_meter.uk-radio.uk-margin-small-left(type='radio', name='image_type', value='meter')
-                                    label.uk-margin-right(for='image_type_bill') Bill
-                                        input#image_type_bill.uk-radio.uk-margin-small-left(type='radio', name='image_type', value='bill')
-                            .uk-margin
-                                label.uk-form-label Is ready to ML
-                                .uk-form-controls.edit_is_ready
-                                    label.uk-switch.uk-switch-small(for='edit_is_ready')
-                                        input#edit_is_ready(type='checkbox', value='1')
-                                        .uk-switch-slider
+                        ul.uk-switcher.edit-tab-container.uk-margin
+                            li
+                                div.uk-container
+                                    h3 Edit image
+                                    .uk-card-media-bottom
+                                        img.image(src='../assets/img/avatar.svg', alt='')
+                                        ul.uk-iconnav
+                                            li
+                                                a.crop_reset(href="#")
+                                                    i.fas.fa-arrows-alt.fa-2x
+                                            li
+                                                a.crop_zoon_in(href="#")
+                                                    i.fas.fa-search-plus.fa-2x
+                                            li
+                                                a.crop_zoon_out(href="#")
+                                                    i.fas.fa-search-minus.fa-2x
+                                            li
+                                                a.crop_rotate_right(href="#")
+                                                    i.fas.fa-redo.fa-2x
+                                            li
+                                                a.crop_rotate_left(href="#")
+                                                    i.fas.fa-undo.fa-2x
+                                            li
+                                                a
+                                                    i.fas.fa-plus-square.fa-2x
+
+                                    form.uk-form-horizontal.edit_image
+                                        input#edit_image_id.uk-input(type='hidden')
+                                        input#edit_image_path.uk-input(type='hidden')
+                                        input#edit_image_rotation.uk-input(type='hidden')
+                                        .uk-margin
+                                            label.uk-form-label Image type
+                                            .uk-form-controls.edit_image_type
+                                                label.uk-margin-right(for='image_type_meter') Meter
+                                                    input#image_type_meter.uk-radio.uk-margin-small-left(type='radio', name='image_type', value='meter')
+                                                label.uk-margin-right(for='image_type_bill') Bill
+                                                    input#image_type_bill.uk-radio.uk-margin-small-left(type='radio', name='image_type', value='bill')
+                                        .uk-margin
+                                            label.uk-form-label Is ready to ML
+                                            .uk-form-controls.edit_is_ready
+                                                label.uk-switch.uk-switch-small(for='edit_is_ready')
+                                                    input#edit_is_ready(type='checkbox', value='1')
+                                                    .uk-switch-slider
+                            li
+                                div.uk-container.ml-logs
+                                    h3 ML Logs
+
                     .uk-modal-footer.uk-text-right
                         button.uk-button.uk-button-primary.edit_image_submit(type='button') Save
 

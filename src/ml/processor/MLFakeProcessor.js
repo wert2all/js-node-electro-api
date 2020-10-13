@@ -1,5 +1,8 @@
 import IMlProcessor from "./IMlProcessor";
 import ImageResult from "../gulp/image/ImageResult";
+import MLModelLoggingRepository from "../../db/repository/ml/MLModelLoggingRepository";
+import DI from "../../lib/di/DI";
+import EntityManager from "../../lib/db-entity-manager/EntityManager";
 
 /**
  * @class MLFakeProcessor
@@ -27,6 +30,19 @@ export default class MLFakeProcessor extends IMlProcessor {
          * @private
          */
         this._prevModel = prevModel;
+        /**
+         *
+         * @type {MLModelLoggingRepository}
+         * @private
+         */
+        this._loggingRepository = new MLModelLoggingRepository();
+        this._loggingRepository.setConnection(connection);
+        /**
+         *
+         * @type {EntityManager}
+         * @private
+         */
+        this._em = DI.getInstance().get(EntityManager);
     }
 
     /**
@@ -49,9 +65,20 @@ export default class MLFakeProcessor extends IMlProcessor {
     async _learnPrevModel(entity) {
         if (this._prevModel) {
             if ((await this._prevModel.isLearned(entity)) !== true) {
+                await this._loggingLearning(entity);
                 await this._prevModel.training(entity);
             }
         }
+        return Promise.resolve();
+    }
+
+    /**
+     *
+     * @param {UserFilesEntity} entity
+     * @return {Promise<void>}
+     * @private
+     */
+    async _loggingLearning(entity) {
         return Promise.resolve();
     }
 }

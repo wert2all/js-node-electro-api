@@ -12,6 +12,7 @@ import CropperFactory from "../imagelist/control/cropper/CropperFactory";
 import AfterEditShowAction from "../imagelist/control/after/AfterEditShowAction";
 import CropperActionComposite from "../imagelist/control/cropper/CropperActionComposite";
 import CropperAction from "../imagelist/control/cropper/CropperAction";
+import MLLogsSelectors from "../mllogs/MLLogsSelectors";
 
 /**
  * @class EditImageInit
@@ -91,8 +92,10 @@ export default class EditImageInit {
             this._editImageViewForm.getElement("edit_image_id"),
             this._document.querySelector("div.ml-logs-spinner"),
             this._document.querySelector("table.ml-logs-table"),
-            api
+            api,
+            new MLLogsSelectors("tbody", "tr", "td span.uk-label", "td span.uk-badge", "td.ml-log-message")
         );
+        this._mlLogs.init();
         const rotationFunc = (cropper, rotationVaLue) => {
             const rotationElement = this._editImageViewForm.getElement("edit_image_rotation");
             rotationElement.setValue((parseInt(rotationElement.getValue(), 10) + rotationVaLue).toString());

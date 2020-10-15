@@ -24,7 +24,7 @@ export default class RequestInterface {
      * @public
      */
     // eslint-disable-next-line no-unused-vars
-    createResponse(request) {
+    async createResponse(request) {
         throw new ImplementationError(this, "createResponse");
     }
 }

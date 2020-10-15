@@ -1,4 +1,5 @@
 import UIElementListInterface from "../../ui/interfaces/element/UIElementListInterface";
+import LogItem from "./data/LogItem";
 
 /**
  * @class UIMLLogs
@@ -80,13 +81,21 @@ export default class UIMLLogs extends UIElementListInterface {
         this._api
             .getMlLogs(this._authProvider.getUserProfile(), this._entityId.getValue())
             .then((logs) => {
+                this._showTable()._hideSpinner();
                 if (logs.getStatus()) {
-                    console.log(logs);
+                    const data = logs.getData();
+                    if (data.hasOwnProperty("logs")) {
+                        const logsItems = data.logs
+                            .map((oneLog) => LogItem.create(oneLog))
+                            .filter((logItem) => !!logItem);
+                        this._appendData(logsItems);
+                    }
                 } else {
                     this._notify.error(logs.getErrorMessage());
                 }
             })
             .catch((error) => {
+                this._showTable()._hideSpinner();
                 this._notify.error(error.message);
             });
     }
@@ -105,7 +114,7 @@ export default class UIMLLogs extends UIElementListInterface {
      *
      * @return {UIMLLogs}
      */
-    hideSpinner() {
+    _hideSpinner() {
         this._spinnerElement.classList.add(UIMLLogs.HIDDEN_STYLE);
         return this;
     }
@@ -140,5 +149,22 @@ export default class UIMLLogs extends UIElementListInterface {
             .querySelectorAll(this._selectors.getRowSelector())
             .forEach((row) => this._elements.getTableBody().removeChild(row));
         return this;
+    }
+
+    /**
+     *
+     * @param {LogItem[]} logsItems
+     * @private
+     */
+    _appendData(logsItems) {
+        logsItems.map((item) => {
+            this._elements.getAliasElement().innerText = item.getAlias();
+            const statusElement = this._elements.getStatusElement();
+            statusElement.classList.remove("uk-label-success");
+            statusElement.classList.remove("uk-label-danger");
+            statusElement.classList.add("uk-label-" + item.getStatus());
+            this._elements.getMessageElement().innerText = item.getMessage();
+            this._elements.getTableBody().appendChild(this._elements.getRowElement().cloneNode(true));
+        });
     }
 }

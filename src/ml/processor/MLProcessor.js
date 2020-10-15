@@ -1,5 +1,5 @@
-import IMLProcessor from "./IMLProcessor";
-import ImageResult from "../gulp/image/ImageResult";
+import ProcessorInterface from "../../gulp/processor/ProcessorInterface";
+import ImageResult from "../../gulp/image/default/ImageResult";
 import MLModelLoggingRepository from "../../db/repository/ml/MLModelLoggingRepository";
 import DI from "../../lib/di/DI";
 import EntityManager from "../../lib/db-entity-manager/EntityManager";
@@ -7,10 +7,10 @@ import MLLoggingEntity from "../../data/entity/ml/MLLoggingEntity";
 
 /**
  * @class MLProcessor
- * @extends IMLProcessor
- * @type IMLProcessor
+ * @extends ProcessorInterface
+ * @type ProcessorInterface
  */
-export default class MLProcessor extends IMLProcessor {
+export default class MLProcessor extends ProcessorInterface {
     /**
      *
      * @param {ConnectionInterface} connection
@@ -49,7 +49,7 @@ export default class MLProcessor extends IMLProcessor {
     /**
      *
      * @param {UserFilesEntity} entity
-     * @param {ImageResult} result
+     * @param {ImageResultInterface} result
      * @return {Promise<ImageResult>} result
      */
     async processImage(entity, result) {
@@ -102,7 +102,7 @@ export default class MLProcessor extends IMLProcessor {
     /**
      *
      * @param {UserFilesEntity} entity
-     * @param {ImageResult} result
+     * @param {ImageResultInterface} result
      * @param {boolean} isStart
      * @return {Promise<void>} result
      */

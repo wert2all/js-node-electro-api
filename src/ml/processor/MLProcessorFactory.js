@@ -1,15 +1,17 @@
 import MLProcessor from "./MLProcessor";
 import MLFakeModel from "../model/MLFakeModel";
+import ProcessorFactoryInterface from "../../gulp/processor/ProcessorFactoryInterface";
 
 /**
  * @class MLProcessorFactory
  */
-export default class MLProcessorFactory {
+export default class MLProcessorFactory extends ProcessorFactoryInterface {
     /**
      *
      * @param {ConnectionInterface} connection
      */
     constructor(connection) {
+        super();
         /**
          *
          * @type {ConnectionInterface}
@@ -21,7 +23,7 @@ export default class MLProcessorFactory {
     /**
      *
      * @param {UserFilesEntity} entity
-     * @return {IMLProcessor|null}
+     * @return {ProcessorInterface|null}
      */
     create(entity) {
         return new MLProcessor(this._connection, new MLFakeModel());

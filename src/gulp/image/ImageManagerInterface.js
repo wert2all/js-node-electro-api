@@ -1,11 +1,11 @@
+import ImplementationError from "../../lib/implementation-error/ImplementationError";
+
 /**
  * @interface
  * @abstract
- * @class IImageManager
+ * @class ImageManagerInterface
  */
-import ImplementationError from "../../../lib/implementation-error/ImplementationError";
-
-export default class IImageManager {
+export default class ImageManagerInterface {
     /**
      * @abstract
      * @return boolean
@@ -41,7 +41,7 @@ export default class IImageManager {
     /**
      * @abstract
      * @param {ImageResult|null} result
-     * @return {IImageManager}
+     * @return {ImageManagerInterface}
      */
     setResult(result) {
         throw new ImplementationError(this, "setResult");

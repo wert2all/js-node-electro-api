@@ -7,6 +7,10 @@ import AbstractAdminRequest from "../../routers/request/AbstractAdminRequest";
 import RequestDataFactory from "./request/RequestDataFactory";
 import ErrorLogEventFactory from "./request/ErrorLogEventFactory";
 import ResponseResult from "../../routers/response/ResponseResult";
+import MLModelLoggingRepository from "../../db/repository/ml/MLModelLoggingRepository";
+import MLLoggingEntity from "../../data/entity/ml/MLLoggingEntity";
+import DefinitionOrder from "../../lib/db-definition/DefinitionOrder";
+import MLModelLoggingDefinition from "../../db/definition/ml/MLModelLoggingDefinition";
 
 /**
  * @class MLLogsGetRequest
@@ -24,6 +28,12 @@ export default class MLLogsGetRequest extends AbstractAdminRequest {
             DI.getInstance().get(LoggerInterface),
             new ErrorLogEventFactory()
         );
+        /**
+         *
+         * @type {MLModelLoggingRepository}
+         * @private
+         */
+        this._mlLoggingRepository = new MLModelLoggingRepository();
     }
 
     /**
@@ -33,7 +43,14 @@ export default class MLLogsGetRequest extends AbstractAdminRequest {
      */
     // eslint-disable-next-line no-unused-vars
     init(dispatcher) {
-        super.setConnection(DI.getInstance().get(ConnectionInterface));
+        /**
+         *
+         * @type {ConnectionInterface}
+         */
+        const connection = DI.getInstance().get(ConnectionInterface);
+        super.setConnection(connection);
+        this._mlLoggingRepository.setConnection(connection);
+
         return this;
     }
 
@@ -53,8 +70,22 @@ export default class MLLogsGetRequest extends AbstractAdminRequest {
      * @protected
      */
     async _processRequest(requestData, response) {
-        response.setData("logs", []);
-        response.setData("entityId", requestData.getEntityId());
+        const logs = (await this._loadLogs(requestData)).map((entity) => entity.getData());
+        response.setData("logs", logs);
         return Promise.resolve(response);
+    }
+
+    /**
+     *
+     * @param {MLLogsGetDataClass} requestData
+     * @return {Promise<EntityInterface[]>}
+     * @private
+     */
+    async _loadLogs(requestData) {
+        const entity = new MLLoggingEntity().setEntityId(requestData.getEntityId());
+        return this._mlLoggingRepository.fetchData(
+            entity,
+            new DefinitionOrder(MLModelLoggingDefinition.COLUMN_ID, DefinitionOrder.TYPE_DESC)
+        );
     }
 }

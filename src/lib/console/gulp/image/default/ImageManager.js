@@ -1,7 +1,7 @@
 import ImageManagerInterface from "../ImageManagerInterface";
-import ImagesValues from "../../../data/entity/ext/ImagesValues";
-import ExtendedValuesEntity from "../../../data/entity/ExtendedValuesEntity";
-import UserFilesDefinition from "../../../db/definition/UserFilesDefinition";
+import ImagesValues from "../../../../../data/entity/ext/ImagesValues";
+import ExtendedValuesEntity from "../../../../../data/entity/ExtendedValuesEntity";
+import UserFilesDefinition from "../../../../../db/definition/UserFilesDefinition";
 
 /**
  * @class ImageManager

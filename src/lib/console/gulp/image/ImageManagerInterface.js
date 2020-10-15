@@ -1,4 +1,4 @@
-import ImplementationError from "../../lib/implementation-error/ImplementationError";
+import ImplementationError from "../../../implementation-error/ImplementationError";
 
 /**
  * @interface
@@ -40,7 +40,7 @@ export default class ImageManagerInterface {
 
     /**
      * @abstract
-     * @param {ImageResult|null} result
+     * @param {ImageResultInterface|null} result
      * @return {ImageManagerInterface}
      */
     setResult(result) {

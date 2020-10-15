@@ -1,22 +1,32 @@
 /**
  * @class GulpTask
  */
-import ImageResult from "./gulp/image/ImageResult";
-
 export default class GulpTask {
     /**
      *
-     * @param {IImageRepository} repository
-     * @param {MLProcessorFactory} mlProcessorFactory
+     * @param {ImageRepositoryInterface} repository
+     * @param {ProcessorFactoryInterface} processorFactory
+     * @param {ImageResultFactoryInterface} resultFactory
      */
-    constructor(repository, mlProcessorFactory) {
+    constructor(repository, processorFactory, resultFactory) {
         /**
          *
-         * @type {IImageRepository}
+         * @type {ImageResultFactoryInterface}
+         * @private
+         */
+        this._resultFactory = resultFactory;
+        /**
+         *
+         * @type {ImageRepositoryInterface}
          * @private
          */
         this._repository = repository;
-        this._processorFactory = mlProcessorFactory;
+        /**
+         *
+         * @type {ProcessorFactoryInterface}
+         * @private
+         */
+        this._processorFactory = processorFactory;
     }
 
     async go() {
@@ -24,11 +34,15 @@ export default class GulpTask {
         for (let key in entities) {
             if (entities.hasOwnProperty(key)) {
                 /**
-                 * @type {IImageManager} imageManager
+                 * @type {ImageManagerInterface} imageManager
                  */
                 const imageManager = entities[key];
                 if (imageManager.canProcess()) {
-                    const result = new ImageResult();
+                    /**
+                     *
+                     * @type {ImageResultInterface}
+                     */
+                    const result = this._resultFactory.create();
                     try {
                         await imageManager.startProcess();
                         const processor = this._processorFactory.create(imageManager.getData());

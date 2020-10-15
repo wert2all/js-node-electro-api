@@ -1,13 +1,17 @@
 import DataValue from "../../../lib/data-value/DataValue";
+import ImageResultInterface from "../ImageResultInterface";
 
 /**
  * @class ImageResult
+ * @extends ImageResultInterface
+ * @type ImageResultInterface
  */
-export default class ImageResult {
+export default class ImageResult extends ImageResultInterface {
     static IS_ERROR = "ml_is_error";
     static ERROR_MESSAGE = "ml_error_message";
 
     constructor() {
+        super();
         /**
          *
          * @type {DataValue}

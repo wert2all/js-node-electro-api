@@ -1,4 +1,4 @@
-import IImageRepository from "./IImageRepository";
+import ImageRepositoryInterface from "../ImageRepositoryInterface";
 import FilesRepository from "../../../db/repository/FilesRepository";
 import UserFilesEntity from "../../../data/entity/UserFilesEntity";
 import ExtendedValuesRepository from "../../../db/repository/ExtendedValuesRepository";
@@ -6,7 +6,7 @@ import ExtendedValuesEntity from "../../../data/entity/ExtendedValuesEntity";
 import UserFilesDefinition from "../../../db/definition/UserFilesDefinition";
 import ImageManager from "./ImageManager";
 
-export default class ImageRepository extends IImageRepository {
+export default class ImageRepository extends ImageRepositoryInterface {
     /**
      *
      * @param {ConnectionInterface} connection
@@ -30,7 +30,7 @@ export default class ImageRepository extends IImageRepository {
 
     /**
      *
-     * @return {IImageManager[]}
+     * @return {ImageManagerInterface[]}
      */
     async getImages() {
         const returnValues = [];

@@ -3,9 +3,9 @@ import ImplementationError from "../../lib/implementation-error/ImplementationEr
 /**
  * @interface
  * @abstract
- * @class IMLProcessor
+ * @class ProcessorInterface
  */
-export default class IMLProcessor {
+export default class ProcessorInterface {
     /**
      * @abstract
      * @param {UserFilesEntity} entity

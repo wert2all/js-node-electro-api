@@ -1,14 +1,14 @@
-import IImageManager from "./IImageManager";
+import ImageManagerInterface from "../ImageManagerInterface";
 import ImagesValues from "../../../data/entity/ext/ImagesValues";
 import ExtendedValuesEntity from "../../../data/entity/ExtendedValuesEntity";
 import UserFilesDefinition from "../../../db/definition/UserFilesDefinition";
 
 /**
  * @class ImageManager
- * @type IImageManager
- * @extends IImageManager
+ * @type ImageManagerInterface
+ * @extends ImageManagerInterface
  */
-export default class ImageManager extends IImageManager {
+export default class ImageManager extends ImageManagerInterface {
     /**
      *
      * @param {UserFilesEntity} fileEntity
@@ -88,8 +88,8 @@ export default class ImageManager extends IImageManager {
 
     /**
      *
-     * @param {ImageResult|null} result
-     * @return {IImageManager}
+     * @param {ImageResultInterface|null} result
+     * @return {ImageManagerInterface}
      */
     setResult(result) {
         if (result) {

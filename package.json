@@ -15,7 +15,6 @@
     },
     "husky": {
         "hooks": {
-            "pre-commit": "npm run test:static",
             "commit-msg": "commitlint -E HUSKY_GIT_PARAMS -g './_config/git/commitlint.js'"
         }
     },

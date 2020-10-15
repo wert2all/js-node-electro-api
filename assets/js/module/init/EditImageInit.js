@@ -13,6 +13,7 @@ import AfterEditShowAction from "../imagelist/control/after/AfterEditShowAction"
 import CropperActionComposite from "../imagelist/control/cropper/CropperActionComposite";
 import CropperAction from "../imagelist/control/cropper/CropperAction";
 import MLLogsSelectors from "../mllogs/MLLogsSelectors";
+import MLLogsElementsFactory from "../mllogs/MLLogsElementsFactory";
 
 /**
  * @class EditImageInit
@@ -91,8 +92,10 @@ export default class EditImageInit {
         this._mlLogs = new UIMLLogs(
             this._editImageViewForm.getElement("edit_image_id"),
             this._document.querySelector("div.ml-logs-spinner"),
-            this._document.querySelector("table.ml-logs-table"),
+            new MLLogsElementsFactory(this._document.querySelector("table.ml-logs-table")),
             api,
+            authProvider,
+            this._ui.getNotify(),
             new MLLogsSelectors("tbody", "tr", "td span.uk-label", "td span.uk-badge", "td.ml-log-message")
         );
         this._mlLogs.init();

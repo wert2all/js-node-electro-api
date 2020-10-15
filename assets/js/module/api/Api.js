@@ -114,6 +114,22 @@ export default class Api {
     /**
      *
      * @param {DataGoogleAuthUser} userProfile
+     * @param {string} entityId
+     * @return {Promise<ApiFetchResult>}
+     */
+    async getMlLogs(userProfile, entityId) {
+        const options = {
+            method: "GET",
+        };
+        return await this._fetcher.fetch(
+            this._createUrl("ml/log/get/?token=" + this._createToken(userProfile) + "&entityid=" + entityId),
+            options
+        );
+    }
+
+    /**
+     *
+     * @param {DataGoogleAuthUser} userProfile
      * @return {string}
      * @private
      */

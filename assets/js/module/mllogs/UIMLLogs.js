@@ -12,18 +12,15 @@ export default class UIMLLogs extends UIElementListInterface {
      *
      * @param {DomFormElementInterface} entityId
      * @param {HTMLElement} spinnerElement
-     * @param {HTMLTableElement} tableElement
+     * @param {MLLogsElementsFactory} elementsFactory
      * @param {Api} api
+     * @param {AuthProviderInterface} authProvider
+     * @param {UINotifyInterface} notify
      * @param {MLLogsSelectors} selectors
      */
-    constructor(entityId, spinnerElement, tableElement, api, selectors) {
+    constructor(entityId, spinnerElement, elementsFactory, api, authProvider, notify, selectors) {
         super();
-        /**
-         *
-         * @type {HTMLTableElement}
-         * @private
-         */
-        this._tableElement = tableElement;
+
         /**
          *
          * @type {HTMLElement}
@@ -44,55 +41,54 @@ export default class UIMLLogs extends UIElementListInterface {
         this._api = api;
         /**
          *
+         * @type {AuthProviderInterface}
+         * @private
+         */
+        this._authProvider = authProvider;
+        /**
+         *
+         * @type {UINotifyInterface}
+         * @private
+         */
+        this._notify = notify;
+        /**
+         *
          * @type {MLLogsSelectors}
          * @private
          */
         this._selectors = selectors;
         /**
          *
-         * @type {null|HTMLElement}
+         * @type {null|MLLogsElements}
          * @private
          */
-        this._tableBody = null;
+        this._elements = null;
         /**
          *
-         * @type {null|HTMLTableRowElement}
+         * @type {MLLogsElementsFactory}
          * @private
          */
-        this._rowElement = null;
-        /**
-         *
-         * @type {null|HTMLElement}
-         * @private
-         */
-        this._statusElement = null;
-        /**
-         *
-         * @type {null|HTMLElement}
-         * @private
-         */
-        this._aliasElement = null;
-        /**
-         *
-         * @type {null|HTMLElement}
-         * @private
-         */
-        this._messageElement = null;
+        this._elementsFactory = elementsFactory;
     }
 
     init() {
-        this._tableBody = this._tableElement.querySelector(this._selectors.getTableBodySelector());
-        this._rowElement = this._tableBody.querySelector(this._selectors.getRowSelector()).cloneNode(true);
-        this._statusElement = this._tableBody.querySelector(this._selectors.getStatusSelector()).cloneNode(true);
-        this._aliasElement = this._tableBody.querySelector(this._selectors.getAliasSelector()).cloneNode(true);
-        this._messageElement = this._tableBody.querySelector(this._selectors.getMessageSelector()).cloneNode(true);
+        this._elements = this._elementsFactory.factory(this._selectors);
     }
 
     refresh() {
-        this._cleanTableRows();
-        this._hideTable()._showSpinner();
-
-        console.log(this._entityId.getValue());
+        this._cleanTableRows()._hideTable()._showSpinner();
+        this._api
+            .getMlLogs(this._authProvider.getUserProfile(), this._entityId.getValue())
+            .then((logs) => {
+                if (logs.getStatus()) {
+                    console.log(logs);
+                } else {
+                    this._notify.error(logs.getErrorMessage());
+                }
+            })
+            .catch((error) => {
+                this._notify.error(error.message);
+            });
     }
 
     /**
@@ -120,7 +116,7 @@ export default class UIMLLogs extends UIElementListInterface {
      * @private
      */
     _showTable() {
-        this._tableElement.classList.remove(UIMLLogs.HIDDEN_STYLE);
+        this._elements.getTableElement().classList.remove(UIMLLogs.HIDDEN_STYLE);
         return this;
     }
 
@@ -129,7 +125,7 @@ export default class UIMLLogs extends UIElementListInterface {
      * @return {UIMLLogs}
      */
     _hideTable() {
-        this._tableElement.classList.add(UIMLLogs.HIDDEN_STYLE);
+        this._elements.getTableElement().classList.add(UIMLLogs.HIDDEN_STYLE);
         return this;
     }
 
@@ -139,9 +135,10 @@ export default class UIMLLogs extends UIElementListInterface {
      * @private
      */
     _cleanTableRows() {
-        this._tableBody
+        this._elements
+            .getTableBody()
             .querySelectorAll(this._selectors.getRowSelector())
-            .forEach((row) => this._tableBody.removeChild(row));
+            .forEach((row) => this._elements.getTableBody().removeChild(row));
         return this;
     }
 }

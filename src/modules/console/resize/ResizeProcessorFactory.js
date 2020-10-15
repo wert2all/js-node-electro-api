@@ -1,4 +1,5 @@
 import ProcessorFactoryInterface from "../../../lib/console/gulp/processor/ProcessorFactoryInterface";
+import ResizeProcessor from "./ResizeProcessor";
 
 /**
  * @class ResizeProcessorFactory
@@ -11,6 +12,6 @@ export default class ResizeProcessorFactory extends ProcessorFactoryInterface {
      * @return {ProcessorInterface|null}
      */
     create(entity) {
-        return null;
+        return new ResizeProcessor();
     }
 }

@@ -9,8 +9,8 @@ export default class ProcessorInterface {
     /**
      * @abstract
      * @param {UserFilesEntity} entity
-     * @param {ImageResult} result
-     * @return {Promise<ImageResult>} result
+     * @param {ImageResultInterface} result
+     * @return {Promise<ImageResultInterface>} result
      */
     async processImage(entity, result) {
         throw new ImplementationError(this, "processImage");

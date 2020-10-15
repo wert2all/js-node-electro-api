@@ -16,6 +16,7 @@ import DI from "../../lib/di/DI";
 import ImagesDeleteRequest from "../../modules/images/ImagesDeleteRequest";
 import UserProfileGetRequest from "../../modules/user/UserProfileGetRequest";
 import ImagesUpdateRequest from "../../modules/images/ImagesUpdateRequest";
+import MLLogsGetRequest from "../../modules/ml/MLLogsGetRequest";
 
 export default class ApplicationFactory {
     constructor() {
@@ -48,6 +49,7 @@ export default class ApplicationFactory {
                 new RouteDefinition("/imagelist/delete/", "post", new ImagesDeleteRequest()),
                 new RouteDefinition("/imagelist/update/", "post", new ImagesUpdateRequest()),
                 new RouteDefinition("/ui/", "get", new UIRequest()),
+                new RouteDefinition("/ml/log/get/", "get", new MLLogsGetRequest()),
             ]),
             di.get(DispatchInterface),
             new ResponseFactory()

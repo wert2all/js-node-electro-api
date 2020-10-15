@@ -1,6 +1,6 @@
 import MLProcessor from "./MLProcessor";
 import MLFakeModel from "../model/MLFakeModel";
-import ProcessorFactoryInterface from "../../gulp/processor/ProcessorFactoryInterface";
+import ProcessorFactoryInterface from "../../../../lib/console/gulp/processor/ProcessorFactoryInterface";
 
 /**
  * @class MLProcessorFactory

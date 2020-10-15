@@ -1,4 +1,4 @@
-import DataValue from "../../../lib/data-value/DataValue";
+import DataValue from "../../../../data-value/DataValue";
 import ImageResultInterface from "../ImageResultInterface";
 
 /**

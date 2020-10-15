@@ -1,9 +1,9 @@
-import ProcessorInterface from "../../gulp/processor/ProcessorInterface";
-import ImageResult from "../../gulp/image/default/ImageResult";
-import MLModelLoggingRepository from "../../db/repository/ml/MLModelLoggingRepository";
-import DI from "../../lib/di/DI";
-import EntityManager from "../../lib/db-entity-manager/EntityManager";
-import MLLoggingEntity from "../../data/entity/ml/MLLoggingEntity";
+import ProcessorInterface from "../../../../lib/console/gulp/processor/ProcessorInterface";
+import ImageResult from "../../../../lib/console/gulp/image/default/ImageResult";
+import MLModelLoggingRepository from "../../../../db/repository/ml/MLModelLoggingRepository";
+import DI from "../../../../lib/di/DI";
+import EntityManager from "../../../../lib/db-entity-manager/EntityManager";
+import MLLoggingEntity from "../../../../data/entity/ml/MLLoggingEntity";
 
 /**
  * @class MLProcessor

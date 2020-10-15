@@ -1,4 +1,4 @@
-import ImplementationError from "../../lib/implementation-error/ImplementationError";
+import ImplementationError from "../../../implementation-error/ImplementationError";
 
 /**
  * @interface

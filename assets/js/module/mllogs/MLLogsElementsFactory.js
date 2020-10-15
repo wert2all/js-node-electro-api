@@ -25,9 +25,9 @@ export default class MLLogsElementsFactory {
     factory(selectors) {
         const tableBody = this._tableElement.querySelector(selectors.getTableBodySelector());
         const rowElement = tableBody.querySelector(selectors.getRowSelector()).cloneNode(true);
-        const statusElement = tableBody.querySelector(selectors.getStatusSelector()).cloneNode(true);
-        const aliasElement = tableBody.querySelector(selectors.getAliasSelector()).cloneNode(true);
-        const messageElement = tableBody.querySelector(selectors.getMessageSelector()).cloneNode(true);
+        const statusElement = rowElement.querySelector(selectors.getStatusSelector());
+        const aliasElement = rowElement.querySelector(selectors.getAliasSelector());
+        const messageElement = rowElement.querySelector(selectors.getMessageSelector());
 
         return new MLLogsElements(
             this._tableElement,

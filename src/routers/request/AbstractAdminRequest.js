@@ -55,7 +55,7 @@ export default class AbstractAdminRequest extends RequestInterface {
         /**
          *
          * @type {UserRepository}
-         * @private
+         * @protected
          */
         this._usersRepository = new UserRepository();
     }

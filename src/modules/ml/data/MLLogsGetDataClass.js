@@ -1,15 +1,17 @@
-import StringExt from "../../../lib/utils/StringExt";
-import AuthNoToken from "../../auth/error/AuthNoToken";
+import RequestDataInterface from "../../../routers/request/data/RequestDataInterface";
 
 /**
  * @class MLLogsGetDataClass
+ * @extends RequestDataInterface
+ * @type RequestDataInterface
  */
-export default class MLLogsGetDataClass {
+export default class MLLogsGetDataClass extends RequestDataInterface {
     /**
      *
      * @param {string} token
      */
     constructor(token) {
+        super();
         /**
          *
          * @type {string}
@@ -30,28 +32,8 @@ export default class MLLogsGetDataClass {
         this._entityId = null;
     }
 
-    /**
-     *
-     * @param request
-     * @return {MLLogsGetDataClass}
-     */
-    static factory(request) {
-        let authToken = null;
-        let returnRequest = null;
-        if (request.query.token) {
-            authToken = Buffer.from(new StringExt(request.query.token).replaceAll('"', ""), "base64").toString();
-        }
-        if (authToken !== null) {
-            returnRequest = new MLLogsGetDataClass(authToken);
-            if (request.query.entityid) {
-                const entityId = parseInt(request.query.entityid, 10);
-                returnRequest.setEntityId(entityId);
-            }
-        } else {
-            throw new AuthNoToken();
-        }
-
-        return returnRequest;
+    getEntityId() {
+        return this._entityId;
     }
 
     /**

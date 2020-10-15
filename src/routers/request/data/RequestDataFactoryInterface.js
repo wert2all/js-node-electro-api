@@ -1,5 +1,6 @@
 /**
  * @interface
+ * @abstract
  * @class RequestDataFactoryInterface
  */
 export default class RequestDataFactoryInterface {
@@ -8,5 +9,5 @@ export default class RequestDataFactoryInterface {
      * @param request
      * @return {RequestDataInterface}
      */
-    static factory(request) {}
+    factory(request) {}
 }

@@ -1,5 +1,7 @@
 {
     "api:url:static:image": "http://localhost:3001/images/",
+    "server:images:subdirectory": "images/",
+    "gulp:path:images:resize:directory": "resized/",
     "render.pug.template.directory": "templates/",
     "render.pug.template.name": "ui.pug"
 }

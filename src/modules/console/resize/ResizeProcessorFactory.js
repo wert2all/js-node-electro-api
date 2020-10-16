@@ -1,5 +1,8 @@
 import ProcessorFactoryInterface from "../../../lib/console/gulp/processor/ProcessorFactoryInterface";
 import ResizeProcessor from "./ResizeProcessor";
+import SizeConfig from "./size/SizeConfig";
+import ResizeSizesHolder from "./size/ResizeSizesHolder";
+import ResizeDestinationPathProviderFactory from "./path/ResizeDestinationPathProviderFactory";
 
 /**
  * @class ResizeProcessorFactory
@@ -12,6 +15,9 @@ export default class ResizeProcessorFactory extends ProcessorFactoryInterface {
      * @return {ProcessorInterface|null}
      */
     create(entity) {
-        return new ResizeProcessor();
+        return new ResizeProcessor(
+            new ResizeSizesHolder([new SizeConfig("250x330", 250, 330)]),
+            new ResizeDestinationPathProviderFactory().factory()
+        );
     }
 }

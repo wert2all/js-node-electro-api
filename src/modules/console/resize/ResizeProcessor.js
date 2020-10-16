@@ -1,4 +1,5 @@
 import ProcessorInterface from "../../../lib/console/gulp/processor/ProcessorInterface";
+import DirectoryUtil from "../../../lib/filesystem/DirectoryUtil";
 
 /**
  * @class ResizeProcessor
@@ -9,8 +10,9 @@ export default class ResizeProcessor extends ProcessorInterface {
     /**
      *
      * @param {ResizeSizesHolder} sizes
+     * @param {DestinationPathProviderInterface} destinationProvider
      */
-    constructor(sizes) {
+    constructor(sizes, destinationProvider) {
         super();
         /**
          *
@@ -18,6 +20,12 @@ export default class ResizeProcessor extends ProcessorInterface {
          * @private
          */
         this._sizes = sizes;
+        /**
+         *
+         * @type {DestinationPathProviderInterface}
+         * @private
+         */
+        this._destinationProvider = destinationProvider;
     }
 
     /**
@@ -26,11 +34,44 @@ export default class ResizeProcessor extends ProcessorInterface {
      * @return {Promise<ImageResultInterface>} result
      */
     async processImage(entity, result) {
-        const sizePromises = this._sizes.getSizes().map((size) => {
-            return new Promise((resolve) => {
-                resolve(true);
+        return new Promise((resolve) => {
+            const sizePromises = this._sizes.getSizes().map((size) => {
+                return new Promise((resolve, reject) => {
+                    this._createDirectory(entity, size)
+                        .then((directory) => {
+                            console.log(directory);
+                            resolve(true);
+                        })
+                        .catch(reject);
+                });
             });
+            Promise.all(sizePromises)
+                .then(() => resolve(result))
+                .catch((error) => {
+                    console.error(error.message);
+                    result.setError(error);
+                    resolve(result);
+                });
         });
-        return Promise.resolve(result);
+    }
+
+    /**
+     *
+     * @param {UserFilesEntity} entity
+     * @param {SizeConfig} size
+     * @return {Promise<string>}
+     * @private
+     */
+    _createDirectory(entity, size) {
+        return new Promise((resolve, reject) => {
+            const destPath = this._destinationProvider.provide(entity, size);
+            process.stdout.write("Creating directory " + destPath + " ...");
+            DirectoryUtil.create(destPath)
+                .then((directory) => {
+                    process.stdout.write(" done\n");
+                    resolve(directory);
+                })
+                .catch(reject);
+        });
     }
 }

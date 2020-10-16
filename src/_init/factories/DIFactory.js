@@ -17,7 +17,6 @@ import Dispatcher from "../../lib/dispatcher/Dispatcher";
 import RendererInterface from "../../lib/renderer/RendererInterface";
 import PugAdapter from "../../lib/renderer/adapter/PugAdapter";
 import ImageUrl from "../../data/images/ImageUrl";
-import ServerConfigFactory from "./ServerConfigFactory";
 import ExpressFactory from "./ExpressFactory";
 import MergeReader from "../../lib/json/MergeReader";
 import ReaderDefault from "../../lib/json/ReaderDefault";

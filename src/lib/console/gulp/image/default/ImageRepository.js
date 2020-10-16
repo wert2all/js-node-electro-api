@@ -1,6 +1,5 @@
 import ImageRepositoryInterface from "../ImageRepositoryInterface";
 import FilesRepository from "../../../../../db/repository/FilesRepository";
-import UserFilesEntity from "../../../../../data/entity/UserFilesEntity";
 import ExtendedValuesRepository from "../../../../../db/repository/ExtendedValuesRepository";
 import ExtendedValuesEntity from "../../../../../data/entity/ExtendedValuesEntity";
 import UserFilesDefinition from "../../../../../db/definition/UserFilesDefinition";
@@ -11,10 +10,27 @@ export default class ImageRepository extends ImageRepositoryInterface {
      *
      * @param {ConnectionInterface} connection
      * @param {ExtendedValuesEntityManager} em
+     * @param {ImageFilterEntityFactoryInterface} entityFilterFactory
      */
-    constructor(connection, em) {
+    constructor(connection, em, entityFilterFactory) {
         super();
+        /**
+         *
+         * @type {ImageFilterEntityFactoryInterface}
+         * @private
+         */
+        this._entityFilterFactory = entityFilterFactory;
+        /**
+         *
+         * @type {FilesRepository}
+         * @private
+         */
         this._filesRepository = new FilesRepository();
+        /**
+         *
+         * @type {ExtendedValuesRepository}
+         * @private
+         */
         this._extRepository = new ExtendedValuesRepository();
 
         this._filesRepository.setConnection(connection);
@@ -34,7 +50,7 @@ export default class ImageRepository extends ImageRepositoryInterface {
      */
     async getImages() {
         const returnValues = [];
-        const entity = new UserFilesEntity().setReady(true);
+        const entity = this._entityFilterFactory.factory();
         const files = await this._filesRepository.fetchData(entity);
 
         for (const fileEntity of files) {

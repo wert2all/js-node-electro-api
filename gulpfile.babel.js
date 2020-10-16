@@ -9,6 +9,8 @@ import EntityManager from "./src/lib/db-entity-manager/EntityManager";
 import MLProcessorFactory from "./src/modules/console/ml/processor/MLProcessorFactory";
 import ImageResultFactory from "./src/lib/console/gulp/image/default/ImageResultFactory";
 import ResizeProcessorFactory from "./src/modules/console/resize/ResizeProcessorFactory";
+import MLImageFilterEntityFactory from "./src/modules/console/ml/entity/MLImageFilterEntityFactory";
+import ResizeImageFilterEntityFactory from "./src/modules/console/resize/entity/ResizeImageFilterEntityFactory";
 
 const gulp = require("gulp");
 const babel = require("gulp-babel");
@@ -108,7 +110,11 @@ const _runTask = (cb, gulpTaskFactoryMethod) => {
 gulp.task("test:rs", (cb) =>
     _runTask(cb, (connection, di) => {
         return new GulpTask(
-            new ImageRepository(connection, new ExtendedValuesEntityManager(di.get(EntityManager))),
+            new ImageRepository(
+                connection,
+                new ExtendedValuesEntityManager(di.get(EntityManager)),
+                new ResizeImageFilterEntityFactory()
+            ),
             new ResizeProcessorFactory(),
             new ImageResultFactory()
         );
@@ -118,7 +124,11 @@ gulp.task("test:rs", (cb) =>
 gulp.task("test:ml", (cb) =>
     _runTask(cb, (connection, di) => {
         return new GulpTask(
-            new ImageRepository(connection, new ExtendedValuesEntityManager(di.get(EntityManager))),
+            new ImageRepository(
+                connection,
+                new ExtendedValuesEntityManager(di.get(EntityManager)),
+                new MLImageFilterEntityFactory()
+            ),
             new MLProcessorFactory(connection),
             new ImageResultFactory()
         );

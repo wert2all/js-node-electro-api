@@ -107,6 +107,14 @@ export default class UserFilesEntity extends EntityInterface {
 
     /**
      *
+     * @return {string}
+     */
+    getFilePath() {
+        return this._data.getData(UserFilesDefinition.COLUMN_PATH);
+    }
+
+    /**
+     *
      * @param {string} key
      * @return {string}
      */

@@ -4,6 +4,7 @@ import fs from "fs";
  * @class ImageProcessDirectoryProcessor
  */
 import YearMon from "../../../../data/YearMon";
+import DirectoryUtil from "../../../../lib/filesystem/DirectoryUtil";
 
 export default class ImageProcessDirectoryProcessor {
     /**
@@ -24,15 +25,7 @@ export default class ImageProcessDirectoryProcessor {
      * @return {Promise<string>}
      */
     create(config) {
-        return new Promise((resolve, reject) => {
-            const directory = this.getDirectoryName(config);
-            fs.mkdir(directory, { recursive: true }, (err) => {
-                if (err) {
-                    reject(err);
-                }
-                resolve(directory);
-            });
-        });
+        return DirectoryUtil.create(this.getDirectoryName(config));
     }
 
     /**

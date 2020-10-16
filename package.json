@@ -8,6 +8,7 @@
         "dev": "npm run devCluster & npm run devBuild",
         "devCluster": "nodemon dist/src/runCluster.js",
         "devBuild": "gulp dev",
+        "images:resize": "gulp images:resize",
         "test:static": "prettier --check .",
         "test:unit": "gulp test:unit",
         "test": "npm run test:static & npm run test:unit ",

@@ -3,6 +3,7 @@ import ResizeProcessor from "./ResizeProcessor";
 import SizeConfig from "./size/SizeConfig";
 import ResizeSizesHolder from "./size/ResizeSizesHolder";
 import ResizeDestinationPathProviderFactory from "./path/ResizeDestinationPathProviderFactory";
+import RotateDestinationPathProviderFactory from "./path/RotateDestinationPathProviderFactory";
 
 /**
  * @class ResizeProcessorFactory
@@ -17,6 +18,7 @@ export default class ResizeProcessorFactory extends ProcessorFactoryInterface {
     create(entity) {
         return new ResizeProcessor(
             new ResizeSizesHolder([new SizeConfig("250x330", 250, 330)]),
+            new RotateDestinationPathProviderFactory().factory(),
             new ResizeDestinationPathProviderFactory().factory()
         );
     }

@@ -3,8 +3,8 @@ import DirectoryUtil from "../../../lib/filesystem/DirectoryUtil";
 import path from "path";
 import SizeConfig from "./size/SizeConfig";
 import ImagesValues from "../../../data/entity/ext/ImagesValues";
+import sharp from "sharp";
 
-const sizeOf = require("image-size");
 /**
  * @class ResizeProcessor
  * @extends ProcessorInterface
@@ -14,10 +14,17 @@ export default class ResizeProcessor extends ProcessorInterface {
     /**
      *
      * @param {ResizeSizesHolder} sizes
+     * @param {DestinationPathProviderInterface} rotateDestinationProvider
      * @param {DestinationPathProviderInterface} destinationProvider
      */
-    constructor(sizes, destinationProvider) {
+    constructor(sizes, rotateDestinationProvider, destinationProvider) {
         super();
+        /**
+         *
+         * @type {DestinationPathProviderInterface}
+         * @private
+         */
+        this._rotateDestinationProvider = rotateDestinationProvider;
         /**
          *
          * @type {ResizeSizesHolder}
@@ -29,7 +36,7 @@ export default class ResizeProcessor extends ProcessorInterface {
          * @type {DestinationPathProviderInterface}
          * @private
          */
-        this._destinationProvider = destinationProvider;
+        this._resizedDestinationProvider = destinationProvider;
     }
 
     /**
@@ -41,7 +48,8 @@ export default class ResizeProcessor extends ProcessorInterface {
         return Promise.all(this._createPromises(entity))
             .then(() => result)
             .catch((error) => {
-                console.error(error.message);
+                console.log("\n");
+                console.error(error);
                 result.setError(error);
                 return result;
             });
@@ -56,7 +64,26 @@ export default class ResizeProcessor extends ProcessorInterface {
      */
     _createDirectory(entity, size) {
         return new Promise((resolve, reject) => {
-            const destPath = this._destinationProvider.provide(entity, size);
+            const destPath = this._resizedDestinationProvider.provide(entity, size);
+            process.stdout.write("Creating directory " + destPath + " ...");
+            DirectoryUtil.create(destPath)
+                .then((directory) => {
+                    process.stdout.write(" done\n");
+                    resolve(directory);
+                })
+                .catch(reject);
+        });
+    }
+
+    /**
+     *
+     * @param {UserFilesEntity} entity
+     * @return {Promise<string>}
+     * @private
+     */
+    _createRotateDirectory(entity) {
+        return new Promise((resolve, reject) => {
+            const destPath = this._rotateDestinationProvider.provide(entity);
             process.stdout.write("Creating directory " + destPath + " ...");
             DirectoryUtil.create(destPath)
                 .then((directory) => {
@@ -80,23 +107,6 @@ export default class ResizeProcessor extends ProcessorInterface {
     /**
      *
      * @param {UserFilesEntity} entity
-     * @return {SizeConfig}
-     * @private
-     */
-    async _getImageSize(entity) {
-        return new Promise((resolve, reject) => {
-            sizeOf(entity.getFilePath(), function (err, dimensions) {
-                if (err) {
-                    reject(err);
-                }
-                resolve(new SizeConfig("original", dimensions.width, dimensions.height));
-            });
-        });
-    }
-
-    /**
-     *
-     * @param {UserFilesEntity} entity
      * @return {Promise<boolean>[]}
      * @private
      */
@@ -104,22 +114,22 @@ export default class ResizeProcessor extends ProcessorInterface {
         return this._sizes.getSizes().map((size) => {
             return new Promise((resolve, reject) => {
                 this._createDirectory(entity, size)
+                    .then((directory) => this._createRotateDirectory(entity).then(() => directory))
                     .then((directory) => this._addImageData("directory", directory, {}))
                     .then((imageData) => this._addImageData("imagePath", entity.getFilePath(), imageData))
                     .then((imageData) => this._addImageData("imageName", this._getImageName(entity), imageData))
                     .then((imageData) => this._addImageData("rotation", this._getRotation(entity), imageData))
-                    .then((imageData) => {
-                        return imageData;
-                    })
                     .then((imageData) =>
-                        this._getImageSize(entity).then((dimensions) =>
-                            this._addImageData("originalSize", dimensions, imageData)
+                        this._addImageData(
+                            "rotatedImagePath",
+                            this._rotateDestinationProvider.provide(entity) + imageData.imageName,
+                            imageData
                         )
                     )
-                    .then((imageData) => {
-                        console.log(imageData);
-                        resolve(true);
-                    })
+                    .then((imageData) => this._rotateDefault(imageData))
+                    .then((imageData) => this._resize(imageData, size))
+                    .then((imageData) => this._rotate(imageData))
+                    .then(() => resolve(true))
                     .catch(reject);
             });
         });
@@ -149,5 +159,83 @@ export default class ResizeProcessor extends ProcessorInterface {
             return parseInt(entity.getExtensionEntity().getValue(ImagesValues.ROTATION), 10);
         }
         return 0;
+    }
+
+    /**
+     *
+     * @param {*} imageData
+     * @return {Promise<*>}
+     * @private
+     */
+    _rotateDefault(imageData) {
+        process.stdout.write("Rotation to default ...");
+        return new Promise((resolve, reject) => {
+            sharp(imageData.imagePath)
+                .rotate()
+                .toFile(imageData.rotatedImagePath, (err, info) => {
+                    if (err) {
+                        reject(err);
+                    }
+                    imageData["imagePath"] = imageData.rotatedImagePath;
+                    imageData["originalSize"] = new SizeConfig("originalSize", info.width, info.height);
+                    process.stdout.write(" done\n");
+                    resolve(imageData);
+                });
+        });
+    }
+
+    /**
+     *
+     * @param {*} imageData
+     * @param {SizeConfig} size
+     * @return {Promise<*>}
+     * @private
+     */
+    _resize(imageData, size) {
+        process.stdout.write("Resizing to " + size.getKey() + " ...");
+        return new Promise((resolve, reject) => {
+            const toFile = imageData.directory + imageData.imageName;
+            sharp(imageData.imagePath)
+                .resize({
+                    width: size.getWidth(),
+                    height: size.getHeight(),
+                    fit: "outside",
+                })
+                .toFile(toFile, () => {
+                    imageData["imagePath"] = toFile;
+                    process.stdout.write(" done\n");
+                    resolve(imageData);
+                });
+        });
+    }
+
+    /**
+     *
+     * @param {*} imageData
+     * @return {Promise<*>}
+     * @private
+     */
+    _rotate(imageData) {
+        process.stdout.write("Rotation to " + imageData.rotation + " ...");
+        return new Promise((resolve, reject) => {
+            if (imageData.rotation !== 0) {
+                sharp(imageData.imagePath)
+                    .rotate(imageData.rotation)
+                    .toBuffer()
+                    .then((buffer) => {
+                        sharp(buffer).toFile(imageData.imagePath, (err) => {
+                            if (err) {
+                                reject(err);
+                            }
+                            process.stdout.write(" done\n");
+                            resolve(imageData);
+                        });
+                    })
+                    .catch(reject);
+            } else {
+                process.stdout.write(" done\n");
+                resolve(imageData);
+            }
+        });
     }
 }

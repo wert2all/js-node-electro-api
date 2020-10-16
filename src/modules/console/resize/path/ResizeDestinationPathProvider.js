@@ -32,16 +32,16 @@ export default class ResizeDestinationPathProvider extends DestinationPathProvid
     /**
      *
      * @param {UserFilesEntity} entity
-     * @param {SizeConfig} size
+     * @param {SizeConfig|null} size
      * @return string
      */
-    provide(entity, size) {
-        const imagePathSplit = (
-            this._storageConfig.getStoragePath() +
-            size.getKey() +
-            path.sep +
-            entity.getFilePath().replace(/\/\//g, "/").replace(this._imageRootPath, "")
-        ).split(path.sep);
+    provide(entity, size = null) {
+        let fullPath = this._storageConfig.getStoragePath();
+        if (size) {
+            fullPath += size.getKey() + path.sep;
+        }
+        fullPath += entity.getFilePath().replace(/\/\//g, "/").replace(this._imageRootPath, "");
+        const imagePathSplit = fullPath.split(path.sep);
         imagePathSplit.pop();
         return imagePathSplit.join(path.sep) + path.sep;
     }

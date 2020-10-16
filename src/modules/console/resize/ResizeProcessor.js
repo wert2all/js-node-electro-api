@@ -45,7 +45,7 @@ export default class ResizeProcessor extends ProcessorInterface {
      * @return {Promise<ImageResultInterface>} result
      */
     async processImage(entity, result) {
-        process.stdout.write("Processing " + this._getImageName(entity) + ":");
+        process.stdout.write("Processing " + this._getImageName(entity) + ":\n");
         return Promise.all(this._createPromises(entity))
             .then(() => result)
             .catch((error) => {
@@ -157,7 +157,10 @@ export default class ResizeProcessor extends ProcessorInterface {
      */
     _getRotation(entity) {
         if (entity.getExtensionEntity()) {
-            return parseInt(entity.getExtensionEntity().getValue(ImagesValues.ROTATION), 10);
+            const rotation = parseInt(entity.getExtensionEntity().getValue(ImagesValues.ROTATION), 10);
+            if (Number.isInteger(rotation)) {
+                return rotation;
+            }
         }
         return 0;
     }

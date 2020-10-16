@@ -45,6 +45,7 @@ export default class ResizeProcessor extends ProcessorInterface {
      * @return {Promise<ImageResultInterface>} result
      */
     async processImage(entity, result) {
+        process.stdout.write("Processing " + this._getImageName(entity) + ":");
         return Promise.all(this._createPromises(entity))
             .then(() => result)
             .catch((error) => {
@@ -65,7 +66,7 @@ export default class ResizeProcessor extends ProcessorInterface {
     _createDirectory(entity, size) {
         return new Promise((resolve, reject) => {
             const destPath = this._resizedDestinationProvider.provide(entity, size);
-            process.stdout.write("Creating directory " + destPath + " ...");
+            process.stdout.write("    Creating directory " + destPath + " ...");
             DirectoryUtil.create(destPath)
                 .then((directory) => {
                     process.stdout.write(" done\n");
@@ -84,7 +85,7 @@ export default class ResizeProcessor extends ProcessorInterface {
     _createRotateDirectory(entity) {
         return new Promise((resolve, reject) => {
             const destPath = this._rotateDestinationProvider.provide(entity);
-            process.stdout.write("Creating directory " + destPath + " ...");
+            process.stdout.write("    Creating directory " + destPath + " ...");
             DirectoryUtil.create(destPath)
                 .then((directory) => {
                     process.stdout.write(" done\n");
@@ -168,7 +169,7 @@ export default class ResizeProcessor extends ProcessorInterface {
      * @private
      */
     _rotateDefault(imageData) {
-        process.stdout.write("Rotation to default ...");
+        process.stdout.write("    Rotation to default ...");
         return new Promise((resolve, reject) => {
             sharp(imageData.imagePath)
                 .rotate()
@@ -192,7 +193,7 @@ export default class ResizeProcessor extends ProcessorInterface {
      * @private
      */
     _resize(imageData, size) {
-        process.stdout.write("Resizing to " + size.getKey() + " ...");
+        process.stdout.write("    Resizing to " + size.getKey() + " ...");
         return new Promise((resolve, reject) => {
             const toFile = imageData.directory + imageData.imageName;
             sharp(imageData.imagePath)
@@ -201,7 +202,10 @@ export default class ResizeProcessor extends ProcessorInterface {
                     height: size.getHeight(),
                     fit: "outside",
                 })
-                .toFile(toFile, () => {
+                .toFile(toFile, (err) => {
+                    if (err) {
+                        reject(err);
+                    }
                     imageData["imagePath"] = toFile;
                     process.stdout.write(" done\n");
                     resolve(imageData);
@@ -216,7 +220,7 @@ export default class ResizeProcessor extends ProcessorInterface {
      * @private
      */
     _rotate(imageData) {
-        process.stdout.write("Rotation to " + imageData.rotation + " ...");
+        process.stdout.write("    Rotation to " + imageData.rotation + " ...");
         return new Promise((resolve, reject) => {
             if (imageData.rotation !== 0) {
                 sharp(imageData.imagePath)

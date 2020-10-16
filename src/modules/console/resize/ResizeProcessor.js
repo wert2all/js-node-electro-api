@@ -1,7 +1,7 @@
 import ProcessorInterface from "../../../lib/console/gulp/processor/ProcessorInterface";
 import DirectoryUtil from "../../../lib/filesystem/DirectoryUtil";
 import path from "path";
-import SizeConfig from "./size/SizeConfig";
+import ResizeConfig from "./size/ResizeConfig";
 import ImagesValues from "../../../data/entity/ext/ImagesValues";
 import sharp from "sharp";
 
@@ -59,7 +59,7 @@ export default class ResizeProcessor extends ProcessorInterface {
     /**
      *
      * @param {UserFilesEntity} entity
-     * @param {SizeConfig} size
+     * @param {ResizeConfig} size
      * @return {Promise<string>}
      * @private
      */
@@ -181,7 +181,7 @@ export default class ResizeProcessor extends ProcessorInterface {
                         reject(err);
                     }
                     imageData["imagePath"] = imageData.rotatedImagePath;
-                    imageData["originalSize"] = new SizeConfig("originalSize", info.width, info.height);
+                    imageData["originalSize"] = new ResizeConfig("originalSize", info.width, info.height);
                     process.stdout.write(" done\n");
                     resolve(imageData);
                 });
@@ -191,7 +191,7 @@ export default class ResizeProcessor extends ProcessorInterface {
     /**
      *
      * @param {*} imageData
-     * @param {SizeConfig} size
+     * @param {ResizeConfig} size
      * @return {Promise<*>}
      * @private
      */
@@ -203,7 +203,8 @@ export default class ResizeProcessor extends ProcessorInterface {
                 .resize({
                     width: size.getWidth(),
                     height: size.getHeight(),
-                    fit: "inside",
+                    fit: size.getFill(),
+                    background: size.getBackground(),
                 })
                 .toFile(toFile, (err) => {
                     if (err) {

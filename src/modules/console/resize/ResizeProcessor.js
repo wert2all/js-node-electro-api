@@ -203,7 +203,7 @@ export default class ResizeProcessor extends ProcessorInterface {
                 .resize({
                     width: size.getWidth(),
                     height: size.getHeight(),
-                    fit: "outside",
+                    fit: "inside",
                 })
                 .toFile(toFile, (err) => {
                     if (err) {

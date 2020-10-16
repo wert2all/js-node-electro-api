@@ -25,6 +25,7 @@ export default class ResizeDestinationPathProviderFactory {
     _getResizedPath(di) {
         return (
             di.get(FileStorage).getConfig().getStoragePath() +
+            di.get(KeyValueStorageInterface).fetch("server:images:subdirectory") +
             di.get(KeyValueStorageInterface).fetch("gulp:path:images:resize:directory")
         );
     }

@@ -1,5 +1,6 @@
 import ProcessorInterface from "../../../lib/console/gulp/processor/ProcessorInterface";
 import DirectoryUtil from "../../../lib/filesystem/DirectoryUtil";
+import * as path from "path";
 
 /**
  * @class ResizeProcessor
@@ -39,7 +40,8 @@ export default class ResizeProcessor extends ProcessorInterface {
                 return new Promise((resolve, reject) => {
                     this._createDirectory(entity, size)
                         .then((directory) => {
-                            console.log(directory);
+                            const imageName = this._getImageName(entity);
+                            console.log(imageName);
                             resolve(true);
                         })
                         .catch(reject);
@@ -73,5 +75,15 @@ export default class ResizeProcessor extends ProcessorInterface {
                 })
                 .catch(reject);
         });
+    }
+
+    /**
+     *
+     * @param {UserFilesEntity} entity
+     * @return {string}
+     * @private
+     */
+    _getImageName(entity) {
+        return entity.getFilePath().split(path.sep).pop();
     }
 }

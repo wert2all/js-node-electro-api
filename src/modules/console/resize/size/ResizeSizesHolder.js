@@ -4,12 +4,12 @@
 export default class ResizeSizesHolder {
     /**
      *
-     * @param {SizeConfig[]} sizes
+     * @param {ResizeConfig[]} sizes
      */
     constructor(sizes) {
         /**
          *
-         * @type {SizeConfig[]}
+         * @type {ResizeConfig[]}
          * @private
          */
         this._sizes = sizes;
@@ -17,7 +17,7 @@ export default class ResizeSizesHolder {
 
     /**
      *
-     * @return {SizeConfig[]}
+     * @return {ResizeConfig[]}
      */
     getSizes() {
         return this._sizes;

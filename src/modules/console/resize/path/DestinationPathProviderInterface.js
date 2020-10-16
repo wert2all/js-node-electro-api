@@ -7,7 +7,7 @@ export default class DestinationPathProviderInterface {
     /**
      * @abstract
      * @param {UserFilesEntity} entity
-     * @param {SizeConfig|null} size
+     * @param {ResizeConfig|null} size
      * @return string
      */
     provide(entity, size = null) {}

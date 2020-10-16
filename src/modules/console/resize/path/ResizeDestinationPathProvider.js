@@ -32,7 +32,7 @@ export default class ResizeDestinationPathProvider extends DestinationPathProvid
     /**
      *
      * @param {UserFilesEntity} entity
-     * @param {SizeConfig|null} size
+     * @param {ResizeConfig|null} size
      * @return string
      */
     provide(entity, size = null) {

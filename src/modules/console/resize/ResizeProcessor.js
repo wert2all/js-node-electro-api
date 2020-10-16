@@ -2,6 +2,7 @@ import ProcessorInterface from "../../../lib/console/gulp/processor/ProcessorInt
 import DirectoryUtil from "../../../lib/filesystem/DirectoryUtil";
 import path from "path";
 import SizeConfig from "./size/SizeConfig";
+import ImagesValues from "../../../data/entity/ext/ImagesValues";
 
 const sizeOf = require("image-size");
 /**
@@ -104,7 +105,12 @@ export default class ResizeProcessor extends ProcessorInterface {
             return new Promise((resolve, reject) => {
                 this._createDirectory(entity, size)
                     .then((directory) => this._addImageData("directory", directory, {}))
-                    .then((imageData) => this._addImageData("imagename", this._getImageName(entity), imageData))
+                    .then((imageData) => this._addImageData("imagePath", entity.getFilePath(), imageData))
+                    .then((imageData) => this._addImageData("imageName", this._getImageName(entity), imageData))
+                    .then((imageData) => this._addImageData("rotation", this._getRotation(entity), imageData))
+                    .then((imageData) => {
+                        return imageData;
+                    })
                     .then((imageData) =>
                         this._getImageSize(entity).then((dimensions) =>
                             this._addImageData("originalSize", dimensions, imageData)
@@ -130,5 +136,18 @@ export default class ResizeProcessor extends ProcessorInterface {
     _addImageData(key, value, imageData) {
         imageData[key] = value;
         return imageData;
+    }
+
+    /**
+     *
+     * @param {UserFilesEntity} entity
+     * @return {number}
+     * @private
+     */
+    _getRotation(entity) {
+        if (entity.getExtensionEntity()) {
+            return parseInt(entity.getExtensionEntity().getValue(ImagesValues.ROTATION), 10);
+        }
+        return 0;
     }
 }

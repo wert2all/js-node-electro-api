@@ -107,7 +107,7 @@ const _runTask = (cb, gulpTaskFactoryMethod) => {
         });
 };
 
-gulp.task("test:rs", (cb) =>
+gulp.task("images:resize", (cb) =>
     _runTask(cb, (connection, di) => {
         return new GulpTask(
             new ImageRepository(

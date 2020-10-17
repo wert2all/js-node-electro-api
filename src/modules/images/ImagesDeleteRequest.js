@@ -9,7 +9,7 @@ import UserRepository from "../../db/repository/UserRepository";
 import UserEntity from "../../data/entity/UserEntity";
 import UserDefinition from "../../db/definition/UserDefinition";
 import DI from "../../lib/di/DI";
-import ImageUrl from "../../data/images/ImageUrl";
+import ImageOriginalUrl from "../../extended/images/providers/ImageOriginalUrl";
 import ConnectionInterface from "../../lib/db-connection/ConnectionInterface";
 import StorageConfiguration from "../../storage/configuration/StorageConfiguration";
 import ImagesDeleteDataClass from "./data/ImagesDeleteDataClass";
@@ -49,10 +49,10 @@ export default class ImagesDeleteRequest extends RequestInterface {
         this._usersRepository = new UserRepository();
         /**
          *
-         * @type {ImageUrl}
+         * @type {ImageOriginalUrl}
          * @private
          */
-        this._imageUrlProvider = DI.getInstance().get(ImageUrl);
+        this._imageUrlProvider = DI.getInstance().get(ImageOriginalUrl);
         /**
          *
          * @type {DI}

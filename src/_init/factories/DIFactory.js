@@ -16,7 +16,7 @@ import TelegramApi from "../../lib/telegram/TelegramApi";
 import Dispatcher from "../../lib/dispatcher/Dispatcher";
 import RendererInterface from "../../lib/renderer/RendererInterface";
 import PugAdapter from "../../lib/renderer/adapter/PugAdapter";
-import ImageUrl from "../../data/images/ImageUrl";
+import ImageOriginalUrl from "../../extended/images/providers/ImageOriginalUrl";
 import ExpressFactory from "./ExpressFactory";
 import MergeReader from "../../lib/json/MergeReader";
 import ReaderDefault from "../../lib/json/ReaderDefault";
@@ -30,6 +30,11 @@ import AppLogEvent from "../../extended/logger/events/AppLogEvent";
 import LoggerStrategy from "../../extended/LoggerStrategy";
 import LogFormatterInterface from "../../lib/logger/LogFormatterInterface";
 import EntityManager from "../../lib/db-entity-manager/EntityManager";
+import ImagesUrlProviderManagerFactory from "../../extended/images/ImagesUrlProviderManagerFactory";
+import ResizeSizesHolder from "../../modules/console/resize/size/ResizeSizesHolder";
+import ResizeConfig from "../../modules/console/resize/size/ResizeConfig";
+import ImagesUrlProviderMerger from "../../extended/images/ImagesUrlProviderMerger";
+import ResizeDestinationPathProviderFactory from "../../modules/console/resize/path/ResizeDestinationPathProviderFactory";
 
 export default class DIFactory {
     /**
@@ -104,7 +109,41 @@ export default class DIFactory {
             )
         );
 
-        di.register(ImageUrl, new ImageUrl(di.get(StorageConfiguration).getConfig(), di.get(FileStorage).getConfig()));
+        di.register(
+            ImageOriginalUrl,
+            new ImageOriginalUrl(
+                di.get(StorageConfiguration).getConfig(),
+                new ResizeDestinationPathProviderFactory().factory()
+            )
+        );
+        di.register(
+            ResizeSizesHolder,
+            new ResizeSizesHolder([
+                new ResizeConfig("250x330", 250, 330, "contain", {
+                    r: 255,
+                    g: 255,
+                    b: 255,
+                    alpha: 1,
+                }),
+            ])
+        );
+        di.register(
+            ImagesUrlProviderManagerFactory,
+            new ImagesUrlProviderManagerFactory(
+                new ImagesUrlProviderMerger(
+                    di.get(KeyValueStorageInterface),
+                    new ResizeDestinationPathProviderFactory()
+                ).merge(
+                    {
+                        original: new ImageOriginalUrl(
+                            di.get(StorageConfiguration).getConfig(),
+                            new ResizeDestinationPathProviderFactory().factory()
+                        ),
+                    },
+                    di.get(ResizeSizesHolder)
+                )
+            )
+        );
         return di;
     }
 

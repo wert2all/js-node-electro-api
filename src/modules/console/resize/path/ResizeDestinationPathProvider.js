@@ -10,6 +10,13 @@ import * as path from "path";
 export default class ResizeDestinationPathProvider extends DestinationPathProviderInterface {
     /**
      *
+     * @return {FileStorageConfig}
+     */
+    getStorageConfig() {
+        return this._storageConfig;
+    }
+    /**
+     *
      * @param {string} imageRootPath
      * @param {FileStorageConfig} storageConfig
      */
@@ -44,5 +51,13 @@ export default class ResizeDestinationPathProvider extends DestinationPathProvid
         const imagePathSplit = fullPath.split(path.sep);
         imagePathSplit.pop();
         return imagePathSplit.join(path.sep) + path.sep;
+    }
+
+    /**
+     *
+     * @return {string}
+     */
+    getImageRootPath() {
+        return this._imageRootPath;
     }
 }

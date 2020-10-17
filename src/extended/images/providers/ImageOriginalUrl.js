@@ -1,17 +1,19 @@
 import path from "path";
-import UserFilesDefinition from "../../db/definition/UserFilesDefinition";
-import ImageProcessDirectoryProcessor from "../../storage/file/process/image/ImageProcessDirectoryProcessor";
+import ImageUrlProviderInterface from "../ImageUrlProviderInterface";
 
 /**
- * @class ImageUrl
+ * @class ImageOriginalUrl
+ * @extends ImageUrlProviderInterface
+ * @type ImageUrlProviderInterface
  */
-export default class ImageUrl {
+export default class ImageOriginalUrl extends ImageUrlProviderInterface {
     /**
      *
      * @param {KeyValueStorageInterface} keyValueStorageConfig
-     * @param {FileStorageConfig} fileStorage
+     * @param {DestinationPathProviderInterface} imageDestination
      */
-    constructor(keyValueStorageConfig, fileStorage) {
+    constructor(keyValueStorageConfig, imageDestination) {
+        super();
         /**
          *
          * @type {KeyValueStorageInterface}
@@ -19,11 +21,9 @@ export default class ImageUrl {
          */
         this._keyValueStorage = keyValueStorageConfig;
         /**
-         *
-         * @type {FileStorageConfig}
-         * @private
+         * @type {DestinationPathProviderInterface}
          */
-        this._fileStorageConfig = fileStorage;
+        this._imageDestination = imageDestination;
     }
 
     /**
@@ -42,9 +42,7 @@ export default class ImageUrl {
      */
     // eslint-disable-next-line no-unused-vars
     _makeUrl(fileData) {
-        return this._makeAbsolutePath(
-            this._makeRelativePath(path.normalize(fileData.getValue(UserFilesDefinition.COLUMN_PATH)))
-        );
+        return this._makeAbsolutePath(this._makeRelativePath(path.normalize(fileData.getFilePath())));
     }
 
     /**
@@ -64,7 +62,15 @@ export default class ImageUrl {
      * @private
      */
     _makeRelativePath(imagePath) {
-        const rootPath = new ImageProcessDirectoryProcessor().getDirectoryRoot(this._fileStorageConfig);
-        return imagePath.substr(rootPath.length, imagePath.length);
+        return imagePath.substr(this._imageDestination.getImageRootPath().length, imagePath.length);
+    }
+
+    /**
+     *
+     * @param {UserFilesEntity} imageEntity
+     * @return {string}
+     */
+    provide(imageEntity) {
+        return this._makeUrl(imageEntity);
     }
 }

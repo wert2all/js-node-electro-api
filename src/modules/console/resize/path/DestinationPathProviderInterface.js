@@ -11,4 +11,10 @@ export default class DestinationPathProviderInterface {
      * @return string
      */
     provide(entity, size = null) {}
+
+    /**
+     * @abstract
+     * @return string
+     */
+    getImageRootPath() {}
 }

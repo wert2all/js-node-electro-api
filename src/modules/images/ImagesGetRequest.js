@@ -12,7 +12,7 @@ import UserDefinition from "../../db/definition/UserDefinition";
 import UserFilesEntity from "../../data/entity/UserFilesEntity";
 import UserFilesDefinition from "../../db/definition/UserFilesDefinition";
 import DI from "../../lib/di/DI";
-import ImageUrl from "../../data/images/ImageUrl";
+import ImageOriginalUrl from "../../extended/images/providers/ImageOriginalUrl";
 import DefinitionOrder from "../../lib/db-definition/DefinitionOrder";
 import DefinitionLimit from "../../lib/db-definition/DefinitionLimit";
 import ConnectionInterface from "../../lib/db-connection/ConnectionInterface";
@@ -22,6 +22,7 @@ import LoggerInterface from "../../lib/logger/LoggerInterface";
 import ImageListLogEvent from "./logs/event/ImageListLogEvent";
 import ExtendedValuesEntity from "../../data/entity/ExtendedValuesEntity";
 import ExtendedValuesRepository from "../../db/repository/ExtendedValuesRepository";
+import ImagesUrlProviderManagerFactory from "../../extended/images/ImagesUrlProviderManagerFactory";
 
 /**
  * @class ImagesGetRequest
@@ -53,10 +54,15 @@ export default class ImagesGetRequest extends RequestInterface {
         this._usersRepository = new UserRepository();
         /**
          *
-         * @type {ImageUrl}
+         * @type {ImageOriginalUrl}
          * @private
          */
-        this._imageUrlProvider = DI.getInstance().get(ImageUrl);
+        this._imageUrlProvider = DI.getInstance().get(ImageOriginalUrl);
+        /**
+         * @type {ImageUrlsManager}
+         * @private
+         */
+        this._imageUrlManager = DI.getInstance().get(ImagesUrlProviderManagerFactory).factory();
     }
 
     /**
@@ -189,7 +195,7 @@ export default class ImagesGetRequest extends RequestInterface {
      * @return {string}
      * @private
      */
-    _replacePath(userFileEntity) {
+    _getFullImageUrl(userFileEntity) {
         return this._imageUrlProvider.getUrl(userFileEntity);
     }
 
@@ -209,8 +215,9 @@ export default class ImagesGetRequest extends RequestInterface {
         for (const userFileEntity of images) {
             await this._extendUserData(userFileEntity);
             await this._extendFileData(userFileEntity);
+            this._extendImageUrls(userFileEntity);
             userFileEntity.unset(UserDefinition.COLUMN_GOOGLE_ID);
-            userFileEntity.setValue("url", this._replacePath(userFileEntity));
+            userFileEntity.setValue("url", this._getFullImageUrl(userFileEntity));
         }
         return images.map((imageEntity) => imageEntity.getData());
     }
@@ -243,5 +250,14 @@ export default class ImagesGetRequest extends RequestInterface {
         } else {
             fileEntity.setValue("ext_data", {});
         }
+    }
+    /**
+     *
+     * @param {UserFilesEntity} userFileEntity
+     * @return {void}
+     * @private
+     */
+    _extendImageUrls(userFileEntity) {
+        userFileEntity.setValue("ext_urls", this._imageUrlManager.provide(userFileEntity));
     }
 }

@@ -10,7 +10,7 @@ import UploadFilesRequestDataClass from "./data/UploadFilesRequestDataClass";
 import UserFilesDefinition from "../../db/definition/UserFilesDefinition";
 import ResponseResult from "../../routers/response/ResponseResult";
 import DI from "../../lib/di/DI";
-import ImageUrl from "../../data/images/ImageUrl";
+import ImageOriginalUrl from "../../extended/images/providers/ImageOriginalUrl";
 import ConnectionInterface from "../../lib/db-connection/ConnectionInterface";
 
 /**
@@ -29,10 +29,10 @@ export default class UploadGetFilesRequest extends RequestInterface {
         this._repository = new FilesRepository();
         /**
          *
-         * @type {ImageUrl}
+         * @type {ImageOriginalUrl}
          * @private
          */
-        this._imageUrlProvider = DI.getInstance().get(ImageUrl);
+        this._imageUrlProvider = DI.getInstance().get(ImageOriginalUrl);
     }
 
     /**

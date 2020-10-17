@@ -23,9 +23,10 @@ export default class EditImageInit {
      *
      * @param {Document} document
      * @param {UIInterface} ui
+     * @param {ImagePreloaderInterface} preloader
      * @param {UIConfig} config
      */
-    constructor(document, ui, config) {
+    constructor(document, ui, preloader, config) {
         /**
          *
          * @type {Document}
@@ -65,6 +66,12 @@ export default class EditImageInit {
          * @private
          */
         this._config = config;
+        /**
+         *
+         * @type {ImagePreloaderInterface}
+         * @private
+         */
+        this._preloader = preloader;
     }
 
     /**
@@ -135,6 +142,7 @@ export default class EditImageInit {
             this._editImageViewForm,
             api,
             this._ui.getNotify(),
+            this._preloader,
             authProvider,
             new CropperFactory(this._config.getCropperOptions(), cropperAction)
         );

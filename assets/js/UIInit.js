@@ -100,7 +100,12 @@ export default class UIInit {
                         new AuthListener(this._ui).addAfterAuth((authProvider) => {
                             const api = new Api(new ApiFetcher(), ApiUrlFactory.create(window));
                             const uiProfile = this._makeProfile(api, window.document, authProvider);
-                            this._editImage = new EditImageInit(window.document, this._ui, this._config);
+                            this._editImage = new EditImageInit(
+                                window.document,
+                                this._ui,
+                                this._imagePreloader,
+                                this._config
+                            );
                             this._editImage.init(api, authProvider);
                             this._makeImageList(api, authProvider, uiProfile);
                             this._makeAuthElements(authProvider, uiProfile);

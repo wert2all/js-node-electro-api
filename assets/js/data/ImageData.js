@@ -198,6 +198,11 @@ export default class ImageData {
         return this;
     }
 
+    /**
+     *
+     * @param {{}} urls
+     * @return {ImageData}
+     */
     setUrls(urls) {
         this._urls = urls;
         return this;

@@ -16,8 +16,9 @@ export default class UIImageList extends UIElementListInterface {
      * @param {Api} api
      * @param {AuthProviderInterface} authProvider
      * @param {UIImagesViewHolder} viewHolder
+     * @param {ImagePreloaderInterface} preloader
      */
-    constructor(viewHolder, api, authProvider) {
+    constructor(viewHolder, api, authProvider, preloader) {
         super();
         /**
          *
@@ -43,6 +44,11 @@ export default class UIImageList extends UIElementListInterface {
          * @private
          */
         this._apiLimits = new ApiLimits(0, 12);
+        /**
+         *@type ImagePreloaderInterface
+         * @private
+         */
+        this._preloader = preloader;
     }
 
     /**
@@ -138,6 +144,7 @@ export default class UIImageList extends UIElementListInterface {
      */
     _aggregateImages(files) {
         return files.map((image) => {
+            this._preloader.load(image.url);
             const imageObject = new ImageData(image.id, image.url)
                 .setType(image.type)
                 .setYearmon(image.yearmon)

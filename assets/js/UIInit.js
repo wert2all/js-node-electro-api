@@ -39,6 +39,7 @@ import UIImageProfileAction from "./module/imagelist/item/actions/actions/UIImag
 import DomFormElementViewHolder from "./dom/form/element/viewholder/DomFormElementViewHolder";
 import ProfileFormRequestModifier from "./module/profile/form/ProfileFormRequestModifier";
 import EditImageInit from "./module/init/EditImageInit";
+import ImagePreloader from "./ui/preload/ImagePreloader";
 
 /**
  * @class UIInit
@@ -67,6 +68,13 @@ export default class UIInit {
          * @private
          */
         this._editImage = null;
+
+        /**
+         *
+         * @type {ImagePreloaderInterface}
+         * @private
+         */
+        this._imagePreloader = new ImagePreloader();
     }
 
     init(window) {
@@ -248,7 +256,7 @@ export default class UIInit {
             imageItem,
             this._ui.getPager()
         );
-        new UIImageList(imageViewHolder, api, authProvider).init();
+        new UIImageList(imageViewHolder, api, authProvider, this._imagePreloader).init();
     }
 
     /**

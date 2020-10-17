@@ -15,10 +15,22 @@ export default class UIEditControl extends UIControlInterface {
      * @param {UIFormViewInterface} formView
      * @param {Api} api
      * @param {UINotifyInterface} notify
+     * @param {ImagePreloaderInterface} preloader
      * @param {AuthProviderInterface} authProvider
      * @param {CropperFactory} cropperFactory
      */
-    constructor(imageElement, submitButton, modalElement, UIKit, formView, api, notify, authProvider, cropperFactory) {
+    constructor(
+        imageElement,
+        submitButton,
+        modalElement,
+        UIKit,
+        formView,
+        api,
+        notify,
+        preloader,
+        authProvider,
+        cropperFactory
+    ) {
         super();
         /**
          *
@@ -86,6 +98,11 @@ export default class UIEditControl extends UIControlInterface {
          * @private
          */
         this._cropperFactory = cropperFactory;
+        /**
+         *@type ImagePreloaderInterface
+         * @private
+         */
+        this._preloader = preloader;
     }
 
     /**
@@ -136,12 +153,15 @@ export default class UIEditControl extends UIControlInterface {
             .setElement("edit_image_ready", imageData.getIsReady() ? "true" : "false")
             .setElement("edit_image_rotation", imageData.getRotation());
 
-        this._image.src = imageData.getUrl();
-        this._cropperFactory.create(this._image).then(() => {
-            if (this._afterShow !== null) {
-                this._afterShow.exec();
-            }
-        });
+        const imageUrl = imageData.getUrls()["original"];
+        const preloaderData = this._preloader.getImage(imageUrl);
+        if (preloaderData === true) {
+            this._applyImage(imageUrl);
+        } else if (preloaderData !== null) {
+            preloaderData.then(() => {
+                this._applyImage(imageUrl);
+            });
+        }
     }
 
     /**
@@ -169,5 +189,21 @@ export default class UIEditControl extends UIControlInterface {
     setAfterShowAction(action) {
         this._afterShow = action;
         return this;
+    }
+
+    /**
+     *
+     * @param {string} imageUrl
+     * @private
+     */
+    _applyImage(imageUrl) {
+        this._image.src = imageUrl;
+        this._image.onload = () => {
+            this._cropperFactory.create(this._image).then(() => {
+                if (this._afterShow !== null) {
+                    this._afterShow.exec();
+                }
+            });
+        };
     }
 }

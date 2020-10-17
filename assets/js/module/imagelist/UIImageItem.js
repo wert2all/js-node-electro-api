@@ -142,7 +142,7 @@ export default class UIImageItem extends UIElementInterface {
             actions.applyData(imageItem.getNode(), imageData, elementList);
         }
         imageItem
-            .setImage(imageData.getUrl())
+            .setImage(imageData.getUrls()["250x330"])
             .setImageType(imageData.getType())
             .setYearMon(imageData.getYearmon())
             .setId(imageData.getId())

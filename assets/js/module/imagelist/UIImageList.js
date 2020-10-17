@@ -147,7 +147,9 @@ export default class UIImageList extends UIElementListInterface {
                 const extData = image.ext_data;
                 imageObject.setRotation(extData.hasOwnProperty("rotation") ? extData.rotation : 0);
             }
-
+            if (image.hasOwnProperty("ext_urls")) {
+                imageObject.setUrls(image.ext_urls);
+            }
             if (image.hasOwnProperty("user")) {
                 imageObject.setUser(
                     new DataGoogleAuthUser(image.user.id, image.user.name, image.user.email, image.user.image)

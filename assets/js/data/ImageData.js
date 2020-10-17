@@ -58,6 +58,20 @@ export default class ImageData {
          * @private
          */
         this._rotation = 0;
+        /**
+         *
+         * @type {{}}
+         * @private
+         */
+        this._urls = {};
+    }
+
+    /**
+     *
+     * @return {{}}
+     */
+    getUrls() {
+        return this._urls;
     }
 
     /**
@@ -181,6 +195,11 @@ export default class ImageData {
      */
     setType(value) {
         this._type = value;
+        return this;
+    }
+
+    setUrls(urls) {
+        this._urls = urls;
         return this;
     }
 }

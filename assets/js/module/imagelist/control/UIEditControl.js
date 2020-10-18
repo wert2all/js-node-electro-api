@@ -103,6 +103,12 @@ export default class UIEditControl extends UIControlInterface {
          * @private
          */
         this._preloader = preloader;
+        /**
+         *
+         * @type {null|Cropper}
+         * @private
+         */
+        this._cropper = null;
     }
 
     /**
@@ -114,6 +120,7 @@ export default class UIEditControl extends UIControlInterface {
      *
      */
     init() {
+        this._cropperFactory.create(this._image).then((cropper) => (this._cropper = cropper));
         this._submitButton.addEventListener("click", () => {
             if (this._formView.validate()) {
                 this._formView.showLoader();
@@ -197,13 +204,11 @@ export default class UIEditControl extends UIControlInterface {
      * @private
      */
     _applyImage(imageUrl) {
-        this._image.src = imageUrl;
-        this._image.onload = () => {
-            this._cropperFactory.create(this._image).then(() => {
-                if (this._afterShow !== null) {
-                    this._afterShow.exec();
-                }
-            });
-        };
+        if (this._cropper != null) {
+            this._cropper.replace(imageUrl);
+            if (this._afterShow !== null) {
+                this._afterShow.exec();
+            }
+        }
     }
 }

@@ -114,7 +114,7 @@ export default class EditImageInit {
 
         const cropperAction = new CropperActionComposite([
             new CropperAction(this._document.querySelector("#modal_edit_image .uk-iconnav .crop_reset"), (cropper) =>
-                cropper.reset()
+                cropper.reset().clear()
             ),
             new CropperAction(this._document.querySelector("#modal_edit_image .uk-iconnav .crop_zoon_in"), (cropper) =>
                 cropper.zoom(0.1)
@@ -133,7 +133,6 @@ export default class EditImageInit {
         ]);
 
         const afterShowAction = new AfterEditShowAction(this._editImageViewForm, cropperAction);
-
         const editControl = new UIEditControl(
             this._document.querySelector("#modal_edit_image img.image"),
             this._document.querySelector("#modal_edit_image button.edit_image_submit"),
@@ -147,7 +146,6 @@ export default class EditImageInit {
             new CropperFactory(this._config.getCropperOptions(), cropperAction)
         );
         editControl.setAfterShowAction(afterShowAction).init();
-
         this._editActionFabric = new UIEditActionFabric(editControl, new AfterEditControlFabric());
     }
 

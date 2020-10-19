@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.63](https://gitlab.local///compare/v0.2.62...v0.2.63) (2020-10-19)
+
+
+### Bug Fixes
+
+* **infra:** babel gulp script ([d735c76](https://gitlab.local///commit/d735c76cb5fa056753bd51e7c5c9fa1c0d78e15c)), closes [#437](https://gitlab.local///issues/437)
+* **infra:** error: Error fetching secret key ([3191858](https://gitlab.local///commit/3191858c619675307f513e592f9684335fb19b8d)), closes [#438](https://gitlab.local///issues/438)
+
 ### [0.2.62](https://gitlab.local///compare/v0.2.61...v0.2.62) (2020-10-19)
 
 

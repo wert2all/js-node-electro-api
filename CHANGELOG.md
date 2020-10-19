@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.61](https://gitlab.local///compare/v0.2.60...v0.2.61) (2020-10-19)
+
+
+### Bug Fixes
+
+* **infra:** add CHANGELOG.md to prettier ignore file ([294eddb](https://gitlab.local///commit/294eddb7ef91ec73734efe9bf3cc68816638449e)), closes [#435](https://gitlab.local///issues/435)
+
 ### [0.2.60](https://gitlab.local///compare/v0.2.59...v0.2.60) (2020-10-19)
 
 

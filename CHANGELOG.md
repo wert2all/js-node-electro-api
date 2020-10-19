@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.62](https://gitlab.local///compare/v0.2.61...v0.2.62) (2020-10-19)
+
+
+### Bug Fixes
+
+* **infra:** gulp to production ([c7c0642](https://gitlab.local///commit/c7c0642ab468a3ad1dc392ffa822f30963ae58d6)), closes [#436](https://gitlab.local///issues/436)
+
 ### [0.2.61](https://gitlab.local///compare/v0.2.60...v0.2.61) (2020-10-19)
 
 

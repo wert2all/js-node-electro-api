@@ -1,17 +1,3 @@
-import GulpTask from "./src/lib/console/gulp/GulpTask";
-import ImageRepository from "./src/lib/console/gulp/image/default/ImageRepository";
-import DIFactory from "./src/_init/factories/DIFactory";
-import ConsoleConfigFactory from "./src/_init/factories/ConsoleConfigFactory";
-import SQLConnectionFactory from "./src/_init/factories/SQLConnectionFactory";
-import ConnectionInterface from "./src/lib/db-connection/ConnectionInterface";
-import ExtendedValuesEntityManager from "./src/extended/ExtendedValuesEntityManager";
-import EntityManager from "./src/lib/db-entity-manager/EntityManager";
-import MLProcessorFactory from "./src/modules/console/ml/processor/MLProcessorFactory";
-import ImageResultFactory from "./src/lib/console/gulp/image/default/ImageResultFactory";
-import ResizeProcessorFactory from "./src/modules/console/resize/ResizeProcessorFactory";
-import MLImageFilterEntityFactory from "./src/modules/console/ml/entity/MLImageFilterEntityFactory";
-import ResizeImageFilterEntityFactory from "./src/modules/console/resize/entity/ResizeImageFilterEntityFactory";
-
 const gulp = require("gulp");
 const babel = require("gulp-babel");
 const clean = require("gulp-clean");
@@ -60,8 +46,8 @@ gulp.task("build:webpack", () => {
 });
 
 gulp.task("build:src", () => gulp.src(["src/**/*"]).pipe(babel()).pipe(gulp.dest("dist/src/")));
-
-gulp.task("build", gulp.parallel("build:src", "build:webpack"));
+gulp.task("build:infra", () => gulp.src("./_infra/prod/**/*").pipe(gulp.dest("dist/_infra/prod/")));
+gulp.task("build", gulp.parallel("build:src", "build:webpack", "build:infra"));
 
 gulp.task("default", gulp.parallel("build", "copy"));
 
@@ -88,52 +74,6 @@ function watchFiles() {
     gulp.watch("./templates/**/*", gulp.series("copy:templates", "serve:reload"));
 }
 
-/**
- *
- * @param {function} cb
- * @param {function} gulpTaskFactoryMethod
- * @private
- */
-const _runTask = (cb, gulpTaskFactoryMethod) => {
-    const di = DIFactory.create(ConsoleConfigFactory);
-    SQLConnectionFactory.create(di)
-        .then((connection) => di.get(ConnectionInterface).setServer(connection))
-        .then(() => di.get(ConnectionInterface))
-        .then((connection) => gulpTaskFactoryMethod(connection, di).go())
-        .then(() => cb())
-        .catch((err) => {
-            console.log(err);
-            cb();
-        });
-};
-
-gulp.task("images:resize", (cb) =>
-    _runTask(cb, (connection, di) => {
-        return new GulpTask(
-            new ImageRepository(
-                connection,
-                new ExtendedValuesEntityManager(di.get(EntityManager)),
-                new ResizeImageFilterEntityFactory()
-            ),
-            new ResizeProcessorFactory(),
-            new ImageResultFactory()
-        );
-    })
-);
-
-gulp.task("test:ml", (cb) =>
-    _runTask(cb, (connection, di) => {
-        return new GulpTask(
-            new ImageRepository(
-                connection,
-                new ExtendedValuesEntityManager(di.get(EntityManager)),
-                new MLImageFilterEntityFactory()
-            ),
-            new MLProcessorFactory(connection),
-            new ImageResultFactory()
-        );
-    })
-);
 const watch = gulp.series("serve", watchFiles);
 
 exports.dev = watch;

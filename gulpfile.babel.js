@@ -46,7 +46,7 @@ gulp.task("build:webpack", () => {
 });
 
 gulp.task("build:src", () => gulp.src(["src/**/*"]).pipe(babel()).pipe(gulp.dest("dist/src/")));
-gulp.task("build:infra", () => gulp.src("./_infra/prod/**/*").pipe(gulp.dest("dist/_infra/prod/")));
+gulp.task("build:infra", () => gulp.src("./_infra/prod/**/*").pipe(babel()).pipe(gulp.dest("dist/_infra/prod/")));
 gulp.task("build", gulp.parallel("build:src", "build:webpack", "build:infra"));
 
 gulp.task("default", gulp.parallel("build", "copy"));

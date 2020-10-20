@@ -1,6 +1,6 @@
 import DIFactory from "../../src/_init/factories/DIFactory";
 import ConsoleConfigFactory from "../../src/_init/factories/ConsoleConfigFactory";
-import SQLConnectionFactory from "../../src/_init/factories/SQLConnectionFactory";
+import SQLiteConnectionFactory from "../../src/_init/factories/SQLiteConnectionFactory";
 import GulpTask from "../../src/lib/console/gulp/GulpTask";
 import ImageRepository from "../../src/lib/console/gulp/image/default/ImageRepository";
 import ExtendedValuesEntityManager from "../../src/extended/ExtendedValuesEntityManager";
@@ -22,7 +22,7 @@ import WriteConnectionInterface from "../../src/lib/db-connection/WriteConnectio
  */
 const _runTask = (cb, gulpTaskFactoryMethod) => {
     const di = DIFactory.create(ConsoleConfigFactory);
-    SQLConnectionFactory.create(di)
+    SQLiteConnectionFactory.create(di)
         .then((connection) => {
             di.get(ReadConnectionInterface).setServer(connection);
             di.get(WriteConnectionInterface).setServer(connection);

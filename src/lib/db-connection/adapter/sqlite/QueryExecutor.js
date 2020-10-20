@@ -1,4 +1,4 @@
-import EventSqlExec from "./dispatcher/EventSqlExec";
+import EventSqlExec from "../../dispatcher/EventSqlExec";
 
 /**
  * @class QueryExecutor

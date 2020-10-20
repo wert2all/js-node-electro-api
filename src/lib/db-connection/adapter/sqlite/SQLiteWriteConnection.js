@@ -1,4 +1,4 @@
-import WriteConnectionInterface from "../WriteConnectionInterface";
+import WriteConnectionInterface from "../../WriteConnectionInterface";
 import SQLiteInsertSQLBuilder from "./builder/SQLiteInsertSQLBuilder";
 import SQLiteUpdateSQLBuilder from "./builder/SQLiteUpdateSQLBuilder";
 import SQLiteDeleteSQLBuilder from "./builder/SQLiteDeleteSQLBuilder";

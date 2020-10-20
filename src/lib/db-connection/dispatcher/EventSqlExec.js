@@ -1,4 +1,4 @@
-import EventInterface from "../../../dispatcher/EventInterface";
+import EventInterface from "../../dispatcher/EventInterface";
 
 /**
  * @class EventSqlExec

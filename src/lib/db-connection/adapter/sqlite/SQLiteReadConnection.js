@@ -1,4 +1,4 @@
-import ReadConnectionInterface from "../ReadConnectionInterface";
+import ReadConnectionInterface from "../../ReadConnectionInterface";
 import SQLiteSelectSQLBuilder from "./builder/SQLiteSelectSQLBuilder";
 import QueryDataProvider from "./QueryDataProvider";
 import QueryExecutor from "./QueryExecutor";

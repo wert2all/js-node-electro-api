@@ -5,6 +5,11 @@ import mysql from "mysql2/promise";
  * @class MysqlConnectionFactory
  */
 export default class MysqlConnectionFactory {
+    /**
+     *
+     * @param {DI} di
+     * @return {Promise<{read:*, write:*}>}
+     */
     static create(di) {
         /**
          *

@@ -13,7 +13,6 @@ import UserEntity from "../../data/entity/UserEntity";
 import UserDefinition from "../../db/definition/UserDefinition";
 import AuthNoAdmin from "../auth/error/AuthNoAdmin";
 import UserRepository from "../../db/repository/UserRepository";
-import ConnectionInterface from "../../lib/db-connection/ConnectionInterface";
 import ServerConfig from "../../server/ServerConfig";
 import FileLogger from "../../lib/logger/adapters/FileLogger";
 import LogFormatterInterface from "../../lib/logger/LogFormatterInterface";
@@ -29,6 +28,7 @@ import UserFilesDefinition from "../../db/definition/UserFilesDefinition";
 import ExtendedValuesRepository from "../../db/repository/ExtendedValuesRepository";
 import ExtendedValuesEntityManager from "../../extended/ExtendedValuesEntityManager";
 import ImagesValues from "../../data/entity/ext/ImagesValues";
+import ReadConnectionInterface from "../../lib/db-connection/ReadConnectionInterface";
 
 /**
  * @class ImagesUpdateRequest
@@ -85,12 +85,12 @@ export default class ImagesUpdateRequest extends RequestInterface {
     init(dispatcher) {
         /**
          *
-         * @type {ConnectionInterface}
+         * @type {ReadConnectionInterface}
          */
-        const connection = this._di.get(ConnectionInterface);
-        this._usersRepository.setConnection(connection);
-        this._extRepository.setConnection(connection);
-        this._repository.setConnection(connection);
+        const readConnection = this._di.get(ReadConnectionInterface);
+        this._usersRepository.setConnection(readConnection);
+        this._extRepository.setConnection(readConnection);
+        this._repository.setConnection(readConnection);
         this._applyLogger();
         return this;
     }

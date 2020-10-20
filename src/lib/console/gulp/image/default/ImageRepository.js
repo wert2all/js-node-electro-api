@@ -8,11 +8,11 @@ import ImageManager from "./ImageManager";
 export default class ImageRepository extends ImageRepositoryInterface {
     /**
      *
-     * @param {ConnectionInterface} connection
+     * @param {ReadConnectionInterface} readConnection
      * @param {ExtendedValuesEntityManager} em
      * @param {ImageFilterEntityFactoryInterface} entityFilterFactory
      */
-    constructor(connection, em, entityFilterFactory) {
+    constructor(readConnection, em, entityFilterFactory) {
         super();
         /**
          *
@@ -33,8 +33,8 @@ export default class ImageRepository extends ImageRepositoryInterface {
          */
         this._extRepository = new ExtendedValuesRepository();
 
-        this._filesRepository.setConnection(connection);
-        this._extRepository.setConnection(connection);
+        this._filesRepository.setConnection(readConnection);
+        this._extRepository.setConnection(readConnection);
 
         /**
          *

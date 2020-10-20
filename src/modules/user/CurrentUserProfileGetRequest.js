@@ -7,10 +7,10 @@ import UserProfileRequestDataClass from "./data/UserProfileRequestDataClass";
 import UserProfileRepository from "../../db/repository/UserProfileRepository";
 import ResponseResult from "../../routers/response/ResponseResult";
 import DI from "../../lib/di/DI";
-import ConnectionInterface from "../../lib/db-connection/ConnectionInterface";
 import LoggerInterface from "../../lib/logger/LoggerInterface";
 import UserProfileLogEvent from "./logs/event/UserProfileLogEvent";
 import UserProfileFetchModel from "./model/UserProfileFetchModel";
+import ReadConnectionInterface from "../../lib/db-connection/ReadConnectionInterface";
 
 /**
  * @class CurrentUserProfileGetRequest
@@ -89,7 +89,7 @@ export default class CurrentUserProfileGetRequest extends RequestInterface {
      */
     // eslint-disable-next-line no-unused-vars
     init(dispatcher) {
-        this._repository.setConnection(DI.getInstance().get(ConnectionInterface));
+        this._repository.setConnection(DI.getInstance().get(ReadConnectionInterface));
         return this;
     }
 }

@@ -15,7 +15,6 @@ import DI from "../../lib/di/DI";
 import ImageOriginalUrl from "../../extended/images/providers/ImageOriginalUrl";
 import DefinitionOrder from "../../lib/db-definition/DefinitionOrder";
 import DefinitionLimit from "../../lib/db-definition/DefinitionLimit";
-import ConnectionInterface from "../../lib/db-connection/ConnectionInterface";
 import StorageConfiguration from "../../storage/configuration/StorageConfiguration";
 import AuthNoAdmin from "../auth/error/AuthNoAdmin";
 import LoggerInterface from "../../lib/logger/LoggerInterface";
@@ -23,6 +22,7 @@ import ImageListLogEvent from "./logs/event/ImageListLogEvent";
 import ExtendedValuesEntity from "../../data/entity/ExtendedValuesEntity";
 import ExtendedValuesRepository from "../../db/repository/ExtendedValuesRepository";
 import ImagesUrlProviderManagerFactory from "../../extended/images/ImagesUrlProviderManagerFactory";
+import ReadConnectionInterface from "../../lib/db-connection/ReadConnectionInterface";
 
 /**
  * @class ImagesGetRequest
@@ -72,9 +72,9 @@ export default class ImagesGetRequest extends RequestInterface {
      */
     // eslint-disable-next-line no-unused-vars
     init(dispatcher) {
-        this._repository.setConnection(DI.getInstance().get(ConnectionInterface));
-        this._usersRepository.setConnection(DI.getInstance().get(ConnectionInterface));
-        this._extRepository.setConnection(DI.getInstance().get(ConnectionInterface));
+        this._repository.setConnection(DI.getInstance().get(ReadConnectionInterface));
+        this._usersRepository.setConnection(DI.getInstance().get(ReadConnectionInterface));
+        this._extRepository.setConnection(DI.getInstance().get(ReadConnectionInterface));
         return this;
     }
 
@@ -251,6 +251,7 @@ export default class ImagesGetRequest extends RequestInterface {
             fileEntity.setValue("ext_data", {});
         }
     }
+
     /**
      *
      * @param {UserFilesEntity} userFileEntity

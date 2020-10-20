@@ -8,7 +8,7 @@ import FilesRepository from "../../db/repository/FilesRepository";
 import UserEntity from "../../data/entity/UserEntity";
 import UserFilesEntity from "../../data/entity/UserFilesEntity";
 import DI from "../../lib/di/DI";
-import ConnectionInterface from "../../lib/db-connection/ConnectionInterface";
+import ReadConnectionInterface from "../../lib/db-connection/ReadConnectionInterface";
 
 /**
  * @class UploadGetCountRequest
@@ -33,7 +33,7 @@ export default class UploadGetCountRequest extends RequestInterface {
      */
     // eslint-disable-next-line no-unused-vars
     init(dispatcher) {
-        this._repository.setConnection(DI.getInstance().get(ConnectionInterface));
+        this._repository.setConnection(DI.getInstance().get(ReadConnectionInterface));
         return this;
     }
 

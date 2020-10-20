@@ -1,7 +1,5 @@
 import DI from "../../lib/di/DI";
 import ServerConfig from "../../server/ServerConfig";
-import ConnectionInterface from "../../lib/db-connection/ConnectionInterface";
-import SQLiteConnection from "../../lib/db-connection/adapter/SQLiteConnection";
 import KeyValueStorageInterface from "../../storage/keyvalue/KeyValueStorageInterface";
 import ConfigStorage from "../../storage/keyvalue/ConfigStorage";
 import FileStorage from "../../storage/FileStorage";
@@ -35,6 +33,10 @@ import ResizeSizesHolder from "../../modules/console/resize/size/ResizeSizesHold
 import ResizeConfig from "../../modules/console/resize/size/ResizeConfig";
 import ImagesUrlProviderMerger from "../../extended/images/ImagesUrlProviderMerger";
 import ResizeDestinationPathProviderFactory from "../../modules/console/resize/path/ResizeDestinationPathProviderFactory";
+import ReadConnectionInterface from "../../lib/db-connection/ReadConnectionInterface";
+import SQLiteReadConnection from "../../lib/db-connection/adapter/SQLiteReadConnection";
+import WriteConnectionInterface from "../../lib/db-connection/WriteConnectionInterface";
+import SQLiteWriteConnection from "../../lib/db-connection/adapter/SQLiteWriteConnection";
 
 export default class DIFactory {
     /**
@@ -54,8 +56,12 @@ export default class DIFactory {
         di.register(LoggerStrategy, this._getLoggers(di, serverConfig));
         di.register(LoggerInterface, new Logger(di.get(LoggerStrategy)));
 
-        di.register(ConnectionInterface, new SQLiteConnection(di.get(LoggerInterface)));
-        di.register(EntityManager, new EntityManager(di.get(ConnectionInterface)));
+        di.register(ReadConnectionInterface, new SQLiteReadConnection(di.get(LoggerInterface)));
+        di.register(WriteConnectionInterface, new SQLiteWriteConnection(di.get(LoggerInterface)));
+        di.register(
+            EntityManager,
+            new EntityManager(di.get(ReadConnectionInterface), di.get(WriteConnectionInterface))
+        );
 
         di.register(
             KeyValueStorageInterface,

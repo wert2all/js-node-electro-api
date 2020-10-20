@@ -62,11 +62,11 @@ export default class AbstractAdminRequest extends RequestInterface {
 
     /**
      *
-     * @param {ConnectionInterface} connection
+     * @param {ReadConnectionInterface} readConnection
      * @return AbstractAdminRequest
      */
-    setConnection(connection) {
-        this._usersRepository.setConnection(connection);
+    setConnection(readConnection) {
+        this._usersRepository.setConnection(readConnection);
         return this;
     }
 

@@ -10,7 +10,6 @@ import UserEntity from "../../data/entity/UserEntity";
 import UserDefinition from "../../db/definition/UserDefinition";
 import DI from "../../lib/di/DI";
 import ImageOriginalUrl from "../../extended/images/providers/ImageOriginalUrl";
-import ConnectionInterface from "../../lib/db-connection/ConnectionInterface";
 import StorageConfiguration from "../../storage/configuration/StorageConfiguration";
 import ImagesDeleteDataClass from "./data/ImagesDeleteDataClass";
 import UserFilesEntity from "../../data/entity/UserFilesEntity";
@@ -26,6 +25,7 @@ import Logger from "../../extended/logger/Logger";
 import EntityManager from "../../lib/db-entity-manager/EntityManager";
 import AuthNoAdmin from "../auth/error/AuthNoAdmin";
 import ImageListLogEvent from "./logs/event/ImageListLogEvent";
+import ReadConnectionInterface from "../../lib/db-connection/ReadConnectionInterface";
 
 /**
  * @class ImagesDeleteRequest
@@ -68,8 +68,8 @@ export default class ImagesDeleteRequest extends RequestInterface {
      */
     // eslint-disable-next-line no-unused-vars
     init(dispatcher) {
-        this._repository.setConnection(this._di.get(ConnectionInterface));
-        this._usersRepository.setConnection(this._di.get(ConnectionInterface));
+        this._repository.setConnection(this._di.get(ReadConnectionInterface));
+        this._usersRepository.setConnection(this._di.get(ReadConnectionInterface));
         this._applyLogger();
         return this;
     }

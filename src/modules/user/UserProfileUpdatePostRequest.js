@@ -11,13 +11,13 @@ import EntityManager from "../../lib/db-entity-manager/EntityManager";
 import ResponseResult from "../../routers/response/ResponseResult";
 import UserRepository from "../../db/repository/UserRepository";
 import DI from "../../lib/di/DI";
-import ConnectionInterface from "../../lib/db-connection/ConnectionInterface";
 import UserProfileDefinition from "../../db/definition/UserProfileDefinition";
 import LoggerInterface from "../../lib/logger/LoggerInterface";
 import UserProfileLogEvent from "./logs/event/UserProfileLogEvent";
 import StorageConfiguration from "../../storage/configuration/StorageConfiguration";
 import UserDefinition from "../../db/definition/UserDefinition";
 import AuthNoAdmin from "../auth/error/AuthNoAdmin";
+import ReadConnectionInterface from "../../lib/db-connection/ReadConnectionInterface";
 
 /**
  * @class UserProfileUpdatePostRequest
@@ -54,8 +54,8 @@ export default class UserProfileUpdatePostRequest extends RequestInterface {
      */
     // eslint-disable-next-line no-unused-vars
     init(dispatcher) {
-        this._profileRepository.setConnection(this._di.get(ConnectionInterface));
-        this._userRepository.setConnection(this._di.get(ConnectionInterface));
+        this._profileRepository.setConnection(this._di.get(ReadConnectionInterface));
+        this._userRepository.setConnection(this._di.get(ReadConnectionInterface));
         return this;
     }
 

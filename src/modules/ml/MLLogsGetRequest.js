@@ -1,7 +1,6 @@
 import RequestInterface from "../../routers/request/RequestInterface";
 import DI from "../../lib/di/DI";
 import LoggerInterface from "../../lib/logger/LoggerInterface";
-import ConnectionInterface from "../../lib/db-connection/ConnectionInterface";
 import StorageConfiguration from "../../storage/configuration/StorageConfiguration";
 import AbstractAdminRequest from "../../routers/request/AbstractAdminRequest";
 import RequestDataFactory from "./request/RequestDataFactory";
@@ -11,6 +10,7 @@ import MLModelLoggingRepository from "../../db/repository/ml/MLModelLoggingRepos
 import MLLoggingEntity from "../../data/entity/ml/MLLoggingEntity";
 import DefinitionOrder from "../../lib/db-definition/DefinitionOrder";
 import MLModelLoggingDefinition from "../../db/definition/ml/MLModelLoggingDefinition";
+import ReadConnectionInterface from "../../lib/db-connection/ReadConnectionInterface";
 
 /**
  * @class MLLogsGetRequest
@@ -45,11 +45,11 @@ export default class MLLogsGetRequest extends AbstractAdminRequest {
     init(dispatcher) {
         /**
          *
-         * @type {ConnectionInterface}
+         * @type {ReadConnectionInterface}
          */
-        const connection = DI.getInstance().get(ConnectionInterface);
-        super.setConnection(connection);
-        this._mlLoggingRepository.setConnection(connection);
+        const readConnection = DI.getInstance().get(ReadConnectionInterface);
+        super.setConnection(readConnection);
+        this._mlLoggingRepository.setConnection(readConnection);
 
         return this;
     }

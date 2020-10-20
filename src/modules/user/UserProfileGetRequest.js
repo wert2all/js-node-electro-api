@@ -8,7 +8,6 @@ import UserProfileRepository from "../../db/repository/UserProfileRepository";
 import UserEntity from "../../data/entity/UserEntity";
 import ResponseResult from "../../routers/response/ResponseResult";
 import DI from "../../lib/di/DI";
-import ConnectionInterface from "../../lib/db-connection/ConnectionInterface";
 import UserDefinition from "../../db/definition/UserDefinition";
 import AuthNoAdmin from "../auth/error/AuthNoAdmin";
 import LoggerInterface from "../../lib/logger/LoggerInterface";
@@ -16,6 +15,7 @@ import UserProfileLogEvent from "./logs/event/UserProfileLogEvent";
 import StorageConfiguration from "../../storage/configuration/StorageConfiguration";
 import UserRepository from "../../db/repository/UserRepository";
 import UserProfileFetchModel from "./model/UserProfileFetchModel";
+import ReadConnectionInterface from "../../lib/db-connection/ReadConnectionInterface";
 
 /**
  * @class UserProfileGetRequest
@@ -103,8 +103,8 @@ export default class UserProfileGetRequest extends RequestInterface {
      */
     // eslint-disable-next-line no-unused-vars
     init(dispatcher) {
-        this._repository.setConnection(DI.getInstance().get(ConnectionInterface));
-        this._usersRepository.setConnection(DI.getInstance().get(ConnectionInterface));
+        this._repository.setConnection(DI.getInstance().get(ReadConnectionInterface));
+        this._usersRepository.setConnection(DI.getInstance().get(ReadConnectionInterface));
         return this;
     }
 

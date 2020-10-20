@@ -9,23 +9,30 @@ import DefinitionLimit from "../db-definition/DefinitionLimit";
 export default class EntityManager {
     /**
      *
-     * @param {ConnectionInterface} connection
+     * @param {ReadConnectionInterface} readConnection
+     * @param {WriteConnectionInterface} writeConnection
      */
-    constructor(connection = null) {
+    constructor(readConnection, writeConnection) {
         /**
          *
-         * @type {ConnectionInterface}
+         * @type {ReadConnectionInterface}
          * @private
          */
-        this._connection = connection;
+        this._readConnection = readConnection;
+        /**
+         *
+         * @type {WriteConnectionInterface}
+         * @private
+         */
+        this._writeConnection = writeConnection;
     }
 
     /**
      *
-     * @return {ConnectionInterface}
+     * @return {ReadConnectionInterface}
      */
-    getConnection() {
-        return this._connection;
+    getReadConnection() {
+        return this._readConnection;
     }
 
     /**
@@ -35,11 +42,11 @@ export default class EntityManager {
      * @return {Promise<EntityInterface>}
      */
     async save(definition, entity) {
-        if (this._connection !== null) {
+        if (this._readConnection !== null && this._writeConnection !== null) {
             if (await this._isExist(definition, entity)) {
-                await this._connection.update(definition, entity.getData());
+                await this._writeConnection.update(definition, entity.getData());
             } else {
-                const rowIdValue = await this._connection.insert(definition, entity.getData());
+                const rowIdValue = await this._writeConnection.insert(definition, entity.getData());
                 entity.setValue(EntityInterface.ROW_ID, rowIdValue);
             }
             return Promise.resolve(entity);
@@ -60,7 +67,12 @@ export default class EntityManager {
         if (primaryValue != null) {
             const filter = new Filter();
             filter.addColumn(definition.getPrimaryColumn(), primaryValue);
-            const entityDbValue = await this._connection.select(definition, filter, null, new DefinitionLimit(0, 1));
+            const entityDbValue = await this._readConnection.select(
+                definition,
+                filter,
+                null,
+                new DefinitionLimit(0, 1)
+            );
             return Promise.resolve(entityDbValue.length > 0);
         } else {
             return Promise.resolve(false);
@@ -75,6 +87,6 @@ export default class EntityManager {
      * @private
      */
     async delete(definition, primaryValue) {
-        return this._connection.delete(definition, primaryValue);
+        return this._writeConnection.delete(definition, primaryValue);
     }
 }

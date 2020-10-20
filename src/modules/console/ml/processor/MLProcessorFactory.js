@@ -8,16 +8,16 @@ import ProcessorFactoryInterface from "../../../../lib/console/gulp/processor/Pr
 export default class MLProcessorFactory extends ProcessorFactoryInterface {
     /**
      *
-     * @param {ConnectionInterface} connection
+     * @param {ReadConnectionInterface} readConnection
      */
-    constructor(connection) {
+    constructor(readConnection) {
         super();
         /**
          *
-         * @type {ConnectionInterface}
+         * @type {ReadConnectionInterface}
          * @private
          */
-        this._connection = connection;
+        this._readConnection = readConnection;
     }
 
     /**
@@ -26,6 +26,6 @@ export default class MLProcessorFactory extends ProcessorFactoryInterface {
      * @return {ProcessorInterface|null}
      */
     create(entity) {
-        return new MLProcessor(this._connection, new MLFakeModel());
+        return new MLProcessor(this._readConnection, new MLFakeModel());
     }
 }

@@ -21,7 +21,6 @@ import EventFileUpload from "./dispatch/event/EventFileUpload";
 import ResponseResult from "../../routers/response/ResponseResult";
 import ResponseDataClass from "../../routers/response/ResponseDataClass";
 import DI from "../../lib/di/DI";
-import ConnectionInterface from "../../lib/db-connection/ConnectionInterface";
 import FileStorage from "../../storage/FileStorage";
 import ServerConfig from "../../server/ServerConfig";
 import FileLogger from "../../lib/logger/adapters/FileLogger";
@@ -30,6 +29,7 @@ import LoggerStrategy from "../../extended/LoggerStrategy";
 import LoggerInterface from "../../lib/logger/LoggerInterface";
 import Logger from "../../extended/logger/Logger";
 import UploadEvent from "./logger/UploadEvent";
+import ReadConnectionInterface from "../../lib/db-connection/ReadConnectionInterface";
 
 /**
  * @class UploadPostRequest
@@ -51,6 +51,12 @@ export default class UploadPostRequest extends RequestInterface {
          * @private
          */
         this._fileStorage = DI.getInstance().get(FileStorage);
+        /**
+         *
+         * @type {EntityManager}
+         * @private
+         */
+        this._em = DI.getInstance().get(EntityManager);
     }
 
     /**
@@ -120,8 +126,11 @@ export default class UploadPostRequest extends RequestInterface {
                 fileData.setPath(tmpFilePath),
                 new ImageFileNameProvider(userFiles)
             );
-
-            const entityManager = new EntityManager(this._repository.getConnection());
+            /**
+             *
+             * @type {EntityManager}
+             */
+            const entityManager = this._em;
             const userEntity = await entityManager.save(new UserRepository().getDefinition(), userFiles.getUser());
             userFiles.setUser(userEntity).setFilePath(fileData.getPath());
             /**
@@ -177,7 +186,7 @@ export default class UploadPostRequest extends RequestInterface {
          * @private
          */
         this._dispatcher = dispatcher;
-        this._repository.setConnection(DI.getInstance().get(ConnectionInterface));
+        this._repository.setConnection(DI.getInstance().get(ReadConnectionInterface));
         this._applyLogger();
         return this;
     }

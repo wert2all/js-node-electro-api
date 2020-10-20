@@ -11,7 +11,7 @@ import UserFilesDefinition from "../../db/definition/UserFilesDefinition";
 import ResponseResult from "../../routers/response/ResponseResult";
 import DI from "../../lib/di/DI";
 import ImageOriginalUrl from "../../extended/images/providers/ImageOriginalUrl";
-import ConnectionInterface from "../../lib/db-connection/ConnectionInterface";
+import ReadConnectionInterface from "../../lib/db-connection/ReadConnectionInterface";
 
 /**
  * @class UploadGetFilesRequest
@@ -42,7 +42,7 @@ export default class UploadGetFilesRequest extends RequestInterface {
      */
     // eslint-disable-next-line no-unused-vars
     init(dispatcher) {
-        this._repository.setConnection(DI.getInstance().get(ConnectionInterface));
+        this._repository.setConnection(DI.getInstance().get(ReadConnectionInterface));
         return this;
     }
 

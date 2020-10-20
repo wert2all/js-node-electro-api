@@ -18,7 +18,7 @@ export default class ExtendedValuesEntityManager {
          */
         this._em = em;
         this._repository = new ExtendedValuesRepository();
-        this._repository.setConnection(this._em.getConnection());
+        this._repository.setConnection(this._em.getReadConnection());
     }
 
     /**

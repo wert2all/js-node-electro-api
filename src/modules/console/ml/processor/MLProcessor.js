@@ -13,11 +13,11 @@ import MLLoggingEntity from "../../../../data/entity/ml/MLLoggingEntity";
 export default class MLProcessor extends ProcessorInterface {
     /**
      *
-     * @param {ConnectionInterface} connection
+     * @param {ReadConnectionInterface} readConnection
      * @param {IMLModel} currentModel
      * @param {IMLModel|null} prevModel
      */
-    constructor(connection, currentModel, prevModel = null) {
+    constructor(readConnection, currentModel, prevModel = null) {
         super();
         /**
          *
@@ -37,7 +37,7 @@ export default class MLProcessor extends ProcessorInterface {
          * @private
          */
         this._loggingRepository = new MLModelLoggingRepository();
-        this._loggingRepository.setConnection(connection);
+        this._loggingRepository.setConnection(readConnection);
         /**
          *
          * @type {EntityManager}

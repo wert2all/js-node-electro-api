@@ -1,7 +1,6 @@
 import DIFactory from "../../src/_init/factories/DIFactory";
 import ConsoleConfigFactory from "../../src/_init/factories/ConsoleConfigFactory";
 import SQLConnectionFactory from "../../src/_init/factories/SQLConnectionFactory";
-import ConnectionInterface from "../../src/lib/db-connection/ConnectionInterface";
 import GulpTask from "../../src/lib/console/gulp/GulpTask";
 import ImageRepository from "../../src/lib/console/gulp/image/default/ImageRepository";
 import ExtendedValuesEntityManager from "../../src/extended/ExtendedValuesEntityManager";
@@ -12,6 +11,8 @@ import ImageResultFactory from "../../src/lib/console/gulp/image/default/ImageRe
 import MLImageFilterEntityFactory from "../../src/modules/console/ml/entity/MLImageFilterEntityFactory";
 import MLProcessorFactory from "../../src/modules/console/ml/processor/MLProcessorFactory";
 import gulp from "gulp";
+import ReadConnectionInterface from "../../src/lib/db-connection/ReadConnectionInterface";
+import WriteConnectionInterface from "../../src/lib/db-connection/WriteConnectionInterface";
 
 /**
  *
@@ -22,9 +23,12 @@ import gulp from "gulp";
 const _runTask = (cb, gulpTaskFactoryMethod) => {
     const di = DIFactory.create(ConsoleConfigFactory);
     SQLConnectionFactory.create(di)
-        .then((connection) => di.get(ConnectionInterface).setServer(connection))
-        .then(() => di.get(ConnectionInterface))
-        .then((connection) => gulpTaskFactoryMethod(connection, di).go())
+        .then((connection) => {
+            di.get(ReadConnectionInterface).setServer(connection);
+            di.get(WriteConnectionInterface).setServer(connection);
+        })
+        .then(() => di.get(ReadConnectionInterface))
+        .then((readConnection) => gulpTaskFactoryMethod(readConnection, di).go())
         .then(() => cb())
         .catch((err) => {
             console.log(err);
@@ -33,10 +37,10 @@ const _runTask = (cb, gulpTaskFactoryMethod) => {
 };
 
 gulp.task("images:resize", (cb) =>
-    _runTask(cb, (connection, di) => {
+    _runTask(cb, (readConnection, di) => {
         return new GulpTask(
             new ImageRepository(
-                connection,
+                readConnection,
                 new ExtendedValuesEntityManager(di.get(EntityManager)),
                 new ResizeImageFilterEntityFactory()
             ),
@@ -47,14 +51,14 @@ gulp.task("images:resize", (cb) =>
 );
 
 gulp.task("test:ml", (cb) =>
-    _runTask(cb, (connection, di) => {
+    _runTask(cb, (readConnection, di) => {
         return new GulpTask(
             new ImageRepository(
-                connection,
+                readConnection,
                 new ExtendedValuesEntityManager(di.get(EntityManager)),
                 new MLImageFilterEntityFactory()
             ),
-            new MLProcessorFactory(connection),
+            new MLProcessorFactory(readConnection),
             new ImageResultFactory()
         );
     })

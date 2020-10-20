@@ -9,30 +9,29 @@ export default class RepositoryAbstract {
     /**
      *
      * @param {ConnectionInterface} connection
+     * @param  {ReadConnectionInterface} readConnection
      */
-    constructor(connection = null) {
+    constructor(connection = null, readConnection = null) {
         /**
          *
          * @type {ConnectionInterface|null}
          * @private
          */
         this._connection = connection;
+        /**
+         *
+         * @type {ReadConnectionInterface|null}
+         * @private
+         */
+        this._readConnection = readConnection;
     }
 
     /**
      *
-     * @param {ConnectionInterface} connection
+     * @param {ReadConnectionInterface} readConnection
      */
-    setConnection(connection) {
-        this._connection = connection;
-    }
-
-    /**
-     *
-     * @return {ConnectionInterface|null}
-     */
-    getConnection() {
-        return this._connection;
+    setConnection(readConnection) {
+        this._readConnection = readConnection;
     }
 
     /**
@@ -70,11 +69,11 @@ export default class RepositoryAbstract {
      * @private
      */
     async _fetch(definition, entity, order = null, limit = null, fields = null) {
-        if (this._connection == null) {
+        if (this._readConnection == null) {
             return Promise.reject(new RepositoryErrorNoConnection());
         }
         const filter = this._filterFactory().create(entity);
-        return await this._connection.select(definition, filter, order, limit, fields);
+        return await this._readConnection.select(definition, filter, order, limit, fields);
     }
 
     /**

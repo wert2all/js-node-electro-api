@@ -5,6 +5,7 @@ import AppLogEvent from "../extended/logger/events/AppLogEvent";
 import ServerConfigFactory from "./factories/ServerConfigFactory";
 import ReadConnectionInterface from "../lib/db-connection/ReadConnectionInterface";
 import WriteConnectionInterface from "../lib/db-connection/WriteConnectionInterface";
+import MysqlConnectionFactory from "./factories/MysqlConnectionFactory";
 
 export default class Runner {
     /**
@@ -21,7 +22,8 @@ export default class Runner {
     run() {
         const di = DIFactory.create(ServerConfigFactory);
 
-        SQLiteConnectionFactory.create(di)
+        MysqlConnectionFactory.create(di)
+            .then((mysqlConnections) => SQLiteConnectionFactory.create(di))
             .then((connection) => {
                 di.get(ReadConnectionInterface).setServer(connection);
                 di.get(WriteConnectionInterface).setServer(connection);

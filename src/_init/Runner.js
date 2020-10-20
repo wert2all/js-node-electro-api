@@ -1,5 +1,5 @@
 import DIFactory from "./factories/DIFactory";
-import SQLConnectionFactory from "./factories/SQLConnectionFactory";
+import SQLiteConnectionFactory from "./factories/SQLiteConnectionFactory";
 import LoggerInterface from "../lib/logger/LoggerInterface";
 import AppLogEvent from "../extended/logger/events/AppLogEvent";
 import ServerConfigFactory from "./factories/ServerConfigFactory";
@@ -21,7 +21,7 @@ export default class Runner {
     run() {
         const di = DIFactory.create(ServerConfigFactory);
 
-        SQLConnectionFactory.create(di)
+        SQLiteConnectionFactory.create(di)
             .then((connection) => {
                 di.get(ReadConnectionInterface).setServer(connection);
                 di.get(WriteConnectionInterface).setServer(connection);

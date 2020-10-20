@@ -37,6 +37,8 @@ import ReadConnectionInterface from "../../lib/db-connection/ReadConnectionInter
 import SQLiteReadConnection from "../../lib/db-connection/adapter/SQLiteReadConnection";
 import WriteConnectionInterface from "../../lib/db-connection/WriteConnectionInterface";
 import SQLiteWriteConnection from "../../lib/db-connection/adapter/SQLiteWriteConnection";
+import EventSqlExec from "../../lib/db-connection/adapter/dispatcher/EventSqlExec";
+import ExecSqlObserver from "../../lib/db-connection/adapter/dispatcher/ExecSqlObserver";
 
 export default class DIFactory {
     /**
@@ -56,8 +58,8 @@ export default class DIFactory {
         di.register(LoggerStrategy, this._getLoggers(di, serverConfig));
         di.register(LoggerInterface, new Logger(di.get(LoggerStrategy)));
 
-        di.register(ReadConnectionInterface, new SQLiteReadConnection(di.get(LoggerInterface)));
-        di.register(WriteConnectionInterface, new SQLiteWriteConnection(di.get(LoggerInterface)));
+        di.register(ReadConnectionInterface, new SQLiteReadConnection());
+        di.register(WriteConnectionInterface, new SQLiteWriteConnection());
         di.register(
             EntityManager,
             new EntityManager(di.get(ReadConnectionInterface), di.get(WriteConnectionInterface))
@@ -102,9 +104,12 @@ export default class DIFactory {
                         )
                     ),
                 ];
+                observers[EventSqlExec.EVENT_NAME] = [new ExecSqlObserver(di.get(LoggerInterface))];
                 return new Dispatcher(observers);
             })()
         );
+        di.get(ReadConnectionInterface).setDispatcher(di.get(DispatchInterface));
+        di.get(WriteConnectionInterface).setDispatcher(di.get(DispatchInterface));
 
         di.register(
             RendererInterface,

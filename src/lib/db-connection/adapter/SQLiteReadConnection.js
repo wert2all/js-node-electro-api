@@ -11,11 +11,7 @@ import TableCreator from "./TableCreator";
  *
  */
 export default class SQLiteReadConnection extends ReadConnectionInterface {
-    /**
-     *
-     * @param {LoggerInterface} logger
-     */
-    constructor(logger) {
+    constructor() {
         super();
         /**
          *
@@ -34,7 +30,7 @@ export default class SQLiteReadConnection extends ReadConnectionInterface {
          * @type {QueryExecutor}
          * @private
          */
-        this._queryExecutor = new QueryExecutor(logger);
+        this._queryExecutor = new QueryExecutor();
         /**
          *
          * @type {TableCreator}
@@ -76,5 +72,13 @@ export default class SQLiteReadConnection extends ReadConnectionInterface {
             data[filter.field] = filter.value;
         });
         return this._queryExecutor.fetch(sql, this._queryDataProvider.buildQueryData(definition, data));
+    }
+
+    /**
+     *
+     * @param {DispatchInterface} dispatcher
+     */
+    setDispatcher(dispatcher) {
+        this._queryExecutor.setDispatcher(dispatcher);
     }
 }

@@ -1,21 +1,25 @@
-import SQLLogEvent from "../../../extended/logger/events/SQLLogEvent";
+import EventSqlExec from "./dispatcher/EventSqlExec";
 
 /**
  * @class QueryExecutor
  */
 export default class QueryExecutor {
-    /**
-     *
-     * @param {LoggerInterface} logger
-     */
-    constructor(logger) {
+    constructor() {
+        this._server = null;
         /**
          *
-         * @type {LoggerInterface}
+         * @type {null|DispatchInterface}
          * @private
          */
-        this._logger = logger;
-        this._server = null;
+        this._dispatcher = null;
+    }
+
+    /**
+     *
+     * @param {DispatchInterface} dispatcher
+     */
+    setDispatcher(dispatcher) {
+        this._dispatcher = dispatcher;
     }
 
     /**
@@ -34,7 +38,9 @@ export default class QueryExecutor {
      */
     async exec(sql, whereData) {
         return new Promise((resolve, reject) => {
-            this._logger.info(new SQLLogEvent(sql));
+            if (this._dispatcher) {
+                this._dispatcher.dispatch(new EventSqlExec(sql));
+            }
             const stmt = this._server.prepare(sql, whereData);
             stmt.run(whereData, (err) => {
                 if (err) {
@@ -54,7 +60,9 @@ export default class QueryExecutor {
      */
     async fetch(sql, whereData) {
         return new Promise((resolve, reject) => {
-            this._logger.info(new SQLLogEvent(sql));
+            if (this._dispatcher) {
+                this._dispatcher.dispatch(new EventSqlExec(sql));
+            }
             const stmt = this._server.prepare(sql, whereData);
             stmt.all(whereData, (err, rows) => {
                 if (err) {

@@ -17,6 +17,14 @@ export default class WriteConnectionInterface {
 
     /**
      * @abstract
+     * @param {DispatchInterface} dispatcher
+     */
+    setDispatcher(dispatcher) {
+        throw new ImplementationError(this, "setDispatcher");
+    }
+
+    /**
+     * @abstract
      * @param {DefinitionTableInterface} definition
      * @param {Object<string, string>} data
      * @return {Promise<void>}

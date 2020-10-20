@@ -17,6 +17,14 @@ export default class ReadConnectionInterface {
 
     /**
      * @abstract
+     * @param {DispatchInterface} dispatcher
+     */
+    setDispatcher(dispatcher) {
+        throw new ImplementationError(this, "setDispatcher");
+    }
+
+    /**
+     * @abstract
      * @param {DefinitionTableInterface} definition
      * @param {FilterInterface} filter
      * @param {DefinitionOrder | null} order

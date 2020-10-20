@@ -14,17 +14,11 @@ import TableCreator from "./TableCreator";
 export default class SQLiteWriteConnection extends WriteConnectionInterface {
     /**
      *
-     * @param {LoggerInterface} logger
      * @param serverConnect
      */
-    constructor(logger, serverConnect = null) {
+    constructor(serverConnect = null) {
         super();
-        /**
-         *
-         * @type {LoggerInterface}
-         * @private
-         */
-        this._logger = logger;
+
         /**
          *
          * @type {SQLiteInsertSQLBuilder}
@@ -54,7 +48,7 @@ export default class SQLiteWriteConnection extends WriteConnectionInterface {
          * @type {QueryExecutor}
          * @private
          */
-        this._queryExecutor = new QueryExecutor(this._logger);
+        this._queryExecutor = new QueryExecutor();
         /**
          *
          * @type {TableCreator}
@@ -112,5 +106,13 @@ export default class SQLiteWriteConnection extends WriteConnectionInterface {
         const prepareValues = this._queryDataProvider.buildQueryData(definition, data);
         delete prepareValues[definition.getPrimaryColumn().getColumnName()];
         return this._queryExecutor.exec(sql, prepareValues);
+    }
+
+    /**
+     *
+     * @param {DispatchInterface} dispatcher
+     */
+    setDispatcher(dispatcher) {
+        this._queryExecutor.setDispatcher(dispatcher);
     }
 }

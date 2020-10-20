@@ -34,11 +34,11 @@ import ResizeConfig from "../../modules/console/resize/size/ResizeConfig";
 import ImagesUrlProviderMerger from "../../extended/images/ImagesUrlProviderMerger";
 import ResizeDestinationPathProviderFactory from "../../modules/console/resize/path/ResizeDestinationPathProviderFactory";
 import ReadConnectionInterface from "../../lib/db-connection/ReadConnectionInterface";
-import SQLiteReadConnection from "../../lib/db-connection/adapter/SQLiteReadConnection";
+import SQLiteReadConnection from "../../lib/db-connection/adapter/sqlite/SQLiteReadConnection";
 import WriteConnectionInterface from "../../lib/db-connection/WriteConnectionInterface";
-import SQLiteWriteConnection from "../../lib/db-connection/adapter/SQLiteWriteConnection";
-import EventSqlExec from "../../lib/db-connection/adapter/dispatcher/EventSqlExec";
-import ExecSqlObserver from "../../lib/db-connection/adapter/dispatcher/ExecSqlObserver";
+import SQLiteWriteConnection from "../../lib/db-connection/adapter/sqlite/SQLiteWriteConnection";
+import EventSqlExec from "../../lib/db-connection/dispatcher/EventSqlExec";
+import ExecSqlObserver from "../../lib/db-connection/dispatcher/ExecSqlObserver";
 
 export default class DIFactory {
     /**

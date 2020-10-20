@@ -1,5 +1,5 @@
 // eslint-disable-next-line max-len
-import DefinitionSQLBuilderInterface from "../../../db-definition/builder/DefinitionSQLBuilderInterface";
+import DefinitionSQLBuilderInterface from "../../../../db-definition/builder/DefinitionSQLBuilderInterface";
 
 /**
  * @class SQLiteInsertSQLBuilder

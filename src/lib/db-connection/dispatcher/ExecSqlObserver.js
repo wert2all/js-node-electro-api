@@ -1,5 +1,5 @@
-import ObserverInterface from "../../../dispatcher/ObserverInterface";
-import SQLLogEvent from "../../../../extended/logger/events/SQLLogEvent";
+import ObserverInterface from "../../dispatcher/ObserverInterface";
+import SQLLogEvent from "../../../extended/logger/events/SQLLogEvent";
 
 /**
  * @class ExecSqlObserver

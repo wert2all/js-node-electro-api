@@ -24,6 +24,12 @@ export default class DefinitionColumnInterface {
 
     /**
      * @abstract
+     * @return {number|null}
+     */
+    getColumnSize() {}
+
+    /**
+     * @abstract
      * @return boolean
      */
     isNull() {

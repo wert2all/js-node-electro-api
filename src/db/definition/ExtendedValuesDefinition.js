@@ -20,6 +20,7 @@ export default class ExtendedValuesDefinition extends DefinitionTableInterface {
         this._primaryColumn = new DefinitionColumn(
             ExtendedValuesDefinition.COLUMN_ID,
             DefinitionColumn.COLUMN_TYPE_INTEGER,
+            null,
             false,
             false,
             true
@@ -35,6 +36,7 @@ export default class ExtendedValuesDefinition extends DefinitionTableInterface {
             new DefinitionColumn(
                 ExtendedValuesDefinition.COLUMN_ENTITY_ID,
                 DefinitionColumn.COLUMN_TYPE_INTEGER,
+                null,
                 false,
                 false,
                 false
@@ -42,6 +44,7 @@ export default class ExtendedValuesDefinition extends DefinitionTableInterface {
             new DefinitionColumn(
                 ExtendedValuesDefinition.COLUMN_ENTITY_TYPE,
                 DefinitionColumn.COLUMN_TYPE_VARCHAR,
+                null,
                 false,
                 false,
                 false
@@ -49,6 +52,7 @@ export default class ExtendedValuesDefinition extends DefinitionTableInterface {
             new DefinitionColumn(
                 ExtendedValuesDefinition.COLUMN_VALUE_NAME,
                 DefinitionColumn.COLUMN_TYPE_VARCHAR,
+                null,
                 false,
                 false,
                 false
@@ -56,6 +60,7 @@ export default class ExtendedValuesDefinition extends DefinitionTableInterface {
             new DefinitionColumn(
                 ExtendedValuesDefinition.COLUMN_VALUE_VALUE,
                 DefinitionColumn.COLUMN_TYPE_VARCHAR,
+                null,
                 true,
                 false,
                 false

@@ -25,6 +25,7 @@ export default class UserFilesDefinition extends DefinitionTableInterface {
         this._primaryColumn = new DefinitionColumn(
             UserFilesDefinition.COLUMN_ID,
             DefinitionColumn.COLUMN_TYPE_INTEGER,
+            null,
             false,
             false,
             true
@@ -34,6 +35,7 @@ export default class UserFilesDefinition extends DefinitionTableInterface {
             new DefinitionColumn(
                 UserFilesDefinition.COLUMN_GOOGLE_USER_ID,
                 DefinitionColumn.COLUMN_TYPE_VARCHAR,
+                null,
                 false,
                 false,
                 false
@@ -41,14 +43,28 @@ export default class UserFilesDefinition extends DefinitionTableInterface {
             new DefinitionColumn(
                 UserFilesDefinition.COLUMN_YEARMON,
                 DefinitionColumn.COLUMN_TYPE_VARCHAR,
+                null,
                 false,
                 false
             ),
-            new DefinitionColumn(UserFilesDefinition.COLUMN_TYPE, DefinitionColumn.COLUMN_TYPE_VARCHAR, false, "bill"),
-            new DefinitionColumn(UserFilesDefinition.COLUMN_PATH, DefinitionColumn.COLUMN_TYPE_VARCHAR, false, false),
+            new DefinitionColumn(
+                UserFilesDefinition.COLUMN_TYPE,
+                DefinitionColumn.COLUMN_TYPE_VARCHAR,
+                null,
+                false,
+                "bill"
+            ),
+            new DefinitionColumn(
+                UserFilesDefinition.COLUMN_PATH,
+                DefinitionColumn.COLUMN_TYPE_VARCHAR,
+                null,
+                false,
+                false
+            ),
             new DefinitionColumn(
                 UserFilesDefinition.COLUMN_IS_READY,
                 DefinitionColumn.COLUMN_TYPE_VARCHAR,
+                null,
                 false,
                 "false"
             ),

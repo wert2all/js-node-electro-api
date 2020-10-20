@@ -26,7 +26,8 @@ export default class MysqlTableSQLBuilder extends DefinitionSQLBuilderInterface 
         return definition
             .getColumns()
             .map((column) => {
-                let columnSQL = " " + column.getColumnName() + " " + column.getType() + " ";
+                let columnSQL =
+                    " " + column.getColumnName() + " " + column.getType() + "( " + column.getColumnSize() + ")";
                 columnSQL += !column.isNull() ? " not null " : " ";
                 columnSQL += this._createDefault(column);
                 columnSQL += column.isPrimary() ? " primary key " : " ";

@@ -32,6 +32,6 @@ export default class TableCreator {
     async createTable(definition) {
         const tableSQl = this._builderCreateTable.buildSQL(definition, null);
         console.log(tableSQl);
-        return this._queryExecutor.exec(tableSQl, {});
+        return this._queryExecutor.exec(tableSQl, []);
     }
 }

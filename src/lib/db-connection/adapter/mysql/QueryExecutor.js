@@ -43,9 +43,7 @@ export default class QueryExecutor {
             }
             this._server
                 .prepare(sql, whereData)
-                .then((stmt) => {
-                    console.log(stmt);
-                })
+                .then((stmt) => stmt.execute(whereData))
                 .catch(reject);
         });
     }

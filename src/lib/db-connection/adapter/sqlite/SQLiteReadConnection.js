@@ -31,12 +31,6 @@ export default class SQLiteReadConnection extends ReadConnectionInterface {
          * @private
          */
         this._queryExecutor = new QueryExecutor();
-        /**
-         *
-         * @type {TableCreator}
-         * @private
-         */
-        this._tableCreator = new TableCreator(this._queryExecutor);
     }
 
     /**
@@ -57,7 +51,6 @@ export default class SQLiteReadConnection extends ReadConnectionInterface {
      * @return {Promise<Array>}
      */
     async select(definition, filter, order = null, limit = null, fields = null) {
-        await this._tableCreator.createTable(definition);
         let data = {};
         filter.getFilterData().forEach((filter) => {
             data[filter.field] = " " + filter.sign + " :" + filter.field;

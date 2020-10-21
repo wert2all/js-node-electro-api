@@ -49,12 +49,6 @@ export default class SQLiteWriteConnection extends WriteConnectionInterface {
          * @private
          */
         this._queryExecutor = new QueryExecutor();
-        /**
-         *
-         * @type {TableCreator}
-         * @private
-         */
-        this._tableCreator = new TableCreator(this._queryExecutor);
     }
 
     /**
@@ -72,7 +66,6 @@ export default class SQLiteWriteConnection extends WriteConnectionInterface {
      * @return {Promise<void>}
      */
     async delete(definition, primaryValue) {
-        await this._tableCreator.createTable(definition);
         const whereData = {};
         whereData[definition.getPrimaryColumn().getColumnName()] = primaryValue;
         const sql = this._builderDelete.buildSQL(definition, whereData);
@@ -88,7 +81,6 @@ export default class SQLiteWriteConnection extends WriteConnectionInterface {
      */
     // eslint-disable-next-line no-unused-vars
     async insert(definition, data) {
-        await this._tableCreator.createTable(definition);
         const sql = this._builderInsert.buildSQL(definition, data);
         const prepareValues = this._queryDataProvider.buildQueryData(definition, data);
         const insertData = await this._queryExecutor.exec(sql, prepareValues);
@@ -101,7 +93,6 @@ export default class SQLiteWriteConnection extends WriteConnectionInterface {
      * @return {Promise<void>}
      */
     async update(definition, data) {
-        await this._tableCreator.createTable(definition);
         const sql = this._builderUpdate.buildSQL(definition, data);
         const prepareValues = this._queryDataProvider.buildQueryData(definition, data);
         delete prepareValues[definition.getPrimaryColumn().getColumnName()];

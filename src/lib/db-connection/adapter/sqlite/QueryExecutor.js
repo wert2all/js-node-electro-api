@@ -1,4 +1,5 @@
-import EventSqlExec from "../../dispatcher/EventSqlExec";
+import EventSqlExec from "../../dispatcher/event/EventSqlExec";
+import EventSqlError from "../../dispatcher/event/EventSqlError";
 
 /**
  * @class QueryExecutor
@@ -44,6 +45,9 @@ export default class QueryExecutor {
             const stmt = this._server.prepare(sql, whereData);
             stmt.run(whereData, (err) => {
                 if (err) {
+                    if (this._dispatcher) {
+                        this._dispatcher.dispatch(new EventSqlError(sql, err));
+                    }
                     reject(err);
                 } else {
                     resolve(stmt);
@@ -66,6 +70,9 @@ export default class QueryExecutor {
             const stmt = this._server.prepare(sql, whereData);
             stmt.all(whereData, (err, rows) => {
                 if (err) {
+                    if (this._dispatcher) {
+                        this._dispatcher.dispatch(new EventSqlError(sql, err));
+                    }
                     reject(err);
                 } else {
                     resolve(rows);

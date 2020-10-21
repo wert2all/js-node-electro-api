@@ -14,7 +14,7 @@ export default class MLModelLoggingDefinition extends DefinitionTableInterface {
         this._primaryColumn = new DefinitionColumn(
             MLModelLoggingDefinition.COLUMN_ID,
             DefinitionColumn.COLUMN_TYPE_INTEGER,
-            null,
+            64,
             false,
             false,
             true
@@ -29,7 +29,7 @@ export default class MLModelLoggingDefinition extends DefinitionTableInterface {
             new DefinitionColumn(
                 MLModelLoggingDefinition.COLUMN_ML_ALIAS,
                 DefinitionColumn.COLUMN_TYPE_VARCHAR,
-                null,
+                20,
                 false,
                 false,
                 false
@@ -37,7 +37,7 @@ export default class MLModelLoggingDefinition extends DefinitionTableInterface {
             new DefinitionColumn(
                 MLModelLoggingDefinition.COLUMN_ENTITY_ID,
                 DefinitionColumn.COLUMN_TYPE_INTEGER,
-                null,
+                64,
                 false,
                 false,
                 false
@@ -45,7 +45,7 @@ export default class MLModelLoggingDefinition extends DefinitionTableInterface {
             new DefinitionColumn(
                 MLModelLoggingDefinition.COLUMN_STATUS,
                 DefinitionColumn.COLUMN_TYPE_VARCHAR,
-                null,
+                10,
                 false,
                 false,
                 false
@@ -53,7 +53,7 @@ export default class MLModelLoggingDefinition extends DefinitionTableInterface {
             new DefinitionColumn(
                 MLModelLoggingDefinition.COLUMN_LOG_MESSAGE,
                 DefinitionColumn.COLUMN_TYPE_VARCHAR,
-                null,
+                255,
                 true,
                 "",
                 false

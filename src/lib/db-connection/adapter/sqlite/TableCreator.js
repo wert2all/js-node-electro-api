@@ -1,14 +1,18 @@
 import SQLiteTableSQLBuilder from "./builder/SQLiteTableSQLBuilder";
+import TableCreatorInterface from "../../tables/TableCreatorInterface";
 
 /**
  * @class TableCreator
+ * @extends TableCreatorInterface
+ * @type TableCreatorInterface
  */
-export default class TableCreator {
+export default class TableCreator extends TableCreatorInterface {
     /**
      *
      * @param {QueryExecutor} queryExecutor
      */
     constructor(queryExecutor) {
+        super();
         /**
          *
          * @type {QueryExecutor}

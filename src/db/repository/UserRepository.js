@@ -29,6 +29,7 @@ export default class UserRepository extends RepositoryAbstract {
      * @param {EntityInterface} user
      * @param {DefinitionOrder|null} order
      * @param {DefinitionLimit|null} limit
+     * @param {null| Object<string, string>} fields
      * @return {Promise<EntityInterface[]>}
      */
     async fetchData(user, order = null, limit = null, fields = null) {

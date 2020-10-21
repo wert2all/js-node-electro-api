@@ -9,11 +9,10 @@ import MysqlConnectionFactory from "./factories/MysqlConnectionFactory";
 import TablesFactoryInterface from "../lib/db-connection/tables/TablesFactoryInterface";
 import DispatchInterface from "../lib/dispatcher/DispatchInterface";
 import MysqlReadConnection from "../lib/db-connection/adapter/mysql/MysqlReadConnection";
-import UserRepository from "../db/repository/UserRepository";
-import UserEntity from "../data/entity/UserEntity";
-import DefinitionOrder from "../lib/db-definition/DefinitionOrder";
+import EntityManager from "../lib/db-entity-manager/EntityManager";
 import UserDefinition from "../db/definition/UserDefinition";
-import DefinitionLimit from "../lib/db-definition/DefinitionLimit";
+import UserEntity from "../data/entity/UserEntity";
+import MysqlWriteConnection from "../lib/db-connection/adapter/mysql/MysqlWriteConnection";
 
 export default class Runner {
     /**
@@ -32,25 +31,22 @@ export default class Runner {
 
         MysqlConnectionFactory.create(di)
             .then((mysqlConnections) => {
+                const writeConnection = new MysqlWriteConnection();
                 const readConnection = new MysqlReadConnection();
-                readConnection.setServer(mysqlConnections.write);
+                readConnection.setServer(mysqlConnections.read);
+                writeConnection.setServer(mysqlConnections.write);
                 readConnection.setDispatcher(di.get(DispatchInterface));
-                const repository = new UserRepository();
-                repository.setConnection(readConnection);
-
+                writeConnection.setDispatcher(di.get(DispatchInterface));
+                const em = new EntityManager(readConnection, writeConnection);
                 const userEntity = new UserEntity();
+                userEntity.setValue(UserDefinition.COLUMN_GOOGLE_ID, "COLUMN_GOOGLE_ID");
+                userEntity.setValue(UserDefinition.COLUMN_GOOGLE_NAME, "COLUMN_GOOGLE_NAME");
+                userEntity.setValue(UserDefinition.COLUMN_GOOGLE_EMAIL, "COLUMN_GOOGLE_EMAIL");
+                userEntity.setValue(UserDefinition.COLUMN_IS_ADMIN, "n");
+                userEntity.setValue(UserDefinition.COLUMN_PHOTO_PATH, "COLUMN_PHOTO_PATH");
 
-                repository
-                    .fetchData(
-                        userEntity,
-                        new DefinitionOrder(UserDefinition.COLUMN_GOOGLE_ID, DefinitionOrder.TYPE_ASC),
-                        new DefinitionLimit(0, 2),
-                        { id: UserDefinition.COLUMN_GOOGLE_ID }
-                    )
-                    .then((data) => {
-                        data.forEach((user) => console.log(user.getData()));
-                        return null;
-                    })
+                em.save(new UserDefinition(), userEntity)
+                    .then((data) => console.log(data))
                     .catch((error) => console.log(error));
                 return null;
             })

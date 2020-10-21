@@ -130,9 +130,9 @@ export default class DIFactory {
                 const observers = {};
                 observers[EventFileUpload.EVENT_NAME] = [new FileUploadedObserver(di.get(TelegramApi))];
                 observers[EventSqlExec.EVENT_NAME] = [new ExecSqlObserver(di.get(LoggerInterface))];
-                observers[EventSqlError.EVENT_NAME] = [
-                    new ExecSqlErrorObserver(di.get(TelegramApi), di.get(LoggerInterface)),
-                ];
+                // observers[EventSqlError.EVENT_NAME] = [
+                //     new ExecSqlErrorObserver(di.get(TelegramApi), di.get(LoggerInterface)),
+                // ];
                 return new Dispatcher(observers);
             })()
         );

@@ -39,6 +39,16 @@ import WriteConnectionInterface from "../../lib/db-connection/WriteConnectionInt
 import SQLiteWriteConnection from "../../lib/db-connection/adapter/sqlite/SQLiteWriteConnection";
 import EventSqlExec from "../../lib/db-connection/dispatcher/EventSqlExec";
 import ExecSqlObserver from "../../lib/db-connection/dispatcher/ExecSqlObserver";
+import TablesFactoryInterface from "../../lib/db-connection/tables/TablesFactoryInterface";
+import TablesFactory from "../../lib/db-connection/tables/TablesFactory";
+import UserDefinition from "../../db/definition/UserDefinition";
+import UserProfileDefinition from "../../db/definition/UserProfileDefinition";
+import UserFilesDefinition from "../../db/definition/UserFilesDefinition";
+import ExtendedValuesDefinition from "../../db/definition/ExtendedValuesDefinition";
+import MLModelLoggingDefinition from "../../db/definition/ml/MLModelLoggingDefinition";
+import MLModelTrainingDefinition from "../../db/definition/ml/MLModelTrainingDefinition";
+import TableCreator from "../../lib/db-connection/adapter/sqlite/TableCreator";
+import QueryExecutor from "../../lib/db-connection/adapter/sqlite/QueryExecutor";
 
 export default class DIFactory {
     /**
@@ -91,7 +101,20 @@ export default class DIFactory {
                 di.get(KeyValueStorageInterface)
             )
         );
-
+        di.register(
+            TablesFactoryInterface,
+            new TablesFactory(
+                [
+                    new UserDefinition(),
+                    new UserProfileDefinition(),
+                    new UserFilesDefinition(),
+                    new ExtendedValuesDefinition(),
+                    new MLModelLoggingDefinition(),
+                    new MLModelTrainingDefinition(),
+                ],
+                new TableCreator(new QueryExecutor())
+            )
+        );
         di.register(
             DispatchInterface,
             (() => {

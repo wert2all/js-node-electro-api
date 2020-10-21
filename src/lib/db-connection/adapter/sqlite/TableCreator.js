@@ -37,4 +37,12 @@ export default class TableCreator extends TableCreatorInterface {
         const tableSQl = this._builderCreateTable.buildSQL(definition, null);
         return this._queryExecutor.exec(tableSQl, {});
     }
+
+    /**
+     *
+     * @param serverConnection
+     */
+    setServer(serverConnection) {
+        this._queryExecutor.setServer(serverConnection);
+    }
 }

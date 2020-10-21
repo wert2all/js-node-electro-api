@@ -15,4 +15,12 @@ export default class TableCreatorInterface {
     async createTable(definition) {
         throw new ImplementationError(this, "createTable");
     }
+
+    /**
+     * @abstract
+     * @param {*} serverConnection
+     */
+    setServer(serverConnection) {
+        throw new ImplementationError(this, "setServer");
+    }
 }

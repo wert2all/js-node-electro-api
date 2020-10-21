@@ -44,7 +44,10 @@ export default class QueryExecutor {
             this._server
                 .prepare(sql, whereData)
                 .then((stmt) => stmt.execute(whereData))
-                .catch(reject);
+                .then((returnValues) => resolve(returnValues))
+                .catch((err) => {
+                    reject(new Error("SQL Error [ " + sql + "]: " + err.message));
+                });
         });
     }
 

@@ -2,20 +2,20 @@ import MysqlTableSQLBuilder from "./builder/MysqlTableSQLBuilder";
 import TableCreatorInterface from "../../tables/TableCreatorInterface";
 
 /**
- * @class TableCreator
+ * @class MysqlTableCreator
  * @extends TableCreatorInterface
  * @type TableCreatorInterface
  */
-export default class TableCreator extends TableCreatorInterface {
+export default class MysqlTableCreator extends TableCreatorInterface {
     /**
      *
-     * @param {QueryExecutor} queryExecutor
+     * @param {MysqlQueryExecutor} queryExecutor
      */
     constructor(queryExecutor) {
         super();
         /**
          *
-         * @type {QueryExecutor}
+         * @type {MysqlQueryExecutor}
          * @private
          */
         this._queryExecutor = queryExecutor;

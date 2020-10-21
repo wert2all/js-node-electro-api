@@ -1,5 +1,5 @@
 import WriteConnectionInterface from "../../WriteConnectionInterface";
-import QueryExecutor from "./QueryExecutor";
+import MysqlQueryExecutor from "./MysqlQueryExecutor";
 import MysqlQueryDataProvider from "./MysqlQueryDataProvider";
 import MysqlInsertSQLBuilder from "./builder/MysqlInsertSQLBuilder";
 import MysqlUpdateSQLBuilder from "./builder/MysqlUpdateSQLBuilder";
@@ -15,10 +15,10 @@ export default class MysqlWriteConnection extends WriteConnectionInterface {
         super();
         /**
          *
-         * @type {QueryExecutor}
+         * @type {MysqlQueryExecutor}
          * @private
          */
-        this._queryExecutor = new QueryExecutor();
+        this._queryExecutor = new MysqlQueryExecutor();
         /**
          *
          * @type {MysqlQueryDataProvider}

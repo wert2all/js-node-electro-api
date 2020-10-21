@@ -20,7 +20,7 @@ export default class ExtendedValuesDefinition extends DefinitionTableInterface {
         this._primaryColumn = new DefinitionColumn(
             ExtendedValuesDefinition.COLUMN_ID,
             DefinitionColumn.COLUMN_TYPE_INTEGER,
-            64,
+            11,
             false,
             false,
             true

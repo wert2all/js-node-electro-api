@@ -2,20 +2,20 @@ import SQLiteTableSQLBuilder from "./builder/SQLiteTableSQLBuilder";
 import TableCreatorInterface from "../../tables/TableCreatorInterface";
 
 /**
- * @class TableCreator
+ * @class SQLiteTableCreator
  * @extends TableCreatorInterface
  * @type TableCreatorInterface
  */
-export default class TableCreator extends TableCreatorInterface {
+export default class SQLiteTableCreator extends TableCreatorInterface {
     /**
      *
-     * @param {QueryExecutor} queryExecutor
+     * @param {SQLiteQueryExecutor} queryExecutor
      */
     constructor(queryExecutor) {
         super();
         /**
          *
-         * @type {QueryExecutor}
+         * @type {SQLiteQueryExecutor}
          * @private
          */
         this._queryExecutor = queryExecutor;

@@ -25,7 +25,7 @@ export default class UserFilesDefinition extends DefinitionTableInterface {
         this._primaryColumn = new DefinitionColumn(
             UserFilesDefinition.COLUMN_ID,
             DefinitionColumn.COLUMN_TYPE_INTEGER,
-            64,
+            11,
             false,
             false,
             true
@@ -35,7 +35,7 @@ export default class UserFilesDefinition extends DefinitionTableInterface {
             new DefinitionColumn(
                 UserFilesDefinition.COLUMN_GOOGLE_USER_ID,
                 DefinitionColumn.COLUMN_TYPE_VARCHAR,
-                20,
+                30,
                 false,
                 false,
                 false
@@ -57,7 +57,7 @@ export default class UserFilesDefinition extends DefinitionTableInterface {
             new DefinitionColumn(
                 UserFilesDefinition.COLUMN_PATH,
                 DefinitionColumn.COLUMN_TYPE_VARCHAR,
-                50,
+                255,
                 false,
                 false
             ),

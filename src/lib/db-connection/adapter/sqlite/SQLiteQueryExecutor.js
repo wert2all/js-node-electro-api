@@ -2,9 +2,9 @@ import EventSqlExec from "../../dispatcher/event/EventSqlExec";
 import EventSqlError from "../../dispatcher/event/EventSqlError";
 
 /**
- * @class QueryExecutor
+ * @class SQLiteQueryExecutor
  */
-export default class QueryExecutor {
+export default class SQLiteQueryExecutor {
     constructor() {
         this._server = null;
         /**

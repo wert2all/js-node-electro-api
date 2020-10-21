@@ -1,5 +1,5 @@
 import ReadConnectionInterface from "../../ReadConnectionInterface";
-import QueryExecutor from "../mysql/QueryExecutor";
+import MysqlQueryExecutor from "./MysqlQueryExecutor";
 import MysqlQueryDataProvider from "./MysqlQueryDataProvider";
 import MysqlSelectSQLBuilder from "./builder/MysqlSelectSQLBuilder";
 
@@ -13,10 +13,10 @@ export default class MysqlReadConnection extends ReadConnectionInterface {
         super();
         /**
          *
-         * @type {QueryExecutor}
+         * @type {MysqlQueryExecutor}
          * @private
          */
-        this._queryExecutor = new QueryExecutor();
+        this._queryExecutor = new MysqlQueryExecutor();
         /**
          *
          * @type {MysqlQueryDataProvider}

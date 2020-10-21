@@ -181,7 +181,11 @@ export default class ResizeProcessor extends ProcessorInterface {
                         reject(err);
                     }
                     imageData["imagePath"] = imageData.rotatedImagePath;
-                    imageData["originalSize"] = new ResizeConfig("originalSize", info.width, info.height);
+                    if (info.hasOwnProperty("width") && info.hasOwnProperty("height")) {
+                        imageData["originalSize"] = new ResizeConfig("originalSize", info.width, info.height);
+                    } else {
+                        console.log(info);
+                    }
                     process.stdout.write(" done\n");
                     resolve(imageData);
                 });

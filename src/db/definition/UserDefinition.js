@@ -24,7 +24,7 @@ export default class UserDefinition extends DefinitionTableInterface {
         this._primaryColumn = new DefinitionColumn(
             UserDefinition.COLUMN_GOOGLE_ID,
             DefinitionColumn.COLUMN_TYPE_VARCHAR,
-            20,
+            30,
             false,
             false,
             true

@@ -14,7 +14,7 @@ export default class MLModelLoggingDefinition extends DefinitionTableInterface {
         this._primaryColumn = new DefinitionColumn(
             MLModelLoggingDefinition.COLUMN_ID,
             DefinitionColumn.COLUMN_TYPE_INTEGER,
-            64,
+            11,
             false,
             false,
             true

@@ -2,9 +2,9 @@ import EventSqlExec from "../../dispatcher/event/EventSqlExec";
 import EventSqlError from "../../dispatcher/event/EventSqlError";
 
 /**
- * @class QueryExecutor
+ * @class MysqlQueryExecutor
  */
-export default class QueryExecutor {
+export default class MysqlQueryExecutor {
     constructor() {
         this._server = null;
         /**
@@ -34,7 +34,7 @@ export default class QueryExecutor {
     /**
      *
      * @param {string} sql
-     * @param {Object<string,string>} whereData
+     * @param {[]} whereData
      * @return {Promise<*>}
      */
     async exec(sql, whereData) {

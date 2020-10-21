@@ -1,8 +1,8 @@
 import ReadConnectionInterface from "../../ReadConnectionInterface";
 import SQLiteSelectSQLBuilder from "./builder/SQLiteSelectSQLBuilder";
 import QueryDataProvider from "./QueryDataProvider";
-import QueryExecutor from "./QueryExecutor";
-import TableCreator from "./TableCreator";
+import SQLiteQueryExecutor from "./SQLiteQueryExecutor";
+import SQLiteTableCreator from "./SQLiteTableCreator";
 
 /**
  * @class SQLiteReadConnection
@@ -27,10 +27,10 @@ export default class SQLiteReadConnection extends ReadConnectionInterface {
         this._queryDataProvider = new QueryDataProvider();
         /**
          *
-         * @type {QueryExecutor}
+         * @type {SQLiteQueryExecutor}
          * @private
          */
-        this._queryExecutor = new QueryExecutor();
+        this._queryExecutor = new SQLiteQueryExecutor();
     }
 
     /**

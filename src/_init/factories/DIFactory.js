@@ -47,8 +47,8 @@ import UserFilesDefinition from "../../db/definition/UserFilesDefinition";
 import ExtendedValuesDefinition from "../../db/definition/ExtendedValuesDefinition";
 import MLModelLoggingDefinition from "../../db/definition/ml/MLModelLoggingDefinition";
 import MLModelTrainingDefinition from "../../db/definition/ml/MLModelTrainingDefinition";
-import TableCreator from "../../lib/db-connection/adapter/sqlite/TableCreator";
-import QueryExecutor from "../../lib/db-connection/adapter/sqlite/QueryExecutor";
+import SQLiteTableCreator from "../../lib/db-connection/adapter/sqlite/SQLiteTableCreator";
+import SQLiteQueryExecutor from "../../lib/db-connection/adapter/sqlite/SQLiteQueryExecutor";
 import EventSqlError from "../../lib/db-connection/dispatcher/event/EventSqlError";
 import ExecSqlErrorObserver from "../../lib/db-connection/dispatcher/ExecSqlErrorObserver";
 
@@ -114,7 +114,7 @@ export default class DIFactory {
                     new MLModelLoggingDefinition(),
                     new MLModelTrainingDefinition(),
                 ],
-                new TableCreator(new QueryExecutor())
+                new SQLiteTableCreator(new SQLiteQueryExecutor())
             )
         );
         di.register(

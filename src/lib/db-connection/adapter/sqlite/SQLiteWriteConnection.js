@@ -3,8 +3,8 @@ import SQLiteInsertSQLBuilder from "./builder/SQLiteInsertSQLBuilder";
 import SQLiteUpdateSQLBuilder from "./builder/SQLiteUpdateSQLBuilder";
 import SQLiteDeleteSQLBuilder from "./builder/SQLiteDeleteSQLBuilder";
 import QueryDataProvider from "./QueryDataProvider";
-import QueryExecutor from "./QueryExecutor";
-import TableCreator from "./TableCreator";
+import SQLiteQueryExecutor from "./SQLiteQueryExecutor";
+import SQLiteTableCreator from "./SQLiteTableCreator";
 
 /**
  * @class SQLiteWriteConnection
@@ -45,10 +45,10 @@ export default class SQLiteWriteConnection extends WriteConnectionInterface {
         this._queryDataProvider = new QueryDataProvider();
         /**
          *
-         * @type {QueryExecutor}
+         * @type {SQLiteQueryExecutor}
          * @private
          */
-        this._queryExecutor = new QueryExecutor();
+        this._queryExecutor = new SQLiteQueryExecutor();
     }
 
     /**

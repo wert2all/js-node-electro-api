@@ -25,7 +25,7 @@ export default class UserProfileDefinition extends DefinitionTableInterface {
         this._primaryColumn = new DefinitionColumn(
             UserProfileDefinition.COLUMN_ID,
             DefinitionColumn.COLUMN_TYPE_INTEGER,
-            64,
+            11,
             false,
             false,
             true
@@ -36,7 +36,7 @@ export default class UserProfileDefinition extends DefinitionTableInterface {
             new DefinitionColumn(
                 UserProfileDefinition.COLUMN_GOOGLE_USER_ID,
                 DefinitionColumn.COLUMN_TYPE_VARCHAR,
-                20,
+                30,
                 false,
                 false,
                 false

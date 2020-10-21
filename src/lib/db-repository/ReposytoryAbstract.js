@@ -8,16 +8,9 @@ import RepositoryErrorNoConnection from "./error/RepositoryErrorNoConnection";
 export default class RepositoryAbstract {
     /**
      *
-     * @param {ConnectionInterface} connection
      * @param  {ReadConnectionInterface} readConnection
      */
-    constructor(connection = null, readConnection = null) {
-        /**
-         *
-         * @type {ConnectionInterface|null}
-         * @private
-         */
-        this._connection = connection;
+    constructor(readConnection = null) {
         /**
          *
          * @type {ReadConnectionInterface|null}

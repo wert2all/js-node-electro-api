@@ -45,7 +45,9 @@ export default class QueryExecutor {
             this._server
                 .prepare(sql, whereData)
                 .then((stmt) => stmt.execute(whereData))
-                .then((returnValues) => resolve(returnValues))
+                .then((returnValues) => {
+                    resolve(returnValues[0]);
+                })
                 .catch((err) => {
                     if (this._dispatcher) {
                         this._dispatcher.dispatch(new EventSqlError(sql, err));
@@ -62,18 +64,6 @@ export default class QueryExecutor {
      * @return {Promise<Array>}
      */
     async fetch(sql, whereData) {
-        return new Promise((resolve, reject) => {
-            if (this._dispatcher) {
-                this._dispatcher.dispatch(new EventSqlExec(sql));
-            }
-            const stmt = this._server.prepare(sql, whereData);
-            stmt.all(whereData, (err, rows) => {
-                if (err) {
-                    reject(err);
-                } else {
-                    resolve(rows);
-                }
-            });
-        });
+        return this.exec(sql, whereData);
     }
 }

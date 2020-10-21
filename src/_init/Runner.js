@@ -6,17 +6,14 @@ import ServerConfigFactory from "./factories/ServerConfigFactory";
 import ReadConnectionInterface from "../lib/db-connection/ReadConnectionInterface";
 import WriteConnectionInterface from "../lib/db-connection/WriteConnectionInterface";
 import MysqlConnectionFactory from "./factories/MysqlConnectionFactory";
-import QueryExecutor from "../lib/db-connection/adapter/mysql/QueryExecutor";
-import TableCreator from "../lib/db-connection/adapter/mysql/TableCreator";
-import TablesFactory from "../lib/db-connection/tables/TablesFactory";
-import UserDefinition from "../db/definition/UserDefinition";
-import UserProfileDefinition from "../db/definition/UserProfileDefinition";
-import ExtendedValuesDefinition from "../db/definition/ExtendedValuesDefinition";
-import MLModelLoggingDefinition from "../db/definition/ml/MLModelLoggingDefinition";
-import MLModelTrainingDefinition from "../db/definition/ml/MLModelTrainingDefinition";
-import UserFilesDefinition from "../db/definition/UserFilesDefinition";
 import TablesFactoryInterface from "../lib/db-connection/tables/TablesFactoryInterface";
 import DispatchInterface from "../lib/dispatcher/DispatchInterface";
+import MysqlReadConnection from "../lib/db-connection/adapter/mysql/MysqlReadConnection";
+import UserRepository from "../db/repository/UserRepository";
+import UserEntity from "../data/entity/UserEntity";
+import DefinitionOrder from "../lib/db-definition/DefinitionOrder";
+import UserDefinition from "../db/definition/UserDefinition";
+import DefinitionLimit from "../lib/db-definition/DefinitionLimit";
 
 export default class Runner {
     /**
@@ -35,21 +32,27 @@ export default class Runner {
 
         MysqlConnectionFactory.create(di)
             .then((mysqlConnections) => {
-                const queryExecutor = new QueryExecutor();
-                queryExecutor.setDispatcher(di.get(DispatchInterface));
-                const tableCreator = new TableCreator(queryExecutor);
-                tableCreator.setServer(mysqlConnections.write);
-                return new TablesFactory(
-                    [
-                        new UserDefinition(),
-                        new UserProfileDefinition(),
-                        new UserFilesDefinition(),
-                        new ExtendedValuesDefinition(),
-                        new MLModelLoggingDefinition(),
-                        new MLModelTrainingDefinition(),
-                    ],
-                    tableCreator
-                ).create();
+                const readConnection = new MysqlReadConnection();
+                readConnection.setServer(mysqlConnections.write);
+                readConnection.setDispatcher(di.get(DispatchInterface));
+                const repository = new UserRepository();
+                repository.setConnection(readConnection);
+
+                const userEntity = new UserEntity();
+
+                repository
+                    .fetchData(
+                        userEntity,
+                        new DefinitionOrder(UserDefinition.COLUMN_GOOGLE_ID, DefinitionOrder.TYPE_ASC),
+                        new DefinitionLimit(0, 2),
+                        { id: UserDefinition.COLUMN_GOOGLE_ID }
+                    )
+                    .then((data) => {
+                        data.forEach((user) => console.log(user.getData()));
+                        return null;
+                    })
+                    .catch((error) => console.log(error));
+                return null;
             })
             .then(() => SQLiteConnectionFactory.create(di))
             .then((connection) => {

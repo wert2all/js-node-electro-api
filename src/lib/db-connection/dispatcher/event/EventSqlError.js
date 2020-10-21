@@ -30,7 +30,7 @@ export default class EventSqlError extends EventInterface {
     }
 
     getEventData() {
-        return "Error [" + this._sql + "]: " + this._error.message;
+        return "Error:\n\n" + this._error.message + "\nSQL: \n\n" + this._sql;
     }
 
     /**

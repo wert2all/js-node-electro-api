@@ -16,6 +16,7 @@ import MLModelLoggingDefinition from "../db/definition/ml/MLModelLoggingDefiniti
 import MLModelTrainingDefinition from "../db/definition/ml/MLModelTrainingDefinition";
 import UserFilesDefinition from "../db/definition/UserFilesDefinition";
 import TablesFactoryInterface from "../lib/db-connection/tables/TablesFactoryInterface";
+import DispatchInterface from "../lib/dispatcher/DispatchInterface";
 
 export default class Runner {
     /**
@@ -35,6 +36,7 @@ export default class Runner {
         MysqlConnectionFactory.create(di)
             .then((mysqlConnections) => {
                 const queryExecutor = new QueryExecutor();
+                queryExecutor.setDispatcher(di.get(DispatchInterface));
                 const tableCreator = new TableCreator(queryExecutor);
                 tableCreator.setServer(mysqlConnections.write);
                 return new TablesFactory(
@@ -58,7 +60,6 @@ export default class Runner {
             .then((connection) => di.get(TablesFactoryInterface).setServer(connection).create())
             .then(() => this._onConnect(di))
             .catch((err) => {
-                console.log(err);
                 di.get(LoggerInterface).error(new AppLogEvent(err.message));
             });
     }

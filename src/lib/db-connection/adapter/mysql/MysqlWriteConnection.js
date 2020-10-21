@@ -3,6 +3,7 @@ import QueryExecutor from "./QueryExecutor";
 import MysqlQueryDataProvider from "./MysqlQueryDataProvider";
 import MysqlInsertSQLBuilder from "./builder/MysqlInsertSQLBuilder";
 import MysqlUpdateSQLBuilder from "./builder/MysqlUpdateSQLBuilder";
+import MysqlDeleteSQLBuilder from "./builder/MysqlDeleteSQLBuilder";
 
 /**
  * @class MysqlWriteConnection
@@ -26,16 +27,22 @@ export default class MysqlWriteConnection extends WriteConnectionInterface {
         this._queryDataProvider = new MysqlQueryDataProvider();
         /**
          *
-         * @type {MysqlInsertSQLBuilder}
+         * @type {DefinitionSQLBuilderInterface}
          * @private
          */
         this._builderInsert = new MysqlInsertSQLBuilder();
         /**
          *
-         * @type {MysqlUpdateSQLBuilder}
+         * @type {DefinitionSQLBuilderInterface}
          * @private
          */
         this._builderUpdate = new MysqlUpdateSQLBuilder();
+        /**
+         *
+         * @type {DefinitionSQLBuilderInterface}
+         * @private
+         */
+        this._builderDelete = new MysqlDeleteSQLBuilder();
     }
 
     /**
@@ -78,5 +85,19 @@ export default class MysqlWriteConnection extends WriteConnectionInterface {
         const prepareValues = this._queryDataProvider.buildQueryData(definition, data);
         delete prepareValues[definition.getPrimaryColumn().getColumnName()];
         return this._queryExecutor.exec(sql, prepareValues);
+    }
+
+    /**
+     *
+     * @param {DefinitionTableInterface} definition
+     * @param {string} primaryValue
+     * @return {Promise<void>}
+     */
+    async delete(definition, primaryValue) {
+        const whereData = {};
+        whereData[definition.getPrimaryColumn().getColumnName()] = primaryValue;
+        const sql = this._builderDelete.buildSQL(definition, whereData);
+        const prepareValues = this._queryDataProvider.buildQueryData(definition, whereData);
+        return this._queryExecutor.exec(sql, prepareValues).then(() => null);
     }
 }

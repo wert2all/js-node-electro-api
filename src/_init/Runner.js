@@ -47,6 +47,12 @@ export default class Runner {
 
                 em.save(new UserDefinition(), userEntity)
                     .then((data) => console.log(data))
+                    .then(() =>
+                        em.delete(new UserDefinition(), "COLUMN_GOOGLE_ID2").then((d) => {
+                            console.log("delete");
+                            console.log(d);
+                        })
+                    )
                     .catch((error) => console.log(error));
                 return null;
             })

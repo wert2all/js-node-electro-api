@@ -84,7 +84,6 @@ export default class EntityManager {
      * @param {DefinitionTableInterface} definition
      * @param {string} primaryValue
      * @return Promise<void>}
-     * @private
      */
     async delete(definition, primaryValue) {
         return this._writeConnection.delete(definition, primaryValue);

@@ -1,5 +1,6 @@
 import DefinitionTableInterface from "../../lib/db-definition/DefinitionTableInterface";
 import DefinitionColumn from "../../lib/db-definition/DefinitionColumn";
+import DefinitionIndex from "../../lib/db-definition/DefinitionIndex";
 
 /**
  * @class UserProfileDefinition
@@ -99,5 +100,21 @@ export default class UserProfileDefinition extends DefinitionTableInterface {
         return this.getColumns()
             .map((definition) => definition.getColumnName())
             .includes(key);
+    }
+
+    /**
+     * @return {DefinitionIndexInterface[]}
+     */
+    getIndexes() {
+        return [
+            new DefinitionIndex(
+                [
+                    UserProfileDefinition.COLUMN_GOOGLE_USER_ID,
+                    UserProfileDefinition.COLUMN_VALUE_TYPE,
+                    UserProfileDefinition.COLUMN_VALUE_NAME,
+                ],
+                true
+            ),
+        ];
     }
 }

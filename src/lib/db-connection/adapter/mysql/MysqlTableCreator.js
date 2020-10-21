@@ -1,5 +1,6 @@
 import MysqlTableSQLBuilder from "./builder/MysqlTableSQLBuilder";
 import TableCreatorInterface from "../../tables/TableCreatorInterface";
+import MysqlIndexSQLBuilder from "./builder/MysqlIndexSQLBuilder";
 
 /**
  * @class MysqlTableCreator
@@ -21,10 +22,16 @@ export default class MysqlTableCreator extends TableCreatorInterface {
         this._queryExecutor = queryExecutor;
         /**
          *
-         * @type {MysqlTableSQLBuilder}
+         * @type {DefinitionSQLBuilderInterface}
          * @private
          */
         this._builderCreateTable = new MysqlTableSQLBuilder();
+        /**
+         *
+         * @type {DefinitionSQLBuilderInterface}
+         * @private
+         */
+        this._builderIndex = new MysqlIndexSQLBuilder();
     }
 
     /**
@@ -35,7 +42,16 @@ export default class MysqlTableCreator extends TableCreatorInterface {
      */
     async createTable(definition) {
         const tableSQl = this._builderCreateTable.buildSQL(definition, null);
-        return this._queryExecutor.exec(tableSQl, []);
+        const indexes = definition
+            .getIndexes()
+            .map((index) => this._builderIndex.buildSQL(definition, index.toHash()))
+            .filter((sql) => sql !== "");
+        return this._queryExecutor.exec(tableSQl, []).then(() => {
+            if (indexes.length > 0) {
+                return Promise.all(indexes.map((indexSql) => this._queryExecutor.exec(indexSql, []))).then(() => null);
+            }
+            return null;
+        });
     }
 
     /**

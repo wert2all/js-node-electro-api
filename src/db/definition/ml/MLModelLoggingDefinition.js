@@ -94,4 +94,11 @@ export default class MLModelLoggingDefinition extends DefinitionTableInterface {
     getColumns() {
         return this._columns;
     }
+
+    /**
+     * @return {DefinitionIndexInterface[]}
+     */
+    getIndexes() {
+        return [];
+    }
 }

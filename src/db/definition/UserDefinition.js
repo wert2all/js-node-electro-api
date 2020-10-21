@@ -103,4 +103,11 @@ export default class UserDefinition extends DefinitionTableInterface {
             .map((definition) => definition.getColumnName())
             .includes(key);
     }
+
+    /**
+     * @return {DefinitionIndexInterface[]}
+     */
+    getIndexes() {
+        return [];
+    }
 }

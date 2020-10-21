@@ -37,7 +37,7 @@ import ReadConnectionInterface from "../../lib/db-connection/ReadConnectionInter
 import SQLiteReadConnection from "../../lib/db-connection/adapter/sqlite/SQLiteReadConnection";
 import WriteConnectionInterface from "../../lib/db-connection/WriteConnectionInterface";
 import SQLiteWriteConnection from "../../lib/db-connection/adapter/sqlite/SQLiteWriteConnection";
-import EventSqlExec from "../../lib/db-connection/dispatcher/EventSqlExec";
+import EventSqlExec from "../../lib/db-connection/dispatcher/event/EventSqlExec";
 import ExecSqlObserver from "../../lib/db-connection/dispatcher/ExecSqlObserver";
 import TablesFactoryInterface from "../../lib/db-connection/tables/TablesFactoryInterface";
 import TablesFactory from "../../lib/db-connection/tables/TablesFactory";
@@ -49,6 +49,8 @@ import MLModelLoggingDefinition from "../../db/definition/ml/MLModelLoggingDefin
 import MLModelTrainingDefinition from "../../db/definition/ml/MLModelTrainingDefinition";
 import TableCreator from "../../lib/db-connection/adapter/sqlite/TableCreator";
 import QueryExecutor from "../../lib/db-connection/adapter/sqlite/QueryExecutor";
+import EventSqlError from "../../lib/db-connection/dispatcher/event/EventSqlError";
+import ExecSqlErrorObserver from "../../lib/db-connection/dispatcher/ExecSqlErrorObserver";
 
 export default class DIFactory {
     /**
@@ -116,18 +118,21 @@ export default class DIFactory {
             )
         );
         di.register(
+            TelegramApi,
+            new TelegramApi(
+                di.get(StorageConfiguration).getSecretStorage().fetch("telegram.bot.token"),
+                di.get(StorageConfiguration).getSecretStorage().fetch("telegram.bot.chat")
+            )
+        );
+        di.register(
             DispatchInterface,
             (() => {
                 const observers = {};
-                observers[EventFileUpload.EVENT_NAME] = [
-                    new FileUploadedObserver(
-                        new TelegramApi(
-                            di.get(StorageConfiguration).getSecretStorage().fetch("telegram.bot.token"),
-                            di.get(StorageConfiguration).getSecretStorage().fetch("telegram.bot.chat")
-                        )
-                    ),
-                ];
+                observers[EventFileUpload.EVENT_NAME] = [new FileUploadedObserver(di.get(TelegramApi))];
                 observers[EventSqlExec.EVENT_NAME] = [new ExecSqlObserver(di.get(LoggerInterface))];
+                observers[EventSqlError.EVENT_NAME] = [
+                    new ExecSqlErrorObserver(di.get(TelegramApi), di.get(LoggerInterface)),
+                ];
                 return new Dispatcher(observers);
             })()
         );

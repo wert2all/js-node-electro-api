@@ -1,4 +1,5 @@
-import EventSqlExec from "../../dispatcher/EventSqlExec";
+import EventSqlExec from "../../dispatcher/event/EventSqlExec";
+import EventSqlError from "../../dispatcher/event/EventSqlError";
 
 /**
  * @class QueryExecutor
@@ -46,6 +47,9 @@ export default class QueryExecutor {
                 .then((stmt) => stmt.execute(whereData))
                 .then((returnValues) => resolve(returnValues))
                 .catch((err) => {
+                    if (this._dispatcher) {
+                        this._dispatcher.dispatch(new EventSqlError(sql, err));
+                    }
                     reject(new Error("SQL Error [ " + sql + "]: " + err.message));
                 });
         });

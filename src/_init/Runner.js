@@ -39,7 +39,7 @@ export default class Runner {
                 writeConnection.setDispatcher(di.get(DispatchInterface));
                 const em = new EntityManager(readConnection, writeConnection);
                 const userEntity = new UserEntity();
-                userEntity.setValue(UserDefinition.COLUMN_GOOGLE_ID, "COLUMN_GOOGLE_ID");
+                userEntity.setValue(UserDefinition.COLUMN_GOOGLE_ID, "COLUMN_GOOGLE_ID2");
                 userEntity.setValue(UserDefinition.COLUMN_GOOGLE_NAME, "COLUMN_GOOGLE_NAME");
                 userEntity.setValue(UserDefinition.COLUMN_GOOGLE_EMAIL, "COLUMN_GOOGLE_EMAIL");
                 userEntity.setValue(UserDefinition.COLUMN_IS_ADMIN, "n");

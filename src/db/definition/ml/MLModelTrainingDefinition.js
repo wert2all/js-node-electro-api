@@ -17,7 +17,7 @@ export default class MLModelTrainingDefinition extends DefinitionTableInterface 
         this._primaryColumn = new DefinitionColumn(
             MLModelTrainingDefinition.COLUMN_ID,
             DefinitionColumn.COLUMN_TYPE_INTEGER,
-            null,
+            64,
             false,
             false,
             true
@@ -32,7 +32,7 @@ export default class MLModelTrainingDefinition extends DefinitionTableInterface 
             new DefinitionColumn(
                 MLModelTrainingDefinition.COLUMN_ML_ALIAS,
                 DefinitionColumn.COLUMN_TYPE_VARCHAR,
-                null,
+                20,
                 false,
                 false,
                 false
@@ -40,7 +40,7 @@ export default class MLModelTrainingDefinition extends DefinitionTableInterface 
             new DefinitionColumn(
                 MLModelTrainingDefinition.COLUMN_ENTITY_ID,
                 DefinitionColumn.COLUMN_TYPE_INTEGER,
-                null,
+                64,
                 false,
                 false,
                 false

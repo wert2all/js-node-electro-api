@@ -1,14 +1,18 @@
 import MysqlTableSQLBuilder from "./builder/MysqlTableSQLBuilder";
+import TableCreatorInterface from "../../tables/TableCreatorInterface";
 
 /**
  * @class TableCreator
+ * @extends TableCreatorInterface
+ * @type TableCreatorInterface
  */
-export default class TableCreator {
+export default class TableCreator extends TableCreatorInterface {
     /**
      *
      * @param {QueryExecutor} queryExecutor
      */
     constructor(queryExecutor) {
+        super();
         /**
          *
          * @type {QueryExecutor}
@@ -31,7 +35,6 @@ export default class TableCreator {
      */
     async createTable(definition) {
         const tableSQl = this._builderCreateTable.buildSQL(definition, null);
-        console.log(tableSQl);
         return this._queryExecutor.exec(tableSQl, []);
     }
 }

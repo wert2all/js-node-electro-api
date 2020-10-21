@@ -103,4 +103,11 @@ export default class UserFilesDefinition extends DefinitionTableInterface {
             .map((definition) => definition.getColumnName())
             .includes(key);
     }
+
+    /**
+     * @return {DefinitionIndexInterface[]}
+     */
+    getIndexes() {
+        return [];
+    }
 }

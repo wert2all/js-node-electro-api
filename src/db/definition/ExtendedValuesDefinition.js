@@ -1,5 +1,6 @@
 import DefinitionTableInterface from "../../lib/db-definition/DefinitionTableInterface";
 import DefinitionColumn from "../../lib/db-definition/DefinitionColumn";
+import DefinitionIndex from "../../lib/db-definition/DefinitionIndex";
 
 /**
  * @class ExtendedValuesDefinition
@@ -100,5 +101,21 @@ export default class ExtendedValuesDefinition extends DefinitionTableInterface {
      */
     getColumns() {
         return this._columns;
+    }
+
+    /**
+     * @return {DefinitionIndexInterface[]}
+     */
+    getIndexes() {
+        return [
+            new DefinitionIndex(
+                [
+                    ExtendedValuesDefinition.COLUMN_ENTITY_ID,
+                    ExtendedValuesDefinition.COLUMN_ENTITY_TYPE,
+                    ExtendedValuesDefinition.COLUMN_VALUE_NAME,
+                ],
+                true
+            ),
+        ];
     }
 }

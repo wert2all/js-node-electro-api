@@ -39,4 +39,12 @@ export default class DefinitionTableInterface {
     isColumn(key) {
         throw new ImplementationError(this, "isColumn");
     }
+
+    /**
+     * @abstract
+     * @return {DefinitionIndexInterface[]}
+     */
+    getIndexes() {
+        throw new ImplementationError(this, "getIndexes");
+    }
 }

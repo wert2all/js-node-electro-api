@@ -81,4 +81,11 @@ export default class MLModelTrainingDefinition extends DefinitionTableInterface 
     getColumns() {
         return this._columns;
     }
+
+    /**
+     * @return {DefinitionIndexInterface[]}
+     */
+    getIndexes() {
+        return [];
+    }
 }

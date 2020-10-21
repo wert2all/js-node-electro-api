@@ -2,6 +2,7 @@ import WriteConnectionInterface from "../../WriteConnectionInterface";
 import QueryExecutor from "./QueryExecutor";
 import MysqlQueryDataProvider from "./MysqlQueryDataProvider";
 import MysqlInsertSQLBuilder from "./builder/MysqlInsertSQLBuilder";
+import MysqlUpdateSQLBuilder from "./builder/MysqlUpdateSQLBuilder";
 
 /**
  * @class MysqlWriteConnection
@@ -29,6 +30,12 @@ export default class MysqlWriteConnection extends WriteConnectionInterface {
          * @private
          */
         this._builderInsert = new MysqlInsertSQLBuilder();
+        /**
+         *
+         * @type {MysqlUpdateSQLBuilder}
+         * @private
+         */
+        this._builderUpdate = new MysqlUpdateSQLBuilder();
     }
 
     /**
@@ -58,6 +65,18 @@ export default class MysqlWriteConnection extends WriteConnectionInterface {
         const sql = this._builderInsert.buildSQL(definition, data);
         const prepareValues = this._queryDataProvider.buildQueryData(definition, data);
         const insertData = await this._queryExecutor.exec(sql, prepareValues);
-        return Promise.resolve(insertData.lastID);
+        return Promise.resolve(insertData.insertId);
+    }
+
+    /**
+     * @param {DefinitionTableInterface} definition
+     * @param {Object<string, string>} data
+     * @return {Promise<void>}
+     */
+    async update(definition, data) {
+        const sql = this._builderUpdate.buildSQL(definition, data);
+        const prepareValues = this._queryDataProvider.buildQueryData(definition, data);
+        delete prepareValues[definition.getPrimaryColumn().getColumnName()];
+        return this._queryExecutor.exec(sql, prepareValues);
     }
 }

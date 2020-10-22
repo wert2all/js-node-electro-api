@@ -1,5 +1,7 @@
 import DefinitionTableInterface from "../../lib/db-definition/DefinitionTableInterface";
-import DefinitionColumn from "../../lib/db-definition/DefinitionColumn";
+import DefinitionColumn from "../../lib/db-definition/implementation/DefinitionColumn";
+import DefinitionForeignKey from "../../lib/db-definition/implementation/DefinitionForeignKey";
+import UserDefinition from "./UserDefinition";
 
 /**
  * @class UserFilesDefinition
@@ -72,6 +74,31 @@ export default class UserFilesDefinition extends DefinitionTableInterface {
                 "false"
             ),
         ];
+        /**
+         *
+         * @type {DefinitionForeignKeyInterface[]}
+         * @private
+         */
+        this._foreignKeys = [
+            new DefinitionForeignKey(
+                [UserFilesDefinition.COLUMN_GOOGLE_USER_ID],
+                new UserDefinition(),
+                [UserDefinition.COLUMN_GOOGLE_ID],
+                [
+                    {
+                        action: "cascade",
+                        actionName: "delete",
+                    },
+                ]
+            ),
+        ];
+    }
+
+    /**
+     * @return {DefinitionForeignKeyInterface[]}
+     */
+    getForeignKeys() {
+        return this._foreignKeys;
     }
 
     /**

@@ -1,5 +1,5 @@
 import DefinitionTableInterface from "../../../lib/db-definition/DefinitionTableInterface";
-import DefinitionColumn from "../../../lib/db-definition/DefinitionColumn";
+import DefinitionColumn from "../../../lib/db-definition/implementation/DefinitionColumn";
 
 /**
  * @class MLModelTrainingDefinition
@@ -49,6 +49,13 @@ export default class MLModelTrainingDefinition extends DefinitionTableInterface 
                 false
             ),
         ];
+    }
+
+    /**
+     * @return {DefinitionForeignKeyInterface[]}
+     */
+    getForeignKeys() {
+        return [];
     }
 
     /**

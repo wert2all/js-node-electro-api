@@ -1,6 +1,6 @@
 // eslint-disable-next-line max-len
 import DefinitionSQLBuilderInterface from "../../../../db-definition/builder/DefinitionSQLBuilderInterface";
-import DefinitionColumn from "../../../../db-definition/DefinitionColumn";
+import DefinitionColumn from "../../../../db-definition/implementation/DefinitionColumn";
 
 /**
  * @class MysqlTableSQLBuilder
@@ -15,7 +15,15 @@ export default class MysqlTableSQLBuilder extends DefinitionSQLBuilderInterface 
      */
     // eslint-disable-next-line no-unused-vars
     buildSQL(definition, data) {
-        return "CREATE TABLE IF NOT EXISTS " + definition.getTableName() + "(" + this._columnsSQL(definition) + ")";
+        return (
+            "CREATE TABLE IF NOT EXISTS " +
+            definition.getTableName() +
+            "(" +
+            this._columnsSQL(definition) +
+            "" +
+            this._addForeignKeys(definition) +
+            ")"
+        );
     }
 
     /**
@@ -70,5 +78,46 @@ export default class MysqlTableSQLBuilder extends DefinitionSQLBuilderInterface 
             ret += " auto_increment ";
         }
         return ret;
+    }
+
+    /**
+     * @param {DefinitionTableInterface} definition
+     * @return {string}
+     * @private
+     */
+    _addForeignKeys(definition) {
+        let ret = "";
+        if (definition.getForeignKeys().length > 0) {
+            ret +=
+                ", " +
+                definition
+                    .getForeignKeys()
+                    .map((key) => {
+                        return (
+                            " FOREIGN KEY " +
+                            "(" +
+                            key.getFields().join(",") +
+                            " ) " +
+                            " REFERENCES  " +
+                            key.getTable().getTableName() +
+                            "( " +
+                            key.getMainFields().join(", ") +
+                            ") " +
+                            this._addOnActions(key).join(" ")
+                        );
+                    })
+                    .join(", ");
+        }
+        return ret;
+    }
+
+    /**
+     *
+     * @param {DefinitionForeignKeyInterface} key
+     * @return {string[]}
+     * @private
+     */
+    _addOnActions(key) {
+        return key.getActions().map((action) => "on " + action.actionName + " " + action.action);
     }
 }

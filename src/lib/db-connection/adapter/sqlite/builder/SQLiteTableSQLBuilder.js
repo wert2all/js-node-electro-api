@@ -1,6 +1,6 @@
 // eslint-disable-next-line max-len
 import DefinitionSQLBuilderInterface from "../../../../db-definition/builder/DefinitionSQLBuilderInterface";
-import DefinitionColumn from "../../../../db-definition/DefinitionColumn";
+import DefinitionColumn from "../../../../db-definition/implementation/DefinitionColumn";
 
 /**
  * @class SQLiteTableSQLBuilder

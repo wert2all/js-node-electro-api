@@ -8,7 +8,7 @@ import ErrorLogEventFactory from "./request/ErrorLogEventFactory";
 import ResponseResult from "../../routers/response/ResponseResult";
 import MLModelLoggingRepository from "../../db/repository/ml/MLModelLoggingRepository";
 import MLLoggingEntity from "../../data/entity/ml/MLLoggingEntity";
-import DefinitionOrder from "../../lib/db-definition/DefinitionOrder";
+import DefinitionOrder from "../../lib/db-definition/implementation/DefinitionOrder";
 import MLModelLoggingDefinition from "../../db/definition/ml/MLModelLoggingDefinition";
 import ReadConnectionInterface from "../../lib/db-connection/ReadConnectionInterface";
 

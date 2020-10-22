@@ -4,7 +4,7 @@
 import EntityManagerError from "./error/EntityManagerError";
 import Filter from "../db-filter/Filter";
 import EntityInterface from "../db-entity/EntityInterface";
-import DefinitionLimit from "../db-definition/DefinitionLimit";
+import DefinitionLimit from "../db-definition/implementation/DefinitionLimit";
 
 export default class EntityManager {
     /**

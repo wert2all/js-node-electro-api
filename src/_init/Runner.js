@@ -6,6 +6,10 @@ import ServerConfigFactory from "./factories/ServerConfigFactory";
 import ReadConnectionInterface from "../lib/db-connection/ReadConnectionInterface";
 import WriteConnectionInterface from "../lib/db-connection/WriteConnectionInterface";
 import TablesFactoryInterface from "../lib/db-connection/tables/TablesFactoryInterface";
+import MysqlConnectionFactory from "./factories/MysqlConnectionFactory";
+import MysqlWriteConnection from "../lib/db-connection/adapter/mysql/MysqlWriteConnection";
+import MysqlReadConnection from "../lib/db-connection/adapter/mysql/MysqlReadConnection";
+import DispatchInterface from "../lib/dispatcher/DispatchInterface";
 
 export default class Runner {
     /**
@@ -22,7 +26,19 @@ export default class Runner {
     run() {
         const di = DIFactory.create(ServerConfigFactory);
 
-        SQLiteConnectionFactory.create(di)
+        MysqlConnectionFactory.create(di)
+            .then((mysqlConnections) => {
+                const writeConnection = new MysqlWriteConnection();
+                const readConnection = new MysqlReadConnection();
+                readConnection.setServer(mysqlConnections.read);
+                writeConnection.setServer(mysqlConnections.write);
+                readConnection.setDispatcher(di.get(DispatchInterface));
+                writeConnection.setDispatcher(di.get(DispatchInterface));
+                di.register(MysqlWriteConnection, writeConnection);
+                di.register(MysqlReadConnection, readConnection);
+                return null;
+            })
+            .then(() => SQLiteConnectionFactory.create(di))
             .then((connection) => {
                 di.get(ReadConnectionInterface).setServer(connection);
                 di.get(WriteConnectionInterface).setServer(connection);

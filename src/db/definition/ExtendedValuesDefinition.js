@@ -24,7 +24,10 @@ export default class ExtendedValuesDefinition extends DefinitionTableInterface {
             11,
             false,
             false,
-            true
+            true,
+            {
+                autoincrement: true,
+            }
         );
 
         /**

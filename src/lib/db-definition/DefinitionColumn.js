@@ -17,8 +17,17 @@ export default class DefinitionColumn extends DefinitionColumnInterface {
      * @param {boolean} isNull
      * @param {string|boolean} defaultValue
      * @param {boolean} isPrimary
+     * @param {{}} attributes
      */
-    constructor(columnName, columnType, size = null, isNull = true, defaultValue = false, isPrimary = false) {
+    constructor(
+        columnName,
+        columnType,
+        size = null,
+        isNull = true,
+        defaultValue = false,
+        isPrimary = false,
+        attributes = {}
+    ) {
         super();
         /**
          *
@@ -56,6 +65,12 @@ export default class DefinitionColumn extends DefinitionColumnInterface {
          * @private
          */
         this._isPrimary = isPrimary;
+        /**
+         *
+         * @type {{}}
+         * @private
+         */
+        this._attributes = attributes;
     }
 
     /**
@@ -100,5 +115,13 @@ export default class DefinitionColumn extends DefinitionColumnInterface {
      */
     getColumnSize() {
         return this._size;
+    }
+
+    /**
+     *
+     * @return {{}}
+     */
+    getAttributes() {
+        return this._attributes;
     }
 }

@@ -28,7 +28,10 @@ export default class UserFilesDefinition extends DefinitionTableInterface {
             11,
             false,
             false,
-            true
+            true,
+            {
+                autoincrement: true,
+            }
         );
         this._columns = [
             this._primaryColumn,

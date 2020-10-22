@@ -51,4 +51,12 @@ export default class DefinitionColumnInterface {
     isPrimary() {
         throw new ImplementationError(this, "isPrimary");
     }
+
+    /**
+     * @abstract
+     * @return { {} }
+     */
+    getAttributes() {
+        throw new ImplementationError(this, "isPrimary");
+    }
 }

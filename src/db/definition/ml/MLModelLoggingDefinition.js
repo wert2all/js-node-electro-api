@@ -17,7 +17,10 @@ export default class MLModelLoggingDefinition extends DefinitionTableInterface {
             11,
             false,
             false,
-            true
+            true,
+            {
+                autoincrement: true,
+            }
         );
         /**
          *

@@ -30,6 +30,7 @@ export default class MysqlTableSQLBuilder extends DefinitionSQLBuilderInterface 
                     " " + column.getColumnName() + " " + column.getType() + "( " + column.getColumnSize() + ")";
                 columnSQL += !column.isNull() ? " not null " : " ";
                 columnSQL += this._createDefault(column);
+                columnSQL += this._addAttributes(column);
                 columnSQL += column.isPrimary() ? " primary key " : " ";
                 return columnSQL;
             })
@@ -55,5 +56,19 @@ export default class MysqlTableSQLBuilder extends DefinitionSQLBuilderInterface 
      */
     _wrapValue(column, value) {
         return column.getType() === DefinitionColumn.COLUMN_TYPE_VARCHAR ? '"' + value + '"' : value;
+    }
+
+    /**
+     *
+     * @param {DefinitionColumnInterface} column
+     * @return {string}
+     * @private
+     */
+    _addAttributes(column) {
+        let ret = "";
+        if (column.getAttributes().hasOwnProperty("autoincrement")) {
+            ret += " auto_increment ";
+        }
+        return ret;
     }
 }

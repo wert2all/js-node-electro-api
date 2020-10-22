@@ -20,7 +20,10 @@ export default class MLModelTrainingDefinition extends DefinitionTableInterface 
             11,
             false,
             false,
-            true
+            true,
+            {
+                autoincrement: true,
+            }
         );
         /**
          *

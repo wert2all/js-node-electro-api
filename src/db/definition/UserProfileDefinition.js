@@ -29,7 +29,10 @@ export default class UserProfileDefinition extends DefinitionTableInterface {
             11,
             false,
             false,
-            true
+            true,
+            {
+                autoincrement: true,
+            }
         );
 
         this._columns = [

@@ -1,4 +1,4 @@
-import DefinitionColumnInterface from "./DefinitionColumnInterface";
+import DefinitionColumnInterface from "../DefinitionColumnInterface";
 
 /**
  * @class DefinitionColumn

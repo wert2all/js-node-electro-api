@@ -1,5 +1,5 @@
 import DefinitionTableInterface from "../../../lib/db-definition/DefinitionTableInterface";
-import DefinitionColumn from "../../../lib/db-definition/DefinitionColumn";
+import DefinitionColumn from "../../../lib/db-definition/implementation/DefinitionColumn";
 
 export default class MLModelLoggingDefinition extends DefinitionTableInterface {
     static TABLE_NAME = "ml_logging";
@@ -62,6 +62,13 @@ export default class MLModelLoggingDefinition extends DefinitionTableInterface {
                 false
             ),
         ];
+    }
+
+    /**
+     * @return {DefinitionForeignKeyInterface[]}
+     */
+    getForeignKeys() {
+        return [];
     }
 
     /**

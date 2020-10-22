@@ -1,6 +1,6 @@
 import DefinitionTableInterface from "../../lib/db-definition/DefinitionTableInterface";
-import DefinitionColumn from "../../lib/db-definition/DefinitionColumn";
-import DefinitionIndex from "../../lib/db-definition/DefinitionIndex";
+import DefinitionColumn from "../../lib/db-definition/implementation/DefinitionColumn";
+import DefinitionIndex from "../../lib/db-definition/implementation/DefinitionIndex";
 
 /**
  * @class ExtendedValuesDefinition
@@ -70,6 +70,13 @@ export default class ExtendedValuesDefinition extends DefinitionTableInterface {
                 false
             ),
         ];
+    }
+
+    /**
+     * @return {DefinitionForeignKeyInterface[]}
+     */
+    getForeignKeys() {
+        return [];
     }
 
     /**

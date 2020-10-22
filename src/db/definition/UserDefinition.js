@@ -1,5 +1,5 @@
 import DefinitionTableInterface from "../../lib/db-definition/DefinitionTableInterface";
-import DefinitionColumn from "../../lib/db-definition/DefinitionColumn";
+import DefinitionColumn from "../../lib/db-definition/implementation/DefinitionColumn";
 
 /**
  * @class UserDefinition
@@ -108,6 +108,13 @@ export default class UserDefinition extends DefinitionTableInterface {
      * @return {DefinitionIndexInterface[]}
      */
     getIndexes() {
+        return [];
+    }
+
+    /**
+     * @return {DefinitionForeignKeyInterface[]}
+     */
+    getForeignKeys() {
         return [];
     }
 }

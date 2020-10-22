@@ -47,4 +47,12 @@ export default class DefinitionTableInterface {
     getIndexes() {
         throw new ImplementationError(this, "getIndexes");
     }
+
+    /**
+     * @abstract
+     * @return {DefinitionForeignKeyInterface[]}
+     */
+    getForeignKeys() {
+        throw new ImplementationError(this, "getForeignKeys");
+    }
 }

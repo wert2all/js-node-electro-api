@@ -1,4 +1,4 @@
-import DefinitionIndexInterface from "./DefinitionIndexInterface";
+import DefinitionIndexInterface from "../keys/DefinitionIndexInterface";
 
 /**
  * @class DefinitionIndex

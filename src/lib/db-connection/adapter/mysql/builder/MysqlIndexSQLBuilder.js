@@ -17,6 +17,9 @@ export default class MysqlIndexSQLBuilder extends DefinitionSQLBuilderInterface 
             definition.getTableName() +
             " add " +
             (index.unique ? "unique" : "") +
+            " " +
+            index.fields.join("_") +
+            " " +
             "(" +
             index.fields.join(", ") +
             ")"

@@ -14,18 +14,6 @@ import gulp from "gulp";
 import ReadConnectionInterface from "../../src/lib/db-connection/ReadConnectionInterface";
 import WriteConnectionInterface from "../../src/lib/db-connection/WriteConnectionInterface";
 import MysqlConnectionFactory from "../../src/_init/factories/MysqlConnectionFactory";
-import MysqlWriteConnection from "../../src/lib/db-connection/adapter/mysql/MysqlWriteConnection";
-import MysqlReadConnection from "../../src/lib/db-connection/adapter/mysql/MysqlReadConnection";
-import DispatchInterface from "../../src/lib/dispatcher/DispatchInterface";
-import TablesFactory from "../../src/lib/db-connection/tables/TablesFactory";
-import UserDefinition from "../../src/db/definition/UserDefinition";
-import UserProfileDefinition from "../../src/db/definition/UserProfileDefinition";
-import UserFilesDefinition from "../../src/db/definition/UserFilesDefinition";
-import ExtendedValuesDefinition from "../../src/db/definition/ExtendedValuesDefinition";
-import MLModelLoggingDefinition from "../../src/db/definition/ml/MLModelLoggingDefinition";
-import MLModelTrainingDefinition from "../../src/db/definition/ml/MLModelTrainingDefinition";
-import MysqlQueryExecutor from "../../src/lib/db-connection/adapter/mysql/MysqlQueryExecutor";
-import MysqlTableCreator from "../../src/lib/db-connection/adapter/mysql/MysqlTableCreator";
 import TablesFactoryInterface from "../../src/lib/db-connection/tables/TablesFactoryInterface";
 import UserRepository from "../../src/db/repository/UserRepository";
 import UserEntity from "../../src/data/entity/UserEntity";
@@ -35,6 +23,7 @@ import UserFilesEntity from "../../src/data/entity/UserFilesEntity";
 import FilesRepository from "../../src/db/repository/FilesRepository";
 import ExtendedValuesRepository from "../../src/db/repository/ExtendedValuesRepository";
 import ExtendedValuesEntity from "../../src/data/entity/ExtendedValuesEntity";
+import SQLiteReadConnection from "../../src/lib/db-connection/adapter/sqlite/SQLiteReadConnection";
 
 /**
  *
@@ -44,13 +33,13 @@ import ExtendedValuesEntity from "../../src/data/entity/ExtendedValuesEntity";
  */
 const _runTask = (cb, gulpTaskFactoryMethod) => {
     const di = DIFactory.create(ConsoleConfigFactory);
-    SQLiteConnectionFactory.create(di)
-        .then((connection) => {
-            di.get(ReadConnectionInterface).setServer(connection);
-            di.get(WriteConnectionInterface).setServer(connection);
+    MysqlConnectionFactory.create(di)
+        .then((mysqlConnections) => {
+            di.get(ReadConnectionInterface).setServer(mysqlConnections.read);
+            di.get(WriteConnectionInterface).setServer(mysqlConnections.write);
+            return mysqlConnections;
         })
-        .then(() => di.get(ReadConnectionInterface))
-        .then((readConnection) => gulpTaskFactoryMethod(readConnection, di).go())
+        .then(() => gulpTaskFactoryMethod(di).go())
         .then(() => cb())
         .catch((err) => {
             console.log(err);
@@ -62,7 +51,7 @@ gulp.task("images:resize", (cb) =>
     _runTask(cb, (readConnection, di) => {
         return new GulpTask(
             new ImageRepository(
-                readConnection,
+                di.get(ReadConnectionInterface),
                 new ExtendedValuesEntityManager(di.get(EntityManager)),
                 new ResizeImageFilterEntityFactory()
             ),
@@ -76,11 +65,11 @@ gulp.task("test:ml", (cb) =>
     _runTask(cb, (readConnection, di) => {
         return new GulpTask(
             new ImageRepository(
-                readConnection,
+                di.get(ReadConnectionInterface),
                 new ExtendedValuesEntityManager(di.get(EntityManager)),
                 new MLImageFilterEntityFactory()
             ),
-            new MLProcessorFactory(readConnection),
+            new MLProcessorFactory(di.get(ReadConnectionInterface)),
             new ImageResultFactory()
         );
     })
@@ -89,44 +78,21 @@ gulp.task("test:ml", (cb) =>
 gulp.task("db:migrate", (cb) => {
     const di = DIFactory.create(ConsoleConfigFactory);
     return MysqlConnectionFactory.create(di)
-        .then((connections) => {
-            const writeConnection = new MysqlWriteConnection();
-            const readConnection = new MysqlReadConnection();
-            readConnection.setServer(connections.read);
-            writeConnection.setServer(connections.write);
-            readConnection.setDispatcher(di.get(DispatchInterface));
-            writeConnection.setDispatcher(di.get(DispatchInterface));
-            di.register(MysqlWriteConnection, writeConnection);
-            di.register(MysqlReadConnection, readConnection);
-            const tableFactory = new TablesFactory(
-                [
-                    new UserDefinition(),
-                    new UserProfileDefinition(),
-                    new UserFilesDefinition(),
-                    new ExtendedValuesDefinition(),
-                    new MLModelLoggingDefinition(),
-                    new MLModelTrainingDefinition(),
-                ],
-                new MysqlTableCreator(new MysqlQueryExecutor())
-            );
-            return tableFactory.setServer(connections.write).create();
+        .then((mysqlConnections) => {
+            di.get(ReadConnectionInterface).setServer(mysqlConnections.read);
+            di.get(WriteConnectionInterface).setServer(mysqlConnections.write);
+            return mysqlConnections;
         })
+        .then((mysqlConnections) => di.get(TablesFactoryInterface).setServer(mysqlConnections.write).create())
         .then(() => SQLiteConnectionFactory.create(di))
-        .then((connection) => {
-            di.get(ReadConnectionInterface).setServer(connection);
-            di.get(WriteConnectionInterface).setServer(connection);
-            return connection;
-        })
-        .then((connection) => {
-            return di.get(TablesFactoryInterface).setServer(connection).create();
-        })
-        .then(() => {
-            const mysqlEm = new EntityManager(di.get(MysqlReadConnection), di.get(MysqlWriteConnection));
+        .then((sqliteConnection) => {
+            const mysqlEm = new EntityManager(di.get(ReadConnectionInterface), di.get(WriteConnectionInterface));
             /**
              *
              * @type {ReadConnectionInterface}
              */
-            const readSqliteConnection = di.get(ReadConnectionInterface);
+            const readSqliteConnection = new SQLiteReadConnection();
+            readSqliteConnection.setServer(sqliteConnection);
 
             const migrationList = [
                 {

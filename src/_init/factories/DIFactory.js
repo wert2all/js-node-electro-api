@@ -47,10 +47,12 @@ import UserFilesDefinition from "../../db/definition/UserFilesDefinition";
 import ExtendedValuesDefinition from "../../db/definition/ExtendedValuesDefinition";
 import MLModelLoggingDefinition from "../../db/definition/ml/MLModelLoggingDefinition";
 import MLModelTrainingDefinition from "../../db/definition/ml/MLModelTrainingDefinition";
-import SQLiteTableCreator from "../../lib/db-connection/adapter/sqlite/SQLiteTableCreator";
-import SQLiteQueryExecutor from "../../lib/db-connection/adapter/sqlite/SQLiteQueryExecutor";
 import EventSqlError from "../../lib/db-connection/dispatcher/event/EventSqlError";
 import ExecSqlErrorObserver from "../../lib/db-connection/dispatcher/ExecSqlErrorObserver";
+import MysqlQueryExecutor from "../../lib/db-connection/adapter/mysql/MysqlQueryExecutor";
+import MysqlTableCreator from "../../lib/db-connection/adapter/mysql/MysqlTableCreator";
+import MysqlReadConnection from "../../lib/db-connection/adapter/mysql/MysqlReadConnection";
+import MysqlWriteConnection from "../../lib/db-connection/adapter/mysql/MysqlWriteConnection";
 
 export default class DIFactory {
     /**
@@ -70,8 +72,8 @@ export default class DIFactory {
         di.register(LoggerStrategy, this._getLoggers(di, serverConfig));
         di.register(LoggerInterface, new Logger(di.get(LoggerStrategy)));
 
-        di.register(ReadConnectionInterface, new SQLiteReadConnection());
-        di.register(WriteConnectionInterface, new SQLiteWriteConnection());
+        di.register(ReadConnectionInterface, new MysqlReadConnection());
+        di.register(WriteConnectionInterface, new MysqlWriteConnection());
         di.register(
             EntityManager,
             new EntityManager(di.get(ReadConnectionInterface), di.get(WriteConnectionInterface))
@@ -114,7 +116,7 @@ export default class DIFactory {
                     new MLModelLoggingDefinition(),
                     new MLModelTrainingDefinition(),
                 ],
-                new SQLiteTableCreator(new SQLiteQueryExecutor())
+                new MysqlTableCreator(new MysqlQueryExecutor())
             )
         );
         di.register(

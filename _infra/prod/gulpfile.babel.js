@@ -48,7 +48,7 @@ const _runTask = (cb, gulpTaskFactoryMethod) => {
 };
 
 gulp.task("images:resize", (cb) =>
-    _runTask(cb, (readConnection, di) => {
+    _runTask(cb, (di) => {
         return new GulpTask(
             new ImageRepository(
                 di.get(ReadConnectionInterface),
@@ -62,7 +62,7 @@ gulp.task("images:resize", (cb) =>
 );
 
 gulp.task("test:ml", (cb) =>
-    _runTask(cb, (readConnection, di) => {
+    _runTask(cb, (di) => {
         return new GulpTask(
             new ImageRepository(
                 di.get(ReadConnectionInterface),

@@ -24,6 +24,8 @@ import FilesRepository from "../../src/db/repository/FilesRepository";
 import ExtendedValuesRepository from "../../src/db/repository/ExtendedValuesRepository";
 import ExtendedValuesEntity from "../../src/data/entity/ExtendedValuesEntity";
 import SQLiteReadConnection from "../../src/lib/db-connection/adapter/sqlite/SQLiteReadConnection";
+import WatchFileFilterEntityFactory from "../../src/modules/console/watch/entity/WatchFileFilterEntityFactory";
+import ResizeDestinationPathProviderFactory from "../../src/modules/console/resize/path/ResizeDestinationPathProviderFactory";
 
 /**
  *
@@ -133,3 +135,24 @@ gulp.task("db:migrate", (cb) => {
             return cb();
         });
 });
+
+gulp.task("watch:images", () => {
+    DIFactory.create(ConsoleConfigFactory);
+    const pathProvider = new ResizeDestinationPathProviderFactory().factory();
+    const watchSrc = [pathProvider.getImageRootPath() + "**", "!" + pathProvider.getStorageConfig().getStoragePath()];
+    return gulp.watch(watchSrc).on("add", (filePath) => {
+        _runTask(Function.prototype, (di) => {
+            return new GulpTask(
+                new ImageRepository(
+                    di.get(ReadConnectionInterface),
+                    new ExtendedValuesEntityManager(di.get(EntityManager)),
+                    new WatchFileFilterEntityFactory(filePath)
+                ),
+                new ResizeProcessorFactory(),
+                new ImageResultFactory()
+            );
+        });
+    });
+});
+
+gulp.task("watch", gulp.parallel("watch:images"));

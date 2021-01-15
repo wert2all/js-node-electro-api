@@ -6,6 +6,206 @@
 export default class TariffDB {
     constructor() {
         this.tariff = {
+            202001: {
+                city: {
+                    one: {
+                        full_peak: {
+                            price: 1.68,
+                            discount: 1,
+                            ranges: [],
+                        },
+                    },
+                    two: {
+                        full_peak: {
+                            price: 1.68,
+                            discount: 1,
+                            ranges: [],
+                        },
+                        half_peak: {
+                            price: 1.68,
+                            discount: 0.5,
+                            ranges: [],
+                        },
+                    },
+                    three: {
+                        full_peak: {
+                            price: 1.68,
+                            discount: 1.5,
+                            ranges: [],
+                        },
+                        half_peak: {
+                            price: 1.68,
+                            discount: 1,
+                            ranges: [],
+                        },
+                        low_peak: {
+                            price: 1.68,
+                            discount: 0.4,
+                            ranges: [],
+                        },
+                    },
+                },
+                dormitories: {
+                    one: {
+                        full_peak: {
+                            price: 1.68,
+                            discount: 1,
+                        },
+                    },
+                    two: {
+                        full_peak: {
+                            price: 1.68,
+                            discount: 1,
+                        },
+                        half_peak: {
+                            price: 1.68,
+                            discount: 0.05,
+                        },
+                    },
+                    three: {
+                        full_peak: {
+                            price: 1.68,
+                            discount: 1.5,
+                        },
+                        half_peak: {
+                            price: 1.68,
+                            discount: 1,
+                        },
+                        low_peak: {
+                            price: 1.68,
+                            discount: 0.4,
+                        },
+                    },
+                },
+                many_children: {
+                    one: {
+                        full_peak: {
+                            price: 1.68,
+                            discount: 1,
+                        },
+                    },
+                    two: {
+                        full_peak: {
+                            price: 1.68,
+                            discount: 1,
+                        },
+                        half_peak: {
+                            price: 1.68,
+                            discount: 0.05,
+                        },
+                    },
+                    three: {
+                        full_peak: {
+                            price: 1.68,
+                            discount: 1.5,
+                        },
+                        half_peak: {
+                            price: 1.68,
+                            discount: 1,
+                        },
+                        low_peak: {
+                            price: 1.68,
+                            discount: 0.4,
+                        },
+                    },
+                },
+                as_organisation: {
+                    one: {
+                        full_peak: {
+                            price: 1.68,
+                            discount: 1,
+                        },
+                    },
+                    two: {
+                        full_peak: {
+                            price: 1.68,
+                            discount: 1,
+                        },
+                        half_peak: {
+                            price: 1.68,
+                            discount: 0.05,
+                        },
+                    },
+                    three: {
+                        full_peak: {
+                            price: 1.68,
+                            discount: 1.5,
+                        },
+                        half_peak: {
+                            price: 1.68,
+                            discount: 1,
+                        },
+                        low_peak: {
+                            price: 1.68,
+                            discount: 0.4,
+                        },
+                    },
+                },
+                electricity: {
+                    one: {
+                        full_peak: {
+                            price: 1.68,
+                            discount: 1,
+                        },
+                    },
+                    two: {
+                        full_peak: {
+                            price: 1.68,
+                            discount: 1,
+                        },
+                        half_peak: {
+                            price: 1.68,
+                            discount: 0.5,
+                        },
+                    },
+                    three: {
+                        full_peak: {
+                            price: 1.68,
+                            discount: 1.5,
+                        },
+                        half_peak: {
+                            price: 1.68,
+                            discount: 1,
+                        },
+                        low_peak: {
+                            price: 1.68,
+                            discount: 0.4,
+                        },
+                    },
+                },
+                without_gaz: {
+                    one: {
+                        full_peak: {
+                            price: 1.68,
+                            discount: 1,
+                        },
+                    },
+                    two: {
+                        full_peak: {
+                            price: 1.68,
+                            discount: 1,
+                        },
+                        half_peak: {
+                            price: 1.68,
+                            discount: 0.5,
+                        },
+                    },
+                    three: {
+                        full_peak: {
+                            price: 1.68,
+                            discount: 1.5,
+                        },
+                        half_peak: {
+                            price: 1.68,
+                            discount: 1,
+                        },
+                        low_peak: {
+                            price: 1.68,
+                            discount: 0.4,
+                        },
+                    },
+                },
+            },
             201703: {
                 city: {
                     one: {

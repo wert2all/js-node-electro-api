@@ -2,6 +2,39 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.65](http://wert2all.urown.cloud/node-libs/js-node-electro-api/compare/v0.2.63...v0.2.65) (2021-01-15)
+
+
+### Features
+
+* **api:** create MysqlConnectionFactory ([16b1e23](http://wert2all.urown.cloud/node-libs/js-node-electro-api/commit/16b1e23b6d82e9e0fff512313595af0d55e5dc91)), closes [#447](http://wert2all.urown.cloud/node-libs/js-node-electro-api/issues/447)
+* **api:** create tables on connection ([fc2e4e8](http://wert2all.urown.cloud/node-libs/js-node-electro-api/commit/fc2e4e85a5508679794be9b9e981a5c19b2526a3)), closes [#452](http://wert2all.urown.cloud/node-libs/js-node-electro-api/issues/452)
+* **api:** db: add indexes functionality ([4128d41](http://wert2all.urown.cloud/node-libs/js-node-electro-api/commit/4128d411e1182e13fb9f0052d9e3829dd9e013d6)), closes [#461](http://wert2all.urown.cloud/node-libs/js-node-electro-api/issues/461)
+* **api:** mysql: create all tables ([0576b7b](http://wert2all.urown.cloud/node-libs/js-node-electro-api/commit/0576b7be18ba597bcb1f60ec7e5351891bc4c1bc)), closes [#450](http://wert2all.urown.cloud/node-libs/js-node-electro-api/issues/450)
+* **api:** mysql: create foreight keys ([5b67b3f](http://wert2all.urown.cloud/node-libs/js-node-electro-api/commit/5b67b3f11455220628b1b2f27c3c49cfb3e5b4c7)), closes [#463](http://wert2all.urown.cloud/node-libs/js-node-electro-api/issues/463)
+* **api:** mysql: delete entity ([9545372](http://wert2all.urown.cloud/node-libs/js-node-electro-api/commit/954537231b64d11ff7ade3d2b5666c54aff580d7)), closes [#459](http://wert2all.urown.cloud/node-libs/js-node-electro-api/issues/459)
+* **api:** mysql: fix creating tables with autoincrement ([023256f](http://wert2all.urown.cloud/node-libs/js-node-electro-api/commit/023256f8503c625b9c89a70061c33e329cb4f40b)), closes [#462](http://wert2all.urown.cloud/node-libs/js-node-electro-api/issues/462)
+* **api:** mysql: init ReadConnectionInteraface ([2f9f60e](http://wert2all.urown.cloud/node-libs/js-node-electro-api/commit/2f9f60ea9a17cb811e7870ced0eaf1308728e910)), closes [#455](http://wert2all.urown.cloud/node-libs/js-node-electro-api/issues/455)
+* **api:** mysql: inser new entity ([24d8a03](http://wert2all.urown.cloud/node-libs/js-node-electro-api/commit/24d8a034ba575742342bb442f950c59520f28998)), closes [#456](http://wert2all.urown.cloud/node-libs/js-node-electro-api/issues/456)
+* **api:** mysql: last insert id ([512d85a](http://wert2all.urown.cloud/node-libs/js-node-electro-api/commit/512d85aacafe52cf18a642253dee044d3aa0c4d0)), closes [#458](http://wert2all.urown.cloud/node-libs/js-node-electro-api/issues/458)
+* **api:** mysql: try to create table ([dfe1a6f](http://wert2all.urown.cloud/node-libs/js-node-electro-api/commit/dfe1a6fe7ee4d502aea465eb0e86c4a423bd5ca9)), closes [#448](http://wert2all.urown.cloud/node-libs/js-node-electro-api/issues/448)
+* **api:** mysql: try to create table ([1362c9e](http://wert2all.urown.cloud/node-libs/js-node-electro-api/commit/1362c9e69b220f6f4149d9690f5089de79abdbbb)), closes [#448](http://wert2all.urown.cloud/node-libs/js-node-electro-api/issues/448)
+* **api:** sql error dispatcher and send telegram message ([70e114d](http://wert2all.urown.cloud/node-libs/js-node-electro-api/commit/70e114dc59b98555659092ca0503fa74952f41bd)), closes [#453](http://wert2all.urown.cloud/node-libs/js-node-electro-api/issues/453)
+* **api:** update entity ([86ab375](http://wert2all.urown.cloud/node-libs/js-node-electro-api/commit/86ab375b221bcee27f5c001e27b501a50cdaaeba)), closes [#457](http://wert2all.urown.cloud/node-libs/js-node-electro-api/issues/457)
+* **infra:** add migration gulp task ([139ccdd](http://wert2all.urown.cloud/node-libs/js-node-electro-api/commit/139ccdde6ca3c52b324cf01140dccd3029f42a41)), closes [#460](http://wert2all.urown.cloud/node-libs/js-node-electro-api/issues/460)
+* **infra:** update one file ([2542875](http://wert2all.urown.cloud/node-libs/js-node-electro-api/commit/254287538bca9d94154bda6e78434fb1c9fdb01c)), closes [#466](http://wert2all.urown.cloud/node-libs/js-node-electro-api/issues/466)
+
+
+### Bug Fixes
+
+* **api:** remove creating table ([18b640c](http://wert2all.urown.cloud/node-libs/js-node-electro-api/commit/18b640cf53e532be06cd0894b1263f45d9cda088)), closes [#451](http://wert2all.urown.cloud/node-libs/js-node-electro-api/issues/451)
+* **api:** small fix sql errors dispatcher ([9096053](http://wert2all.urown.cloud/node-libs/js-node-electro-api/commit/909605368f99b42677f68c5f8c36bb9b1e365867)), closes [#454](http://wert2all.urown.cloud/node-libs/js-node-electro-api/issues/454)
+* **api:** switch database ([0c4cc47](http://wert2all.urown.cloud/node-libs/js-node-electro-api/commit/0c4cc474fad155978c31e385d5b304928fc52570)), closes [#441](http://wert2all.urown.cloud/node-libs/js-node-electro-api/issues/441)
+* **api:** update tariff ([a276826](http://wert2all.urown.cloud/node-libs/js-node-electro-api/commit/a2768261763afd5a12e93458ea9fcece7c34a9c9)), closes [#467](http://wert2all.urown.cloud/node-libs/js-node-electro-api/issues/467)
+* **infra:** fix width error ([e11a006](http://wert2all.urown.cloud/node-libs/js-node-electro-api/commit/e11a0066040687b00e6c05940719143ed4536cb9)), closes [#439](http://wert2all.urown.cloud/node-libs/js-node-electro-api/issues/439)
+* **infra:** infra: gulp task fix ([4879b37](http://wert2all.urown.cloud/node-libs/js-node-electro-api/commit/4879b37196f28d1b6b7b0862c3f268e1b5d34f3b)), closes [#465](http://wert2all.urown.cloud/node-libs/js-node-electro-api/issues/465)
+* **infra:** remove rpm ragistry ([7c422ab](http://wert2all.urown.cloud/node-libs/js-node-electro-api/commit/7c422ab8daffd1a5804f6112b634b71b411f34b6)), closes [#464](http://wert2all.urown.cloud/node-libs/js-node-electro-api/issues/464)
+
 ### [0.2.64](http://wert2all.urown.cloud/node-libs/js-node-electro-api/compare/v0.2.63...v0.2.64) (2021-01-15)
 
 

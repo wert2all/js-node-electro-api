@@ -15,7 +15,7 @@ export default class YearMon {
     }
 
     _parseDate(date) {
-        return "" + date.getFullYear() + (date.getMonth() < 10 ? "0" : "") + date.getMonth();
+        return "" + date.getFullYear() + (date.getMonth() < 10 ? "0" : "") + (date.getMonth() + 1);
     }
 
     toInt() {

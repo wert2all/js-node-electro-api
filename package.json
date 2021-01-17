@@ -54,7 +54,6 @@
         "pm2": "^4.5.1",
         "pug": "^3.0.0",
         "sharp": "^0.27.0",
-        "sqlite3": "^5.0.1",
         "uikit": "^3.6.11"
     },
     "devDependencies": {
@@ -84,6 +83,6 @@
         "terser-webpack-plugin": "^4.2.3",
         "through2": "^4.0.2",
         "webpack": "^4.44.2",
-        "webpack-stream": "^6.1.0"
+        "webpack-stream": "^6.1.1"
     }
 }

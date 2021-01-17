@@ -38,7 +38,7 @@ export default class FileKeyValueStorage extends KeyValueStorageInterface {
         if (this._registry.hasOwnProperty(key)) {
             return this._registry[key];
         }
-        return this._defaultFetch();
+        return this._defaultFetch(key);
     }
 
     /**
@@ -52,10 +52,11 @@ export default class FileKeyValueStorage extends KeyValueStorageInterface {
 
     /**
      * @abstract
+     * @param {string} key
      * @return {*}
      * @protected
      */
-    _defaultFetch() {
+    _defaultFetch(key) {
         throw new ImplementationError(this, "_doError");
     }
 }

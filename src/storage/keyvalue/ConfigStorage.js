@@ -15,11 +15,11 @@ export default class ConfigStorage extends FileKeyValueStorage {
     }
 
     /**
-     *
+     * @param {string} key
      * @return {null}
      * @protected
      */
-    _defaultFetch() {
+    _defaultFetch(key) {
         return null;
     }
 }

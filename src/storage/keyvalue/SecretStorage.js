@@ -15,10 +15,11 @@ export default class SecretStorage extends FileKeyValueStorage {
     }
 
     /**
+     * @param {string} key
      * @return {*}
      * @protected
      */
-    _defaultFetch() {
-        throw Error("Error fetching secret key");
+    _defaultFetch(key) {
+        throw Error("Error fetching secret key " + key);
     }
 }

@@ -51,6 +51,8 @@ import MysqlQueryExecutor from "../../lib/db-connection/adapter/mysql/MysqlQuery
 import MysqlTableCreator from "../../lib/db-connection/adapter/mysql/MysqlTableCreator";
 import MysqlReadConnection from "../../lib/db-connection/adapter/mysql/MysqlReadConnection";
 import MysqlWriteConnection from "../../lib/db-connection/adapter/mysql/MysqlWriteConnection";
+import MysqlConnectionFactory from "../../lib/db-connection/adapter/mysql/factory/MysqlConnectionFactory";
+import MysqlConnectionDelegate from "../../lib/db-connection/adapter/mysql/MysqlConnectionDelegate";
 
 export default class DIFactory {
     /**
@@ -70,13 +72,6 @@ export default class DIFactory {
         di.register(LoggerStrategy, this._getLoggers(di, serverConfig));
         di.register(LoggerInterface, new Logger(di.get(LoggerStrategy)));
 
-        di.register(ReadConnectionInterface, new MysqlReadConnection());
-        di.register(WriteConnectionInterface, new MysqlWriteConnection());
-        di.register(
-            EntityManager,
-            new EntityManager(di.get(ReadConnectionInterface), di.get(WriteConnectionInterface))
-        );
-
         di.register(
             KeyValueStorageInterface,
             new ConfigStorage(
@@ -91,18 +86,38 @@ export default class DIFactory {
             FileStorage,
             new FileStorage(new FileStorageConfig(path.normalize(applicationDirectory + "data/files/")))
         );
+        const storageConfig = new StorageConfiguration(
+            new SecretStorage(
+                new MergeReader(
+                    new ReaderDefault(applicationDirectory + "secret.sample.json"),
+                    new ReaderDefault(applicationDirectory + "secret.json")
+                )
+            ),
+            di.get(KeyValueStorageInterface)
+        );
+        di.register(StorageConfiguration, storageConfig);
+
         di.register(
-            StorageConfiguration,
-            new StorageConfiguration(
-                new SecretStorage(
-                    new MergeReader(
-                        new ReaderDefault(applicationDirectory + "secret.sample.json"),
-                        new ReaderDefault(applicationDirectory + "secret.json")
-                    )
-                ),
-                di.get(KeyValueStorageInterface)
+            ReadConnectionInterface,
+            new MysqlReadConnection(
+                new MysqlConnectionDelegate(
+                    new MysqlConnectionFactory(storageConfig.getSecretStorage(), "db:mysql:url:read")
+                )
             )
         );
+        di.register(
+            WriteConnectionInterface,
+            new MysqlWriteConnection(
+                new MysqlConnectionDelegate(
+                    new MysqlConnectionFactory(storageConfig.getSecretStorage(), "db:mysql:url:write")
+                )
+            )
+        );
+        di.register(
+            EntityManager,
+            new EntityManager(di.get(ReadConnectionInterface), di.get(WriteConnectionInterface))
+        );
+
         di.register(
             TablesFactoryInterface,
             new TablesFactory(
@@ -114,7 +129,13 @@ export default class DIFactory {
                     new MLModelLoggingDefinition(),
                     new MLModelTrainingDefinition(),
                 ],
-                new MysqlTableCreator(new MysqlQueryExecutor())
+                new MysqlTableCreator(
+                    new MysqlQueryExecutor(
+                        new MysqlConnectionDelegate(
+                            new MysqlConnectionFactory(storageConfig.getSecretStorage(), "db:mysql:url:write")
+                        )
+                    )
+                )
             )
         );
         di.register(

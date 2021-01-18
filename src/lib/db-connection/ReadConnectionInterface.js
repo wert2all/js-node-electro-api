@@ -8,23 +8,6 @@ import ImplementationError from "../implementation-error/ImplementationError";
 export default class ReadConnectionInterface {
     /**
      * @abstract
-     * @param serverConnection
-     */
-    // eslint-disable-next-line no-unused-vars
-    setServer(serverConnection) {
-        throw new ImplementationError(this, "setServer");
-    }
-
-    /**
-     * @abstract
-     * @param {DispatchInterface} dispatcher
-     */
-    setDispatcher(dispatcher) {
-        throw new ImplementationError(this, "setDispatcher");
-    }
-
-    /**
-     * @abstract
      * @param {DefinitionTableInterface} definition
      * @param {FilterInterface} filter
      * @param {DefinitionOrder | null} order
@@ -35,5 +18,13 @@ export default class ReadConnectionInterface {
     // eslint-disable-next-line no-unused-vars
     async select(definition, filter, order = null, limit = null, fields = null) {
         throw new ImplementationError(this, "select");
+    }
+
+    /**
+     * @abstract
+     * @param {DispatchInterface} dispatcher
+     */
+    setDispatcher(dispatcher) {
+        throw new ImplementationError(this, "setDispatcher");
     }
 }

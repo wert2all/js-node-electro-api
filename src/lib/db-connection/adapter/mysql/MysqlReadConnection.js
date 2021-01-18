@@ -9,14 +9,18 @@ import MysqlSelectSQLBuilder from "./builder/MysqlSelectSQLBuilder";
  * @type ReadConnectionInterface
  */
 export default class MysqlReadConnection extends ReadConnectionInterface {
-    constructor() {
+    /**
+     *
+     * @param {ConnectionInterface} connectionDelegate
+     */
+    constructor(connectionDelegate) {
         super();
         /**
          *
          * @type {MysqlQueryExecutor}
          * @private
          */
-        this._queryExecutor = new MysqlQueryExecutor();
+        this._queryExecutor = new MysqlQueryExecutor(connectionDelegate);
         /**
          *
          * @type {MysqlQueryDataProvider}
@@ -65,13 +69,5 @@ export default class MysqlReadConnection extends ReadConnectionInterface {
      */
     setDispatcher(dispatcher) {
         this._queryExecutor.setDispatcher(dispatcher);
-    }
-
-    /**
-     *
-     * @param serverConnection
-     */
-    setServer(serverConnection) {
-        this._queryExecutor.setServer(serverConnection);
     }
 }

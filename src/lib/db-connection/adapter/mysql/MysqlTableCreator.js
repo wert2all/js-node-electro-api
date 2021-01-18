@@ -61,14 +61,6 @@ export default class MysqlTableCreator extends TableCreatorInterface {
 
     /**
      *
-     * @param serverConnection
-     */
-    setServer(serverConnection) {
-        this._queryExecutor.setServer(serverConnection);
-    }
-
-    /**
-     *
      * @param  {DefinitionTableInterface} definition
      * @return {Promise<void>}
      * @private

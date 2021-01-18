@@ -11,14 +11,18 @@ import MysqlDeleteSQLBuilder from "./builder/MysqlDeleteSQLBuilder";
  * @type WriteConnectionInterface
  */
 export default class MysqlWriteConnection extends WriteConnectionInterface {
-    constructor() {
+    /**
+     *
+     * @param {ConnectionInterface} connectionDelegate
+     */
+    constructor(connectionDelegate) {
         super();
         /**
          *
          * @type {MysqlQueryExecutor}
          * @private
          */
-        this._queryExecutor = new MysqlQueryExecutor();
+        this._queryExecutor = new MysqlQueryExecutor(connectionDelegate);
         /**
          *
          * @type {MysqlQueryDataProvider}
@@ -43,22 +47,6 @@ export default class MysqlWriteConnection extends WriteConnectionInterface {
          * @private
          */
         this._builderDelete = new MysqlDeleteSQLBuilder();
-    }
-
-    /**
-     *
-     * @param {DispatchInterface} dispatcher
-     */
-    setDispatcher(dispatcher) {
-        this._queryExecutor.setDispatcher(dispatcher);
-    }
-
-    /**
-     *
-     * @param serverConnection
-     */
-    setServer(serverConnection) {
-        this._queryExecutor.setServer(serverConnection);
     }
 
     /**
@@ -99,5 +87,13 @@ export default class MysqlWriteConnection extends WriteConnectionInterface {
         const sql = this._builderDelete.buildSQL(definition, whereData);
         const prepareValues = this._queryDataProvider.buildQueryData(definition, whereData);
         return this._queryExecutor.exec(sql, prepareValues).then(() => null);
+    }
+
+    /**
+     *
+     * @param {DispatchInterface} dispatcher
+     */
+    setDispatcher(dispatcher) {
+        this._queryExecutor.setDispatcher(dispatcher);
     }
 }

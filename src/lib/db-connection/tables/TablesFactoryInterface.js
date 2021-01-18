@@ -13,13 +13,4 @@ export default class TablesFactoryInterface {
     async create() {
         throw ImplementationError(this, "create");
     }
-
-    /**
-     * @abstract
-     * @param {*} serverConnection
-     * @return {TablesFactoryInterface}
-     */
-    setServer(serverConnection) {
-        throw new ImplementationError(this, "setServer");
-    }
 }

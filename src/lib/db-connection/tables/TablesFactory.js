@@ -38,14 +38,4 @@ export default class TablesFactory extends TablesFactoryInterface {
                 throw err;
             });
     }
-
-    /**
-     *
-     * @param serverConnection
-     * @return {TablesFactoryInterface}
-     */
-    setServer(serverConnection) {
-        this._tableCreator.setServer(serverConnection);
-        return this;
-    }
 }

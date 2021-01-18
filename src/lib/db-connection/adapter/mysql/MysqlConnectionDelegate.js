@@ -17,7 +17,7 @@ export default class MysqlConnectionDelegate extends ConnectionInterface {
         this._connectionFactory = connectionFactory;
         /**
          *
-         * @type {null|*}
+         * @type {null|import('mysql2/promise').Connection}
          * @private
          */
         this._serverConnection = null;
@@ -32,7 +32,15 @@ export default class MysqlConnectionDelegate extends ConnectionInterface {
     }
 
     ping() {
-        return new Promise((resolve) => resolve(false));
+        return new Promise((resolve) => {
+            if (this._serverConnection !== null) {
+                this._serverConnection
+                    .ping()
+                    .then(() => resolve(true))
+                    .catch((_) => resolve(false));
+            }
+            resolve(false);
+        });
     }
 
     /**

@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.68](http://wert2all.urown.cloud/node-libs/js-node-electro-api/compare/v0.2.67...v0.2.68) (2021-01-18)
+
+
+### Bug Fixes
+
+* **api:** fix Too many connections error ([4db91b3](http://wert2all.urown.cloud/node-libs/js-node-electro-api/commit/4db91b3e8bf15ba5e286634e865723195e2ecaf9)), closes [#474](http://wert2all.urown.cloud/node-libs/js-node-electro-api/issues/474)
+* **api:** pass keyvalue to FileKeyValueStorage::_defaultFetch ([dfe859b](http://wert2all.urown.cloud/node-libs/js-node-electro-api/commit/dfe859ba2f38acb9e087e67f3c16b2aac8913a50)), closes [#470](http://wert2all.urown.cloud/node-libs/js-node-electro-api/issues/470)
+* **api:** remove sqlite connection ([e5ef318](http://wert2all.urown.cloud/node-libs/js-node-electro-api/commit/e5ef318a95c0985d4c85dfe738021a4d8ca6a4e0)), closes [#472](http://wert2all.urown.cloud/node-libs/js-node-electro-api/issues/472)
+* **ui:** update deps ([e5d65e2](http://wert2all.urown.cloud/node-libs/js-node-electro-api/commit/e5d65e22f22a8917ab539edc66b068b395ee6800)), closes [#473](http://wert2all.urown.cloud/node-libs/js-node-electro-api/issues/473)
+
 ### [0.2.67](http://wert2all.urown.cloud/node-libs/js-node-electro-api/compare/v0.2.66...v0.2.67) (2021-01-16)
 
 

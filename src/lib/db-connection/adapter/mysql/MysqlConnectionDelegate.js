@@ -36,8 +36,14 @@ export default class MysqlConnectionDelegate extends ConnectionInterface {
             if (this._serverConnection !== null) {
                 this._serverConnection
                     .ping()
-                    .then(() => resolve(true))
-                    .catch((_) => resolve(false));
+                    .then(() => {
+                        console.log("ping!!!");
+                        resolve(true);
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                        resolve(false);
+                    });
             }
             resolve(false);
         });

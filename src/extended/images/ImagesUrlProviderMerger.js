@@ -1,6 +1,4 @@
 import ImageSizeUrl from "./providers/ImageSizeUrl";
-import KeyValueStorageInterface from "../../storage/keyvalue/KeyValueStorageInterface";
-import ResizeDestinationPathProviderFactory from "../../modules/console/resize/path/ResizeDestinationPathProviderFactory";
 
 export default class ImagesUrlProviderMerger {
     /**

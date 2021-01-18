@@ -11,8 +11,6 @@ import MLImageFilterEntityFactory from "../../src/modules/console/ml/entity/MLIm
 import MLProcessorFactory from "../../src/modules/console/ml/processor/MLProcessorFactory";
 import gulp from "gulp";
 import ReadConnectionInterface from "../../src/lib/db-connection/ReadConnectionInterface";
-import WriteConnectionInterface from "../../src/lib/db-connection/WriteConnectionInterface";
-import MysqlConnectionFactory from "../../src/_init/factories/MysqlConnectionFactory";
 import WatchFileFilterEntityFactory from "../../src/modules/console/watch/entity/WatchFileFilterEntityFactory";
 import ResizeDestinationPathProviderFactory from "../../src/modules/console/resize/path/ResizeDestinationPathProviderFactory";
 
@@ -24,13 +22,8 @@ import ResizeDestinationPathProviderFactory from "../../src/modules/console/resi
  */
 const _runTask = (cb, gulpTaskFactoryMethod) => {
     const di = DIFactory.create(ConsoleConfigFactory);
-    MysqlConnectionFactory.create(di)
-        .then((mysqlConnections) => {
-            di.get(ReadConnectionInterface).setServer(mysqlConnections.read);
-            di.get(WriteConnectionInterface).setServer(mysqlConnections.write);
-            return mysqlConnections;
-        })
-        .then(() => gulpTaskFactoryMethod(di).go())
+    gulpTaskFactoryMethod(di)
+        .go()
         .then(() => cb())
         .catch((err) => {
             console.log(err);

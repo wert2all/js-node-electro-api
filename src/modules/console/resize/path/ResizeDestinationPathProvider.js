@@ -1,5 +1,4 @@
 import DestinationPathProviderInterface from "./DestinationPathProviderInterface";
-import FileStorageConfig from "../../../../storage/file/FileStorageConfig";
 import * as path from "path";
 
 /**

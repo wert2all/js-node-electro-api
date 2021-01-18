@@ -5,8 +5,17 @@ import EventSqlError from "../../dispatcher/event/EventSqlError";
  * @class MysqlQueryExecutor
  */
 export default class MysqlQueryExecutor {
-    constructor() {
-        this._server = null;
+    /**
+     *
+     * @param {ConnectionInterface} connection
+     */
+    constructor(connection) {
+        /**
+         *
+         * @type {ConnectionInterface}
+         * @private
+         */
+        this._connection = connection;
         /**
          *
          * @type {null|DispatchInterface}
@@ -25,14 +34,6 @@ export default class MysqlQueryExecutor {
 
     /**
      *
-     * @param serverConnection
-     */
-    setServer(serverConnection) {
-        this._server = serverConnection;
-    }
-
-    /**
-     *
      * @param {string} sql
      * @param {[]} whereData
      * @return {Promise<*>}
@@ -42,8 +43,9 @@ export default class MysqlQueryExecutor {
             if (this._dispatcher) {
                 this._dispatcher.dispatch(new EventSqlExec(sql));
             }
-            this._server
-                .prepare(sql, whereData)
+            this._connection
+                .getConnection()
+                .then((connection) => connection.prepare(sql, whereData))
                 .then((stmt) => stmt.execute(whereData))
                 .then((returnValues) => {
                     resolve(returnValues[0]);

@@ -1,4 +1,3 @@
-import RequestInterface from "../../routers/request/RequestInterface";
 import DI from "../../lib/di/DI";
 import LoggerInterface from "../../lib/logger/LoggerInterface";
 import StorageConfiguration from "../../storage/configuration/StorageConfiguration";

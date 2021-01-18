@@ -8,11 +8,13 @@ import ImplementationError from "../implementation-error/ImplementationError";
 export default class WriteConnectionInterface {
     /**
      * @abstract
-     * @param serverConnection
+     * @param {DefinitionTableInterface} definition
+     * @param {Object<string, string>} data
+     * @return {Promise<void>}
      */
     // eslint-disable-next-line no-unused-vars
-    setServer(serverConnection) {
-        throw new ImplementationError(this, "setServer");
+    async update(definition, data) {
+        throw new ImplementationError(this, "update");
     }
 
     /**
@@ -21,17 +23,6 @@ export default class WriteConnectionInterface {
      */
     setDispatcher(dispatcher) {
         throw new ImplementationError(this, "setDispatcher");
-    }
-
-    /**
-     * @abstract
-     * @param {DefinitionTableInterface} definition
-     * @param {Object<string, string>} data
-     * @return {Promise<void>}
-     */
-    // eslint-disable-next-line no-unused-vars
-    async update(definition, data) {
-        throw new ImplementationError(this, "update");
     }
 
     /**

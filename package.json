@@ -10,6 +10,7 @@
         "devCluster": "nodemon dist/src/runCluster.js",
         "devBuild": "gulp dev",
         "images:resize": "gulp -f _infra/prod/gulpfile.babel.js images:resize",
+        "watch:images": "gulp -f _infra/prod/gulpfile.babel.js watch:images",
         "test:static": "prettier --check .",
         "test:unit": "gulp test:unit",
         "test": "npm run test:static & npm run test:unit ",

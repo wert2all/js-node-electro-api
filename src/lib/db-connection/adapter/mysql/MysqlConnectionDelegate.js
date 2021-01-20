@@ -1,3 +1,4 @@
+import { resolveConfigFile } from "prettier";
 import ConnectionInterface from "../../ConnectionInterface";
 
 /**
@@ -36,35 +37,38 @@ export default class MysqlConnectionDelegate extends ConnectionInterface {
             if (this._serverConnection !== null) {
                 this._serverConnection
                     .ping()
-                    .then(() => {
-                        console.log("ping!!!");
-                        resolve(true);
-                    })
+                    .then(() => resolve(true))
                     .catch((err) => {
                         console.log(err);
                         resolve(false);
                     });
+            } else {
+                resolve(false);
             }
-            resolve(false);
         });
     }
 
     /**
      *
-     * @return {Promise<bool>}
+     * @return {Promise<*|null>}
      */
     getConnection() {
-        return this.ping().then((isConnected) => {
-            if (isConnected) {
-                return this._serverConnection;
-            } else {
-                return this.getConnectionFactory()
-                    .factory()
-                    .then((connection) => {
-                        this._serverConnection = connection;
-                        return connection;
-                    });
-            }
+        return new Promise((resolve) => {
+            this.ping()
+                .then((isConnected) => {
+                    if (isConnected) {
+                        this._isCheck = false;
+                        resolve(this._serverConnection);
+                    } else {
+                        this.getConnectionFactory()
+                            .factory()
+                            .then((connection) => {
+                                this._serverConnection = connection;
+                                resolve(this._serverConnection);
+                            });
+                    }
+                })
+                .catch((_) => resolve(this._serverConnection));
         });
     }
 }

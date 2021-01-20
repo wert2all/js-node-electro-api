@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.69](http://wert2all.urown.cloud/node-libs/js-node-electro-api/compare/v0.2.68...v0.2.69) (2021-01-20)
+
+
+### Features
+
+* **infra:** add pm2 app for gulp watch ([43ef783](http://wert2all.urown.cloud/node-libs/js-node-electro-api/commit/43ef783ebcee2dc3c082e58fd153e19a7104292e)), closes [#477](http://wert2all.urown.cloud/node-libs/js-node-electro-api/issues/477)
+
+
+### Bug Fixes
+
+* **infra:** check resizing ([00ce288](http://wert2all.urown.cloud/node-libs/js-node-electro-api/commit/00ce2880cb9ac8cbf37c991bfad1e756c4dd8ca6)), closes [#475](http://wert2all.urown.cloud/node-libs/js-node-electro-api/issues/475)
+* **ui:** test watch ([76e792f](http://wert2all.urown.cloud/node-libs/js-node-electro-api/commit/76e792fb902dd9459f0ce51ebbbe5427c9e7bee0)), closes [#476](http://wert2all.urown.cloud/node-libs/js-node-electro-api/issues/476)
+
 ### [0.2.68](http://wert2all.urown.cloud/node-libs/js-node-electro-api/compare/v0.2.67...v0.2.68) (2021-01-18)
 
 

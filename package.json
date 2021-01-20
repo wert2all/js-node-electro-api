@@ -1,6 +1,6 @@
 {
     "name": "js-node-electro-api",
-    "version": "0.2.68",
+    "version": "0.2.69",
     "private": true,
     "scripts": {
         "start": "pm2 start ecosystem.config.js --watch -i max --env production",

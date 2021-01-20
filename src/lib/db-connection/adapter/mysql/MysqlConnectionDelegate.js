@@ -57,7 +57,6 @@ export default class MysqlConnectionDelegate extends ConnectionInterface {
             this.ping()
                 .then((isConnected) => {
                     if (isConnected) {
-                        this._isCheck = false;
                         resolve(this._serverConnection);
                     } else {
                         this.getConnectionFactory()

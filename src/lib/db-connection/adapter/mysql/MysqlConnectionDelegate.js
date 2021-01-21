@@ -1,4 +1,3 @@
-import { resolveConfigFile } from "prettier";
 import ConnectionInterface from "../../ConnectionInterface";
 
 /**

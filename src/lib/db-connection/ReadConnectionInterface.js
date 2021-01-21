@@ -27,4 +27,12 @@ export default class ReadConnectionInterface {
     setDispatcher(dispatcher) {
         throw new ImplementationError(this, "setDispatcher");
     }
+
+    /**
+     * @return {Promise<*|null>}
+     * @abstract
+     */
+    getConnection() {
+        throw new ImplementationError(this, "getConnection");
+    }
 }

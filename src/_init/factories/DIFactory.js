@@ -101,7 +101,7 @@ export default class DIFactory {
             ReadConnectionInterface,
             new MysqlReadConnection(
                 new MysqlConnectionDelegate(
-                    new MysqlConnectionFactory(storageConfig.getSecretStorage(), "db:mysql:url:read")
+                    new MysqlConnectionFactory(storageConfig.getSecretStorage().fetch("db:mysql:url:read"))
                 )
             )
         );
@@ -109,7 +109,7 @@ export default class DIFactory {
             WriteConnectionInterface,
             new MysqlWriteConnection(
                 new MysqlConnectionDelegate(
-                    new MysqlConnectionFactory(storageConfig.getSecretStorage(), "db:mysql:url:write")
+                    new MysqlConnectionFactory(storageConfig.getSecretStorage().fetch("db:mysql:url:write"))
                 )
             )
         );
@@ -132,7 +132,7 @@ export default class DIFactory {
                 new MysqlTableCreator(
                     new MysqlQueryExecutor(
                         new MysqlConnectionDelegate(
-                            new MysqlConnectionFactory(storageConfig.getSecretStorage(), "db:mysql:url:write")
+                            new MysqlConnectionFactory(storageConfig.getSecretStorage().fetch("db:mysql:url:write"))
                         )
                     )
                 )

@@ -19,10 +19,16 @@ export default class MysqlWriteConnection extends WriteConnectionInterface {
         super();
         /**
          *
+         * @type {ConnectionInterface}
+         * @private
+         */
+        this._connectionDelegate = connectionDelegate;
+        /**
+         *
          * @type {MysqlQueryExecutor}
          * @private
          */
-        this._queryExecutor = new MysqlQueryExecutor(connectionDelegate);
+        this._queryExecutor = new MysqlQueryExecutor(this._connectionDelegate);
         /**
          *
          * @type {MysqlQueryDataProvider}
@@ -95,5 +101,9 @@ export default class MysqlWriteConnection extends WriteConnectionInterface {
      */
     setDispatcher(dispatcher) {
         this._queryExecutor.setDispatcher(dispatcher);
+    }
+
+    getConnection() {
+        return this._connectionDelegate.getConnection();
     }
 }

@@ -46,4 +46,12 @@ export default class WriteConnectionInterface {
     async delete(definition, primaryValue) {
         throw new ImplementationError(this, "delete");
     }
+
+    /**
+     * @return {Promise<*|null>}
+     * @abstract
+     */
+    getConnection() {
+        throw new ImplementationError(this, "getConnection");
+    }
 }

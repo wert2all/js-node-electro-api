@@ -39,23 +39,27 @@ export default class MysqlQueryExecutor {
      * @return {Promise<*>}
      */
     async exec(sql, whereData) {
+        const createError = (err) => {
+            if (this._dispatcher) {
+                this._dispatcher.dispatch(new EventSqlError(sql, err));
+            }
+            return new Error("SQL Error [ " + sql + "]: " + err.message);
+        };
         return new Promise((resolve, reject) => {
             if (this._dispatcher) {
                 this._dispatcher.dispatch(new EventSqlExec(sql));
             }
             this._connection
                 .getConnection()
-                .then((connection) => connection.prepare(sql, whereData))
-                .then((stmt) => stmt.execute(whereData))
-                .then((returnValues) => {
-                    resolve(returnValues[0]);
+                .then((connection) => {
+                    connection.execute(sql, whereData, (err, results) => {
+                        if (err) {
+                            reject(createError(err));
+                        }
+                        resolve(results);
+                    });
                 })
-                .catch((err) => {
-                    if (this._dispatcher) {
-                        this._dispatcher.dispatch(new EventSqlError(sql, err));
-                    }
-                    reject(new Error("SQL Error [ " + sql + "]: " + err.message));
-                });
+                .catch((err) => reject(createError(err)));
         });
     }
 

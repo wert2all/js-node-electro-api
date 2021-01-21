@@ -76,4 +76,6 @@ function watchFiles() {
 
 const watch = gulp.series("serve", watchFiles);
 
+gulp.task("build:tmp", () => gulp.src(["tmp/**/*"]).pipe(babel()).pipe(gulp.dest("dist/tmp/")));
+
 exports.dev = watch;

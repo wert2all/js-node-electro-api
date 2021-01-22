@@ -7,10 +7,9 @@ export default class ResizeConfig {
      * @param {string} key
      * @param {number} width
      * @param {number} height
-     * @param {string} fill
-     * @param {{r: number, b: number, g: number, alpha: number}} background
+     * @param {*} background
      */
-    constructor(key, width, height, fill = "inside", background = { r: 0, g: 0, b: 0, alpha: 1 }) {
+    constructor(key, width, height, background = "") {
         /**
          *
          * @type {{r: number, b: number, g: number, alpha: number}}
@@ -35,28 +34,14 @@ export default class ResizeConfig {
          * @private
          */
         this._height = height;
-        /**
-         *
-         * @type {string}
-         * @private
-         */
-        this._fill = fill;
     }
 
     /**
      *
-     * @return {{r: number, b: number, g: number, alpha: number}}
+     * @return {*}
      */
     getBackground() {
         return this._background;
-    }
-
-    /**
-     *
-     * @return {string}
-     */
-    getFill() {
-        return this._fill;
     }
 
     /**

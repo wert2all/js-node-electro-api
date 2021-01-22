@@ -176,17 +176,7 @@ export default class DIFactory {
                 new ResizeDestinationPathProviderFactory().factory()
             )
         );
-        di.register(
-            ResizeSizesHolder,
-            new ResizeSizesHolder([
-                new ResizeConfig("250x330", 250, 330, "contain", {
-                    r: 255,
-                    g: 255,
-                    b: 255,
-                    alpha: 1,
-                }),
-            ])
-        );
+        di.register(ResizeSizesHolder, new ResizeSizesHolder([new ResizeConfig("250x330", 250, 330, "transparent")]));
         di.register(
             ImagesUrlProviderManagerFactory,
             new ImagesUrlProviderManagerFactory(

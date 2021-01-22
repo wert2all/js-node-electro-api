@@ -9,7 +9,7 @@ import StorageConfiguration from "../../storage/configuration/StorageConfigurati
 import SecretStorage from "../../storage/keyvalue/SecretStorage";
 import DispatchInterface from "../../lib/dispatcher/DispatchInterface";
 import EventFileUpload from "../../modules/upload/dispatch/event/EventFileUpload";
-import FileUploadedObserver from "../../modules/upload/dispatch/observers/FileUploadedObserver";
+import UploadedFileTelegramObserver from "../../modules/upload/dispatch/observers/UploadedFileTelegramObserver";
 import TelegramApi from "../../lib/telegram/TelegramApi";
 import Dispatcher from "../../lib/dispatcher/Dispatcher";
 import RendererInterface from "../../lib/renderer/RendererInterface";
@@ -53,6 +53,11 @@ import MysqlReadConnection from "../../lib/db-connection/adapter/mysql/MysqlRead
 import MysqlWriteConnection from "../../lib/db-connection/adapter/mysql/MysqlWriteConnection";
 import MysqlConnectionFactory from "../../lib/db-connection/adapter/mysql/factory/MysqlConnectionFactory";
 import MysqlConnectionDelegate from "../../lib/db-connection/adapter/mysql/MysqlConnectionDelegate";
+import UploadedFileAmqpObserver from "../../modules/upload/dispatch/observers/UploadedFileAmqpObserver";
+import UploadAmqpSender from "../../modules/upload/amqp/UploadAmqpSender";
+import AmqpInterface from "../../lib/amqp/AmqpInterface";
+import AmqplibAdapter from "../../lib/amqp/AmqplibAdapter";
+import UploadAmqpMessageFactory from "../../modules/upload/amqp/UploadAmqpMessageFactory";
 
 export default class DIFactory {
     /**
@@ -145,11 +150,23 @@ export default class DIFactory {
                 di.get(StorageConfiguration).getSecretStorage().fetch("telegram.bot.chat")
             )
         );
+
+        di.register(
+            AmqpInterface,
+            new AmqplibAdapter(di.get(StorageConfiguration).getSecretStorage().fetch("amqp.host.url"))
+        );
+
         di.register(
             DispatchInterface,
             (() => {
                 const observers = {};
-                observers[EventFileUpload.EVENT_NAME] = [new FileUploadedObserver(di.get(TelegramApi))];
+                observers[EventFileUpload.EVENT_NAME] = [
+                    new UploadedFileTelegramObserver(di.get(TelegramApi)),
+                    new UploadedFileAmqpObserver(
+                        new UploadAmqpSender(di.get(AmqpInterface)),
+                        new UploadAmqpMessageFactory()
+                    ),
+                ];
                 observers[EventSqlExec.EVENT_NAME] = [new ExecSqlObserver(di.get(LoggerInterface))];
                 observers[EventSqlError.EVENT_NAME] = [
                     new ExecSqlErrorObserver(di.get(TelegramApi), di.get(LoggerInterface)),

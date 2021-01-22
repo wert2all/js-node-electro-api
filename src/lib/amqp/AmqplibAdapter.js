@@ -28,7 +28,7 @@ export default class AmqplibAdapter extends AmqpInterface {
     /**
      *
      * @param {string} queueName
-     * @param {{}} message
+     * @param {AmqpMessageInterface} message
      * @return {Promise<boolean>}
      */
     sendMessage(queueName, message) {
@@ -47,14 +47,14 @@ export default class AmqplibAdapter extends AmqpInterface {
      *
      * @param {*} channel
      * @param {string} queueName
-     * @param {{}} message
+     * @param {AmqpMessageInterface} message
      * @return {Promise}
      * @private
      */
     _sendMessage(channel, queueName, message) {
         return new Promise((resolve) => {
             channel.assertQueue(queueName).then(() => {
-                channel.sendToQueue(queueName, Buffer.from(JSON.stringify(message)), () => {
+                channel.sendToQueue(queueName, Buffer.from(message.toString()), () => {
                     resolve(true);
                 });
             });
@@ -63,7 +63,7 @@ export default class AmqplibAdapter extends AmqpInterface {
 
     /**
      *
-     * @return {Promise<ChannelWrapper>}
+     * @return {Promise}
      * @private
      */
     _getChannel() {

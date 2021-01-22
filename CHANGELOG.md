@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.70](https://wert2all.urown.cloud/node-libs/js-node-electro-api/compare/v0.2.69...v0.2.70) (2021-01-22)
+
+
+### Bug Fixes
+
+* **api:** fix too many connections ([a62f779](https://wert2all.urown.cloud/node-libs/js-node-electro-api/commit/a62f77931cd9e2a8d9bb390022d799cf8774e654)), closes [#478](https://wert2all.urown.cloud/node-libs/js-node-electro-api/issues/478)
+
 ### [0.2.69](http://wert2all.urown.cloud/node-libs/js-node-electro-api/compare/v0.2.68...v0.2.69) (2021-01-20)
 
 

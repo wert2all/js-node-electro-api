@@ -3,7 +3,8 @@ import DirectoryUtil from "../../../lib/filesystem/DirectoryUtil";
 import path from "path";
 import ResizeConfig from "./size/ResizeConfig";
 import ImagesValues from "../../../data/entity/ext/ImagesValues";
-import sharp from "sharp";
+import ImageData from "./data/ImageData";
+import gm from "gm";
 
 /**
  * @class ResizeProcessor
@@ -116,37 +117,23 @@ export default class ResizeProcessor extends ProcessorInterface {
             return new Promise((resolve, reject) => {
                 this._createDirectory(entity, size)
                     .then((directory) => this._createRotateDirectory(entity).then(() => directory))
-                    .then((directory) => this._addImageData("directory", directory, {}))
-                    .then((imageData) => this._addImageData("imagePath", entity.getFilePath(), imageData))
-                    .then((imageData) => this._addImageData("imageName", this._getImageName(entity), imageData))
-                    .then((imageData) => this._addImageData("rotation", this._getRotation(entity), imageData))
+                    .then((directory) => new ImageData().setDirectory(directory))
+                    .then((imageData) => imageData.setImagePath(entity.getFilePath()))
+                    .then((imageData) => imageData.setImageName(this._getImageName(entity)))
+                    .then((imageData) => imageData.setRotation(this._getRotation(entity)))
                     .then((imageData) =>
-                        this._addImageData(
-                            "rotatedImagePath",
-                            this._rotateDestinationProvider.provide(entity) + imageData.imageName,
-                            imageData
+                        imageData.setRotatedImagePath(
+                            this._rotateDestinationProvider.provide(entity) + imageData.getImageName()
                         )
                     )
-                    .then((imageData) => this._rotateDefault(imageData))
+                    .then((imageData) => this._setImageSizes(imageData))
+                    .then((imageData) => this._rotateDefault(imageData, size.getBackground()))
                     .then((imageData) => this._resize(imageData, size))
-                    .then((imageData) => this._rotate(imageData))
+                    .then((imageData) => this._rotate(imageData, size.getBackground()))
                     .then(() => resolve(true))
                     .catch(reject);
             });
         });
-    }
-
-    /**
-     *
-     * @param {string} key
-     * @param {*} value
-     * @param {*} imageData
-     * @return {*}
-     * @private
-     */
-    _addImageData(key, value, imageData) {
-        imageData[key] = value;
-        return imageData;
     }
 
     /**
@@ -167,25 +154,21 @@ export default class ResizeProcessor extends ProcessorInterface {
 
     /**
      *
-     * @param {*} imageData
-     * @return {Promise<*>}
+     * @param {ImageData} imageData
+     * @param background
+     * @return {Promise<ImageData>}
      * @private
      */
-    _rotateDefault(imageData) {
+    _rotateDefault(imageData, background) {
         process.stdout.write("    Rotation to default ...");
         return new Promise((resolve, reject) => {
-            sharp(imageData.imagePath)
-                .rotate()
-                .toFile(imageData.rotatedImagePath, (err, info) => {
+            gm(imageData.getImagePath())
+                .rotate(background, 0)
+                .write(imageData.getRotatedImagePath(), (err) => {
                     if (err) {
                         reject(err);
                     }
-                    imageData["imagePath"] = imageData.rotatedImagePath;
-                    if (info.hasOwnProperty("width") && info.hasOwnProperty("height")) {
-                        imageData["originalSize"] = new ResizeConfig("originalSize", info.width, info.height);
-                    } else {
-                        console.log(info);
-                    }
+                    imageData.setImagePath(imageData.getRotatedImagePath());
                     process.stdout.write(" done\n");
                     resolve(imageData);
                 });
@@ -194,27 +177,22 @@ export default class ResizeProcessor extends ProcessorInterface {
 
     /**
      *
-     * @param {*} imageData
+     * @param {ImageData} imageData
      * @param {ResizeConfig} size
-     * @return {Promise<*>}
+     * @return {Promise<ImageData>}
      * @private
      */
     _resize(imageData, size) {
         process.stdout.write("    Resizing to " + size.getKey() + " ...");
         return new Promise((resolve, reject) => {
-            const toFile = imageData.directory + imageData.imageName;
-            sharp(imageData.imagePath)
-                .resize({
-                    width: size.getWidth(),
-                    height: size.getHeight(),
-                    fit: size.getFill(),
-                    background: size.getBackground(),
-                })
-                .toFile(toFile, (err) => {
+            const toFile = imageData.getDirectory() + imageData.getImageName();
+            gm(imageData.getImagePath())
+                .resize(size.getWidth(), size.getHeight())
+                .write(toFile, (err) => {
                     if (err) {
                         reject(err);
                     }
-                    imageData["imagePath"] = toFile;
+                    imageData.setImagePath(toFile);
                     process.stdout.write(" done\n");
                     resolve(imageData);
                 });
@@ -223,31 +201,59 @@ export default class ResizeProcessor extends ProcessorInterface {
 
     /**
      *
-     * @param {*} imageData
-     * @return {Promise<*>}
+     * @param {ImageData} imageData
+     * @param {*} background
+     * @return {Promise<ImageData>}
      * @private
      */
-    _rotate(imageData) {
-        process.stdout.write("    Rotation to " + imageData.rotation + " ...");
+    _rotate(imageData, background) {
+        process.stdout.write("    Rotation to " + imageData.getRotation() + " ...");
         return new Promise((resolve, reject) => {
-            if (imageData.rotation !== 0) {
-                sharp(imageData.imagePath)
-                    .rotate(imageData.rotation)
-                    .toBuffer()
-                    .then((buffer) => {
-                        sharp(buffer).toFile(imageData.imagePath, (err) => {
+            if (imageData.getRotation() !== 0) {
+                gm(imageData.getImagePath())
+                    .rotate(background, imageData.getRotation())
+                    .toBuffer((err, buffer) => {
+                        if (err) {
+                            reject(err);
+                        }
+                        gm(buffer).write(imageData.getImagePath(), (err) => {
                             if (err) {
                                 reject(err);
                             }
                             process.stdout.write(" done\n");
                             resolve(imageData);
                         });
-                    })
-                    .catch(reject);
+                    });
             } else {
                 process.stdout.write(" done\n");
                 resolve(imageData);
             }
+        });
+    }
+
+    /**
+     *
+     * @param {ImageData} imageData
+     * @return {Promise<ImageData>}
+     * @private
+     */
+    _setImageSizes(imageData) {
+        process.stdout.write("    Getting image sizes " + imageData.getImageName() + " ...");
+        return new Promise((resolve, reject) => {
+            gm(imageData.getImagePath()).size((err, sizes) => {
+                if (err) {
+                    reject(err);
+                }
+                if (sizes) {
+                    if (sizes.width && sizes.height) {
+                        imageData.setOriginalSize(new ResizeConfig("originalSize", sizes.width, sizes.height));
+                    }
+
+                    resolve(imageData);
+                } else {
+                    reject("Null size");
+                }
+            });
         });
     }
 }

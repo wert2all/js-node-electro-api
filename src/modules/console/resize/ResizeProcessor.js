@@ -248,7 +248,7 @@ export default class ResizeProcessor extends ProcessorInterface {
                     if (sizes.width && sizes.height) {
                         imageData.setOriginalSize(new ResizeConfig("originalSize", sizes.width, sizes.height));
                     }
-
+                    process.stdout.write(" done\n");
                     resolve(imageData);
                 } else {
                     reject("Null size");

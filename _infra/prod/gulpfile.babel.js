@@ -63,8 +63,8 @@ gulp.task("watch:images", () => {
     DIFactory.create(ConsoleConfigFactory);
     const pathProvider = new ResizeDestinationPathProviderFactory().factory();
     const watchSrc = [pathProvider.getImageRootPath() + "**", "!" + pathProvider.getStorageConfig().getStoragePath()];
-    return gulp.watch(watchSrc).on("add", (filePath) => {
-        _runTask(Function.prototype, (di) => {
+    const onEvent = (filePath) => {
+        return _runTask(Function.prototype, (di) => {
             return new GulpTask(
                 new ImageRepository(
                     di.get(ReadConnectionInterface),
@@ -75,7 +75,8 @@ gulp.task("watch:images", () => {
                 new ImageResultFactory()
             );
         });
-    });
+    };
+    return gulp.watch(watchSrc).on("add", onEvent).on("change", onEvent);
 });
 
 gulp.task("watch", gulp.parallel("watch:images"));

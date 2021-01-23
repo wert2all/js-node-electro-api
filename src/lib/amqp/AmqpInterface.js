@@ -9,7 +9,7 @@ export default class AmqpInterface {
     /**
      * @abstract
      * @param {string} queueName
-     * @param {{}} message
+     * @param {AmqpMessageInterface} message
      * @return {Promise<boolean>}
      */
     sendMessage(queueName, message) {

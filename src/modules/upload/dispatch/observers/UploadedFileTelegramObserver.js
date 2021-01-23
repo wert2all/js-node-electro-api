@@ -7,11 +7,11 @@ import UploadEvent from "../../logger/UploadEvent";
 import DI from "../../../../lib/di/DI";
 
 /**
- * @class FileUploadedObserver
+ * @class UploadedFileTelegramObserver
  * @extends ObserverInterface
  * @type ObserverInterface
  */
-export default class FileUploadedObserver extends ObserverInterface {
+export default class UploadedFileTelegramObserver extends ObserverInterface {
     /**
      *
      * @param {TelegramApi}telegram

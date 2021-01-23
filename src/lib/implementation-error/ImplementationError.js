@@ -1,5 +1,10 @@
 import ImplementationErrorInterface from "./ImplementationErrorInterface";
 
+/**
+ * @class ImplementationError
+ * @type ImplementationErrorInterface
+ * @extends ImplementationErrorInterface
+ */
 export default class ImplementationError extends ImplementationErrorInterface {
     /**
      *

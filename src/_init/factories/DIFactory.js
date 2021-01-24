@@ -56,8 +56,10 @@ import MysqlConnectionDelegate from "../../lib/db-connection/adapter/mysql/Mysql
 import UploadedFileAmqpObserver from "../../modules/upload/dispatch/observers/UploadedFileAmqpObserver";
 import UploadAmqpSender from "../../modules/upload/amqp/UploadAmqpSender";
 import AmqpInterface from "../../lib/amqp/AmqpInterface";
-import AmqplibAdapter from "../../lib/amqp/AmqplibAdapter";
+import AmqplibAdapter from "../../lib/amqp/broker/AmqplibAdapter";
 import UploadAmqpMessageFactory from "../../modules/upload/amqp/UploadAmqpMessageFactory";
+import AmqpConsumersProviderInterface from "../../lib/amqp/consumer/AmqpConsumersProviderInterface";
+import AmqpConsumersProvider from "../../lib/amqp/consumer/AmqpConsumersProvider";
 
 export default class DIFactory {
     /**
@@ -151,6 +153,7 @@ export default class DIFactory {
             )
         );
 
+        di.register(AmqpConsumersProviderInterface, new AmqpConsumersProvider());
         di.register(
             AmqpInterface,
             new AmqplibAdapter(di.get(StorageConfiguration).getSecretStorage().fetch("amqp.host.url"))

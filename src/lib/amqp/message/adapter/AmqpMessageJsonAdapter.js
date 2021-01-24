@@ -1,5 +1,10 @@
 import AmqpMessageInterface from "../AmqpMessageInterface";
 
+/**
+ * @class AmqpMessageJsonAdapter
+ * @type AmqpMessageInterface
+ * @extends AmqpMessageInterface
+ */
 export default class AmqpMessageJsonAdapter extends AmqpMessageInterface {
     /**
      *

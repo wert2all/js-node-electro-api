@@ -1,4 +1,4 @@
-import AmqpInterface from "./AmqpInterface";
+import AmqpInterface from "../AmqpInterface";
 import amqp from "amqplib";
 
 /**

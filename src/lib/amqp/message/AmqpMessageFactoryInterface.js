@@ -15,4 +15,13 @@ export default class AmqpMessageFactoryInterface {
     create(object) {
         throw new ImplementationError(this, "create");
     }
+
+    /**
+     * @abstract
+     * @param message
+     * @return {AmqpMessageInterface|null}
+     */
+    fromMessage(message) {
+        throw new ImplementationError(this, "fromMessage");
+    }
 }

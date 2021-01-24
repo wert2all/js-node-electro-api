@@ -20,7 +20,7 @@ export default class AmqpInterface {
      * @abstract
      * @param {string} queueName
      * @param {function} handler
-     * @return void
+     * @return {Promise}
      */
     consume(queueName, handler) {
         throw new ImplementationError(this, "consume");

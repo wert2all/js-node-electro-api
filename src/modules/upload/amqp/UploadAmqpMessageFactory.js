@@ -19,4 +19,18 @@ export default class UploadAmqpMessageFactory extends AmqpMessageFactoryInterfac
         }
         return null;
     }
+
+    /**
+     *
+     * @param message
+     * @return {AmqpMessageInterface|null}
+     */
+    fromMessage(message) {
+        try {
+            return this.create(JSON.parse(message.content.toString()));
+        } catch (err) {
+            console.log(err);
+            return null;
+        }
+    }
 }

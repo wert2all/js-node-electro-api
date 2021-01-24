@@ -23,7 +23,7 @@ export default class AmqpConsumersProvider extends AmqpConsumersProviderInterfac
      * @returns {void}
      */
     register(sender, messageFactory, consumerFactory) {
-        this._consumers[sender.getQueueName()] = consumerFactory.create(messageFactory);
+        this._consumers[sender.getQueueName()] = consumerFactory.create(sender.getQueueName(), messageFactory);
     }
 
     /**
@@ -37,5 +37,13 @@ export default class AmqpConsumersProvider extends AmqpConsumersProviderInterfac
         } else {
             return null;
         }
+    }
+
+    /**
+     *
+     * @return {string[]}
+     */
+    getQueues() {
+        return Object.keys(this._consumers);
     }
 }

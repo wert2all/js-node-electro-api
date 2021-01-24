@@ -1,4 +1,4 @@
-import AmqpSenderInterface from "../../../lib/amqp/AmqpSenderInterface";
+import AmqpSenderInterface from "../../../lib/amqp/sender/AmqpSenderInterface";
 
 /**
  * @class UploadAmqpSender

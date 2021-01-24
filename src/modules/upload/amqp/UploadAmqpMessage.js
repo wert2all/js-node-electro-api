@@ -1,32 +1,18 @@
-import AmqpMessageInterface from "../../../lib/amqp/message/AmqpMessageInterface";
+import AmqpMessageJsonAdapter from "../../../lib/amqp/message/adapter/AmqpMessageJsonAdapter";
 
 /**
  * @class UploadAmqpMessage
  * @type AmqpMessageInterface
- * @extends AmqpMessageInterface
+ * @extends AmqpMessageJsonAdapter
  */
-export default class UploadAmqpMessage extends AmqpMessageInterface {
+export default class UploadAmqpMessage extends AmqpMessageJsonAdapter {
     /**
      *
      * @param {string} entityId
      */
     constructor(entityId) {
-        super();
-        /**
-         *
-         * @type {string}
-         * @private
-         */
-        this._entityId = entityId;
-    }
-
-    /**
-     *
-     * @return {string}
-     */
-    toString() {
-        return JSON.stringify({
-            entityId: this._entityId,
+        super({
+            entityId: entityId,
         });
     }
 }

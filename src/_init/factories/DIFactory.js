@@ -61,6 +61,10 @@ import UploadAmqpMessageFactory from "../../modules/upload/amqp/UploadAmqpMessag
 import AmqpConsumersProviderInterface from "../../lib/amqp/consumer/AmqpConsumersProviderInterface";
 import AmqpConsumersProvider from "../../lib/amqp/consumer/AmqpConsumersProvider";
 import UploadAddFileAmqpConsumerFactory from "../../modules/console/amqp/UploadAddFileAmqpConsumerFactory";
+import ImageChangeAmqpObserver from "../../modules/images/dispatch/observers/ImageChangeAmqpObserver";
+import EventImageChange from "../../modules/images/dispatch/event/EventImageChange";
+import ChangeImageAmqpSender from "../../modules/images/amqp/ChangeImageAmqpSender";
+import ChangeImageAmqpMessageFactory from "../../modules/images/amqp/ChangeImageAmqpMessageFactory";
 
 export default class DIFactory {
     /**
@@ -180,6 +184,12 @@ export default class DIFactory {
                 observers[EventSqlExec.EVENT_NAME] = [new ExecSqlObserver(di.get(LoggerInterface))];
                 observers[EventSqlError.EVENT_NAME] = [
                     new ExecSqlErrorObserver(di.get(TelegramApi), di.get(LoggerInterface)),
+                ];
+                observers[EventImageChange.EVENT_NAME] = [
+                    new ImageChangeAmqpObserver(
+                        new ChangeImageAmqpSender(di.get(AmqpInterface)),
+                        new ChangeImageAmqpMessageFactory()
+                    ),
                 ];
                 return new Dispatcher(observers);
             })()

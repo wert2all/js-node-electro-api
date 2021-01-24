@@ -25,4 +25,12 @@ export default class AmqpConsumersProviderInterface {
     get(queueName) {
         throw new ImplementationError(this, "get");
     }
+
+    /**
+     * @abstract
+     * @return {string[]}
+     */
+    getQueues() {
+        throw new ImplementationError(this, "getQueues");
+    }
 }

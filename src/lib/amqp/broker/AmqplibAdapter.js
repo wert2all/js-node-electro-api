@@ -86,10 +86,10 @@ export default class AmqplibAdapter extends AmqpInterface {
      *
      * @param {string} queueName
      * @param {function} handler
-     * @return void
+     * @return {Promise}
      */
     consume(queueName, handler) {
-        this._getChannel().then((channel) => {
+        return this._getChannel().then((channel) => {
             channel.assertQueue(queueName).then(() =>
                 channel.consume(queueName, (msg) => {
                     handler(channel, msg);

@@ -11,8 +11,7 @@ import MLImageFilterEntityFactory from "../../src/modules/console/ml/entity/MLIm
 import MLProcessorFactory from "../../src/modules/console/ml/processor/MLProcessorFactory";
 import gulp from "gulp";
 import ReadConnectionInterface from "../../src/lib/db-connection/ReadConnectionInterface";
-import WatchFileFilterEntityFactory from "../../src/modules/console/watch/entity/WatchFileFilterEntityFactory";
-import ResizeDestinationPathProviderFactory from "../../src/modules/console/resize/path/ResizeDestinationPathProviderFactory";
+import AmqpConsumersProviderInterface from "../../src/lib/amqp/consumer/AmqpConsumersProviderInterface";
 
 /**
  *
@@ -59,24 +58,20 @@ gulp.task("test:ml", (cb) =>
     })
 );
 
-gulp.task("watch:images", () => {
-    DIFactory.create(ConsoleConfigFactory);
-    const pathProvider = new ResizeDestinationPathProviderFactory().factory();
-    const watchSrc = [pathProvider.getImageRootPath() + "**", "!" + pathProvider.getStorageConfig().getStoragePath()];
-    const onEvent = (filePath) => {
-        return _runTask(Function.prototype, (di) => {
-            return new GulpTask(
-                new ImageRepository(
-                    di.get(ReadConnectionInterface),
-                    new ExtendedValuesEntityManager(di.get(EntityManager)),
-                    new WatchFileFilterEntityFactory(filePath)
-                ),
-                new ResizeProcessorFactory(),
-                new ImageResultFactory()
-            );
-        });
-    };
-    return gulp.watch(watchSrc).on("add", onEvent).on("change", onEvent);
+gulp.task("consumers:run", (cb) => {
+    const di = DIFactory.create(ConsoleConfigFactory);
+    /**
+     *
+     * @type {AmqpConsumersProviderInterface}
+     */
+    const amqpConsumersProvider = di.get(AmqpConsumersProviderInterface);
+    amqpConsumersProvider.getQueues().forEach((queue) => {
+        amqpConsumersProvider
+            .get(queue)
+            .consume()
+            .catch((err) => {
+                console.log(err);
+            });
+    });
+    return cb();
 });
-
-gulp.task("watch", gulp.parallel("watch:images"));

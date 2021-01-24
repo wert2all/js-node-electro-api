@@ -60,6 +60,7 @@ import AmqplibAdapter from "../../lib/amqp/broker/AmqplibAdapter";
 import UploadAmqpMessageFactory from "../../modules/upload/amqp/UploadAmqpMessageFactory";
 import AmqpConsumersProviderInterface from "../../lib/amqp/consumer/AmqpConsumersProviderInterface";
 import AmqpConsumersProvider from "../../lib/amqp/consumer/AmqpConsumersProvider";
+import UploadAddFileAmqpConsumerFactory from "../../modules/console/amqp/UploadAddFileAmqpConsumerFactory";
 
 export default class DIFactory {
     /**
@@ -153,11 +154,17 @@ export default class DIFactory {
             )
         );
 
-        di.register(AmqpConsumersProviderInterface, new AmqpConsumersProvider());
         di.register(
             AmqpInterface,
             new AmqplibAdapter(di.get(StorageConfiguration).getSecretStorage().fetch("amqp.host.url"))
         );
+        const amqpConsumerProvider = new AmqpConsumersProvider();
+        amqpConsumerProvider.register(
+            new UploadAmqpSender(di.get(AmqpInterface)),
+            new UploadAmqpMessageFactory(),
+            new UploadAddFileAmqpConsumerFactory(di.get(AmqpInterface))
+        );
+        di.register(AmqpConsumersProviderInterface, amqpConsumerProvider);
 
         di.register(
             DispatchInterface,

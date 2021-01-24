@@ -1,5 +1,4 @@
 import ObserverInterface from "../../../../lib/dispatcher/ObserverInterface";
-import UserFilesDefinition from "../../../../db/definition/UserFilesDefinition";
 
 /**
  * @class UploadedFileAmqpObserver
@@ -34,7 +33,8 @@ export default class UploadedFileAmqpObserver extends ObserverInterface {
          * @type {UserFilesEntity}
          */
         const userFilesEntity = event.getEventData();
-        const id = userFilesEntity.getValue(UserFilesDefinition.COLUMN_ID);
+        //FIXME
+        const id = userFilesEntity.getValue("rowId");
         return this._amqp.send(this._factory.create({ entity_id: id }));
     }
 }

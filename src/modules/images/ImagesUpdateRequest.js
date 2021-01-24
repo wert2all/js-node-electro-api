@@ -29,6 +29,8 @@ import ExtendedValuesRepository from "../../db/repository/ExtendedValuesReposito
 import ExtendedValuesEntityManager from "../../extended/ExtendedValuesEntityManager";
 import ImagesValues from "../../data/entity/ext/ImagesValues";
 import ReadConnectionInterface from "../../lib/db-connection/ReadConnectionInterface";
+import EventFileUpload from "../upload/dispatch/event/EventFileUpload";
+import EventImageChange from "./dispatch/event/EventImageChange";
 
 /**
  * @class ImagesUpdateRequest
@@ -74,6 +76,12 @@ export default class ImagesUpdateRequest extends RequestInterface {
          * @private
          */
         this._extEm = new ExtendedValuesEntityManager(this._em);
+        /**
+         *
+         * @type {DispatchInterface}
+         * @private
+         */
+        this._dispatcher = null;
     }
 
     /**
@@ -92,6 +100,7 @@ export default class ImagesUpdateRequest extends RequestInterface {
         this._extRepository.setConnection(readConnection);
         this._repository.setConnection(readConnection);
         this._applyLogger();
+        this._dispatcher = dispatcher;
         return this;
     }
 
@@ -122,6 +131,8 @@ export default class ImagesUpdateRequest extends RequestInterface {
                 const savedExtData = await this._extEm.save(extEntity);
                 response.setData("dump", savedExtData);
                 response.setStatus(true);
+
+                await this._dispatcher.dispatch(new EventImageChange(imageData));
             } else {
                 const error = new ImageListNoImage();
                 response.setStatus(false);

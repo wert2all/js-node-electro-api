@@ -57,6 +57,12 @@ export default class UploadPostRequest extends RequestInterface {
          * @private
          */
         this._em = DI.getInstance().get(EntityManager);
+        /**
+         *
+         * @type {DispatchInterface}
+         * @private
+         */
+        this._dispatcher = null;
     }
 
     /**

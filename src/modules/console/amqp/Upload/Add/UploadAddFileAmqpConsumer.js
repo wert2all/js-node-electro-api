@@ -1,4 +1,4 @@
-import AmqpConsumerInterface from "../../../lib/amqp/consumer/AmqpConsumerInterface";
+import AmqpConsumerInterface from "../../../../../lib/amqp/consumer/AmqpConsumerInterface";
 
 /**
  * @class UploadAddFileAmqpConsumer
@@ -34,6 +34,10 @@ export default class UploadAddFileAmqpConsumer extends AmqpConsumerInterface {
         this._messageFactory = messageFactory;
     }
 
+    /**
+     *
+     * @return {Promise<void>}
+     */
     consume() {
         return this._amqp.consume(this._queueName, (channel, msg) => {
             /**

@@ -60,11 +60,12 @@ import AmqplibAdapter from "../../lib/amqp/broker/AmqplibAdapter";
 import UploadAmqpMessageFactory from "../../modules/upload/amqp/UploadAmqpMessageFactory";
 import AmqpConsumersProviderInterface from "../../lib/amqp/consumer/AmqpConsumersProviderInterface";
 import AmqpConsumersProvider from "../../lib/amqp/consumer/AmqpConsumersProvider";
-import UploadAddFileAmqpConsumerFactory from "../../modules/console/amqp/UploadAddFileAmqpConsumerFactory";
+import UploadAddFileAmqpConsumerFactory from "../../modules/console/amqp/Upload/Add/UploadAddFileAmqpConsumerFactory";
 import ImageChangeAmqpObserver from "../../modules/images/dispatch/observers/ImageChangeAmqpObserver";
 import EventImageChange from "../../modules/images/dispatch/event/EventImageChange";
 import ChangeImageAmqpSender from "../../modules/images/amqp/ChangeImageAmqpSender";
 import ChangeImageAmqpMessageFactory from "../../modules/images/amqp/ChangeImageAmqpMessageFactory";
+import ChangeImageFileAmqpConsumerFactory from "../../modules/console/amqp/Image/Change/ChangeImageFileAmqpConsumerFactory";
 
 export default class DIFactory {
     /**
@@ -167,6 +168,11 @@ export default class DIFactory {
             new UploadAmqpSender(di.get(AmqpInterface)),
             new UploadAmqpMessageFactory(),
             new UploadAddFileAmqpConsumerFactory(di.get(AmqpInterface))
+        );
+        amqpConsumerProvider.register(
+            new ChangeImageAmqpSender(di.get(AmqpInterface)),
+            new ChangeImageAmqpMessageFactory(),
+            new ChangeImageFileAmqpConsumerFactory(di.get(AmqpInterface))
         );
         di.register(AmqpConsumersProviderInterface, amqpConsumerProvider);
 

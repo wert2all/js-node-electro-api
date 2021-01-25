@@ -1,12 +1,12 @@
-import UploadAddFileAmqpConsumer from "./UploadAddFileAmqpConsumer";
-import AmqpConsumerFactoryInterface from "../../../lib/amqp/consumer/AmqpConsumerFactoryInterface";
+import AmqpConsumerFactoryInterface from "../../../../../lib/amqp/consumer/AmqpConsumerFactoryInterface";
+import ChangeImageFileAmqpConsumer from "./ChangeImageFileAmqpConsumer";
 
 /**
- * @class UploadAddFileAmqpConsumerFactory
+ * @class ChangeImageFileAmqpConsumerFactory
  * @extends AmqpConsumerFactoryInterface
  * @type AmqpConsumerFactoryInterface
  */
-export default class UploadAddFileAmqpConsumerFactory extends AmqpConsumerFactoryInterface {
+export default class ChangeImageFileAmqpConsumerFactory extends AmqpConsumerFactoryInterface {
     /**
      *
      * @param {AmqpInterface} amqp
@@ -28,6 +28,6 @@ export default class UploadAddFileAmqpConsumerFactory extends AmqpConsumerFactor
      * @return {AmqpConsumerInterface}
      */
     create(queueName, messageFactory) {
-        return new UploadAddFileAmqpConsumer(queueName, this._amqp, messageFactory);
+        return new ChangeImageFileAmqpConsumer(queueName, this._amqp, messageFactory);
     }
 }

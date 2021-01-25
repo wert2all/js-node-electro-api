@@ -8,7 +8,7 @@ import ImplementationError from "../../implementation-error/ImplementationError"
 export default class AmqpConsumerInterface {
     /**
      * @abstract
-     * @return {Promise<void>}
+     * @return {Promise<ConsumeHandlerHolder>}
      */
     consume() {
         throw new ImplementationError(this, "consume");

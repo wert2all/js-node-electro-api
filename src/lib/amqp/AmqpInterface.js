@@ -19,10 +19,9 @@ export default class AmqpInterface {
     /**
      * @abstract
      * @param {string} queueName
-     * @param {function} handler
-     * @return {Promise}
+     * @return {Promise<ConsumeHandlerHolder>}
      */
-    consume(queueName, handler) {
+    consume(queueName) {
         throw new ImplementationError(this, "consume");
     }
 }

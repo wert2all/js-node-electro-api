@@ -20,10 +20,11 @@ export default class AmqpConsumersProvider extends AmqpConsumersProviderInterfac
      * @param {AmqpSenderInterface} sender
      * @param {AmqpMessageFactoryInterface} messageFactory
      * @param {AmqpConsumerFactoryInterface} consumerFactory
-     * @returns {void}
+     * @returns {AmqpConsumersProviderInterface}
      */
     register(sender, messageFactory, consumerFactory) {
         this._consumers[sender.getQueueName()] = consumerFactory.create(sender.getQueueName(), messageFactory);
+        return this;
     }
 
     /**

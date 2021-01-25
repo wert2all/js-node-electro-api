@@ -1,18 +1,18 @@
 import AmqpMessageJsonAdapter from "../../../lib/amqp/message/adapter/AmqpMessageJsonAdapter";
 
 /**
- * @class UploadAmqpMessage
+ * @class FileAmqpMessage
  * @type AmqpMessageInterface
  * @extends AmqpMessageJsonAdapter
  */
-export default class UploadAmqpMessage extends AmqpMessageJsonAdapter {
+export default class FileAmqpMessage extends AmqpMessageJsonAdapter {
     /**
      *
      * @param {string} entityId
      */
     constructor(entityId) {
         super({
-            entityId: entityId,
+            entity_id: entityId,
         });
     }
 }

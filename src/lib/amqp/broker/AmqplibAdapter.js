@@ -1,5 +1,6 @@
 import AmqpInterface from "../AmqpInterface";
 import amqp from "amqplib";
+import ConsumeHandlerHolder from "../consumer/ConsumeHandlerHolder";
 
 /**
  * @class AmqplibAdapter
@@ -85,16 +86,22 @@ export default class AmqplibAdapter extends AmqpInterface {
     /**
      *
      * @param {string} queueName
-     * @param {function} handler
-     * @return {Promise}
+     * @return {Promise<ConsumeHandlerHolder>}
      */
-    consume(queueName, handler) {
-        return this._getChannel().then((channel) => {
-            channel.assertQueue(queueName).then(() =>
-                channel.consume(queueName, (msg) => {
-                    handler(channel, msg);
+    consume(queueName) {
+        return new Promise((resolve, reject) => {
+            this._getChannel()
+                .then((channel) => {
+                    channel
+                        .assertQueue(queueName)
+                        .then(() =>
+                            channel.consume(queueName, (msg) => {
+                                resolve(new ConsumeHandlerHolder(channel, msg));
+                            })
+                        )
+                        .catch(reject);
                 })
-            );
+                .catch(reject);
         });
     }
 }

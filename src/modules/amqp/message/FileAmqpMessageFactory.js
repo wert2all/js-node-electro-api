@@ -1,12 +1,12 @@
-import UploadAmqpMessage from "./UploadAmqpMessage";
+import FileAmqpMessage from "./FileAmqpMessage";
 import AmqpMessageFactoryInterface from "../../../lib/amqp/message/AmqpMessageFactoryInterface";
 
 /**
- * @class UploadAmqpMessageFactory
+ * @class FileAmqpMessageFactory
  * @extends AmqpMessageFactoryInterface
  * @type AmqpMessageFactoryInterface
  */
-export default class UploadAmqpMessageFactory extends AmqpMessageFactoryInterface {
+export default class FileAmqpMessageFactory extends AmqpMessageFactoryInterface {
     /**
      *
      * @param {{}} object
@@ -15,7 +15,7 @@ export default class UploadAmqpMessageFactory extends AmqpMessageFactoryInterfac
      */
     create(object) {
         if (object.hasOwnProperty("entity_id")) {
-            return new UploadAmqpMessage(object.entity_id);
+            return new FileAmqpMessage(object.entity_id);
         }
         return null;
     }

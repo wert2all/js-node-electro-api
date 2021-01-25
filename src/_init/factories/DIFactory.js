@@ -54,18 +54,15 @@ import MysqlWriteConnection from "../../lib/db-connection/adapter/mysql/MysqlWri
 import MysqlConnectionFactory from "../../lib/db-connection/adapter/mysql/factory/MysqlConnectionFactory";
 import MysqlConnectionDelegate from "../../lib/db-connection/adapter/mysql/MysqlConnectionDelegate";
 import UploadedFileAmqpObserver from "../../modules/upload/dispatch/observers/UploadedFileAmqpObserver";
-import UploadAmqpSender from "../../modules/upload/amqp/UploadAmqpSender";
+import UploadAmqpProducer from "../../modules/upload/amqp/UploadAmqpProducer";
 import AmqpInterface from "../../lib/amqp/AmqpInterface";
 import AmqplibAdapter from "../../lib/amqp/broker/AmqplibAdapter";
-import UploadAmqpMessageFactory from "../../modules/upload/amqp/UploadAmqpMessageFactory";
+import FileAmqpMessageFactory from "../../modules/amqp/message/FileAmqpMessageFactory";
 import AmqpConsumersProviderInterface from "../../lib/amqp/consumer/AmqpConsumersProviderInterface";
-import AmqpConsumersProvider from "../../lib/amqp/consumer/AmqpConsumersProvider";
-import UploadAddFileAmqpConsumerFactory from "../../modules/console/amqp/Upload/Add/UploadAddFileAmqpConsumerFactory";
 import ImageChangeAmqpObserver from "../../modules/images/dispatch/observers/ImageChangeAmqpObserver";
 import EventImageChange from "../../modules/images/dispatch/event/EventImageChange";
-import ChangeImageAmqpSender from "../../modules/images/amqp/ChangeImageAmqpSender";
-import ChangeImageAmqpMessageFactory from "../../modules/images/amqp/ChangeImageAmqpMessageFactory";
-import ChangeImageFileAmqpConsumerFactory from "../../modules/console/amqp/Image/Change/ChangeImageFileAmqpConsumerFactory";
+import ChangeImageAmqpProducer from "../../modules/images/amqp/ChangeImageAmqpProducer";
+import AMQPProviderFactory from "./AMQPProviderFactory";
 
 export default class DIFactory {
     /**
@@ -163,19 +160,8 @@ export default class DIFactory {
             AmqpInterface,
             new AmqplibAdapter(di.get(StorageConfiguration).getSecretStorage().fetch("amqp.host.url"))
         );
-        const amqpConsumerProvider = new AmqpConsumersProvider();
-        amqpConsumerProvider.register(
-            new UploadAmqpSender(di.get(AmqpInterface)),
-            new UploadAmqpMessageFactory(),
-            new UploadAddFileAmqpConsumerFactory(di.get(AmqpInterface))
-        );
-        amqpConsumerProvider.register(
-            new ChangeImageAmqpSender(di.get(AmqpInterface)),
-            new ChangeImageAmqpMessageFactory(),
-            new ChangeImageFileAmqpConsumerFactory(di.get(AmqpInterface))
-        );
-        di.register(AmqpConsumersProviderInterface, amqpConsumerProvider);
 
+        di.register(AmqpConsumersProviderInterface, new AMQPProviderFactory().create(di));
         di.register(
             DispatchInterface,
             (() => {
@@ -183,8 +169,8 @@ export default class DIFactory {
                 observers[EventFileUpload.EVENT_NAME] = [
                     new UploadedFileTelegramObserver(di.get(TelegramApi)),
                     new UploadedFileAmqpObserver(
-                        new UploadAmqpSender(di.get(AmqpInterface)),
-                        new UploadAmqpMessageFactory()
+                        new UploadAmqpProducer(di.get(AmqpInterface)),
+                        new FileAmqpMessageFactory()
                     ),
                 ];
                 observers[EventSqlExec.EVENT_NAME] = [new ExecSqlObserver(di.get(LoggerInterface))];
@@ -193,8 +179,8 @@ export default class DIFactory {
                 ];
                 observers[EventImageChange.EVENT_NAME] = [
                     new ImageChangeAmqpObserver(
-                        new ChangeImageAmqpSender(di.get(AmqpInterface)),
-                        new ChangeImageAmqpMessageFactory()
+                        new ChangeImageAmqpProducer(di.get(AmqpInterface)),
+                        new FileAmqpMessageFactory()
                     ),
                 ];
                 return new Dispatcher(observers);

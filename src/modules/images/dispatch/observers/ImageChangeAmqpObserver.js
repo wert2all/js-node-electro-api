@@ -1,5 +1,5 @@
 import ObserverInterface from "../../../../lib/dispatcher/ObserverInterface";
-import EntityInterface from "../../../../lib/db-entity/EntityInterface";
+import UserFilesDefinition from "../../../../db/definition/UserFilesDefinition";
 
 /**
  * @class ImageChangeAmqpObserver
@@ -30,7 +30,7 @@ export default class ImageChangeAmqpObserver extends ObserverInterface {
 
     notify(event) {
         return this._amqp.send(
-            this._factory.create({ entity_id: event.getEventData().getValue(EntityInterface.ROW_ID) })
+            this._factory.create({ entity_id: event.getEventData().getValue(UserFilesDefinition.COLUMN_ID) })
         );
     }
 }

@@ -1,11 +1,11 @@
 import AmqpSenderInterface from "../../../lib/amqp/sender/AmqpSenderInterface";
 
 /**
- * @class UploadAmqpSender
+ * @class UploadAmqpProducer
  * @extends  AmqpSenderInterface
  * @type AmqpSenderInterface
  */
-export default class UploadAmqpSender extends AmqpSenderInterface {
+export default class UploadAmqpProducer extends AmqpSenderInterface {
     static QUEUE = "amqp.upload.file";
 
     /**
@@ -36,6 +36,6 @@ export default class UploadAmqpSender extends AmqpSenderInterface {
      * @return {string}
      */
     getQueueName() {
-        return UploadAmqpSender.QUEUE;
+        return UploadAmqpProducer.QUEUE;
     }
 }

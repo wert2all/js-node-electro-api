@@ -1,12 +1,11 @@
 import AmqpConsumerInterface from "../../../../../lib/amqp/consumer/AmqpConsumerInterface";
-import ImageResizeAmqpProducer from "../Resize/ImageResizeAmqpProducer";
 
 /**
- * @class ChangeImageFileAmqpConsumer
+ * @class ImageResizeAmqpConsumer
  * @extends AmqpConsumerInterface
  * @type AmqpConsumerInterface
  */
-export default class ChangeImageFileAmqpConsumer extends AmqpConsumerInterface {
+export default class ImageResizeAmqpConsumer extends AmqpConsumerInterface {
     /**
      *
      * @param {AmqpInterface} amqp
@@ -41,26 +40,8 @@ export default class ChangeImageFileAmqpConsumer extends AmqpConsumerInterface {
      */
     consume() {
         return this._amqp.consume(this._queueName, (channel, msg) => {
-            /**
-             *
-             * @type {AmqpMessageInterface|null}
-             */
-            const message = this._messageFactory.fromMessage(msg);
-            if (message != null) {
-                const producer = new ImageResizeAmqpProducer(this._amqp);
-                producer
-                    .send(message)
-                    .then()
-                    .catch((err) => {
-                        console.log(err);
-                        channel.reject(msg, false);
-                    });
-                console.log(this._queueName + ": done");
-                channel.ack(msg);
-            } else {
-                console.log("rejecting message");
-                channel.reject(msg, false);
-            }
+            console.log("image resizing");
+            channel.ack(msg);
         });
     }
 }

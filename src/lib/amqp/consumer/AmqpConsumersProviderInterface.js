@@ -11,7 +11,7 @@ export default class AmqpConsumersProviderInterface {
      * @param {AmqpSenderInterface} sender
      * @param {AmqpMessageFactoryInterface} messageFactory
      * @param {AmqpConsumerFactoryInterface} consumerFactory
-     * @returns {void}
+     * @returns {AmqpConsumersProviderInterface}
      */
     register(sender, messageFactory, consumerFactory) {
         throw new ImplementationError(this, "register");

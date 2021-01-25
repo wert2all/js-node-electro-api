@@ -1,11 +1,11 @@
 import AmqpSenderInterface from "../../../lib/amqp/sender/AmqpSenderInterface";
 
 /**
- * @class ChangeImageAmqpSender
+ * @class ChangeImageAmqpProducer
  * @extends AmqpSenderInterface
  * @type AmqpSenderInterface
  */
-export default class ChangeImageAmqpSender extends AmqpSenderInterface {
+export default class ChangeImageAmqpProducer extends AmqpSenderInterface {
     static QUEUE = "amqp.change.file";
 
     /**
@@ -27,7 +27,7 @@ export default class ChangeImageAmqpSender extends AmqpSenderInterface {
      * @return {string}
      */
     getQueueName() {
-        return ChangeImageAmqpSender.QUEUE;
+        return ChangeImageAmqpProducer.QUEUE;
     }
 
     /**

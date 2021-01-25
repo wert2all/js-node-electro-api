@@ -2,11 +2,12 @@ import AmqpConsumersProvider from "../../lib/amqp/consumer/AmqpConsumersProvider
 import UploadAmqpProducer from "../../modules/upload/amqp/UploadAmqpProducer";
 import AmqpInterface from "../../lib/amqp/AmqpInterface";
 import FileAmqpMessageFactory from "../../modules/amqp/message/FileAmqpMessageFactory";
-import UploadAddFileAmqpConsumerFactory from "../../modules/console/amqp/Upload/Add/UploadAddFileAmqpConsumerFactory";
 import ChangeImageAmqpProducer from "../../modules/images/amqp/ChangeImageAmqpProducer";
-import ChangeImageFileAmqpConsumerFactory from "../../modules/console/amqp/Image/Change/ChangeImageFileAmqpConsumerFactory";
 import ImageResizeAmqpProducer from "../../modules/console/amqp/Image/Resize/ImageResizeAmqpProducer";
-import ImageResizeAmqpConsumerFactory from "../../modules/console/amqp/Image/Resize/ImageResizeAmqpConsumerFactory";
+import ChangeImageProcessor from "../../modules/console/amqp/Image/Change/ChangeImageProcessor";
+import AmqpConsumerFactory from "../../lib/amqp/consumer/AmqpConsumerFactory";
+import ImageResizeProcessor from "../../modules/console/amqp/Image/Resize/ImageResizeProcessor";
+import UploadAddFileProcessor from "../../modules/console/amqp/Upload/Add/UploadAddFileProcessor";
 
 /**
  * @class AMQPProviderFactory
@@ -28,17 +29,17 @@ export default class AMQPProviderFactory {
             .register(
                 new UploadAmqpProducer(amqpBroker),
                 new FileAmqpMessageFactory(),
-                new UploadAddFileAmqpConsumerFactory(amqpBroker)
+                new AmqpConsumerFactory(amqpBroker, new UploadAddFileProcessor(amqpBroker))
             )
             .register(
                 new ChangeImageAmqpProducer(amqpBroker),
                 new FileAmqpMessageFactory(),
-                new ChangeImageFileAmqpConsumerFactory(amqpBroker)
+                new AmqpConsumerFactory(amqpBroker, new ChangeImageProcessor(amqpBroker))
             )
             .register(
                 new ImageResizeAmqpProducer(amqpBroker),
                 new FileAmqpMessageFactory(),
-                new ImageResizeAmqpConsumerFactory(amqpBroker)
+                new AmqpConsumerFactory(amqpBroker, new ImageResizeProcessor(amqpBroker))
             );
     }
 }

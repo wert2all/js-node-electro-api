@@ -2,7 +2,7 @@
 module.exports = {
     apps: [
         {
-            name: "electro-watch",
+            name: "electro-consumers",
             script: "node ./dist/_infra/prod/consumers.js",
             watch: false,
             env: {

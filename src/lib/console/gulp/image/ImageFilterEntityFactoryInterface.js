@@ -8,7 +8,7 @@ import ImplementationError from "../../../implementation-error/ImplementationErr
 export default class ImageFilterEntityFactoryInterface {
     /**
      * @abstract
-     * @return UserFilesEntity
+     * @return {UserFilesEntity}
      */
     factory() {
         throw ImplementationError(this, "factory");

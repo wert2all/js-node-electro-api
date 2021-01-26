@@ -14,7 +14,7 @@
         "test:unit": "gulp test:unit",
         "test": "npm run test:static & npm run test:unit ",
         "release": "standard-version",
-        "consumers:run": "gulp -f _infra/prod/gulpfile.babel.js consumers:run"
+        "consumers:run": "node _infra/prod/consumers.js"
     },
     "husky": {
         "hooks": {

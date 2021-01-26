@@ -57,21 +57,3 @@ gulp.task("test:ml", (cb) =>
         );
     })
 );
-
-gulp.task("consumers:run", (cb) => {
-    const di = DIFactory.create(ConsoleConfigFactory);
-    /**
-     *
-     * @type {AmqpConsumersProviderInterface}
-     */
-    const amqpConsumersProvider = di.get(AmqpConsumersProviderInterface);
-    amqpConsumersProvider.getQueues().forEach((queue) => {
-        amqpConsumersProvider
-            .get(queue)
-            .consume()
-            .catch((err) => {
-                console.log(err);
-            });
-    });
-    return cb();
-});

@@ -8,6 +8,13 @@ import ChangeImageProcessor from "../../modules/console/amqp/Image/Change/Change
 import AmqpConsumerFactory from "../../lib/amqp/consumer/AmqpConsumerFactory";
 import ImageResizeProcessor from "../../modules/console/amqp/Image/Resize/ImageResizeProcessor";
 import UploadAddFileProcessor from "../../modules/console/amqp/Upload/Add/UploadAddFileProcessor";
+import ImageRepository from "../../lib/console/gulp/image/default/ImageRepository";
+import ReadConnectionInterface from "../../lib/db-connection/ReadConnectionInterface";
+import ExtendedValuesEntityManager from "../../extended/ExtendedValuesEntityManager";
+import EntityManager from "../../lib/db-entity-manager/EntityManager";
+import ResizeImageFilterEntityFactory from "../../modules/console/resize/entity/ResizeImageFilterEntityFactory";
+import ImageResultFactory from "../../lib/console/gulp/image/default/ImageResultFactory";
+import ResizeProcessorFactory from "../../modules/console/resize/ResizeProcessorFactory";
 
 /**
  * @class AMQPProviderFactory
@@ -39,7 +46,19 @@ export default class AMQPProviderFactory {
             .register(
                 new ImageResizeAmqpProducer(amqpBroker),
                 new FileAmqpMessageFactory(),
-                new AmqpConsumerFactory(amqpBroker, new ImageResizeProcessor(amqpBroker))
+                new AmqpConsumerFactory(
+                    amqpBroker,
+                    new ImageResizeProcessor(
+                        amqpBroker,
+                        new ImageRepository(
+                            di.get(ReadConnectionInterface),
+                            new ExtendedValuesEntityManager(di.get(EntityManager)),
+                            new ResizeImageFilterEntityFactory()
+                        ),
+                        new ResizeProcessorFactory(),
+                        new ImageResultFactory()
+                    )
+                )
             );
     }
 }

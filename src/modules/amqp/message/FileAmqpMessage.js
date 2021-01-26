@@ -14,5 +14,19 @@ export default class FileAmqpMessage extends AmqpMessageJsonAdapter {
         super({
             entity_id: entityId,
         });
+        /**
+         *
+         * @type {string}
+         * @private
+         */
+        this._entityid = entityId;
+    }
+
+    /**
+     *
+     * @return {string}
+     */
+    getEntityId() {
+        return this._entityid;
     }
 }

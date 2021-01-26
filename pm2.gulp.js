@@ -3,7 +3,7 @@ module.exports = {
     apps: [
         {
             name: "electro-watch",
-            script: "gulp -f ./dist/_infra/prod/gulpfile.babel.js watch:images",
+            script: "node ./dist/_infra/prod/consumers.js",
             watch: false,
             env: {
                 NODE_ENV: "development",

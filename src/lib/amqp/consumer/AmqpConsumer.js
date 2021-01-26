@@ -1,4 +1,5 @@
 import AmqpConsumerInterface from "./AmqpConsumerInterface";
+import AmqpConsumeHandler from "./handler/AmqpConsumeHandler";
 
 /**
  * @class AmqpConsumer
@@ -46,16 +47,6 @@ export default class AmqpConsumer extends AmqpConsumerInterface {
      * @return {Promise<void>}
      */
     consume() {
-        return this._amqp
-            .consume(this._queueName)
-            .then((messageHolder) =>
-                this._processor.process(
-                    messageHolder.getChannel(),
-                    this._messageFactory.fromMessage(messageHolder.getMessage()),
-                    messageHolder.getMessage()
-                )
-            )
-            .then(() => console.log(this._queueName + ": done"))
-            .catch((err) => console.log(err));
+        return this._amqp.consume(this._queueName, new AmqpConsumeHandler(this._processor, this._messageFactory));
     }
 }

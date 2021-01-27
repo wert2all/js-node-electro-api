@@ -33,7 +33,12 @@ module.exports = {
             },
             {
                 test: /\.js$/,
-                use: ["babel-loader"],
+                use: {
+                    loader: "@sucrase/webpack-loader",
+                    options: {
+                        transforms: ["imports"],
+                    },
+                },
             },
         ],
     },

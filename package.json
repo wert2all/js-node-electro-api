@@ -7,7 +7,7 @@
         "build": "export NODE_ENV=production && gulp clean && gulp default",
         "build:src": "gulp build:src && gulp build:infra && gulp copy",
         "dev": "npm run devCluster & npm run devBuild",
-        "devCluster": "nodemon dist/src/runCluster.js",
+        "devCluster": "pm2 start ecosystem.config.js --no-daemon",
         "devBuild": "gulp dev",
         "images:resize": "gulp -f _infra/prod/gulpfile.js images:resize",
         "test:static": "prettier --check .",
@@ -19,12 +19,6 @@
         "hooks": {
             "commit-msg": "commitlint -E HUSKY_GIT_PARAMS -g './_config/git/commitlint.js'"
         }
-    },
-    "nodemonConfig": {
-        "ignore": [
-            "assets/*",
-            "templates/*"
-        ]
     },
     "config": {
         "commitizen": {
@@ -76,7 +70,6 @@
         "jest-cli": "^26.6.3",
         "less": "^4.1.0",
         "less-loader": "^7.3.0",
-        "nodemon": "^2.0.7",
         "npm-check-updates": "^11.1.1",
         "plugin-error": "^1.0.1",
         "prettier": "2.2.1",

@@ -4,11 +4,8 @@ module.exports = {
         {
             name: "electro",
             script: "./dist/src/runOne.js",
-            watch: ["./dist"],
-            env: {
-                NODE_ENV: "development",
-            },
-            ignore_watch: ["logs"],
+            watch: ["./dist/src/"],
+            watch_delay: 3000,
             env_production: {
                 NODE_ENV: "production",
             },

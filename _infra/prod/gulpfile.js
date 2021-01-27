@@ -11,7 +11,6 @@ import MLImageFilterEntityFactory from "../../src/modules/console/ml/entity/MLIm
 import MLProcessorFactory from "../../src/modules/console/ml/processor/MLProcessorFactory";
 import gulp from "gulp";
 import ReadConnectionInterface from "../../src/lib/db-connection/ReadConnectionInterface";
-import AmqpConsumersProviderInterface from "../../src/lib/amqp/consumer/AmqpConsumersProviderInterface";
 
 /**
  *

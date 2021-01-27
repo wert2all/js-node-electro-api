@@ -9,7 +9,7 @@
         "dev": "npm run devCluster & npm run devBuild",
         "devCluster": "nodemon dist/src/runCluster.js",
         "devBuild": "gulp dev",
-        "images:resize": "gulp -f _infra/prod/gulpfile.babel.js images:resize",
+        "images:resize": "gulp -f _infra/prod/gulpfile.js images:resize",
         "test:static": "prettier --check .",
         "test:unit": "gulp test:unit",
         "test": "npm run test:static & npm run test:unit ",
@@ -34,14 +34,16 @@
             "config": "_config/git/commitizen.js"
         }
     },
+    "jest": {
+        "transform": {
+            ".(js|jsx|ts|tsx)": "@sucrase/jest-plugin"
+        }
+    },
     "dependencies": {
-        "@babel/core": "^7.12.10",
-        "@babel/plugin-proposal-class-properties": "^7.12.1",
-        "@babel/plugin-transform-runtime": "^7.12.10",
-        "@babel/preset-env": "^7.12.11",
-        "@babel/register": "^7.12.10",
-        "@babel/runtime": "^7.12.5",
-        "@sentry/node": "^6.0.1",
+        "@sentry/node": "^6.0.2",
+        "@sucrase/gulp-plugin": "^2.0.0",
+        "@sucrase/jest-plugin": "^2.0.0",
+        "@sucrase/webpack-loader": "^2.0.0",
         "amqplib": "^0.6.0",
         "body-parser": "^1.19.0",
         "cropperjs": "^1.5.9",
@@ -49,24 +51,23 @@
         "express-fileupload": "^1.2.1",
         "form-data": "^3.0.0",
         "gm": "^1.23.1",
-        "google-auth-library": "^6.1.4",
+        "google-auth-library": "^6.1.6",
         "gulp": "^4.0.2",
         "mysql2": "^2.2.5",
         "node-fetch": "^2.6.1",
         "pm2": "^4.5.1",
         "pug": "^3.0.0",
-        "uikit": "^3.6.13"
+        "sucrase": "^3.17.0",
+        "uikit": "^3.6.14"
     },
     "devDependencies": {
         "@commitlint/cli": "^11.0.0",
         "@fortawesome/fontawesome-free": "^5.15.2",
         "@jest/core": "^26.6.3",
         "@jest/globals": "^26.6.2",
-        "babel-loader": "^8.2.2",
-        "browser-sync": "^2.26.13",
+        "browser-sync": "^2.26.14",
         "css-loader": "^5.0.1",
         "cz-customizable": "^6.3.0",
-        "gulp-babel": "^8.0.0",
         "gulp-clean": "^0.4.0",
         "gulp-cli": "^2.3.0",
         "gulp-jest": "^4.0.3",
@@ -76,7 +77,7 @@
         "less": "^4.1.0",
         "less-loader": "^7.3.0",
         "nodemon": "^2.0.7",
-        "npm-check-updates": "^11.0.2",
+        "npm-check-updates": "^11.1.1",
         "plugin-error": "^1.0.1",
         "prettier": "2.2.1",
         "standard-version": "^9.1.0",
@@ -84,6 +85,6 @@
         "terser-webpack-plugin": "^4.2.3",
         "through2": "^4.0.2",
         "webpack": "^4.44.2",
-        "webpack-stream": "^6.1.1"
+        "webpack-stream": "^6.1.2"
     }
 }

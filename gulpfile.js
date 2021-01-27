@@ -1,11 +1,14 @@
 const gulp = require("gulp");
-const babel = require("gulp-babel");
 const clean = require("gulp-clean");
 const PluginError = require("plugin-error");
 const webpack = require("webpack-stream");
 const browserSync = require("browser-sync").create();
 const runCLI = require("@jest/core").runCLI;
 const through2 = require("through2");
+const sucraseImport = require("@sucrase/gulp-plugin");
+const sucrase = function () {
+    return sucraseImport({ transforms: ["imports"] });
+};
 
 const jest = (options = {}) => {
     return through2.obj((file, enc, cb) => {
@@ -45,8 +48,9 @@ gulp.task("build:webpack", () => {
         .pipe(gulp.dest("dist/assets/"));
 });
 
-gulp.task("build:src", () => gulp.src(["src/**/*"]).pipe(babel()).pipe(gulp.dest("dist/src/")));
-gulp.task("build:infra", () => gulp.src("./_infra/prod/**/*").pipe(babel()).pipe(gulp.dest("dist/_infra/prod/")));
+gulp.task("build:tmp", () => gulp.src(["tmp/**/*"]).pipe(sucrase()).pipe(gulp.dest("dist/tmp/")));
+gulp.task("build:src", () => gulp.src(["src/**/*"]).pipe(sucrase()).pipe(gulp.dest("dist/src/")));
+gulp.task("build:infra", () => gulp.src("./_infra/prod/**/*").pipe(sucrase()).pipe(gulp.dest("dist/_infra/prod/")));
 gulp.task("build", gulp.parallel("build:src", "build:webpack", "build:infra"));
 
 gulp.task("default", gulp.parallel("build", "copy"));
@@ -71,12 +75,11 @@ gulp.task("serve", gulp.series("serve:init"));
 // Watch files
 function watchFiles() {
     gulp.watch(["./src/**/*"], gulp.series("build:src", "serve:reload"));
+    gulp.watch(["./_infra/prod/**/*"], gulp.series("build:infra"));
     gulp.watch("./assets/**/*", gulp.series("build:webpack", "copy:images", "serve:reload"));
     gulp.watch("./templates/**/*", gulp.series("copy:templates", "serve:reload"));
 }
 
 const watch = gulp.series("serve", watchFiles);
-
-gulp.task("build:tmp", () => gulp.src(["tmp/**/*"]).pipe(babel()).pipe(gulp.dest("dist/tmp/")));
 
 exports.dev = watch;

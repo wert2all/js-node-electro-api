@@ -57,7 +57,7 @@ gulp.task("serve:init", (cb) => {
     browserSync.init({
         proxy: "localhost:3000",
         port: 3001,
-        reloadDelay: 15000,
+        reloadDelay: 1000,
     });
     return cb();
 });

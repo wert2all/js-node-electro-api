@@ -13,8 +13,10 @@ export default class ImageResizeProcessor extends AmqpConsumeProcessorInterface 
      * @param {ImageRepository} imageRepository
      * @param {ProcessorFactoryInterface} processorFactory
      * @param {ImageResultFactoryInterface} resultFactory
+     * @param {AmqpSenderInterface} successProducer
+     * @param {AmqpMessageFactoryInterface} successMessageFactory
      */
-    constructor(amqp, imageRepository, processorFactory, resultFactory) {
+    constructor(amqp, imageRepository, processorFactory, resultFactory, successProducer, successMessageFactory) {
         super();
         /**
          *
@@ -40,6 +42,18 @@ export default class ImageResizeProcessor extends AmqpConsumeProcessorInterface 
          * @private
          */
         this._resultFactory = resultFactory;
+        /**
+         *
+         * @type {AmqpSenderInterface}
+         * @private
+         */
+        this._successProducer = successProducer;
+        /**
+         *
+         * @type {AmqpMessageFactoryInterface}
+         * @private
+         */
+        this._successMessageFactory = successMessageFactory;
     }
 
     /**
@@ -72,11 +86,9 @@ export default class ImageResizeProcessor extends AmqpConsumeProcessorInterface 
                                 }
                                 return result;
                             })
-                            .then((result) => {
-                                imageManager.setResult(result);
-                                return imageManager.stopProcess();
-                            })
-                            .then();
+                            .then((result) => imageManager.setResult(result))
+                            .then(() => this._successProducer.send(this._successMessageFactory.create({})))
+                            .then(() => imageManager.stopProcess());
                     }
                     return null;
                 })

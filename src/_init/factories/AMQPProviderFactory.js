@@ -35,7 +35,7 @@ export default class AMQPProviderFactory {
          */
         const amqpBroker = di.get(AmqpInterface);
         const amqpConsumerProvider = new AmqpConsumersProvider();
-        return amqpConsumerProvider
+        amqpConsumerProvider
             .register(
                 new UploadAmqpProducer(amqpBroker),
                 new FileAmqpMessageFactory(),
@@ -45,7 +45,9 @@ export default class AMQPProviderFactory {
                 new ChangeImageAmqpProducer(amqpBroker),
                 new FileAmqpMessageFactory(),
                 new AmqpConsumerFactory(amqpBroker, new ChangeImageProcessor(amqpBroker))
-            )
+            );
+        const imageSuccessProducer = new DefaultAmqpProducer(amqpBroker, "amqp.image.resize.ok");
+        amqpConsumerProvider
             .register(
                 new ImageResizeAmqpProducer(amqpBroker),
                 new FileAmqpMessageFactory(),
@@ -59,14 +61,17 @@ export default class AMQPProviderFactory {
                             new ResizeImageFilterEntityFactory()
                         ),
                         new ResizeProcessorFactory(),
-                        new ImageResultFactory()
+                        new ImageResultFactory(),
+                        imageSuccessProducer,
+                        new DefaultAmqpMessageFactory()
                     )
                 )
             )
             .register(
-                new DefaultAmqpProducer(amqpBroker, "amqp.image.resize.ok"),
+                imageSuccessProducer,
                 new DefaultAmqpMessageFactory(),
                 new AmqpConsumerFactory(amqpBroker, new DefaultAmqpProcessor())
             );
+        return amqpConsumerProvider;
     }
 }

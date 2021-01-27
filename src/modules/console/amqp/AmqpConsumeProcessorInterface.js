@@ -11,9 +11,9 @@ export default class AmqpConsumeProcessorInterface {
      * @return {Promise}
      * @param channel
      * @param {null|AmqpMessageInterface} message
-     * @param msgObg
+     * @param msgObj
      */
-    process(channel, message, msgObg) {
+    process(channel, message, msgObj) {
         throw new ImplementationError(this, "process");
     }
 }

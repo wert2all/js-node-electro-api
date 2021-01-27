@@ -15,6 +15,9 @@ import EntityManager from "../../lib/db-entity-manager/EntityManager";
 import ResizeImageFilterEntityFactory from "../../modules/console/resize/entity/ResizeImageFilterEntityFactory";
 import ImageResultFactory from "../../lib/console/gulp/image/default/ImageResultFactory";
 import ResizeProcessorFactory from "../../modules/console/resize/ResizeProcessorFactory";
+import DefaultAmqpProducer from "../../modules/amqp/default/DefaultAmqpProducer";
+import DefaultAmqpProcessor from "../../modules/amqp/default/DefaultAmqpProcessor";
+import DefaultAmqpMessageFactory from "../../modules/amqp/default/DefaultAmqpMessageFactory";
 
 /**
  * @class AMQPProviderFactory
@@ -59,6 +62,11 @@ export default class AMQPProviderFactory {
                         new ImageResultFactory()
                     )
                 )
+            )
+            .register(
+                new DefaultAmqpProducer(amqpBroker, "amqp.image.resize.ok"),
+                new DefaultAmqpMessageFactory(),
+                new AmqpConsumerFactory(amqpBroker, new DefaultAmqpProcessor())
             );
     }
 }

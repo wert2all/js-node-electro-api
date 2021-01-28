@@ -52,12 +52,12 @@ export default class AmqplibAdapter extends AmqpInterface {
      * @private
      */
     _sendMessage(channel, queueName, message) {
-        return new Promise((resolve) => {
-            channel.assertQueue(queueName).then(() => {
-                channel.sendToQueue(queueName, Buffer.from(message.toString()), () => {
-                    resolve(true);
-                });
-            });
+        return new Promise((resolve, reject) => {
+            channel
+                .assertQueue(queueName)
+                .then(() => channel.sendToQueue(queueName, Buffer.from(message.toString())))
+                .then((sendResult) => resolve(sendResult))
+                .catch(reject);
         });
     }
 

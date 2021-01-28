@@ -13,7 +13,8 @@
         "test:static": "prettier --check .",
         "test:unit": "gulp test:unit",
         "test": "npm run test:static & npm run test:unit ",
-        "release": "standard-version"
+        "release": "standard-version",
+        "consumers:start": "node ./dist/_infra/prod/consumers.js"
     },
     "husky": {
         "hooks": {

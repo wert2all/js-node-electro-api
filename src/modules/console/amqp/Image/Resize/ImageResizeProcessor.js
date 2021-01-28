@@ -79,12 +79,16 @@ export default class ImageResizeProcessor extends AmqpConsumeProcessorInterface 
                                 const result = this._resultFactory.create();
                                 const processor = this._processorFactory.create(imageManager.getData());
                                 if (processor) {
-                                    return processor.processImage(imageManager.getData(), result).catch((err) => {
-                                        result.setError(err);
-                                        return result;
-                                    });
+                                    return processor
+                                        .processImage(imageManager.getData(), result)
+                                        .then(() => result)
+                                        .catch((err) => {
+                                            result.setError(err);
+                                            return result;
+                                        });
+                                } else {
+                                    return result;
                                 }
-                                return result;
                             })
                             .then((result) => imageManager.setResult(result))
                             .then(() => this._successProducer.send(this._successMessageFactory.create({})))

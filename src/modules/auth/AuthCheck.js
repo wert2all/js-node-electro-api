@@ -11,7 +11,15 @@ export default class AuthCheck {
      * @param {string} apiKey
      */
     constructor(apiKey) {
+        /**
+         *
+         * @type {string}
+         */
         this.apiKey = apiKey;
+        /**
+         *
+         * @type {OAuth2Client}
+         */
         this.client = new OAuth2Client(apiKey, "", "");
     }
 
